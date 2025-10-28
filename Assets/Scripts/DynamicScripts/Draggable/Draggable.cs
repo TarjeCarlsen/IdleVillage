@@ -40,8 +40,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrag(PointerEventData eventData)
     {
         OnDragging?.Invoke();
-        if(isPositionValid() && enableColorsOnDrag){
+        if(!isPositionValid() && enableColorsOnDrag){
             objectImage.color = overlapColor;
+        }else{
+        objectImage.color = draggingColor;
         }
         transform.position = Input.mousePosition;
     }
@@ -85,6 +87,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (myRect.Overlaps(otherRect))
             {
+                print("other rect = "+ otherRect);
                 if(enableColorsOnDrag) objectImage.color = overlapColor;
                 return false;
             }

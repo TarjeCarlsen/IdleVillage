@@ -83,7 +83,7 @@ private void MakeCurrencyRow(int index)
 
     // === Grid layout on background ===
     GridLayoutGroup grid = bgObj.AddComponent<GridLayoutGroup>();
-    grid.padding = new RectOffset(-55, 0, 0, 0);
+    grid.padding = new RectOffset(-133, 0, 0, 0);
     grid.cellSize = new Vector2(95, 50);
     grid.spacing = new Vector2(55, 0);
     grid.startCorner = GridLayoutGroup.Corner.UpperLeft;
@@ -114,6 +114,7 @@ private void MakeCurrencyRow(int index)
     text.alignment = TextAlignmentOptions.Center;
     text.color = Color.black;
     text.fontSize = 28;
+    text.fontStyle = FontStyles.Bold;
     text.textWrappingMode = TextWrappingModes.NoWrap;
 
     RectTransform textRect = text.GetComponent<RectTransform>();

@@ -17,6 +17,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] TMP_Text description_txt;
     [SerializeField] TMP_Text level_txt;
     [SerializeField] private List<CardInfoContent>  cardInfoContents;
+    public Action OnBought;
     private void HideLevel() => level_txt.text = "";
     private int level;
     private int maxLevel;
@@ -85,6 +86,7 @@ public void Init()
             if(cardData.useLevels)level++;
             CalculateNewPrice();
             UpdateUI();
+            OnBought?.Invoke();
             // upgradeApplier.ApplyUpgrade();
         }
     }
