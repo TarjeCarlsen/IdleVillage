@@ -10,11 +10,12 @@ public class CardData : ScriptableObject
         public string header_txt;
         public string descriptionText_txt;
         public List<Sprite>content_images;
-        public List<CardData> cardDatas;
+        public List<CardDataInfo> cardDataInfo;
         public int maxLevel = 10;
+        public bool useLevels;
 
     [System.Serializable]
-    public class CardDatas{
+    public class CardDataInfo{
         public CurrencyTypes type;
         public string price;
         public Sprite sprite;

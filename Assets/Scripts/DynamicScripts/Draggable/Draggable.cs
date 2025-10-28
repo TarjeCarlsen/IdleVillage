@@ -14,6 +14,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private Color overlapColor = new Color(1f, 0f, 0f, 1f);
     [SerializeField] private Color sellColor = new Color(1f, 0.65f, 0f, 1f);
     [SerializeField] private Color overAcceptsWheatColor = new Color(0f, 0.5f, 1f, 1f);  
+    [SerializeField] private bool enableColorsOnDrag = true;
     private Vector3 startPosition;
     public Action OnDragging;
     public Action OnStopDragging;
@@ -22,11 +23,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
     private void Awake(){
-        if(objectImage == null)
+        if(objectImage == null && enableColorsOnDrag)
         {
          objectImage = GetComponent<Image>();
          originalColor = objectImage.color;
-        }
+        }else if(enableColorsOnDrag)
         originalColor = objectImage.color;
 
     }
@@ -39,7 +40,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrag(PointerEventData eventData)
     {
         OnDragging?.Invoke();
-        if(isPositionValid()){
+        if(isPositionValid() && enableColorsOnDrag){
             objectImage.color = overlapColor;
         }
         transform.position = Input.mousePosition;
@@ -49,13 +50,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         OnStopDragging?.Invoke();
 
-        objectImage.color = originalColor;
+        if(enableColorsOnDrag) objectImage.color = originalColor;
         
         if (!isPositionValid())
         {
             print("inside not valid");
             transform.position = startPosition;
-            objectImage.color = originalColor;
+            if(enableColorsOnDrag)objectImage.color = originalColor;
             return;
         }
 
@@ -84,7 +85,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (myRect.Overlaps(otherRect))
             {
-                objectImage.color = overlapColor;
+                if(enableColorsOnDrag) objectImage.color = overlapColor;
                 return false;
             }
         }
