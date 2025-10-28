@@ -22,6 +22,7 @@ public class HouseManager : MonoBehaviour
     public class HousePrefabs{
         public HouesTypes houesType;
         public GameObject housePrefab;
+        public HouseData houseData;
     }
     private void Awake(){
         if(Instance != null && Instance != this){
@@ -46,7 +47,12 @@ public class HouseManager : MonoBehaviour
     data.positions = new List<Vector3>();
     data.types = new List<HouesTypes>();
 
-data.parentObjectName = parentObject != null ? parentObject.name : "";
+
+    if(parentObject != null){
+        data.parentObjectName = parentObject.name;
+    }else{
+        data.parentObjectName = "";
+    }
 
     foreach (var house in spawnedHouses)
     {
@@ -76,12 +82,14 @@ public void Load(HouseManagerSaveData data) {
         HouesTypes type = data.types[i];
         Vector3 pos = data.positions[i];
 
+        HousePrefabs prefabData = housePrefabs[(int)type];
         GameObject prefab = housePrefabs[(int)type].housePrefab;
         GameObject newHouse = Instantiate(prefab, pos, Quaternion.identity, parentObject);
 
         HouseInstance instance = newHouse.GetComponent<HouseInstance>();
         if (instance != null) {
             instance.uniqueId = data.uniqueIds[i];
+            instance.AssignData(prefabData.houseData); // NEW
             spawnedHouses.Add(instance);
         }
     }

@@ -11,6 +11,7 @@ public class SaveSystem
     {
         public CurrencySaveData currencySaveData;
         public HouseManagerSaveData houseManagerSaveData;
+        public InventoryHandlerSaveData[] inventoryHandlerSaveData;
 
     }
 
@@ -43,6 +44,13 @@ public class SaveSystem
     {
         GameManager.Instance.moneyManager.Save(ref _saveData.currencySaveData);
         GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
+
+        InventoryHandler[]inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
+        _saveData.inventoryHandlerSaveData = new InventoryHandlerSaveData[inventoryHandlers.Length];
+        for (int i = 0; i < inventoryHandlers.Length; i++)
+        {
+            inventoryHandlers[i].Save(ref _saveData.inventoryHandlerSaveData[i]);
+        }
     }
     
 
@@ -50,6 +58,12 @@ public class SaveSystem
     {
         GameManager.Instance.moneyManager.Load(_saveData.currencySaveData);
         GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
+
+        InventoryHandler[] inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
+        for (int i = 0; i < inventoryHandlers.Length; i++)
+        {
+            inventoryHandlers[i].Load(_saveData.inventoryHandlerSaveData[i]);
+        }
 
     }
 

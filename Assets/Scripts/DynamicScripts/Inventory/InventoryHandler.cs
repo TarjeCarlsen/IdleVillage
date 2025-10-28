@@ -74,17 +74,64 @@ public class InventoryHandler : MonoBehaviour
         {
             inv_text_img[(int)type].parentObject.SetActive(false);
         }
-        ResetPositionBackToInv();
         SpawnOnPlaced(type, draggable.transform);
     }
 
     public void SpawnOnPlaced(HouesTypes type, Transform position){
-        print("positin = " + position);
         HouseManager.Instance.SpawnHouse(type, parentToSpawnUnder, position);
     }
 
-    public void ResetPositionBackToInv(){
+
+
+
+
+
+public void Save(ref InventoryHandlerSaveData data){
+    data.inventoryDatas = new List<InventoryData>();
+    foreach(HouesTypes type in Enum.GetValues(typeof(HouesTypes))){
+        int count = houseCounter[type];
+        if(count > 0){
+    print("saving inventory");
+            data.inventoryDatas.Add(new InventoryData{
+                houseType = type.ToString(),
+                counter_txt = count,
+            });
+        }
+    }
 
     }
 
+public void Load(InventoryHandlerSaveData data){
+    InitializeHousecounter();
+
+    foreach(TextAndImage entry in inv_text_img){
+        entry.parentObject.SetActive(false);
+        entry.inventoryTxt.text = "";
+    }
+    foreach (InventoryData item in data.inventoryDatas)
+    {
+        if (Enum.TryParse<HouesTypes>(item.houseType, out HouesTypes type))
+        {
+            houseCounter[type] = item.counter_txt;
+            var uiEntry = inv_text_img[(int)type];
+            uiEntry.parentObject.SetActive(true);
+            uiEntry.inventoryTxt.text = item.counter_txt > 1 ? item.counter_txt.ToString() : "";
+        }
+    }
+}
+
+
+
+}
+
+[System.Serializable]
+public struct InventoryHandlerSaveData{
+    public List<InventoryData> inventoryDatas;
+}
+
+
+[System.Serializable]
+public class InventoryData{
+    public string houseType;
+    public int counter_txt;
 }

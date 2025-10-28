@@ -9,5 +9,9 @@ public class HouseInstance : MonoBehaviour
 
     private void Awake(){
         uniqueId = houseData.houesType + "_" + Guid.NewGuid().ToString();
+        
     }
+    public void AssignData(HouseData data) {
+    houseData = data;
+}
 }
