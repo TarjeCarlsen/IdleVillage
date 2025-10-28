@@ -10,6 +10,8 @@ public class InventoryHandler : MonoBehaviour
 
     private Dictionary<HouesTypes, int> houseCounter = new();
     [SerializeField] private List<TextAndImage> inv_text_img;
+    [SerializeField] private Transform parentToSpawnUnder;
+    private HouseManager houseManager;
 
     [System.Serializable]
     public class TextAndImage
@@ -22,6 +24,7 @@ public class InventoryHandler : MonoBehaviour
 
     private void Awake()
     {
+        houseManager =GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();;
         InitializeHousecounter();
     }
 
@@ -30,7 +33,8 @@ public class InventoryHandler : MonoBehaviour
         for (int i = 0; i < inv_text_img.Count; i++)
         {
             HouesTypes type = (HouesTypes)i;
-            inv_text_img[i].draggable.OnPlaced += () => RemoveFromInv(type);
+            inv_text_img[i].draggable.OnPlaced += (draggable) => RemoveFromInv(type, draggable);
+
         }
     }
 
@@ -39,7 +43,8 @@ public class InventoryHandler : MonoBehaviour
         for (int i = 0; i < inv_text_img.Count; i++)
         {
             HouesTypes type = (HouesTypes)i;
-            inv_text_img[i].draggable.OnPlaced -= () => RemoveFromInv(type);
+            inv_text_img[i].draggable.OnPlaced -= (draggable) => RemoveFromInv(type, draggable);
+
         }
     }
 
@@ -61,7 +66,7 @@ public class InventoryHandler : MonoBehaviour
         inv_text_img[(int)type].parentObject.SetActive(true);
     }
 
-    public void RemoveFromInv(HouesTypes type)
+    public void RemoveFromInv(HouesTypes type, Draggable draggable)
     {
         houseCounter[type]--;
         inv_text_img[(int)type].inventoryTxt.text = houseCounter[type].ToString();
@@ -69,6 +74,17 @@ public class InventoryHandler : MonoBehaviour
         {
             inv_text_img[(int)type].parentObject.SetActive(false);
         }
+        ResetPositionBackToInv();
+        SpawnOnPlaced(type, draggable.transform);
+    }
+
+    public void SpawnOnPlaced(HouesTypes type, Transform position){
+        print("positin = " + position);
+        HouseManager.Instance.SpawnHouse(type, parentToSpawnUnder, position);
+    }
+
+    public void ResetPositionBackToInv(){
+
     }
 
 }

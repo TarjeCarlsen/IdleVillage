@@ -17,6 +17,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] TMP_Text description_txt;
     [SerializeField] TMP_Text level_txt;
     [SerializeField] private List<CardInfoContent>  cardInfoContents;
+    [SerializeField] private HouseManager houseManager;
     public Action OnBought;
     private void HideLevel() => level_txt.text = "";
     private int level;
@@ -33,6 +34,7 @@ public class CardInfo : MonoBehaviour
     }
 
         private void Awake(){
+        houseManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();;
                     rectTransform = GetComponent<RectTransform>();
         uiCamera = Camera.main; 
         Init();  
@@ -90,6 +92,7 @@ public void Init()
             // upgradeApplier.ApplyUpgrade();
         }
     }
+
 
     private void CalculateNewPrice(){
         for (int i = 0; i < cardInfoContents.Count; i++)

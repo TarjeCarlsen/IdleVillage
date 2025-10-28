@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private RectTransform dragHitBox;
-    [SerializeField] private RectTransform dropZone;
+    private RectTransform dropZone;
     [SerializeField] private Image objectImage;
     private Color originalColor;
     [SerializeField] private Color draggingColor = new Color(0f, 1f, 0f, 1f);
@@ -15,14 +15,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private Color sellColor = new Color(1f, 0.65f, 0f, 1f);
     [SerializeField] private Color overAcceptsWheatColor = new Color(0f, 0.5f, 1f, 1f);  
     [SerializeField] private bool enableColorsOnDrag = true;
+   [SerializeField] private bool staticSnapBack = false;
     private Vector3 startPosition;
     public Action OnDragging;
     public Action OnStopDragging;
-    public Action OnPlaced;
+    public Action<Draggable> OnPlaced;
     public bool hasBeenPlaced;
 
 
     private void Awake(){
+        dropZone = GameObject.FindGameObjectWithTag("DropZone").GetComponent<RectTransform>();;
         if(objectImage == null && enableColorsOnDrag)
         {
          objectImage = GetComponent<Image>();
@@ -66,8 +68,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {   
             print("Placed");
             hasBeenPlaced = true;
-            OnPlaced?.Invoke();
+            OnPlaced?.Invoke(this);
         }
+            if(staticSnapBack){
+                transform.position = startPosition;
+                hasBeenPlaced = false;
+            }
     }
 
 
@@ -104,5 +110,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         rt.GetWorldCorners(corners);
         Vector2 size = corners[2] - corners[0];
         return new Rect(corners[0], size);
+    }
+
+    public void ResetPosition(){
+
     }
 }
