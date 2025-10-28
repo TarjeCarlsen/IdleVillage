@@ -41,6 +41,7 @@ public class MoneyManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Instance = this;    
         InitializeCurrencies();
     }
 
@@ -77,8 +78,8 @@ public class MoneyManager : MonoBehaviour
 
     public void AddCurrency(CurrencyTypes type, BigNumber amount){ // --------- NEW
         var current = currency[type];
-        // BigNumber maxStorage = StorageManager.Instance.GetMaxStorage(type); // -------- ADD BACK WHEN HAVE STORAGE MANAGER
-        BigNumber maxStorage = 2000;
+        BigNumber maxStorage = StorageManager.Instance.GetMaxStorage(type); // -------- ADD BACK WHEN HAVE STORAGE MANAGER
+        // BigNumber maxStorage = 2000;
         if((currency[type] + amount) > maxStorage){
             currency[type] = maxStorage;
         }else{

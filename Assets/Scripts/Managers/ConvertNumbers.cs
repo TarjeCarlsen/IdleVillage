@@ -47,19 +47,34 @@ public class ConvertNumbers : MonoBehaviour
     /// <summary>
     /// Formats a BigNumber instance into short notation (1K, 1M, etc.)
     /// </summary>
-    public string FormatNumber(BigNumber value)
+public string FormatNumber(BigNumber value)
+{
+    double num = value.number;
+    int exp = value.exponent;
+
+    // ✅ Normalize so that num is between 1 and 1000
+    while (num >= 1000)
     {
-        // Convert exponent from base-10 to thousands
-        int expGroup = value.exponent / 3;
-        if (expGroup < suffixes.Length && value.exponent <= 21)
-        {
-            double scaled = value.number * Math.Pow(10, value.exponent % 3);
-            return $"{scaled:0.##}{suffixes[expGroup]}";
-        }
-        else
-        {
-            return $"{value.number:0.##}e{value.exponent}";
-        }
+        num /= 1000;
+        exp += 3;
+    }
+    while (num < 1 && exp > 0)
+    {
+        num *= 1000;
+        exp -= 3;
     }
 
+    // ✅ Determine suffix index
+    int expGroup = exp / 3;
+
+    if (expGroup < suffixes.Length && exp <= 63)
+    {
+        return $"{num:0.##}{suffixes[expGroup]}";
+    }
+    else
+    {
+        // fallback to scientific
+        return $"{num:0.##}e{exp}";
+    }
+}
 }
