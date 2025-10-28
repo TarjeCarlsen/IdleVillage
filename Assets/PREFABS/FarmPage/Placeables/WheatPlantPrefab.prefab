@@ -130,6 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4162096424202536690}
   - component: {fileID: 5040710655031619405}
+  - component: {fileID: 5196070334360176396}
   m_Layer: 5
   m_Name: WheatPlantPrefab
   m_TagString: Untagged
@@ -172,14 +173,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragHitBox: {fileID: 6137046030993075090}
-  dropZone: {fileID: 0}
   objectImage: {fileID: 4180128310953923758}
   draggingColor: {r: 0, g: 1, b: 0, a: 1}
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
   sellColor: {r: 1, g: 0.65, b: 0, a: 1}
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
   enableColorsOnDrag: 1
+  staticSnapBack: 0
   hasBeenPlaced: 0
+--- !u!114 &5196070334360176396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709676183145568915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad5c8a5b6a160f4abed64e6aac5fc6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  houseData: {fileID: 11400000, guid: ea0d43da90c572f4aa84add7ac56339a, type: 2}
 --- !u!1 &7251944841248128153
 GameObject:
   m_ObjectHideFlags: 0

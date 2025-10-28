@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public MoneyManager moneyManager {get; set;}
+    public HouseManager houseManager {get; set;}
 
 
     private void Awake(){
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Start(){
         moneyManager = FindFirstObjectByType<MoneyManager>();
+        houseManager = FindFirstObjectByType<HouseManager>();
     }
 
 

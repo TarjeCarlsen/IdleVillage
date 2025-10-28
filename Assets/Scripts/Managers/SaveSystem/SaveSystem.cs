@@ -10,6 +10,7 @@ public class SaveSystem
     public struct SaveData
     {
         public CurrencySaveData currencySaveData;
+        public HouseManagerSaveData houseManagerSaveData;
 
     }
 
@@ -41,12 +42,14 @@ public class SaveSystem
     public static void HandleSaveData()
     {
         GameManager.Instance.moneyManager.Save(ref _saveData.currencySaveData);
+        GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
     }
     
 
     public static void HandleLoadData()
     {
         GameManager.Instance.moneyManager.Load(_saveData.currencySaveData);
+        GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
 
     }
 
