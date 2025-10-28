@@ -39,4 +39,8 @@ private void StartGrowing(){
     plant_animator.SetBool("plantGrown", true);
         print("finished!");
     }
+
+    public void OnPlantClicked(){
+        // MoneyManager.
+    }
 }

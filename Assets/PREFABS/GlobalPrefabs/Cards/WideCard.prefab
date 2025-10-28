@@ -1125,6 +1125,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1699259474893566021}
   - {fileID: 2353803248841348180}
   - {fileID: 9159450580824925612}
   - {fileID: 6596897204078934077}
@@ -1161,6 +1162,11 @@ MonoBehaviour:
     price_img: {fileID: 8075360337249934053}
     types: 0
   houseManager: {fileID: 0}
+  cardPositionPlaceholder: {fileID: 0}
+  staticPositionParent: {fileID: 0}
+  originalParent: {fileID: 0}
+  reparentedAnchoredPosition: {x: 0, y: 0}
+  reparrentCard: 0
 --- !u!1 &5393540358278955839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,6 +2258,41 @@ MonoBehaviour:
   m_Spacing: {x: 50.09, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!1 &8525401966047256032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699259474893566021}
+  m_Layer: 5
+  m_Name: placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1699259474893566021
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525401966047256032}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5223869770597326920}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8695870919598635910
 GameObject:
   m_ObjectHideFlags: 0

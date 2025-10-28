@@ -44,6 +44,7 @@ public class CardInfo : MonoBehaviour
 public void Init()
 {
     if (isInitialized) return;
+
     header_txt.text = cardData.header_txt;
     content_img.sprite = cardData.content_images[level];
     description_txt.text = cardData.descriptionText_txt;
@@ -70,7 +71,6 @@ public void Init()
 
     public bool CanAfford(){
         foreach(CardInfoContent price in cardInfoContents){
-            print($"{BigNumber.Parse(price.price_text.text)} > {MoneyManager.Instance.GetCurrency(price.types)}");
             if (BigNumber.Parse(price.price_text.text) > MoneyManager.Instance.GetCurrency(price.types)){
                 return false;
             }
@@ -79,12 +79,10 @@ public void Init()
     }
 
     public void OnBuyClick(){
-        print("inside click");
         if(level == maxLevel && cardData.useLevels){
             return;
         }
         if(CanAfford()){
-        print("inside afford");
             foreach(CardInfoContent price in cardInfoContents){
                 MoneyManager.Instance.SubtractCurrency(price.types, BigNumber.Parse(price.price_text.text));
             }
@@ -145,4 +143,5 @@ void Update()
         }
     }
 }
+
 }

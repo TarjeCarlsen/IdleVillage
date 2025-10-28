@@ -15,6 +15,11 @@ public class UIPageTools
     {
         ToggleCanvas("FarmPageCanvas");
     }
+    [MenuItem("UI/Show Upgrade Page")]
+    static void ShowUpgradePage()
+    {
+        ToggleCanvas("UpgradePageCanvas");
+    }
 
     static void ToggleCanvas(string name)
     {
