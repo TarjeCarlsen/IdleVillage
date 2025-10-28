@@ -10,20 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a390db302a0e2b94bb71a0b80495e4b1, type: 3}
-  m_Name: WheatPlant
+  m_Name: SiloCardData
   m_EditorClassIdentifier: 
-  header_txt: Wheat Sappling
-  descriptionText_txt: Wheat sapplings can be collected for wheat when fully grown
+  header_txt: Silo
+  descriptionText_txt: Increases storagecapasity for all farm currencies by {amountToIncrease}
   content_images:
-  - {fileID: 21300000, guid: 0516d21692a04c24eb905323b3f38860, type: 3}
+  - {fileID: 21300000, guid: 658838f7b24c4a54cb2bcaf557dc059b, type: 3}
   cardDataInfo:
   - type: 0
-    price: 5
+    price: 4
     sprite: {fileID: 21300000, guid: 06e23e775eddd23458e92bbd0b16b4c1, type: 3}
-    priceMultiplier: 1.5
-  - type: 1
-    price: 2
-    sprite: {fileID: 21300000, guid: 535f703d5d81b854bbc06485c15f6fe8, type: 3}
     priceMultiplier: 1.5
   maxLevel: 10
   useLevels: 0

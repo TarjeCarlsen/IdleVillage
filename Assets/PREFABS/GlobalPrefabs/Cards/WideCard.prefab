@@ -1160,10 +1160,7 @@ MonoBehaviour:
     price_text: {fileID: 8557557062147680414}
     price_img: {fileID: 8075360337249934053}
     types: 0
-  - price_parent_obj: {fileID: 8277261224455750087}
-    price_text: {fileID: 8606297078987069051}
-    price_img: {fileID: 5647558883456315922}
-    types: 1
+  houseManager: {fileID: 0}
 --- !u!1 &5393540358278955839
 GameObject:
   m_ObjectHideFlags: 0

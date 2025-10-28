@@ -6,8 +6,8 @@ using UnityEngine;
 public enum HouesTypes{
     wheatplant,
     silo,
-    windmill,
     bakery,
+    windmill,
     tractor,
 }
 public class HouseManager : MonoBehaviour
@@ -53,7 +53,15 @@ public class HouseManager : MonoBehaviour
     }else{
         data.parentObjectName = "";
     }
-
+Debug.Log($"Saving {spawnedHouses.Count} houses");
+for (int i = 0; i < spawnedHouses.Count; i++) {
+    var house = spawnedHouses[i];
+    if (house == null) {
+        Debug.LogWarning($"SpawnedHouses[{i}] is null");
+        continue;
+    }
+    Debug.Log($"House[{i}] uniqueId = {house.uniqueId}, transform = {house.transform}, type = {house.GetHouseType()}");
+}
     foreach (var house in spawnedHouses)
     {
         data.uniqueIds.Add(house.uniqueId);

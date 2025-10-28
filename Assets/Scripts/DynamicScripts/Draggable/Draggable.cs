@@ -24,13 +24,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
     private void Awake(){
-        dropZone = GameObject.FindGameObjectWithTag("DropZone").GetComponent<RectTransform>();;
         if(objectImage == null && enableColorsOnDrag)
         {
          objectImage = GetComponent<Image>();
          originalColor = objectImage.color;
         }else if(enableColorsOnDrag)
         originalColor = objectImage.color;
+
+    }
+
+    private void Start(){
+        dropZone = GameObject.FindGameObjectWithTag("DropZone").GetComponent<RectTransform>();;
 
     }
 

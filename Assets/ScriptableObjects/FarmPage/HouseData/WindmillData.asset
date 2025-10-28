@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 269b1c6900b90384aab42ea97daf78a3, type: 3}
-  m_Name: WheatPlant
+  m_Name: WindmillData
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 0}
-  houesType: 0
+  houesType: 3

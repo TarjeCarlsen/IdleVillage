@@ -70,6 +70,7 @@ public void Init()
 
     public bool CanAfford(){
         foreach(CardInfoContent price in cardInfoContents){
+            print($"{BigNumber.Parse(price.price_text.text)} > {MoneyManager.Instance.GetCurrency(price.types)}");
             if (BigNumber.Parse(price.price_text.text) > MoneyManager.Instance.GetCurrency(price.types)){
                 return false;
             }
@@ -78,10 +79,12 @@ public void Init()
     }
 
     public void OnBuyClick(){
+        print("inside click");
         if(level == maxLevel && cardData.useLevels){
             return;
         }
         if(CanAfford()){
+        print("inside afford");
             foreach(CardInfoContent price in cardInfoContents){
                 MoneyManager.Instance.SubtractCurrency(price.types, BigNumber.Parse(price.price_text.text));
             }

@@ -63,6 +63,7 @@ public class InventoryHandler : MonoBehaviour
         {
             inv_text_img[(int)type].inventoryTxt.text = houseCounter[type].ToString();
         }
+        print("type index = "+ (int)type);
         inv_text_img[(int)type].parentObject.SetActive(true);
     }
 
