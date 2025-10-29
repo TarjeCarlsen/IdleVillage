@@ -369,4 +369,18 @@ MonoBehaviour:
       number: 100
       exponent: 0
     defaultUnitsPerObject: 0
-  draggable: {fileID: 7104786814292001268}
+  - type: 3
+    defaultAmount:
+      number: 100
+      exponent: 0
+    defaultUnitsPerObject: 0
+  - type: 4
+    defaultAmount:
+      number: 100
+      exponent: 0
+    defaultUnitsPerObject: 0
+  - type: 5
+    defaultAmount:
+      number: 100
+      exponent: 0
+    defaultUnitsPerObject: 0

@@ -11,8 +11,8 @@ public class SaveSystem
     {
         public CurrencySaveData currencySaveData;
         public HouseManagerSaveData houseManagerSaveData;
+        public StorageManagerSaveData storageManagerSaveData;
         public InventoryHandlerSaveData[] inventoryHandlerSaveData;
-
     }
 
     public static string SaveFileName()
@@ -36,14 +36,31 @@ public class SaveSystem
     }
 
 
+/**
+// ------------ Template for saving array ------------------//
+        OriginalScript[] newScriptArray = GameObject.FindObjectsByType<OriginalScript>(FindObjectsSortMode.None);
+        _saveData.ScriptSaveData = new definedSaveArray[newScriptArray.Length];
+        for (int i = 0; i < newScriptArray.Length; i++)
+        {
+            newScriptArray[i].Save(ref _saveData.ScriptSaveData[i]);
+        }
+// ------------ Template for loading array ------------------//
+
+        OriginalScript[] newScriptArray = GameObject.FindObjectsByType<OriginalScript>(FindObjectsSortMode.None);
+        for (int i = 0; i < newScriptArray.Length; i++)
+        {
+            newScriptArray[i].Load(_saveData.ScriptSaveData[i]);
+        }
+**/
+
     //--------------SETUP FOR SAVING SCRIPT-------------------------
     // First comment for name of the script thats beign saved
     // Second comment for function of the script
-
     public static void HandleSaveData()
     {
         GameManager.Instance.moneyManager.Save(ref _saveData.currencySaveData);
         GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
+        GameManager.Instance.storageManager.Save(ref _saveData.storageManagerSaveData);
 
         InventoryHandler[]inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
         _saveData.inventoryHandlerSaveData = new InventoryHandlerSaveData[inventoryHandlers.Length];
@@ -58,12 +75,15 @@ public class SaveSystem
     {
         GameManager.Instance.moneyManager.Load(_saveData.currencySaveData);
         GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
+        GameManager.Instance.storageManager.Load(_saveData.storageManagerSaveData);
 
         InventoryHandler[] inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
         for (int i = 0; i < inventoryHandlers.Length; i++)
         {
             inventoryHandlers[i].Load(_saveData.inventoryHandlerSaveData[i]);
         }
+
+
 
     }
 

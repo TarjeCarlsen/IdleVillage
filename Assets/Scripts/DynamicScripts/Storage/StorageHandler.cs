@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Xml;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEditor;
 using UnityEngine;
 
 public class StorageHandler : MonoBehaviour
 {
-    [SerializeField] List<StorageData> storageDatas;
-    private bool hasBeenPlaced = false;
+    [SerializeField] private List<StorageData> storageDatas;
 
     [System.Serializable]
     public class StorageData{
@@ -14,17 +15,15 @@ public class StorageHandler : MonoBehaviour
         public int defaultUnitsPerObject;
     }
 
-    private void Awake(){
-        if(!hasBeenPlaced)InitiateIncrease();
-    }
+private void Awake(){
+    InitiateIncrease();
+}
 
     private void InitiateIncrease(){
         foreach(StorageData data in storageDatas){
             StorageManager.Instance.AddStorageAmount(data.type, data.defaultAmount);
             StorageManager.Instance.AddStorageUnits(data.type, data.defaultUnitsPerObject);
         }
-        hasBeenPlaced = true;
     }
-
 
 }

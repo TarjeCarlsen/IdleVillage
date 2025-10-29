@@ -15,8 +15,8 @@ public class HouseManager : MonoBehaviour
     public static HouseManager Instance {get; private set;}
     public List<HousePrefabs> housePrefabs;
     private List<HouseInstance> spawnedHouses = new();
-    private string uniqueId;
     private Transform parentObject; 
+    // private bool houseCreated;
 
     [System.Serializable]
     public class HousePrefabs{
@@ -35,8 +35,9 @@ public class HouseManager : MonoBehaviour
         GameObject prefab = housePrefabs[(int)type].housePrefab;
         GameObject newHouse = Instantiate(prefab,position.position,Quaternion.identity, parent);
         HouseInstance instance = newHouse.GetComponent<HouseInstance>();
-        uniqueId = instance.uniqueId;
+        instance.CreateNewId();
         parentObject = parent;
+        // houseCreated = true;
         if(instance != null) spawnedHouses.Add(instance);
     }
 
@@ -46,27 +47,25 @@ public class HouseManager : MonoBehaviour
     data.uniqueIds = new List<string>();
     data.positions = new List<Vector3>();
     data.types = new List<HouesTypes>();
-
+    // data.houseCreated = new List<bool>();
 
     if(parentObject != null){
         data.parentObjectName = parentObject.name;
     }else{
         data.parentObjectName = "";
     }
-Debug.Log($"Saving {spawnedHouses.Count} houses");
 for (int i = 0; i < spawnedHouses.Count; i++) {
     var house = spawnedHouses[i];
     if (house == null) {
-        Debug.LogWarning($"SpawnedHouses[{i}] is null");
         continue;
     }
-    Debug.Log($"House[{i}] uniqueId = {house.uniqueId}, transform = {house.transform}, type = {house.GetHouseType()}");
 }
     foreach (var house in spawnedHouses)
     {
         data.uniqueIds.Add(house.uniqueId);
         data.positions.Add(house.transform.position);
         data.types.Add(house.GetHouseType());
+        // data.houseCreated.Add(houseCreated);
     }
     }
 public void Load(HouseManagerSaveData data) {
@@ -76,7 +75,6 @@ public void Load(HouseManagerSaveData data) {
         if (foundParent != null) {
             parentObject = foundParent.transform;
         } else {
-            Debug.LogWarning($"HouseManager: Could not find GameObject named '{data.parentObjectName}' for parentObject.");
         }
     }
 
@@ -99,6 +97,7 @@ public void Load(HouseManagerSaveData data) {
             instance.uniqueId = data.uniqueIds[i];
             instance.AssignData(prefabData.houseData); // NEW
             spawnedHouses.Add(instance);
+            // instance.SetHouseCreated(data.houseCreated[i]);
         }
     }
 }
@@ -112,5 +111,6 @@ public struct HouseManagerSaveData{
     public List<Vector3> positions;
     public List<HouesTypes> types;
      public string parentObjectName;
+    //  public List<bool> houseCreated;
 
 }

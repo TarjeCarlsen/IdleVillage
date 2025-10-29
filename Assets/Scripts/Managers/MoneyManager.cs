@@ -12,6 +12,7 @@ public enum CurrencyTypes{
     money,
     wheat,
     grain,
+    flour,
     dough,
     bread,
     child,
