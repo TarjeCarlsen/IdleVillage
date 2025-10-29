@@ -248,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragHitBox: {fileID: 8779766623042918518}
+  dropZoneTag: DropZoneFarm
   objectImage: {fileID: 4780569136969158392}
   draggingColor: {r: 0, g: 1, b: 0, a: 1}
   overlapColor: {r: 1, g: 0, b: 0, a: 1}

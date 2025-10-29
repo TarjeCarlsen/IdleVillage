@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 
@@ -21,6 +22,13 @@ public enum TimeUpgradeTypes
 
 }
 
+public enum SpecialUpgradeTypes{
+    flourDragAmount,
+    flourToDoughClickPower,
+    doughDragAmount,
+
+}
+
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -28,8 +36,10 @@ public class UpgradeManager : MonoBehaviour
 
     public Dictionary<CurrencyTypes, BigNumber> productionPower;
     public Dictionary<CurrencyTypes, BigNumber> storagePower;
+    public Dictionary<SpecialUpgradeTypes, BigNumber> specialProductionPower;
     public Dictionary<TimeUpgradeTypes, float> upgradeTime;
     [SerializeField] private BigNumber defaultProductionPower = 1;
+    [SerializeField] private BigNumber defaultSpecialProductionPower = 1;
     [SerializeField] private BigNumber defaultStoragePower = 100;
     [SerializeField] private float defaultTimePower = 2;
 
@@ -40,6 +50,7 @@ public class UpgradeManager : MonoBehaviour
         else Destroy(gameObject);
         InitializePowers();
         InitializeTime();
+        InitializeSpecialPowers();
     }
 
 
@@ -52,6 +63,13 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    private void InitializeSpecialPowers(){
+        specialProductionPower = new Dictionary<SpecialUpgradeTypes, BigNumber>();
+        foreach(SpecialUpgradeTypes type in Enum.GetValues(typeof(SpecialUpgradeTypes))){
+            specialProductionPower[type] = defaultSpecialProductionPower;
+        }
+
+    }
     private void InitializeTime(){
         upgradeTime = new Dictionary<TimeUpgradeTypes, float>();
         foreach(TimeUpgradeTypes type in Enum.GetValues(typeof(TimeUpgradeTypes))){
@@ -60,13 +78,13 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+
+    // ------------------------ STORAGE UPGRADE TYPES --------------------- //
     public BigNumber GetProductionPower(CurrencyTypes type) => productionPower[type];
     public BigNumber GetStoragePower(CurrencyTypes type) => storagePower[type];
 
-
+    // ------------------------ POWER UPGRADE TYPES --------------------- //
     public void AddPowerFlat(CurrencyTypes type, BigNumber amount) => productionPower[type] += amount;
-    
-
     public void AddPowerMulti(CurrencyTypes type, BigNumber multiplier)
     {
         BigNumber result = (BigNumber)productionPower[type] * multiplier;
@@ -83,6 +101,17 @@ public class UpgradeManager : MonoBehaviour
         storagePower[type] = result;
         StorageManager.Instance.AddStorageAmount(type, storagePower[type]);
     }
+    // ------------------------ SPECIAL UPGRADE TYPES --------------------- //
+     public BigNumber GetSpecialProductionAmount(SpecialUpgradeTypes type) => specialProductionPower[type];
+
+    public void AddSpecialPowerFlat(SpecialUpgradeTypes type, BigNumber amount) => specialProductionPower[type] += amount;
+
+    public void AddSpecialPowerMulti(SpecialUpgradeTypes type, double multiplier)
+    {
+        BigNumber result = specialProductionPower[type] * multiplier;
+        specialProductionPower[type] = result;
+    }
+    // ------------------------ TIME UPGRADE TYPES --------------------- //
     private const float MIN_TIME = 0.1f; // Clamp time. MAXIMUM REDUCTION REACHING 0.1f
     public float GetTimePower(TimeUpgradeTypes type) {
     float time = upgradeTime[type];

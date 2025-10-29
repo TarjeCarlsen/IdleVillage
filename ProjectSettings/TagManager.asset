@@ -5,7 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - GameManager
-  - DropZone
+  - DropZoneFarm
+  - DropZoneBakeryBowl
+  - DropZoneBakeryCrate
+  - DropZoneBakerFurnace
+  - FlourObject
+  - BakeryManager
   layers:
   - Default
   - TransparentFX

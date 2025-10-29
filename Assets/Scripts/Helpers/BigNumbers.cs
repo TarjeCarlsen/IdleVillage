@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 [Serializable]
 public struct BigNumber
@@ -6,13 +7,20 @@ public struct BigNumber
     public double number;
     public int exponent;
 
-    public BigNumber(double number, int exponent)
+public BigNumber(double number, int exponent)
+{
+    if (number == 0)
+    {
+        this.number = 0;
+        this.exponent = 0;
+    }
+    else
     {
         Normalize(ref number, ref exponent);
         this.number = number;
         this.exponent = exponent;
     }
-
+}
     public static BigNumber operator +(BigNumber a, BigNumber b)
     {
         if (a.number == 0) return b;
@@ -63,38 +71,58 @@ public struct BigNumber
             exponent--;
         }
     }
+    public BigNumber Normalized()
+{
+    double num = this.number;
+    int exp = this.exponent;
+    Normalize(ref num, ref exp);
+    return new BigNumber(num, exp);
+}
     public static implicit operator BigNumber(double value)
     {
         return new BigNumber(value, 0);
     }
-    public static bool operator >(BigNumber a, BigNumber b)
-    {
-        if (a.exponent != b.exponent)
-            return a.exponent > b.exponent;
-        return a.number > b.number;
-    }
+public static bool operator <(BigNumber a, BigNumber b)
+{
+    a = a.Normalized();
+    b = b.Normalized();
 
-    public static bool operator <(BigNumber a, BigNumber b)
-    {
-        if (a.exponent != b.exponent)
-            return a.exponent < b.exponent;
-        return a.number < b.number;
-    }
+    if (a.exponent != b.exponent)
+        return a.exponent < b.exponent;
+    return a.number < b.number;
+}
 
-    public static bool operator >=(BigNumber a, BigNumber b)
-    {
-        return !(a < b);
-    }
+public static bool operator >(BigNumber a, BigNumber b)
+{
+    a = a.Normalized();
+    b = b.Normalized();
 
-    public static bool operator <=(BigNumber a, BigNumber b)
-    {
-        return !(a > b);
-    }
+    if (a.exponent != b.exponent)
+        return a.exponent > b.exponent;
+    return a.number > b.number;
+}
 
-    public static bool operator ==(BigNumber a, BigNumber b)
-    {
-        return a.exponent == b.exponent && Math.Abs(a.number - b.number) < 1e-9;
-    }
+public static bool operator >=(BigNumber a, BigNumber b)
+{
+    a = a.Normalized();
+    b = b.Normalized();
+    return a > b || a == b;
+}
+
+public static bool operator <=(BigNumber a, BigNumber b)
+{
+    a = a.Normalized();
+    b = b.Normalized();
+    return a < b || a == b;
+}
+
+public static bool operator ==(BigNumber a, BigNumber b)
+{
+    a = a.Normalized();
+    b = b.Normalized();
+
+    return a.exponent == b.exponent && Math.Abs(a.number - b.number) < 1e-9;
+}
 
     public static bool operator !=(BigNumber a, BigNumber b)
     {
@@ -186,5 +214,20 @@ public static bool TryParse(string input, out BigNumber result)
         result = new BigNumber(0, 0);
         return false;
     }
+}
+public static BigNumber Min(BigNumber a, BigNumber b)
+{
+    UnityEngine.Debug.Log($"Comparing: a = {a}, b = {b}, a < b = {a < b}");
+    return a < b ? a : b;
+}
+public static BigNumber Max(BigNumber a, BigNumber b)
+{
+    return a > b ? a : b;
+}
+public int CompareTo(BigNumber other)
+{
+    if (this > other) return 1;
+    if (this < other) return -1;
+    return 0;
 }
 }

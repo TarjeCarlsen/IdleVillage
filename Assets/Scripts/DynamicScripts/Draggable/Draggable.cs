@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private RectTransform dragHitBox;
+    [SerializeField] private string dropZoneTag;
     private RectTransform dropZone;
     [SerializeField] private Image objectImage;
     private Color originalColor;
@@ -16,6 +17,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private Color overAcceptsWheatColor = new Color(0f, 0.5f, 1f, 1f);  
     [SerializeField] private bool enableColorsOnDrag = true;
    [SerializeField] private bool staticSnapBack = false;
+   [SerializeField] private bool destroyOutsideDropzone;
+   
+   [SerializeField] private GameObject gameObjectToDestroy;
+    [SerializeField] private bool enableDragOnSpawn = false;
+    private bool isBeingDraggedOnSpawn = false;
     private Vector3 startPosition;
     public Action OnDragging;
     public Action OnStopDragging;
@@ -34,7 +40,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     private void Start(){
-        dropZone = GameObject.FindGameObjectWithTag("DropZone").GetComponent<RectTransform>();;
+    dropZone = GameObject.FindGameObjectWithTag(dropZoneTag).GetComponent<RectTransform>();
+
+    if (enableDragOnSpawn)
+    {
+        isBeingDraggedOnSpawn = true;
+    }
 
     }
 
@@ -63,6 +74,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (!isPositionValid())
         {
             print("inside not valid");
+            if(gameObjectToDestroy != null && destroyOutsideDropzone) Destroy(gameObjectToDestroy);
             transform.position = startPosition;
             if(enableColorsOnDrag)objectImage.color = originalColor;
             return;
@@ -114,5 +126,33 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Vector2 size = corners[2] - corners[0];
         return new Rect(corners[0], size);
     }
+private void Update() // handles dragging on spawn
+{
+    if (isBeingDraggedOnSpawn && Input.GetMouseButton(0))
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        OnBeginDrag(eventData);
+        OnDrag(eventData);
+    }
+
+    if (isBeingDraggedOnSpawn && Input.GetMouseButtonUp(0))
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        OnEndDrag(eventData);
+        isBeingDraggedOnSpawn = false;
+    }
+}
+public void SetEnableDragOnSpawn(bool value)// handles dragging on spawn
+{
+    enableDragOnSpawn = value;
+}
 
 }
