@@ -133,7 +133,7 @@ private void MakeCurrencyRow(int index)
         {
             BigNumber value = MoneyManager.Instance.GetCurrency(type);
             BigNumber max = StorageManager.Instance.GetMaxStorage(type);
-            currencyText_list[index].text = $"{ConvertNumbers.Instance.FormatNumber(value)}/{ConvertNumbers.Instance.FormatNumber(max)}";
+            currencyText_list[index].text = $"{ConvertNumbers.Instance.FormatNumber(value)}{" "} / {" "}{ConvertNumbers.Instance.FormatNumber(max)}";
         }
     }
 }

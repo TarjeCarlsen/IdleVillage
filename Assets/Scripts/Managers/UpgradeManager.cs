@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public enum UpgradeTypes{
-    globalPower,
-    moneyPower,
-    farmPower,
 
-}
 
 public enum TimeUpgradeTypes
 {
@@ -43,7 +38,8 @@ public class UpgradeManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
+        InitializePowers();
+        InitializeTime();
     }
 
 
@@ -69,6 +65,7 @@ public class UpgradeManager : MonoBehaviour
 
 
     public void AddPowerFlat(CurrencyTypes type, BigNumber amount) => productionPower[type] += amount;
+    
 
     public void AddPowerMulti(CurrencyTypes type, BigNumber multiplier)
     {

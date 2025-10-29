@@ -97,7 +97,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (myRect.Overlaps(otherRect))
             {
-                print("other rect = "+ otherRect);
                 if(enableColorsOnDrag) objectImage.color = overlapColor;
                 return false;
             }
@@ -116,7 +115,4 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return new Rect(corners[0], size);
     }
 
-    public void ResetPosition(){
-
-    }
 }
