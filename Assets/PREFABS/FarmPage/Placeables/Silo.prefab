@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 1471825692577613565}
   - component: {fileID: 7104786814292001268}
   - component: {fileID: 978158694146664263}
+  - component: {fileID: 4455859315589276238}
   m_Layer: 5
   m_Name: Silo
   m_TagString: Untagged
@@ -330,7 +331,7 @@ MonoBehaviour:
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
   enableColorsOnDrag: 1
   staticSnapBack: 0
-  hasBeenPlaced: 1
+  hasBeenPlaced: 0
 --- !u!114 &978158694146664263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,3 +346,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   houseData: {fileID: 11400000, guid: 0fe4040c548e7cb40afda117d17938d0, type: 2}
   uniqueId: 
+--- !u!114 &4455859315589276238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833858414357669085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db01770ebecd6fc46ab077c2486defe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storageDatas:
+  - type: 1
+    defaultAmount:
+      number: 100
+      exponent: 0
+    defaultUnitsPerObject: 0
+  - type: 2
+    defaultAmount:
+      number: 100
+      exponent: 0
+    defaultUnitsPerObject: 0
+  draggable: {fileID: 7104786814292001268}

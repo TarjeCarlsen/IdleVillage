@@ -37,10 +37,13 @@ private void StartGrowing(){
 
     public void FinishedGrowingFromAnim(){
     plant_animator.SetBool("plantGrown", true);
-        print("finished!");
+    plantGrown = true;
     }
 
     public void OnPlantClicked(){
-        // MoneyManager.
+        if(!plantGrown) return;
+        StartGrowing();
+        BigNumber bonus = UpgradeManager.Instance.GetProductionPower(CurrencyTypes.wheat);
+        MoneyManager.Instance.AddCurrency(CurrencyTypes.wheat, bonus);
     }
 }
