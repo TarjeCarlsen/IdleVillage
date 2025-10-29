@@ -20,7 +20,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] private HouseManager houseManager;
     public Action OnBought;
     private void HideLevel() => level_txt.text = "";
-    private int level;
+    public int level;
     private int maxLevel;
     private bool isInitialized = false;
     private Camera uiCamera;
