@@ -173,11 +173,13 @@ MonoBehaviour:
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
   sellColor: {r: 1, g: 0.65, b: 0, a: 1}
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
-  enableColorsOnDrag: 0
+  enableColorsOnDrag: 1
   staticSnapBack: 0
   destroyOutsideDropzone: 1
+  ignoreOverlaps: 1
   gameObjectToDestroy: {fileID: 9009609496739046089}
   enableDragOnSpawn: 1
+  draggableEnabled: 1
   hasBeenPlaced: 0
 --- !u!114 &7157051622271951141
 MonoBehaviour:
@@ -192,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropzoneTag: DropZoneBakerFurnace
+  draggable: {fileID: 2765241388258800823}
 --- !u!114 &-1057283486081414357
 MonoBehaviour:
   m_ObjectHideFlags: 0

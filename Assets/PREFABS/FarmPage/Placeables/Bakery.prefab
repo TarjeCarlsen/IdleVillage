@@ -160,6 +160,8 @@ MonoBehaviour:
   canvasToShow: {fileID: 4028840246139701790}
   canvasToHide: {fileID: 0}
   disableDraggable: {fileID: 1598173479339259430}
+  canvasToHideTag: FarmingArea
+  canvasToShowTag: 
 --- !u!1 &3240105202440191869
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +300,7 @@ MonoBehaviour:
   enableColorsOnDrag: 1
   staticSnapBack: 0
   destroyOutsideDropzone: 0
+  ignoreOverlaps: 0
   gameObjectToDestroy: {fileID: 0}
   enableDragOnSpawn: 0
   draggableEnabled: 1
@@ -643,6 +646,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3405243805201771469, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3838840248681851014, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -691,6 +698,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612649048460614150, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
+      propertyPath: parentToSpawnUnder
+      value: 
+      objectReference: {fileID: 6255089160699443701}
     - target: {fileID: 5714191527709514533, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -852,6 +863,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cf5a6c561d05c40ba7c8500e803aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &6255089160699443701 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1390174010164475994, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
+  m_PrefabInstance: {fileID: 5009244782639677871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7830982899526097796 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2965995159346403883, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}

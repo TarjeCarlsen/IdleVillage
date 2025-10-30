@@ -134,7 +134,7 @@ private void MakeCurrencyRow(int index)
         {
             AlphabeticNotation value = MoneyManager.Instance.GetCurrency(type);
             AlphabeticNotation max = StorageManager.Instance.GetMaxStorage(type);
-            currencyText_list[index].text = $"{ConvertNumbers.Instance.FormatNumber(value)}{" "} / {" "}{ConvertNumbers.Instance.FormatNumber(max)}";
+            currencyText_list[index].text = $"{value}{" "} / {" "}{max}";
         }
     }
 }

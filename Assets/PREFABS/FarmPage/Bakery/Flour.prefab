@@ -168,16 +168,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragHitBox: {fileID: 2319516094771556481}
   dropZoneTag: DropZoneBakeryBowl
+  useFindTag: 0
+  useGetTagInParent: 1
   objectImage: {fileID: 3224233668354543445}
   draggingColor: {r: 0, g: 1, b: 0, a: 1}
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
   sellColor: {r: 1, g: 0.65, b: 0, a: 1}
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
-  enableColorsOnDrag: 0
+  enableColorsOnDrag: 1
   staticSnapBack: 0
   destroyOutsideDropzone: 1
+  ignoreOverlaps: 1
   gameObjectToDestroy: {fileID: 7516817307261678876}
   enableDragOnSpawn: 1
+  draggableEnabled: 1
   hasBeenPlaced: 0
 --- !u!114 &-4651775937649433329
 MonoBehaviour:
@@ -192,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropzoneTag: DropZoneBakeryBowl
+  draggable: {fileID: 1214863125425899112}
 --- !u!114 &5708988199373001180
 MonoBehaviour:
   m_ObjectHideFlags: 0

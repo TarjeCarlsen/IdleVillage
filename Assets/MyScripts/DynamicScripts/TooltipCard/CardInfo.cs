@@ -19,7 +19,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] TMP_Text level_txt;
     [SerializeField] private List<CardInfoContent>  cardInfoContents;
     [SerializeField] private HouseManager houseManager;
-    public Action OnBought;
+    public event Action OnBought;
     private void HideLevel() => level_txt.text = "";
     public int level;
     private int maxLevel;

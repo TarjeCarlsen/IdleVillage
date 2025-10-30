@@ -9,8 +9,8 @@ public class HouseInstance : MonoBehaviour
     // public bool houseCreated;
     // public bool GetHouseCreated()=> houseCreated;
     public HouesTypes GetHouseType() => houseData.houesType;
-    public Action OnNewIdCreated;
-    public Action OnHouseCreated;
+    public event Action OnNewIdCreated;
+    public event Action OnHouseCreated;
 
     // private void Awake(){
     // CreateNewId();

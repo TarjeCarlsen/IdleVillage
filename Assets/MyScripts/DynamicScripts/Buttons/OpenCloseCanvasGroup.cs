@@ -6,6 +6,17 @@ public class OpenCloseCanvasGroup : MonoBehaviour
     [SerializeField] private CanvasGroup canvasToHide;
     [SerializeField] private Draggable disableDraggable;
 
+    [SerializeField] private string canvasToHideTag;
+    [SerializeField] private string canvasToShowTag;
+
+    private void Awake(){
+        if(canvasToHide == null){
+            canvasToHide = GameObject.FindGameObjectWithTag(canvasToHideTag).GetComponent<CanvasGroup>();
+        }
+        if(canvasToShow == null){
+            canvasToShow = GameObject.FindGameObjectWithTag(canvasToShowTag).GetComponent<CanvasGroup>();
+        }
+    }
 
     public void DisableDragging(){
         disableDraggable.draggableEnabled = false;
@@ -24,5 +35,10 @@ public class OpenCloseCanvasGroup : MonoBehaviour
         canvasToHide.interactable = false;
         canvasToHide.blocksRaycasts = false;
 
+    }
+
+    public void ShowAndHideBehind(){
+        ShowCanvas();
+        HideCanvas();
     }
 }

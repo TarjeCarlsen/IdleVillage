@@ -3,15 +3,29 @@ using UnityEngine;
 
 public class CollectObject : MonoBehaviour
 {
+
     private RectTransform dropZoneHitbox;
     [SerializeField] private string dropzoneTag;
-    private Draggable draggable;
+   [SerializeField] private Draggable draggable;
     public event Action OnCollect;
 
     private void Awake()
     {
-        draggable = GetComponent<Draggable>();
-        dropZoneHitbox = GameObject.FindGameObjectWithTag(dropzoneTag).GetComponent<RectTransform>();;
+    Transform current = transform.parent; // get the parent of the object
+    while (current != null)
+    {
+        if (current != transform) // skip self
+        {
+            dropZoneHitbox = current.GetComponent<RectTransform>();
+            break;
+        }
+        current = current.parent;
+    }
+
+    if (dropZoneHitbox == null)
+    {
+        Debug.LogWarning("No parent RectTransform found", this);
+    }
     }
 
     private void OnEnable()

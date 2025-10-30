@@ -6,7 +6,7 @@ public class FlourHandler : MonoBehaviour
     private BakeryManager bakeryManager;
 
     private void Start(){
-        bakeryManager = GameObject.FindGameObjectWithTag("BakeryManager").GetComponent<BakeryManager>();
+         bakeryManager = GetComponentInParent<BakeryManager>();
     }
     private void OnEnable(){
         collectObject.OnCollect += Collect; 

@@ -13,7 +13,7 @@ public class ProgressBarHandler : MonoBehaviour
     [SerializeField] private float duration = 5f;
 
     private Coroutine progressCoroutine;
-    private Action onComplete;
+    private event Action onComplete;
 
 
 /// <To Call function>

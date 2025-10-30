@@ -33,13 +33,11 @@ public class FurnaceHandler : MonoBehaviour
 
 
     private IEnumerator FurnaceCooking(){
-        print("coroutine started");
         progressBarHandler.StartProgress(UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.furnaceBakingTime));
         bakeryManager.StartCookingAnim();
         breadDone = false;
         // cookingAnimator.SetBool("ChimneyOn",true);
         yield return new WaitForSeconds(UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.furnaceBakingTime));
-        print("stopcooking");
         breadDone = true;
             bakeryManager.StopCookingAnim();
             // CollectFromFurnace();

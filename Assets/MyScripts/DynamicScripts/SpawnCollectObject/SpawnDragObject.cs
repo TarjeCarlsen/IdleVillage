@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class SpawnDragObject : MonoBehaviour
 {
+    [Header("Set the parent to be the dropzone of where the spawned item will be collected. or else it wont get collected")]
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private RectTransform creationHitBox;
     [SerializeField] private RectTransform parentToSpawnUnder;
@@ -12,7 +13,19 @@ public class SpawnDragObject : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && IsPointerOverUIHitbox())
+    if (Input.GetMouseButtonDown(0) && IsPointerOverUIHitbox())
+    {
+        GameObject selected = EventSystem.current.currentSelectedGameObject;
+        if (selected != null && selected.transform.IsChildOf(transform))
+        {
+            SpawnObjectOnMouse();
+        }
+    }
+    }
+
+    public void SpawnObject(){
+                GameObject selected = EventSystem.current.currentSelectedGameObject;
+                if (selected != null && selected.transform.IsChildOf(transform))
         {
             SpawnObjectOnMouse();
         }

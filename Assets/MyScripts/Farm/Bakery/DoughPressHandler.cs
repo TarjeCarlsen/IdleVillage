@@ -10,15 +10,19 @@ public class DoughPressHandler : MonoBehaviour
     
 
     private void Start(){
-        StartGenerating();
+        if(bakeryManager.flourCounter > 0){
+            StartGenerating();
+        }
     }
     private void StartGenerating(){
         if(doughPressRoutine == null){
             doughPressRoutine = StartCoroutine(StartPressingDough());
+            bakeryManager.StartPressAnim();
         }
     }   
     private void StopGenerating(){
         if(doughPressRoutine != null){
+             bakeryManager.StopPressAnim();
             StopCoroutine(doughPressRoutine);
             doughPressRoutine = null;
         }
@@ -32,6 +36,7 @@ public class DoughPressHandler : MonoBehaviour
 
     private  IEnumerator StartPressingDough(){
         while(true){
+
         yield return new WaitForSeconds(UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.doughPressCycleTime));
              bakeryManager.AddFlourToDough();
              if(bakeryManager.flourCounter <= 0){

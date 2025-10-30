@@ -20,8 +20,9 @@ public class BakeryManager : MonoBehaviour
 
     [SerializeField] private Animator doughToCrateAnim;
     [SerializeField] private Animator cookingAnimator;
+    [SerializeField] private Animator doughPressAnimator;
 
-    public Action OnFlourDropped;
+    public event Action OnFlourDropped;
 
     public AlphabeticNotation flourCounter;
     private AlphabeticNotation flourToDoughCounter;
@@ -70,6 +71,7 @@ public void AddFlourToDough()
 
     public void AddDoughToFurnace()
     {
+        // Debug.Log($"{name} animator id: {cookingAnimator.GetInstanceID()} on object {cookingAnimator.gameObject.name}");
         if(BreadDone) return;
         AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
         AlphabeticNotation amountToAdd = DoughCalculateAmountLeft(SpecialUpgradeTypes.doughDragAmount);
@@ -142,13 +144,19 @@ public void AddFlourToDough()
 
     }
 
+    public void StartPressAnim(){
+        doughPressAnimator.SetBool("hasFlour", true);
+    }
+    public void StopPressAnim(){
+        doughPressAnimator.SetBool("hasFlour", false);
+    }
+
     public void UpdateUI()
     {
-        print("storage = "+ StorageManager.Instance.GetMaxStorage(CurrencyTypes.money));
-        flourCounter_txt.text = ConvertNumbers.Instance.FormatNumber(flourCounter).ToString() + "/" + ConvertNumbers.Instance.FormatNumber(StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour));
-        flourToDoughCounter_txt.text = ConvertNumbers.Instance.FormatNumber(flourToDoughCounter).ToString() + "/" +ConvertNumbers.Instance.FormatNumber(StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap)).ToString();
-        doughInsideFurnace_txt.text = ConvertNumbers.Instance.FormatNumber(doughInsideFurCounter).ToString() + "/" + ConvertNumbers.Instance.FormatNumber(StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap));
-        breadDone_txt.text = ConvertNumbers.Instance.FormatNumber(breadDoneAmount).ToString();
+        flourCounter_txt.text = flourCounter.ToString() + "/" + StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour);
+        flourToDoughCounter_txt.text = flourToDoughCounter.ToString() + "/" +StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap).ToString();
+        doughInsideFurnace_txt.text = doughInsideFurCounter.ToString() + "/" + StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
+        breadDone_txt.text = breadDoneAmount.ToString();
 
         if(MoneyManager.Instance.GetCurrency(CurrencyTypes.flour) > new AlphabeticNotation(0.5,0)){
             flourFullImage.SetActive(true);
