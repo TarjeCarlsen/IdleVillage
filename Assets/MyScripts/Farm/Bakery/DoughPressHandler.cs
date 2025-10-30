@@ -14,13 +14,11 @@ public class DoughPressHandler : MonoBehaviour
     }
     private void StartGenerating(){
         if(doughPressRoutine == null){
-            print("starting coroutine");
             doughPressRoutine = StartCoroutine(StartPressingDough());
         }
     }   
     private void StopGenerating(){
         if(doughPressRoutine != null){
-            print("stopping coroutine");
             StopCoroutine(doughPressRoutine);
             doughPressRoutine = null;
         }

@@ -1106,6 +1106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5223869770597326920}
   - component: {fileID: 519344872387741250}
+  - component: {fileID: 622894690186997419}
   m_Layer: 5
   m_Name: WideCard
   m_TagString: Untagged
@@ -1162,11 +1163,21 @@ MonoBehaviour:
     price_img: {fileID: 8075360337249934053}
     types: 0
   houseManager: {fileID: 0}
-  cardPositionPlaceholder: {fileID: 0}
-  staticPositionParent: {fileID: 0}
-  originalParent: {fileID: 0}
-  reparentedAnchoredPosition: {x: 0, y: 0}
-  reparrentCard: 0
+  level: 0
+--- !u!114 &622894690186997419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4965712932255779968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c860b40c7b001042aa4691001cb7c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagForWhereToCenter: FarmingArea
+  anchoredPosition: {x: 315, y: 125}
 --- !u!1 &5393540358278955839
 GameObject:
   m_ObjectHideFlags: 0

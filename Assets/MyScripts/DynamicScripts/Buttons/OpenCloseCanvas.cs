@@ -23,7 +23,7 @@ public class OpenCloseCanvas : MonoBehaviour
     }
 
 
-    private void ShowCanvas(){
+    public void ShowCanvas(){
         if(canvasToShow == null) return;
         canvasToShow.gameObject.SetActive(true);
         canvasToShow.enabled = true;

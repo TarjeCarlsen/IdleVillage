@@ -21,6 +21,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
    
    [SerializeField] private GameObject gameObjectToDestroy;
     [SerializeField] private bool enableDragOnSpawn = false;
+    [SerializeField] public bool draggableEnabled = true;
     private bool isBeingDraggedOnSpawn = false;
     private Vector3 startPosition;
     public Action OnDragging;
@@ -51,11 +52,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(!draggableEnabled) return;
         startPosition = transform.position;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(!draggableEnabled) return;
+        // if (!RectTransformUtility.RectangleContainsScreenPoint(dragHitBox, eventData.position, eventData.pressEventCamera))
+        // return; // Ignore drags outside the hitbox
+
         OnDragging?.Invoke();
         if(!isPositionValid() && enableColorsOnDrag){
             objectImage.color = overlapColor;
@@ -67,6 +73,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!draggableEnabled) return;
         OnStopDragging?.Invoke();
 
         if(enableColorsOnDrag) objectImage.color = originalColor;

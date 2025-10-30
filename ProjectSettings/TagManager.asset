@@ -11,6 +11,7 @@ TagManager:
   - DropZoneBakerFurnace
   - FlourObject
   - BakeryManager
+  - FarmingArea
   layers:
   - Default
   - TransparentFX
