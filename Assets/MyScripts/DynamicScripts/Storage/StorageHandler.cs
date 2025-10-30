@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Xml;
+using LargeNumbers;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -11,8 +12,8 @@ public class StorageHandler : MonoBehaviour
     [System.Serializable]
     public class StorageData{
         public CurrencyTypes type;
-        public BigNumber defaultAmount;
-        public int defaultUnitsPerObject;
+        public AlphabeticNotation defaultAmount;
+        public AlphabeticNotation defaultUnitsPerObject;
     }
 
 private void Awake(){

@@ -4,6 +4,8 @@ using System.Numerics;
 using Unity.Mathematics;
 using UnityEngine;
 using System;
+using LargeNumbers;
+using LargeNumbers.Example;
 public class HelperFunctions : MonoBehaviour
 {
 
@@ -17,14 +19,14 @@ public class HelperFunctions : MonoBehaviour
         Instance = this;
     }
 
-    public BigNumber GetLeftover(BigNumber amount, BigNumber currentlyInStorage){ // returns leftover so that values dont reach minus values
-        BigNumber leftOver = 0;
-        leftOver = BigNumber.Min(amount, currentlyInStorage);    
+    public AlphabeticNotation GetLeftover(AlphabeticNotation amount, AlphabeticNotation currentlyInStorage){ // returns leftover so that values dont reach minus values
+        AlphabeticNotation leftOver = new LargeNumber(0);
+        leftOver = AlphabeticNotationUtils.Min(amount, currentlyInStorage);    
         return leftOver;
     }
 
-    public BigNumber GetMaxPossible(BigNumber amount, BigNumber maxStorage){ // returns max to add without going over storage cap
-        return BigNumber.Min(amount, maxStorage);
+    public AlphabeticNotation GetMaxPossible(AlphabeticNotation amount, AlphabeticNotation maxStorage){ // returns max to add without going over storage cap
+        return AlphabeticNotationUtils.Min(amount, maxStorage);
     }
 
 //Generates a unique id for objects. Send it the object name to get "name" + uniqueid as the new unique id
@@ -89,4 +91,5 @@ public float ConvertTimeToSeconds(string timeString)
 
     return 0f; // fallback if input is invalid
 }
+
 }

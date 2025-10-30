@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using LargeNumbers;
 
 
 public enum TimeUpgradeTypes
@@ -35,13 +35,13 @@ public class UpgradeManager : MonoBehaviour
 {
     public static UpgradeManager Instance { get; private set; }
 
-    public Dictionary<CurrencyTypes, BigNumber> productionPower;
-    public Dictionary<CurrencyTypes, BigNumber> storagePower;
-    public Dictionary<SpecialUpgradeTypes, BigNumber> specialProductionPower;
+    public Dictionary<CurrencyTypes, AlphabeticNotation> productionPower;
+    public Dictionary<CurrencyTypes, AlphabeticNotation> storagePower;
+    public Dictionary<SpecialUpgradeTypes, AlphabeticNotation> specialProductionPower;
     public Dictionary<TimeUpgradeTypes, float> upgradeTime;
-    [SerializeField] private BigNumber defaultProductionPower = 1;
-    [SerializeField] private BigNumber defaultSpecialProductionPower = 1;
-    [SerializeField] private BigNumber defaultStoragePower = 100;
+    [SerializeField] private AlphabeticNotation defaultProductionPower = new AlphabeticNotation(1);
+    [SerializeField] private AlphabeticNotation defaultSpecialProductionPower = new AlphabeticNotation(1);
+    [SerializeField] private AlphabeticNotation defaultStoragePower = new AlphabeticNotation(100);
     [SerializeField] private float defaultTimePower = 2;
 
 
@@ -56,8 +56,8 @@ public class UpgradeManager : MonoBehaviour
 
 
     private void InitializePowers(){
-        productionPower = new Dictionary<CurrencyTypes, BigNumber>();
-        storagePower = new Dictionary<CurrencyTypes, BigNumber>();
+        productionPower = new Dictionary<CurrencyTypes, AlphabeticNotation>();
+        storagePower = new Dictionary<CurrencyTypes, AlphabeticNotation>();
         foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
             productionPower[type] = defaultProductionPower;
             storagePower[type] = defaultStoragePower;
@@ -65,7 +65,7 @@ public class UpgradeManager : MonoBehaviour
     }
 
     private void InitializeSpecialPowers(){
-        specialProductionPower = new Dictionary<SpecialUpgradeTypes, BigNumber>();
+        specialProductionPower = new Dictionary<SpecialUpgradeTypes, AlphabeticNotation>();
         foreach(SpecialUpgradeTypes type in Enum.GetValues(typeof(SpecialUpgradeTypes))){
             specialProductionPower[type] = defaultSpecialProductionPower;
         }
@@ -81,35 +81,35 @@ public class UpgradeManager : MonoBehaviour
 
 
     // ------------------------ STORAGE UPGRADE TYPES --------------------- //
-    public BigNumber GetProductionPower(CurrencyTypes type) => productionPower[type];
-    public BigNumber GetStoragePower(CurrencyTypes type) => storagePower[type];
+    public AlphabeticNotation GetProductionPower(CurrencyTypes type) => productionPower[type];
+    public AlphabeticNotation GetStoragePower(CurrencyTypes type) => storagePower[type];
 
     // ------------------------ POWER UPGRADE TYPES --------------------- //
-    public void AddPowerFlat(CurrencyTypes type, BigNumber amount) => productionPower[type] += amount;
-    public void AddPowerMulti(CurrencyTypes type, BigNumber multiplier)
+    public void AddPowerFlat(CurrencyTypes type, AlphabeticNotation amount) => productionPower[type] += amount;
+    public void AddPowerMulti(CurrencyTypes type, AlphabeticNotation multiplier)
     {
-        BigNumber result = (BigNumber)productionPower[type] * multiplier;
+        AlphabeticNotation result = (AlphabeticNotation)productionPower[type] * multiplier;
         productionPower[type] = result;
     }
-    public void AddStorageAmountFlat(CurrencyTypes type, BigNumber amount)
+    public void AddStorageAmountFlat(CurrencyTypes type, AlphabeticNotation amount)
     {
         storagePower[type] += amount;
         StorageManager.Instance.AddStorageAmount(type, amount);
     }
-    public void AddStorageAmountMulti(CurrencyTypes type, BigNumber multiplier)
+    public void AddStorageAmountMulti(CurrencyTypes type, AlphabeticNotation multiplier)
     {
-        BigNumber result = (BigNumber)storagePower[type] * multiplier;
+        AlphabeticNotation result = (AlphabeticNotation)storagePower[type] * multiplier;
         storagePower[type] = result;
         StorageManager.Instance.AddStorageAmount(type, storagePower[type]);
     }
     // ------------------------ SPECIAL UPGRADE TYPES --------------------- //
-     public BigNumber GetSpecialProductionAmount(SpecialUpgradeTypes type) => specialProductionPower[type];
+     public AlphabeticNotation GetSpecialProductionAmount(SpecialUpgradeTypes type) => specialProductionPower[type];
 
-    public void AddSpecialPowerFlat(SpecialUpgradeTypes type, BigNumber amount) => specialProductionPower[type] += amount;
+    public void AddSpecialPowerFlat(SpecialUpgradeTypes type, AlphabeticNotation amount) => specialProductionPower[type] += amount;
 
     public void AddSpecialPowerMulti(SpecialUpgradeTypes type, double multiplier)
     {
-        BigNumber result = specialProductionPower[type] * multiplier;
+        AlphabeticNotation result = specialProductionPower[type] * multiplier;
         specialProductionPower[type] = result;
     }
     // ------------------------ TIME UPGRADE TYPES --------------------- //
@@ -177,13 +177,13 @@ public class UpgradeManager : MonoBehaviour
         foreach (var entry in data.productionData)
         {
             if (Enum.TryParse(entry.type, out CurrencyTypes type))
-                productionPower[type] = BigNumber.Parse(entry.amount);
+                productionPower[type] = new AlphabeticNotation(Double.Parse(entry.amount));
         }
 
         foreach (var entry in data.storageData)
         {
             if (Enum.TryParse(entry.type, out CurrencyTypes type))
-                storagePower[type] = BigNumber.Parse(entry.amount);
+                storagePower[type] = new AlphabeticNotation(Double.Parse(entry.amount));
         }
         if (data.timeData != null)
         {

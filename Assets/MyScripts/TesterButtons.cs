@@ -1,15 +1,35 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using LargeNumbers;
+using System;
 
 public class TesterButtons : MonoBehaviour
 {
 
     [SerializeField] private List<TESTERBUTTONDATA> buttonData;
 
+
+
+
+//testing largenumbers
+    // private void Start(){
+    //     LargeNumber testingLargeNumber = testLargeValue;
+    //     AlphabeticNotation testingAlphabetic = testAlphaValue;
+
+
+    //     string myLargeString = testingLargeNumber.ToString();
+    //     string myAlphaString = testAlphaValue.ToString();
+
+
+
+    //     LargeNumber largeBack =new LargeNumber(Double.Parse(myLargeString));
+    //     AlphabeticNotation alphaBack = new AlphabeticNotation(double.Parse(myAlphaString));
+
+    // }
+
     [System.Serializable]
     public class TESTERBUTTONDATA{
-        public BigNumber amount;
+        public LargeNumbers.AlphabeticNotation amount;
         public CurrencyTypes currencyType;
     }
 

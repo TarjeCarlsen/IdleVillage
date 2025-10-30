@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using LargeNumbers;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -71,7 +72,7 @@ public void Init()
 
     public bool CanAfford(){
         foreach(CardInfoContent price in cardInfoContents){
-            if (BigNumber.Parse(price.price_text.text) > MoneyManager.Instance.GetCurrency(price.types)){
+            if (Double.Parse(price.price_text.text) > MoneyManager.Instance.GetCurrency(price.types)){
                 return false;
             }
         }
@@ -84,7 +85,7 @@ public void Init()
         }
         if(CanAfford()){
             foreach(CardInfoContent price in cardInfoContents){
-                MoneyManager.Instance.SubtractCurrency(price.types, BigNumber.Parse(price.price_text.text));
+                MoneyManager.Instance.SubtractCurrency(price.types, new AlphabeticNotation(Double.Parse(price.price_text.text)));
             }
             if(cardData.useLevels)level++;
             CalculateNewPrice();
@@ -98,7 +99,7 @@ public void Init()
     private void CalculateNewPrice(){
         for (int i = 0; i < cardInfoContents.Count; i++)
         {
-            BigNumber result = double.Parse(cardInfoContents[i].price_text.text) * cardData.cardDataInfo[i].priceMultiplier;
+            AlphabeticNotation result = new AlphabeticNotation(double.Parse(cardInfoContents[i].price_text.text) * cardData.cardDataInfo[i].priceMultiplier);
             cardInfoContents[i].price_text.text = result.ToString();
         }
     }

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using LargeNumbers;
 public class PlantGrow : MonoBehaviour
 {
 
@@ -43,7 +43,7 @@ private void StartGrowing(){
     public void OnPlantClicked(){
         if(!plantGrown) return;
         StartGrowing();
-        BigNumber bonus = UpgradeManager.Instance.GetProductionPower(CurrencyTypes.wheat);
+        AlphabeticNotation bonus = UpgradeManager.Instance.GetProductionPower(CurrencyTypes.wheat);
         MoneyManager.Instance.AddCurrency(CurrencyTypes.wheat, bonus);
     }
 }

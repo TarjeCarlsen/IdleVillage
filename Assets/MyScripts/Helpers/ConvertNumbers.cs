@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 public class ConvertNumbers : MonoBehaviour
 {
+    //UNUUSED DELETE
     public static ConvertNumbers Instance { get; private set; }
 
     private static readonly string[] suffixes =

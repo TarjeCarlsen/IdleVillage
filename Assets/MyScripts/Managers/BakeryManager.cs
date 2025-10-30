@@ -3,6 +3,8 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using LargeNumbers;
+using LargeNumbers.Example;
 
 public class BakeryManager : MonoBehaviour
 {
@@ -18,21 +20,21 @@ public class BakeryManager : MonoBehaviour
     [SerializeField] private Animator doughToCrateAnim;
     [SerializeField] private Animator cookingAnimator;
 
-    private BigNumber flourCounter;
-    private BigNumber flourToDoughCounter;
-    public BigNumber doughInsideFurCounter;
+    private AlphabeticNotation flourCounter;
+    private AlphabeticNotation flourToDoughCounter;
+    public AlphabeticNotation doughInsideFurCounter;
 
     private bool BreadDone;
-    private BigNumber breadDoneAmount;
-    public void SetBreadDoneAmount(BigNumber amount) => breadDoneAmount = amount;
+    private AlphabeticNotation breadDoneAmount;
+    public void SetBreadDoneAmount(AlphabeticNotation amount) => breadDoneAmount = amount;
     private void Start(){
         UpdateUI();
     }
     public void AddFlourToBowl()
     {
-        BigNumber maxStorage = StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour);
-        BigNumber amountToAdd = CalculateAmountLeft(CurrencyTypes.flour, SpecialUpgradeTypes.flourDragAmount);
-        if (BigNumber.CompareWhole(flourCounter + amountToAdd, maxStorage) > 0) return;
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour);
+        AlphabeticNotation amountToAdd = CalculateAmountLeft(CurrencyTypes.flour, SpecialUpgradeTypes.flourDragAmount);
+        if (flourCounter + amountToAdd > maxStorage) return;
         if (amountToAdd > 0)
         {
             flourCounter += amountToAdd;
@@ -43,8 +45,8 @@ public class BakeryManager : MonoBehaviour
 
 public void AddFlourToDough()
 {
-    BigNumber maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
-    BigNumber amountToAdd = BowlCalculateAmountLeft(SpecialUpgradeTypes.flourToDoughClickPower);
+    AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
+    AlphabeticNotation amountToAdd = BowlCalculateAmountLeft(SpecialUpgradeTypes.flourToDoughClickPower);
 
     if (amountToAdd <= 0)
         return;
@@ -52,11 +54,11 @@ public void AddFlourToDough()
     flourToDoughCounter += amountToAdd;
     flourCounter -= amountToAdd;
 
-    if (BigNumber.CompareWhole(flourToDoughCounter,maxStorage) >= 0)
+    if (flourToDoughCounter >= maxStorage)
     {
-        MoneyManager.Instance.AddCurrency(CurrencyTypes.dough, 1);
+        MoneyManager.Instance.AddCurrency(CurrencyTypes.dough, new AlphabeticNotation(1));
         doughToCrateAnim.Play("PlusOneDough");
-        flourToDoughCounter = 0;
+        flourToDoughCounter = new AlphabeticNotation(0);
     }
 
     UpdateUI();
@@ -65,9 +67,9 @@ public void AddFlourToDough()
     public void AddDoughToFurnace()
     {
         if(BreadDone) return;
-        BigNumber maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
-        BigNumber amountToAdd = DoughCalculateAmountLeft(SpecialUpgradeTypes.doughDragAmount);
-        if (BigNumber.CompareWhole(doughInsideFurCounter + amountToAdd, maxStorage) > 0) return;
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
+        AlphabeticNotation amountToAdd = DoughCalculateAmountLeft(SpecialUpgradeTypes.doughDragAmount);
+        if (doughInsideFurCounter + amountToAdd > maxStorage) return;
         if (amountToAdd > 0)
         {
             doughInsideFurCounter += amountToAdd;
@@ -77,41 +79,41 @@ public void AddFlourToDough()
         }
     }
 
-    private BigNumber CalculateAmountLeft(CurrencyTypes type, SpecialUpgradeTypes specialType)
+    private AlphabeticNotation CalculateAmountLeft(CurrencyTypes type, SpecialUpgradeTypes specialType)
     {
-        BigNumber maxStorage = StorageManager.Instance.GetMaxStorage(type);
-        BigNumber dragAmount = HelperFunctions.Instance.GetLeftover(
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxStorage(type);
+        AlphabeticNotation dragAmount = HelperFunctions.Instance.GetLeftover(
             UpgradeManager.Instance.GetSpecialProductionAmount(specialType),
             MoneyManager.Instance.GetCurrency(type)
         );
-        BigNumber spaceLeft = maxStorage - flourCounter;
-        BigNumber amountToAdd = BigNumber.Min(dragAmount, spaceLeft);
+        AlphabeticNotation spaceLeft = maxStorage - flourCounter;
+        AlphabeticNotation amountToAdd = AlphabeticNotationUtils.Min(dragAmount, spaceLeft);
 
         return amountToAdd;
     }
 
-    private BigNumber BowlCalculateAmountLeft(SpecialUpgradeTypes specialType)
+    private AlphabeticNotation BowlCalculateAmountLeft(SpecialUpgradeTypes specialType)
     {
-        BigNumber maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
-        BigNumber clickAmount = HelperFunctions.Instance.GetLeftover(
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
+        AlphabeticNotation clickAmount = HelperFunctions.Instance.GetLeftover(
             UpgradeManager.Instance.GetSpecialProductionAmount(specialType),
             flourCounter
         );
-        BigNumber spaceLeft = maxStorage - flourToDoughCounter;
-        BigNumber amountToAdd = BigNumber.Min(clickAmount, spaceLeft);
+        AlphabeticNotation spaceLeft = maxStorage - flourToDoughCounter;
+        AlphabeticNotation amountToAdd = AlphabeticNotationUtils.Min(clickAmount, spaceLeft);
         return amountToAdd;
     }
 
-    private BigNumber DoughCalculateAmountLeft(SpecialUpgradeTypes specialtype)
+    private AlphabeticNotation DoughCalculateAmountLeft(SpecialUpgradeTypes specialtype)
     {
-        BigNumber maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
-        BigNumber doughDragAmount = HelperFunctions.Instance.GetLeftover(
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
+        AlphabeticNotation doughDragAmount = HelperFunctions.Instance.GetLeftover(
             UpgradeManager.Instance.GetSpecialProductionAmount(specialtype),
             MoneyManager.Instance.GetCurrency(CurrencyTypes.dough)
         );
 
-        BigNumber spaceLeft = maxStorage - doughInsideFurCounter;
-        BigNumber amountToAdd = BigNumber.Min(doughDragAmount, spaceLeft);
+        AlphabeticNotation spaceLeft = maxStorage - doughInsideFurCounter;
+        AlphabeticNotation amountToAdd = AlphabeticNotationUtils.Min(doughDragAmount, spaceLeft);
 
         return amountToAdd;
 
@@ -144,7 +146,7 @@ public void AddFlourToDough()
         doughInsideFurnace_txt.text = ConvertNumbers.Instance.FormatNumber(doughInsideFurCounter).ToString() + "/" + ConvertNumbers.Instance.FormatNumber(StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap));
         breadDone_txt.text = ConvertNumbers.Instance.FormatNumber(breadDoneAmount).ToString();
 
-        if(BigNumber.CompareWhole(MoneyManager.Instance.GetCurrency(CurrencyTypes.flour), new BigNumber(0.5,0)) >0){
+        if(MoneyManager.Instance.GetCurrency(CurrencyTypes.flour) > new AlphabeticNotation(0.5,0)){
             flourFullImage.SetActive(true);
             flourEmptyImage.SetActive(false);
 

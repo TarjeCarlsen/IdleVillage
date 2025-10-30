@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using LargeNumbers;
 public enum UpgradeTypes{
     UnlockArea,
     AddPowerFlat,
@@ -16,8 +16,8 @@ public class UpgradeEffect : ScriptableObject
 {
     public UpgradeTypes upgradeTypes;
     public CurrencyTypes currencyTypes;
-    public BigNumber flat;
-    public float multi;
+    public AlphabeticNotation flat;
+    public AlphabeticNotation multi;
 
     public void Apply(GameObject target = null){
 

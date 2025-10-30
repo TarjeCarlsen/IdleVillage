@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-
+using LargeNumbers;
 
 public enum SpecialStorageType{
     furnaceStorageCap,
@@ -13,7 +13,7 @@ public enum SpecialStorageType{
 [System.Serializable]
 public struct TESTINGSTORAGE{
     public CurrencyTypes currencyType;
-    public BigNumber testNumber;
+    public AlphabeticNotation testNumber;
 }
 
 public class StorageManager : MonoBehaviour
@@ -23,12 +23,12 @@ public class StorageManager : MonoBehaviour
 
     public event Action <CurrencyTypes> OnStorageChange;
     [SerializeField] private List<TESTINGSTORAGE> SpecificStartStorage_TESTING;
-    public Dictionary<CurrencyTypes, BigNumber> storageAmount = new();
-    public Dictionary<CurrencyTypes, BigNumber> storageUnit = new();
-    public Dictionary<SpecialStorageType, BigNumber> specialStorageAmount = new();
-    [SerializeField] private BigNumber defaultStartStorageAmount;
-    [SerializeField] private BigNumber defaultStartStorageUnits;
-    [SerializeField] private BigNumber defaultSpecialStorageAmount;
+    public Dictionary<CurrencyTypes, AlphabeticNotation> storageAmount = new();
+    public Dictionary<CurrencyTypes, AlphabeticNotation> storageUnit = new();
+    public Dictionary<SpecialStorageType, AlphabeticNotation> specialStorageAmount = new();
+    [SerializeField] private AlphabeticNotation defaultStartStorageAmount;
+    [SerializeField] private AlphabeticNotation defaultStartStorageUnits;
+    [SerializeField] private AlphabeticNotation defaultSpecialStorageAmount;
 
 
     private void Awake()
@@ -50,7 +50,7 @@ public class StorageManager : MonoBehaviour
         {
             var testEntry = SpecificStartStorage_TESTING.Find(e => e.currencyType == type);
 
-            if (testEntry.testNumber.number != 0){
+            if (testEntry.testNumber != 0){
 
                 storageAmount[type] = testEntry.testNumber;
                 storageUnit[type] = defaultStartStorageUnits;
@@ -71,35 +71,35 @@ public class StorageManager : MonoBehaviour
 
     public void UpdateStorage(){
         foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
-            AddStorageAmount(type, 0);
-            AddStorageUnits(type, 0);
+            AddStorageAmount(type,new AlphabeticNotation(0));
+            AddStorageUnits(type, new AlphabeticNotation(0));
         }
     }
 
-    public BigNumber GetMaxStorage (CurrencyTypes type) => storageAmount[type] * storageUnit[type];
+    public AlphabeticNotation GetMaxStorage (CurrencyTypes type) => storageAmount[type] * storageUnit[type];
 
-    public BigNumber GetStorageUnits(CurrencyTypes type) => storageUnit[type];
+    public AlphabeticNotation GetStorageUnits(CurrencyTypes type) => storageUnit[type];
 
-    public void AddStorageAmount(CurrencyTypes type, BigNumber amount){
+    public void AddStorageAmount(CurrencyTypes type, AlphabeticNotation amount){
         storageAmount[type] += amount;
         OnStorageChange?.Invoke(type);
     }
 
-    public void AddStorageUnits(CurrencyTypes type, BigNumber amount){
+    public void AddStorageUnits(CurrencyTypes type, AlphabeticNotation amount){
         storageUnit[type] += amount;
         OnStorageChange?.Invoke(type);
     }
 
-    public void SetStorageUnits(CurrencyTypes type, BigNumber amount){
+    public void SetStorageUnits(CurrencyTypes type, AlphabeticNotation amount){
         storageUnit[type] = amount;
         OnStorageChange?.Invoke(type);
     }
 
-    public BigNumber GetMaxSpecialStorage(SpecialStorageType type) => specialStorageAmount[type];
-    public void AddSpecialStorageAmount(SpecialStorageType type, BigNumber amount){
+    public AlphabeticNotation GetMaxSpecialStorage(SpecialStorageType type) => specialStorageAmount[type];
+    public void AddSpecialStorageAmount(SpecialStorageType type, AlphabeticNotation amount){
         specialStorageAmount[type] += amount;
     }
-    public void SetSpecialStorageAmount(SpecialStorageType type,BigNumber amount) => specialStorageAmount[type] = amount;
+    public void SetSpecialStorageAmount(SpecialStorageType type,AlphabeticNotation amount) => specialStorageAmount[type] = amount;
 
 
     public void Save(ref StorageManagerSaveData data)
@@ -109,9 +109,9 @@ public class StorageManager : MonoBehaviour
         foreach (var entry in storageAmount)
         {
             CurrencyTypes type = entry.Key;
-            BigNumber amount = entry.Value;
+            AlphabeticNotation amount = entry.Value;
 
-            BigNumber units = storageUnit.ContainsKey(type) ? storageUnit[type] : 0;
+            AlphabeticNotation units = storageUnit.ContainsKey(type) ? storageUnit[type] : new AlphabeticNotation(0);
 
             data.storageData.Add(new StorageDataList
             {
@@ -133,7 +133,7 @@ public class StorageManager : MonoBehaviour
         {
             if (Enum.TryParse(entry.type, out CurrencyTypes type))
             {
-                storageAmount[type] = BigNumber.Parse(entry.amount);
+                storageAmount[type] = new AlphabeticNotation(Double.Parse(entry.amount));
                 storageUnit[type] = entry.units;
                 OnStorageChange?.Invoke(type);
             }
@@ -165,5 +165,5 @@ public struct StorageManagerSaveData
 public struct StorageDataList{
     public string type;
     public string amount;
-    public BigNumber units;
+    public AlphabeticNotation units;
 }

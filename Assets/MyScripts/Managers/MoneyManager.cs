@@ -5,7 +5,7 @@ using NUnit.Framework.Constraints;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
-
+using LargeNumbers;
 
 
 public enum CurrencyTypes{
@@ -25,15 +25,15 @@ public enum CurrencyTypes{
 [System.Serializable]
 public struct TESTINCURRENCIES{
     public CurrencyTypes currencyType;
-    public BigNumber testNumber;
+    public AlphabeticNotation testNumber;
 }
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance {get; private set;}
 
-    public Dictionary<CurrencyTypes, BigNumber> currency;
+    public Dictionary<CurrencyTypes, AlphabeticNotation> currency;
     [SerializeField] private List<TESTINCURRENCIES> SpecificStartValue_TESTING;
-    [SerializeField] private BigNumber defaultStartMoney = 1;
+    [SerializeField] private AlphabeticNotation defaultStartMoney = new AlphabeticNotation(1);
 
     public event Action<CurrencyTypes>OnCurrencyChanged;
 
@@ -54,14 +54,14 @@ public class MoneyManager : MonoBehaviour
 
     private void InitializeCurrencies()
     {
-        currency = new Dictionary<CurrencyTypes, BigNumber>();
+        currency = new Dictionary<CurrencyTypes, AlphabeticNotation>();
 
         foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
         {
             // Find if there’s a test value in the serialized list
             var testEntry = SpecificStartValue_TESTING.Find(e => e.currencyType == type);
 
-            if (testEntry.testNumber.number != 0)
+            if (testEntry.testNumber != 0)
                 currency[type] = testEntry.testNumber;
             else
                 currency[type] = defaultStartMoney;
@@ -69,18 +69,18 @@ public class MoneyManager : MonoBehaviour
     }
 
 
-    public BigNumber GetCurrency(CurrencyTypes type) => currency[type];
+    public AlphabeticNotation GetCurrency(CurrencyTypes type) => currency[type];
     public void UpdateCurrencies(){
             foreach (CurrencyTypes types in Enum.GetValues(typeof(CurrencyTypes)))
         {
-            AddCurrency(types,0);
+            AddCurrency(types,new AlphabeticNotation(0));
         }
     }
 
-    public void AddCurrency(CurrencyTypes type, BigNumber amount){ // --------- NEW
+    public void AddCurrency(CurrencyTypes type, AlphabeticNotation amount){ // --------- NEW
         var current = currency[type];
-        BigNumber maxStorage = StorageManager.Instance.GetMaxStorage(type); // -------- ADD BACK WHEN HAVE STORAGE MANAGER
-        // BigNumber maxStorage = 2000;
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxStorage(type); // -------- ADD BACK WHEN HAVE STORAGE MANAGER
+        // AlphabeticNotation maxStorage = 2000;
         if((currency[type] + amount) > maxStorage){
             currency[type] = maxStorage;
         }else{
@@ -89,7 +89,7 @@ public class MoneyManager : MonoBehaviour
         OnCurrencyChanged?.Invoke(type);
     }
 
-    public void SubtractCurrency(CurrencyTypes type, BigNumber amount){
+    public void SubtractCurrency(CurrencyTypes type, AlphabeticNotation amount){
         currency[type] -= amount;
         OnCurrencyChanged?.Invoke(type);
 
@@ -112,7 +112,7 @@ public class MoneyManager : MonoBehaviour
     {
         foreach(var element in data.currencyData){
             if(Enum.TryParse(element.type, out CurrencyTypes type)){
-                currency[type] = BigNumber.Parse(element.amount);
+                currency[type] =new AlphabeticNotation(Double.Parse(element.amount));
                 OnCurrencyChanged?.Invoke(type);
             }
         }

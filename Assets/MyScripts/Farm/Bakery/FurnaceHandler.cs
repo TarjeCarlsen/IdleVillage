@@ -1,4 +1,5 @@
 using System.Collections;
+using LargeNumbers;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -10,8 +11,8 @@ public class FurnaceHandler : MonoBehaviour
     [SerializeField] private ProgressBarHandler progressBarHandler;
     private Coroutine cookingCoroutine;
     private bool breadDone = false;
-    public BigNumber breadDoneAmount;
-    public BigNumber GetBreadDone() => breadDoneAmount;
+    public AlphabeticNotation breadDoneAmount;
+    public AlphabeticNotation GetBreadDone() => breadDoneAmount;
 
 
     public void StartFurnace(){
@@ -21,7 +22,7 @@ public class FurnaceHandler : MonoBehaviour
     }
     public void CollectFromFurnace(){
         if(breadDone){
-            bakeryManager.SetBreadDoneAmount(0);
+            bakeryManager.SetBreadDoneAmount(new AlphabeticNotation(0));
             MoneyManager.Instance.AddCurrency(CurrencyTypes.bread,breadDoneAmount);
             bakeryManager.HarvestBreadAnim();
             breadDone = false;
@@ -44,7 +45,7 @@ public class FurnaceHandler : MonoBehaviour
             // CollectFromFurnace();
             breadDoneAmount = bakeryManager.doughInsideFurCounter; 
             bakeryManager.SetBreadDoneAmount(breadDoneAmount);
-            bakeryManager.doughInsideFurCounter = 0;
+            bakeryManager.doughInsideFurCounter = new AlphabeticNotation(0);
             bakeryManager.UpdateUI();
             StopCoroutine(cookingCoroutine);
             cookingCoroutine= null;
