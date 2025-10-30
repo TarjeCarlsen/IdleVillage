@@ -9,6 +9,7 @@ using LargeNumbers;
 public enum TimeUpgradeTypes
 {
     wheatPlantGrowTime,
+    doughPressCycleTime,
     furnaceBakingTime,
     schoolChildFarmerTime,
     schoolChildElectricianTime,

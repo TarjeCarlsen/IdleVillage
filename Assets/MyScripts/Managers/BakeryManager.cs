@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using LargeNumbers;
 using LargeNumbers.Example;
+using System;
 
 public class BakeryManager : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public class BakeryManager : MonoBehaviour
     [SerializeField] private Animator doughToCrateAnim;
     [SerializeField] private Animator cookingAnimator;
 
-    private AlphabeticNotation flourCounter;
+    public Action OnFlourDropped;
+
+    public AlphabeticNotation flourCounter;
     private AlphabeticNotation flourToDoughCounter;
     public AlphabeticNotation doughInsideFurCounter;
 
@@ -40,6 +43,7 @@ public class BakeryManager : MonoBehaviour
             flourCounter += amountToAdd;
             MoneyManager.Instance.SubtractCurrency(CurrencyTypes.flour, amountToAdd);
             UpdateUI();
+            OnFlourDropped?.Invoke();
         }
     }
 
