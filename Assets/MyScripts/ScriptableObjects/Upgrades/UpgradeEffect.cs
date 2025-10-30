@@ -2,6 +2,7 @@ using UnityEngine;
 using LargeNumbers;
 public enum UpgradeTypes{
     UnlockArea,
+    SetActivationState,
     AddPowerFlat,
     AddPowerMulti,
 }
@@ -16,8 +17,10 @@ public class UpgradeEffect : ScriptableObject
 {
     public UpgradeTypes upgradeTypes;
     public CurrencyTypes currencyTypes;
+    public ActivationUnlocks activationUnlocks;
     public AlphabeticNotation flat;
     public AlphabeticNotation multi;
+    public bool activationState;
 
     public void Apply(GameObject target = null){
 
@@ -26,6 +29,10 @@ public class UpgradeEffect : ScriptableObject
             // -------- AREA UNLOCKS -------- //
             case UpgradeTypes.UnlockArea:
                 target?.SetActive(true);
+                break;
+            // -------- AREA UNLOCKS -------- //
+            case UpgradeTypes.SetActivationState:
+                UpgradeManager.Instance.SetActivationUnlock(activationUnlocks, activationState);
                 break;
             // -------- POWER UPGRADES -------- //
             case UpgradeTypes.AddPowerFlat:

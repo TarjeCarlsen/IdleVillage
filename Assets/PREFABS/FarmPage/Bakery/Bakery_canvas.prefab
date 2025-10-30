@@ -1008,8 +1008,19 @@ MonoBehaviour:
   flourToDoughCounter_txt: {fileID: 6084988598905539763}
   doughInsideFurnace_txt: {fileID: 4709155989124218682}
   breadDone_txt: {fileID: 4551990348495839905}
-  doughImageObject: {fileID: 2942678979701589248}
-  fillStagesObject: {fileID: 2084669518345356576}
+  bowl: {fileID: 6538811406071561239}
+  doughPress: {fileID: 3307053360428016897}
+  fillStages:
+  - {fileID: 3259694517311480870}
+  - {fileID: 7265593387056298884}
+  - {fileID: 7029880677504354394}
+  - {fileID: 3913544527279946296}
+  - {fileID: 8420597194340818392}
+  - {fileID: 4386009331696547774}
+  - {fileID: 2526227484028577512}
+  - {fileID: 515904160470330478}
+  - {fileID: 1585570814728066440}
+  - {fileID: 4236503899363088605}
   flourFullImage: {fileID: 6876354399581325141}
   flourEmptyImage: {fileID: 5776804641992885364}
   doughToCrateAnim: {fileID: 2023303276842799279}
@@ -1253,7 +1264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2965995159346403883
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1923,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &691697073057248058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3942,7 +3953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6847722866491178901
 RectTransform:
   m_ObjectHideFlags: 0

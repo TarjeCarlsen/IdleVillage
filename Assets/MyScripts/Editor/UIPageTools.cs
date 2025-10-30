@@ -45,11 +45,11 @@ public class UIPageTools
         bool shouldShow = !target.gameObject.activeSelf; // toggle behavior
 
         // Hide all canvases
-        foreach (Canvas c in canvases)
-        {
-            if (c.hideFlags == HideFlags.None)
-                c.gameObject.SetActive(false);
-        }
+foreach (Canvas c in canvases)
+{
+    if (c.hideFlags == HideFlags.None && c.transform.parent == null)
+        c.gameObject.SetActive(false);
+}
 
         // Show the selected one if it was hidden
         if (shouldShow)

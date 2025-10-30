@@ -12,6 +12,7 @@ TagManager:
   - FlourObject
   - BakeryManager
   - FarmingArea
+  - UpgradePage
   layers:
   - Default
   - TransparentFX

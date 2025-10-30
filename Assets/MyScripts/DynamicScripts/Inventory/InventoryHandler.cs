@@ -91,7 +91,6 @@ public void Save(ref InventoryHandlerSaveData data){
     foreach(HouesTypes type in Enum.GetValues(typeof(HouesTypes))){
         int count = houseCounter[type];
         if(count > 0){
-    print("saving inventory");
             data.inventoryDatas.Add(new InventoryData{
                 houseType = type.ToString(),
                 counter_txt = count,

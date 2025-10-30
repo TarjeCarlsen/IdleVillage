@@ -133,7 +133,8 @@ public class StorageManager : MonoBehaviour
         {
             if (Enum.TryParse(entry.type, out CurrencyTypes type))
             {
-                storageAmount[type] = new AlphabeticNotation(Double.Parse(entry.amount));
+                AlphabeticNotation.GetAlphabeticNotationFromString(entry.amount, out var parsed);
+                storageAmount[type] = parsed;
                 storageUnit[type] = entry.units;
                 OnStorageChange?.Invoke(type);
             }

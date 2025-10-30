@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using LargeNumbers;
 using LargeNumbers.Example;
 using System;
+using System.Collections.Generic;
 
 public class BakeryManager : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class BakeryManager : MonoBehaviour
     [SerializeField] private TMP_Text flourToDoughCounter_txt;
     [SerializeField] private TMP_Text doughInsideFurnace_txt;
     [SerializeField] private TMP_Text breadDone_txt;
-    [SerializeField] private GameObject doughImageObject;
-    [SerializeField] private GameObject fillStagesObject;
+    // [SerializeField] private GameObject doughImageObject;
+    // [SerializeField] private GameObject fillStagesObject;
+    [SerializeField] private GameObject bowl;
+    [SerializeField] private GameObject doughPress;
+    [SerializeField] private List<GameObject> fillStages;
     [SerializeField] private GameObject flourFullImage;
     [SerializeField] private GameObject flourEmptyImage;
 
@@ -28,14 +32,26 @@ public class BakeryManager : MonoBehaviour
     private AlphabeticNotation flourToDoughCounter;
     public AlphabeticNotation doughInsideFurCounter;
 
+    private AlphabeticNotation prevCounter;
     private bool BreadDone;
     private AlphabeticNotation breadDoneAmount;
     public void SetBreadDoneAmount(AlphabeticNotation amount) => breadDoneAmount = amount;
+
     private void Start(){
         UpdateUI();
     }
+
+    public void OnEnable(){
+        UpgradeManager.Instance.OnActivationUnlock += ActivateDoughPress;
+    }
+    public void OnDisable(){
+        UpgradeManager.Instance.OnActivationUnlock -= ActivateDoughPress;
+    }
+    
     public void AddFlourToBowl()
     {
+        prevCounter = flourCounter;
+
         AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour);
         AlphabeticNotation amountToAdd = CalculateAmountLeft(CurrencyTypes.flour, SpecialUpgradeTypes.flourDragAmount);
         if (flourCounter + amountToAdd > maxStorage) return;
@@ -50,6 +66,8 @@ public class BakeryManager : MonoBehaviour
 
 public void AddFlourToDough()
 {
+    prevCounter = flourCounter;
+
     AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
     AlphabeticNotation amountToAdd = BowlCalculateAmountLeft(SpecialUpgradeTypes.flourToDoughClickPower);
 
@@ -124,6 +142,36 @@ public void AddFlourToDough()
         return amountToAdd;
 
     }
+
+    private void ActivateDoughPress(){
+        doughPress.SetActive(true);
+        bowl.SetActive(false);
+        UpgradeManager.Instance.OnActivationUnlock -= ActivateDoughPress;
+    }
+
+    private void FillStagesBowl(){
+
+        for (AlphabeticNotation i = prevCounter; i < flourCounter; i=i+1)
+        {
+            int index = (int)i;
+            if (index >= fillStages.Count)
+                break;
+    print($"prevcounter = " + prevCounter);
+            fillStages[index].SetActive(true);
+        }
+    }
+
+private void EmptyStagesBowl()
+{
+    for (AlphabeticNotation i = prevCounter - 1; i >= flourCounter; i = i - 1)
+    {
+        int index = (int)i;
+        if (index < 0 || index >= fillStages.Count)
+            continue;
+
+        fillStages[index].SetActive(false);
+    }
+}
     public void StartCookingAnim(){
         cookingAnimator.SetBool("TurnedOn",true);
        cookingAnimator.SetBool("DoughInside", false);
@@ -166,5 +214,19 @@ public void AddFlourToDough()
             flourEmptyImage.SetActive(true);
             flourFullImage.SetActive(false);
         }
+
+    if(UpgradeManager.Instance.GetActivationUnlock(ActivationUnlocks.doughpress)){
+        ActivateDoughPress();
+    }else{
+
+        if (flourCounter > prevCounter)
+        {
+            FillStagesBowl();
+        }
+        else if (flourCounter < prevCounter)
+        {
+            EmptyStagesBowl();
+        }
+    }
     }
 }

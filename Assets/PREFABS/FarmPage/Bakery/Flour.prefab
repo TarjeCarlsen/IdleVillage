@@ -175,7 +175,7 @@ MonoBehaviour:
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
   sellColor: {r: 1, g: 0.65, b: 0, a: 1}
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
-  enableColorsOnDrag: 1
+  enableColorsOnDrag: 0
   staticSnapBack: 0
   destroyOutsideDropzone: 1
   ignoreOverlaps: 1

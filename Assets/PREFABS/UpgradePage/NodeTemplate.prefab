@@ -256,12 +256,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 1612380344931427037}
-  requirementDatas:
-  - cardFromPreNode: {fileID: 0}
-    requiredLevel: 0
   nodeImage: {fileID: 6781621506746104702}
   buttonObject: {fileID: 5628404336892041453}
   defaultUnlocked: 0
+  requirementDatas:
+  - cardFromPreNode: {fileID: 0}
+    requiredLevel: 0
 --- !u!1 &4156196615547712352
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +504,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 535f703d5d81b854bbc06485c15f6fe8, type: 3}
+    - target: {fileID: 622894690186997419, guid: ef868af08040d0e4f92103440df79d64, type: 3}
+      propertyPath: anchoredPosition.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 622894690186997419, guid: ef868af08040d0e4f92103440df79d64, type: 3}
+      propertyPath: anchoredPosition.y
+      value: 245
+      objectReference: {fileID: 0}
+    - target: {fileID: 622894690186997419, guid: ef868af08040d0e4f92103440df79d64, type: 3}
+      propertyPath: tagForWhereToCenter
+      value: UpgradePage
+      objectReference: {fileID: 0}
     - target: {fileID: 2849814042092761738, guid: ef868af08040d0e4f92103440df79d64, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
