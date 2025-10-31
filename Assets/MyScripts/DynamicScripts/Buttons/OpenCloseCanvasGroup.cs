@@ -10,12 +10,23 @@ public class OpenCloseCanvasGroup : MonoBehaviour
     [SerializeField] private string canvasToShowTag;
 
     private void Awake(){
-        if(canvasToHide == null){
-            canvasToHide = GameObject.FindGameObjectWithTag(canvasToHideTag).GetComponent<CanvasGroup>();
-        }
-        if(canvasToShow == null){
-            canvasToShow = GameObject.FindGameObjectWithTag(canvasToShowTag).GetComponent<CanvasGroup>();
-        }
+    if (canvasToHide == null)
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag(canvasToHideTag);
+        if (obj != null)
+            canvasToHide = obj.GetComponent<CanvasGroup>();
+        else
+            Debug.LogWarning($"[OpenCloseCanvasGroup] No object found with tag '{canvasToHideTag}'", this);
+    }
+
+    if (canvasToShow == null)
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag(canvasToShowTag);
+        if (obj != null)
+            canvasToShow = obj.GetComponent<CanvasGroup>();
+        else
+            Debug.LogWarning($"[OpenCloseCanvasGroup] No object found with tag '{canvasToShowTag}'", this);
+    }
     }
 
     public void DisableDragging(){

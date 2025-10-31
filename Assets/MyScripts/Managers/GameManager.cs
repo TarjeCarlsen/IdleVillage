@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public MoneyManager moneyManager {get; set;}
     public HouseManager houseManager {get; set;}
     public StorageManager storageManager {get; set;}
+    public UpgradeManager upgradeManager{get; set;}
 
 
     private void Awake(){
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void Start(){
         moneyManager = FindFirstObjectByType<MoneyManager>();
+        upgradeManager = FindFirstObjectByType<UpgradeManager>();
         houseManager = FindFirstObjectByType<HouseManager>();
         storageManager = FindFirstObjectByType<StorageManager>();
     }
