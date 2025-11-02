@@ -1180,7 +1180,6 @@ MonoBehaviour:
   amountToGenerate_txt: {fileID: 97192912590538059}
   startGeneratingButton: {fileID: 8963899312629631147}
   stopRequested: 0
-  isRunning: 0
 --- !u!114 &8963899312629631147
 MonoBehaviour:
   m_ObjectHideFlags: 0

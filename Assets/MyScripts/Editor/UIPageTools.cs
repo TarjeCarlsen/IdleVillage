@@ -20,6 +20,11 @@ public class UIPageTools
     {
         ToggleCanvas("UpgradePageCanvas");
     }
+    [MenuItem("UI/Show ShopPage")]
+    static void ShowShopPage()
+    {
+        ToggleCanvas("ShopPageCanvas");
+    }
 
     static void ToggleCanvas(string name)
     {
