@@ -61,13 +61,16 @@ public class MoneyManager : MonoBehaviour
             // Find if there’s a test value in the serialized list
             var testEntry = SpecificStartValue_TESTING.Find(e => e.currencyType == type);
 
-            if (testEntry.testNumber != 0)
+            if (testEntry.testNumber != 0){
+
                 currency[type] = testEntry.testNumber;
+                currency[type] = currency[type] * 1; // normalize the number with multiply by 1
+            }
             else
                 currency[type] = defaultStartMoney;
+                currency[type] = currency[type] * 1; // normalize the number with multiply by 1
         }
     }
-
 
     public AlphabeticNotation GetCurrency(CurrencyTypes type) => currency[type];
     public void UpdateCurrencies(){

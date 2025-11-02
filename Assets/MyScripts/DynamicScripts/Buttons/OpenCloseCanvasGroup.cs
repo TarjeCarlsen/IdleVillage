@@ -21,6 +21,7 @@ public class OpenCloseCanvasGroup : MonoBehaviour
 
     if (canvasToShow == null)
     {
+
         GameObject obj = GameObject.FindGameObjectWithTag(canvasToShowTag);
         if (obj != null)
             canvasToShow = obj.GetComponent<CanvasGroup>();

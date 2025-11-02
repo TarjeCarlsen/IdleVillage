@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using LargeNumbers;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Card/CardData")]
@@ -17,7 +18,7 @@ public class CardData : ScriptableObject
     [System.Serializable]
     public class CardDataInfo{
         public CurrencyTypes type;
-        public string price;
+        public AlphabeticNotation price;
         public Sprite sprite;
         public float priceMultiplier;
     }

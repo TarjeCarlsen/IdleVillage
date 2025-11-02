@@ -32,6 +32,7 @@ public class CardInfo : MonoBehaviour
         public TMP_Text price_text;
         public Image price_img;
         public CurrencyTypes types;
+        public AlphabeticNotation rawPrice; 
     }
 
         private void Awake(){
@@ -61,9 +62,10 @@ public void Init()
         else
         {
             cardInfoContents[i].price_parent_obj.SetActive(true);
-            cardInfoContents[i].price_text.text = cardData.cardDataInfo[i].price;
+            cardInfoContents[i].price_text.text = cardData.cardDataInfo[i].price.ToString();
             cardInfoContents[i].price_img.sprite = cardData.cardDataInfo[i].sprite;
             cardInfoContents[i].types = cardData.cardDataInfo[i].type;
+            cardInfoContents[i].rawPrice = cardData.cardDataInfo[i].price;
         }
     }
     if(!cardData.useLevels) HideLevel();
@@ -72,7 +74,7 @@ public void Init()
 
     public bool CanAfford(){
         foreach(CardInfoContent price in cardInfoContents){
-            if (Double.Parse(price.price_text.text) > MoneyManager.Instance.GetCurrency(price.types)){
+            if (price.rawPrice > MoneyManager.Instance.GetCurrency(price.types)){
                 return false;
             }
         }
@@ -85,7 +87,7 @@ public void Init()
         }
         if(CanAfford()){
             foreach(CardInfoContent price in cardInfoContents){
-                MoneyManager.Instance.SubtractCurrency(price.types, new AlphabeticNotation(Double.Parse(price.price_text.text)));
+                MoneyManager.Instance.SubtractCurrency(price.types, price.rawPrice);
             }
             if(cardData.useLevels)level++;
             CalculateNewPrice();
@@ -99,8 +101,9 @@ public void Init()
     private void CalculateNewPrice(){
         for (int i = 0; i < cardInfoContents.Count; i++)
         {
-            AlphabeticNotation result = new AlphabeticNotation(double.Parse(cardInfoContents[i].price_text.text) * cardData.cardDataInfo[i].priceMultiplier);
-            cardInfoContents[i].price_text.text = result.ToString();
+            AlphabeticNotation result = cardInfoContents[i].rawPrice * cardData.cardDataInfo[i].priceMultiplier;
+            cardInfoContents[i].price_text.text = result.ToStringSmart(1);
+            cardInfoContents[i].rawPrice = result;
         }
     }
 

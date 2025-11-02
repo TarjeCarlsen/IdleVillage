@@ -649,5 +649,24 @@ namespace LargeNumbers
 
             return Math.Pow ( 1000, number.magnitude ) * number.coefficient;
         }
+public string ToStringSmart(int maxDecimals = 1)
+{
+    // Round to desired decimal places
+    double rounded = Math.Round(coefficient, maxDecimals);
+
+    // If it's a whole number, don't show decimal places
+    if (rounded % 1 == 0)
+        return $"{(int)rounded}{GetAlphabeticMagnitudeName(magnitude)}";
+
+    // Else, show up to 1 decimal
+    return $"{rounded.ToString($"F{maxDecimals}")}{GetAlphabeticMagnitudeName(magnitude)}";
+}
+
+public AlphabeticNotation Normalize(AlphabeticNotation raw)
+{
+    return new AlphabeticNotation(raw.coefficient, raw.magnitude); // forces Fix()
+}
     }
+
+    
 }

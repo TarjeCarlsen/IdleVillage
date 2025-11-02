@@ -92,4 +92,18 @@ public float ConvertTimeToSeconds(string timeString)
     return 0f; // fallback if input is invalid
 }
 
+
+public AlphabeticNotation CalculateOutputPerMin(AlphabeticNotation amount, float time)
+{
+    if (time <= 0f)
+    {
+        Debug.LogWarning("Time must be greater than zero to calculate output per minute.");
+        return new AlphabeticNotation(0);
+    }
+
+    // amount per second = amount / time
+    // per minute = * 60
+    return (amount / time) * 60f;
+}
+
 }

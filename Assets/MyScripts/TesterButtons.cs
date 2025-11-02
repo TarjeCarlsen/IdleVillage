@@ -7,25 +7,26 @@ public class TesterButtons : MonoBehaviour
 {
 
     [SerializeField] private List<TESTERBUTTONDATA> buttonData;
-
+    [SerializeField] AlphabeticNotation value_to_test;
 
 
 
 //testing largenumbers
-    // private void Start(){
-    //     LargeNumber testingLargeNumber = testLargeValue;
-    //     AlphabeticNotation testingAlphabetic = testAlphaValue;
+    private void Start(){
+        AlphabeticNotation testAlphaValue = new AlphabeticNotation(value_to_test);
+        print("startvalue = " + testAlphaValue);
+
+        string myAlphaString = testAlphaValue.ToString();
+
+        print("stringified value = " + myAlphaString);
+
+        // AlphabeticNotation test2 = new AlphabeticNotation(Double.Parse(myAlphaString));
+        // print("test2 = "+ test2);
+        AlphabeticNotation.GetAlphabeticNotationFromString(myAlphaString, out var newNumber);
+        print("testing newNumber = "+ newNumber);
 
 
-    //     string myLargeString = testingLargeNumber.ToString();
-    //     string myAlphaString = testAlphaValue.ToString();
-
-
-
-    //     LargeNumber largeBack =new LargeNumber(Double.Parse(myLargeString));
-    //     AlphabeticNotation alphaBack = new AlphabeticNotation(double.Parse(myAlphaString));
-
-    // }
+    }
 
     [System.Serializable]
     public class TESTERBUTTONDATA{

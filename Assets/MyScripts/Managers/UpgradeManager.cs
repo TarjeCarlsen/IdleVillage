@@ -12,6 +12,8 @@ public enum TimeUpgradeTypes
     wheatPlantGrowTime,
     doughPressCycleTime,
     furnaceBakingTime,
+    windmillGrainTime,
+    windmillFlourTime,
     schoolChildFarmerTime,
     schoolChildElectricianTime,
     schoolChildMinerTime,

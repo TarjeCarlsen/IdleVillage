@@ -156,7 +156,7 @@ public void AddFlourToDough()
             int index = (int)i;
             if (index >= fillStages.Count)
                 break;
-    print($"prevcounter = " + prevCounter);
+
             fillStages[index].SetActive(true);
         }
     }
