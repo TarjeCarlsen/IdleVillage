@@ -666,6 +666,12 @@ public AlphabeticNotation Normalize(AlphabeticNotation raw)
 {
     return new AlphabeticNotation(raw.coefficient, raw.magnitude); // forces Fix()
 }
+
+public AlphabeticNotation Round(int decimals = 0)
+{
+    double roundedCoefficient = Math.Round(coefficient, decimals, MidpointRounding.AwayFromZero);
+    return new AlphabeticNotation(roundedCoefficient, magnitude); // constructor auto-normalizes
+}
     }
 
     
