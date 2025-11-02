@@ -324,6 +324,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragHitBox: {fileID: 8218101199343400118}
+  dropZoneTag: DropZoneFarm
+  useFindTag: 1
+  useGetTagInParent: 0
   objectImage: {fileID: 7276036680923560187}
   draggingColor: {r: 0, g: 1, b: 0, a: 1}
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
@@ -331,6 +334,11 @@ MonoBehaviour:
   overAcceptsWheatColor: {r: 0, g: 0.5, b: 1, a: 1}
   enableColorsOnDrag: 1
   staticSnapBack: 0
+  destroyOutsideDropzone: 0
+  ignoreOverlaps: 0
+  gameObjectToDestroy: {fileID: 0}
+  enableDragOnSpawn: 0
+  draggableEnabled: 1
   hasBeenPlaced: 0
 --- !u!114 &978158694146664263
 MonoBehaviour:
@@ -361,26 +369,36 @@ MonoBehaviour:
   storageDatas:
   - type: 1
     defaultAmount:
-      number: 100
-      exponent: 0
-    defaultUnitsPerObject: 0
+      coefficient: 0
+      magnitude: 0
+    defaultUnitsPerObject:
+      coefficient: 0
+      magnitude: 0
   - type: 2
     defaultAmount:
-      number: 100
-      exponent: 0
-    defaultUnitsPerObject: 0
+      coefficient: 100
+      magnitude: 0
+    defaultUnitsPerObject:
+      coefficient: 0
+      magnitude: 0
   - type: 3
     defaultAmount:
-      number: 100
-      exponent: 0
-    defaultUnitsPerObject: 0
+      coefficient: 100
+      magnitude: 0
+    defaultUnitsPerObject:
+      coefficient: 0
+      magnitude: 0
   - type: 4
     defaultAmount:
-      number: 100
-      exponent: 0
-    defaultUnitsPerObject: 0
+      coefficient: 100
+      magnitude: 0
+    defaultUnitsPerObject:
+      coefficient: 0
+      magnitude: 0
   - type: 5
     defaultAmount:
-      number: 100
-      exponent: 0
-    defaultUnitsPerObject: 0
+      coefficient: 100
+      magnitude: 0
+    defaultUnitsPerObject:
+      coefficient: 0
+      magnitude: 0

@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215bfe629d58e814cb0412648f0b5828, type: 3}
   m_Name: FlatWheatPower
   m_EditorClassIdentifier: 
-  upgradeTypes: 1
+  upgradeTypes: 2
   currencyTypes: 1
+  activationUnlocks: 0
   flat:
-    number: 1
-    exponent: 0
-  multi: 1
+    coefficient: 1
+    magnitude: 0
+  multi:
+    coefficient: 0
+    magnitude: 0
+  activationState: 0
