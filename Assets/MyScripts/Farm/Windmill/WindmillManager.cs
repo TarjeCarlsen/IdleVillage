@@ -12,7 +12,6 @@ public class WindmillManager : MonoBehaviour
     [SerializeField] private GeneratorSimple[] generatorSimple;
     private AlphabeticNotation grainOutput;
     private AlphabeticNotation flourOutput;
-    [SerializeField] private WindmillHandler windmillHandler;
     [SerializeField] private Animator windmillAnimator;
 
     private void OnEnable()

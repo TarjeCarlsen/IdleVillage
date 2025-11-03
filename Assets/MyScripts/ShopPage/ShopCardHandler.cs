@@ -10,16 +10,19 @@ public class ShopCardHandler : MonoBehaviour
     [SerializeField] private TMP_Text time_txt;
     [SerializeField] private TMP_Text percent_txt;
     [SerializeField] private TMP_Text result_txt;
+
     [SerializeField] private AlphabeticNotation startPrice;
     [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(10);
     [SerializeField] private SliderHandler sliderHandlerPrice;
     [SerializeField] private SliderHandler sliderHandlerAmount;
+    [SerializeField] private GameObject prefabListingToCreate;
+    [SerializeField] private Transform parentToSpawnUnder;
     [SerializeField] private Color percentColor;
+    [SerializeField]private float defaultTime = 60; 
+    private AlphabeticNotation currentPrice;
+    private AlphabeticNotation result;
+
     private Color originalPercentColor;
-    private int amountOfCustomersInterested = 1; //currently setting amount of interested statically in the scritp, change to get affected
-                                             //by upgrades to the shop that make more customers want the items to improve
-    [SerializeField]private float timeBetweenSellChecks = 1f; // static time check between listings, can be changed with upgradable                                             
-        [Header("Chance Settings")]
     [SerializeField, Tooltip("Controls how steeply chance falls as price increases")]
     private float steepness = 2f;
 
@@ -29,16 +32,19 @@ public class ShopCardHandler : MonoBehaviour
     [SerializeField, Tooltip("Minimum possible chance (never reaches 0)")]
     private float minChance = 0.001f;
     private double chance;
+    private float rawTimeFloat = 60;
     private string time;
-    private Coroutine ListingCoroutine;
 
     private void Awake(){
+
         sliderHandlerPrice.SetMaxValueFromScript(startPrice * maxAdjustPriceMulti);
         originalPercentColor = percent_txt.color;
-        time = "00:00";
-        UpdateUI();
     }
 
+    private void Start(){
+        time = HelperFunctions.Instance.ConvertSecondsToTime(rawTimeFloat);
+        UpdateUI();
+    }
     private void OnEnable(){
         sliderHandlerPrice.OnSliderDragging += CalculatePercent;
         sliderHandlerPrice.OnStoppedSliderDrag += CalculatePercent;        
@@ -53,16 +59,43 @@ public class ShopCardHandler : MonoBehaviour
     }
 
     public void OnListButtonClicked(){
-        StartListing();
+        CreateListing();
+    }
+
+    private void CreateListing(){
+        if(CanAfford() && sliderHandlerAmount.sliderValue > 0 && rawTimeFloat > 0 && sliderHandlerPrice.sliderValue > 0){
+            MoneyManager.Instance.SubtractCurrency(sliderHandlerAmount.maxValueCurrencytype, sliderHandlerAmount.sliderValue);
+            GameObject newListing =  Instantiate(prefabListingToCreate,parentToSpawnUnder);
+            ListingHandler handler = newListing.GetComponent<ListingHandler>();
+            handler.SetSellingAmount(result);
+            handler.SetTime(rawTimeFloat);
+            handler.SetChance(chance);
+            handler.SetCancelAmount(sliderHandlerAmount.sliderValue);
+            handler.SetCancelCurrency(sliderHandlerAmount.maxValueCurrencytype);
+            sliderHandlerAmount.ResetSliderValues();
+            sliderHandlerPrice.ResetSliderValues();
+        }else{
+            print("time or slider is 0. chose a time!"); //POPUP TAG. IMPLEMENT POPUP FOR CHOSE A TIME AND AMOUNT
+        }
+    }
+
+    private bool CanAfford(){
+            print("slider value = "+ sliderHandlerAmount.sliderValue);
+        if(MoneyManager.Instance.GetCurrency(sliderHandlerAmount.maxValueCurrencytype) >= sliderHandlerAmount.sliderValue){
+            return true;
+        }
+        return false;
     }
     public void OnTimeButtonClicked(float timeFloat){
         time = HelperFunctions.Instance.ConvertSecondsToTime(timeFloat);
+        rawTimeFloat = timeFloat;
+        print("time float = "+ timeFloat);
         UpdateUI();
     }
 
     private void CalculatePercent()
     {
-        AlphabeticNotation currentPrice = sliderHandlerPrice.sliderValue;
+        currentPrice = sliderHandlerPrice.sliderValue;
 
         // --- Convert to double ratio safely ---
         double marketValue = startPrice.Standard();
@@ -81,51 +114,14 @@ public class ShopCardHandler : MonoBehaviour
         // --- Convert to % and display ---
         float percent = (float)(chance * 100f);
         UpdateUI();
-        // percent_txt.text = $"{percent:F1}%";
-
-        // Optional debug or display example
-        //ItemSold();
-        // You could simulate sale result here if needed:
-        // bool sold = Random.value <= chance;
-        // result_txt.text = sold ? "Sold!" : "Not sold";
-    }
-
-    private bool ItemSold(){
-        float randomValue = Random.value;
-        print($"chance was {chance} rolled - {randomValue}");
-        return randomValue <= chance;
-    }
-
-    private void StartListing(){
-        if(ListingCoroutine == null){
-            ListingCoroutine = StartCoroutine(CheckForSoldItem());
-        }
-    }
-
-    private void CloseListing(){
-        if(ListingCoroutine != null){
-            StopCoroutine(CheckForSoldItem());
-            ListingCoroutine = null;
-        }
-    }
-
-    private IEnumerator CheckForSoldItem(){ // coroutine should be placed on the item listing itself, not shopcard
-        while(true){
-        yield return new WaitForSeconds(timeBetweenSellChecks);
-        CalculatePercent();
-        if(ItemSold()){
-            CloseListing();
-            print("item sold!");
-            break;
-        }
-            print("item Not sold!");
-        }
     }
 
     private void UpdateUI(){
         marketPrice_txt.text = startPrice.ToStringSmart(1);
-        result_txt.text = (sliderHandlerPrice.sliderValue * sliderHandlerAmount.sliderValue).ToStringSmart(1);
+        result = sliderHandlerPrice.sliderValue * sliderHandlerAmount.sliderValue;
+        result_txt.text = result.ToStringSmart(1);
         time_txt.text = time;
+        print("TIME = "+ time);
 
             // --- Update percent text color ---
     float percent = (float)(chance * 100f);

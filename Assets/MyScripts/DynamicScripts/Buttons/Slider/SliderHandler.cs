@@ -19,11 +19,12 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     ***/
 
 
-    [SerializeField] private CurrencyTypes maxValueCurrencytype;
+    [SerializeField] public CurrencyTypes maxValueCurrencytype;
     [SerializeField] private bool useCurrencyTypeMaxValue = false;
     [SerializeField] private AlphabeticNotation customMaxValue;
     [SerializeField]private bool useCustomMaxValue;
     [SerializeField] private bool useMaxValueFromOtherScript;
+    [SerializeField] private bool showOutputAsPercent;
     public AlphabeticNotation maxValueFromScript;
     [SerializeField] private Slider slider;
     [SerializeField] private TMP_Text sliderAmount_txt;
@@ -37,7 +38,29 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
         ResetSliderValues();
         sliderAmount_txt.text = "0";
     }
-    private void ResetSliderValues(){
+
+    private void OnEnable(){
+        MoneyManager.Instance.OnCurrencyChanged += UpdateMaxValue;
+    }
+    private void OnDisable(){
+        MoneyManager.Instance.OnCurrencyChanged -= UpdateMaxValue;
+
+    }
+
+    private void UpdateMaxValue(CurrencyTypes types){
+        if(maxValueCurrencytype != types)return;
+        if(useCurrencyTypeMaxValue){
+            maxValue = MoneyManager.Instance.GetCurrency(types);
+        }else if(useCustomMaxValue){
+            MoneyManager.Instance.OnCurrencyChanged -= UpdateMaxValue;
+            maxValue = customMaxValue;
+        }else if(useMaxValueFromOtherScript){
+            MoneyManager.Instance.OnCurrencyChanged -= UpdateMaxValue;
+            maxValue = maxValueFromScript;
+        }
+    }
+
+    public void ResetSliderValues(){
         if(useCurrencyTypeMaxValue){
         maxValue = MoneyManager.Instance.GetCurrency(maxValueCurrencytype);
         }else if(useCustomMaxValue){
@@ -47,6 +70,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
         }
         slider.minValue = 0;
         slider.maxValue = 1f;
+        slider.value = 0;
     }
 
     private AlphabeticNotation GetValue(){
