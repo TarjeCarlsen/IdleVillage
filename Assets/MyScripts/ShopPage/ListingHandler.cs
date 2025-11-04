@@ -4,8 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class ListingHandler : MonoBehaviour
 {
+    [SerializeField] private TMP_Text statAmount_txt; // - stat selling amount box
+    [SerializeField] private TMP_Text percentageCustomers_txt; // - percentage within customer box
     [SerializeField] private Sprite sellingIconSprite;
     [SerializeField] private Sprite expiredIconSprite;
     [SerializeField] private Image resultIcon;
@@ -24,6 +28,8 @@ public class ListingHandler : MonoBehaviour
     private Coroutine ListingCoroutine;
     private Coroutine timerCoroutine;
     private float timeRemaining;
+    private Color percentColor;
+    private Color originalPercentColor;
 
     // [SerializeField] private float totalListingTime = 10f;
     [SerializeField] private float timeBetweenSellChecks;  
@@ -52,6 +58,7 @@ public class ListingHandler : MonoBehaviour
     private void Awake(){
         if(itemDidSell) StopActiveListing();
         resultIcon.sprite = sellingIconSprite;
+        originalPercentColor = percentageCustomers_txt.color;
     }
     private void Start()
     {
@@ -119,8 +126,8 @@ private IEnumerator CheckForSoldItem()
 {
     while (timeRemaining > 0f && !itemDidSell)
     {
-    float randomTimeBetweenChecks = UnityEngine.Random.Range(0, timeBetweenSellChecks);
-        yield return new WaitForSeconds(randomTimeBetweenChecks);
+    float randomTimeBetweenChecks = UnityEngine.Random.Range(0, timeBetweenSellChecks); // = 2s
+        yield return new WaitForSeconds(randomTimeBetweenChecks); // venter i ^
         amountOfCustomersInterested++; // USE THIS FOR DISPLAYING AMOUNT OF BUYERS INTERESTED
         if(amountOfCustomers_txt != null)amountOfCustomers_txt.text = amountOfCustomersInterested.ToString();
         itemDidSell = ItemSold();
@@ -152,11 +159,38 @@ private IEnumerator UpdateTimer()
     time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(0f);
 }
 
+private void PercentVisuals(){
+    double percent = chance * 100f;
+    if(percent < 0.1f){
+    percentageCustomers_txt.text = $"<0.1%";
+    }else{
+    percentageCustomers_txt.text = $"{percent:F1}%";
+    }
+
+    if (percent <= 0f)
+    {
+        // restore the original TMP color
+        percentageCustomers_txt.color = originalPercentColor;
+    }
+    // pick color based on percent range
+    if (percent >= 80f)
+        percentageCustomers_txt.color = new Color(0f, 1f, 0f);               // bright green
+    else if (percent >= 60f)
+        percentageCustomers_txt.color = new Color(0.4f, 1f, 0.4f);           // softer green
+    else if (percent >= 40f)
+        percentageCustomers_txt.color = new Color(1f, 0.65f, 0f);            // orange
+    else if (percent >= 20f)
+        percentageCustomers_txt.color = new Color(0.8f, 0.2f, 0.2f);         // subtle red
+    else
+        percentageCustomers_txt.color = new Color(1f, 0f, 0f);               // bright red
+        
+}
+
     private void UpdateUI()
     {
         if (itemDidSell)
         {
-            header_txt.text = "Sold!";
+            header_txt.text = "";
             collectButton.SetActive(true);
             cancellButton.SetActive(false);
             soldImage.SetActive(true);
@@ -171,6 +205,8 @@ private IEnumerator UpdateTimer()
             amount_txt.text = cancelAmount.ToStringSmart(1);
             }
         }
+        PercentVisuals();
+        statAmount_txt.text = cancelAmount.ToStringSmart(1);
         amountOfCustomers_txt.text = amountOfCustomersInterested.ToString();
     }
 }

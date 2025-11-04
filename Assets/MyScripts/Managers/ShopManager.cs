@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using LargeNumbers;
 using TMPro;
@@ -85,7 +86,8 @@ void Awake()
                 listingObjects[key].listingHandler.OnCollectButtonClicked();
             }
         }
-        // UpdateCollectAmount();
+        
+        currentCollectAmount_txt.text = new AlphabeticNotation(0).ToString();
     }
 
     private void UpdateUI(){

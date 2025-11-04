@@ -36,8 +36,9 @@ public class ShopCardHandler : MonoBehaviour
     private float midpoint = 1.5f;
 
     [SerializeField, Tooltip("Minimum possible chance (never reaches 0)")]
-    private float minChance = 0.001f;
+    private float minChance = 0.00001f;
     private double chance;
+    float atLeastOneSalePercent;
     private float rawTimeFloat = 60;
     private string time;
 
@@ -156,11 +157,14 @@ public class ShopCardHandler : MonoBehaviour
     public void OnTimeButtonClicked(float timeFloat){
         time = HelperFunctions.Instance.ConvertSecondsToTime(timeFloat);
         rawTimeFloat = timeFloat;
+        CalculatePercent();
         UpdateUI();
     }
 
     private void CalculatePercent()
     {
+        float averageAmountOfCustomers = rawTimeFloat / (UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks) / 2);
+        print("average amount of customers  = "+ averageAmountOfCustomers);
         currentPrice = sliderHandlerPrice.sliderValue;
 
         // --- Convert to double ratio safely ---
@@ -171,14 +175,21 @@ public class ShopCardHandler : MonoBehaviour
         if (marketValue <= 0)
             marketValue = 0.000001d;
 
+                 //4           // 20              //5
         double priceRatio = playerValue / marketValue;
 
-        // --- Logistic demand curve ---
+        // --- Logistic demand curve ---           //4   /  1,5= 2,666^1,5 = 4,35 =          1/5,35
         chance = 1.0 / (1.0 + System.Math.Pow(priceRatio / midpoint, steepness));
+
+                                //  0,17ish    0.001    
         chance = System.Math.Max(chance, minChance);
 
         // --- Convert to % and display ---
         float percent = (float)(chance * 100f);
+        print("chance = "+ chance);
+        double atLeastOneSaleChance = 1.0 - System.Math.Pow(1.0 - chance, averageAmountOfCustomers);
+        atLeastOneSalePercent = (float)(atLeastOneSaleChance * 100f);
+
         UpdateUI();
     }
 
@@ -190,19 +201,19 @@ public class ShopCardHandler : MonoBehaviour
 
             // --- Update percent text color ---
     float percent = (float)(chance * 100f);
-    if (percent <= 0f)
+    if (atLeastOneSalePercent <= 0f)
     {
         // restore the original TMP color
         percent_txt.color = originalPercentColor;
     }
     // pick color based on percent range
-    if (percent >= 80f)
+    if (atLeastOneSalePercent >= 80f)
         percentColor = new Color(0f, 1f, 0f);               // bright green
-    else if (percent >= 60f)
+    else if (atLeastOneSalePercent >= 60f)
         percentColor = new Color(0.4f, 1f, 0.4f);           // softer green
-    else if (percent >= 40f)
+    else if (atLeastOneSalePercent >= 40f)
         percentColor = new Color(1f, 0.65f, 0f);            // orange
-    else if (percent >= 20f)
+    else if (atLeastOneSalePercent >= 20f)
         percentColor = new Color(0.8f, 0.2f, 0.2f);         // subtle red
     else
         percentColor = new Color(1f, 0f, 0f);               // bright red
@@ -210,6 +221,6 @@ public class ShopCardHandler : MonoBehaviour
     percent_txt.color = percentColor;
 
     // update text (if not already done in CalculatePercent)
-    percent_txt.text = $"{percent:F1}%";
+    percent_txt.text = $"{atLeastOneSalePercent:F1}%";
     }
 }
