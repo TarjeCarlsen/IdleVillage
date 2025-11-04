@@ -20,7 +20,7 @@ public class ShopCardHandler : MonoBehaviour
     [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(10);
     private AlphabeticNotation currentPrice;
     private AlphabeticNotation result;
-    [SerializeField]private float defaultTime = 60; 
+    // [SerializeField]private float defaultTime = 60; 
     // private string uniqueID;
     private string cardName;
 
@@ -94,8 +94,9 @@ public class ShopCardHandler : MonoBehaviour
             sliderHandlerPrice.ResetSliderValues();
             handler.SetUniqueID(uniqueID);
             ShopManager.Instance.AddListing(uniqueID, listingData);
+
+            ShopManager.Instance.UpdateCollectAmount(result,true);
         }else{
-            // print("time or slider is 0. chose a time!"); //POPUP TAG. IMPLEMENT POPUP FOR CHOSE A TIME AND AMOUNT
         }
     }
 
@@ -115,6 +116,7 @@ public class ShopCardHandler : MonoBehaviour
             listingData.cancelType = loadMaxValueCurrencyType;
             listingData.uniqueID = loadUniqueID;
             listingData.shopCardName = loadShopCardName;
+            listingData.listingSold = loadListingSold;
             listingData.listingHandler = handler;
 
             handler.SetSellingAmount(loadResult);
@@ -127,16 +129,15 @@ public class ShopCardHandler : MonoBehaviour
 
             if(loadListingSold)
             {
-            print("close listing! for - "+ loadUniqueID);
-             handler.CloseListing();
+             handler.StopActiveListing();
+             ShopManager.Instance.UpdateCollectAmount(loadResult,true);
+             ShopManager.Instance.UpdateListing(loadUniqueID,loadListingSold);
             }
-            print("didnt close listing");
 
             ShopManager.Instance.AddListing(loadUniqueID, listingData);
     }
 
     private bool CanAfford(){
-            // print("slider value = "+ sliderHandlerAmount.sliderValue);
         if(MoneyManager.Instance.GetCurrency(sliderHandlerAmount.maxValueCurrencytype) >= sliderHandlerAmount.sliderValue){
             return true;
         }
@@ -145,7 +146,6 @@ public class ShopCardHandler : MonoBehaviour
     public void OnTimeButtonClicked(float timeFloat){
         time = HelperFunctions.Instance.ConvertSecondsToTime(timeFloat);
         rawTimeFloat = timeFloat;
-        // print("time float = "+ timeFloat);
         UpdateUI();
     }
 
@@ -177,7 +177,6 @@ public class ShopCardHandler : MonoBehaviour
         result = sliderHandlerPrice.sliderValue * sliderHandlerAmount.sliderValue;
         result_txt.text = result.ToStringSmart(1);
         time_txt.text = time;
-        // print("TIME = "+ time);
 
             // --- Update percent text color ---
     float percent = (float)(chance * 100f);

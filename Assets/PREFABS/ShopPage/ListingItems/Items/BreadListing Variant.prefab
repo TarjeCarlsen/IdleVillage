@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1622042136987836451, guid: c2f109f2f9eb67249ab43a0a41513d26, type: 3}
+      propertyPath: m_text
+      value: Time Remaining
+      objectReference: {fileID: 0}
     - target: {fileID: 3881228710849954095, guid: c2f109f2f9eb67249ab43a0a41513d26, type: 3}
       propertyPath: m_Name
       value: BreadListing Variant

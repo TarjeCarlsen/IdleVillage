@@ -36,33 +36,41 @@ public class ListingHandler : MonoBehaviour
     public bool itemDidSell = false;
     public void SetListingSold(bool state) => itemDidSell = state;
     public bool GetListingSold() => itemDidSell;
-        public void SetSellingAmount(AlphabeticNotation amount) 
+    public void SetSellingAmount(AlphabeticNotation amount) 
     {
         sellingAmount = amount;
         amount_txt.text = amount.ToStringSmart(1);
     }
+    public AlphabeticNotation GetSellingAmount() => sellingAmount;
 
     private void Awake(){
-        if(itemDidSell) CloseListing();
+        if(itemDidSell) StopActiveListing();
     }
     private void Start()
     {
         if(timeRemaining == 0){
         timeRemaining = totalListingTime;
         }
+
+        StartCoroutine(WaitForOneFrame());
+    }
+
+    private IEnumerator WaitForOneFrame(){
+        yield return null;
         StartListing();
         UpdateUI();
     }
 
     public void OnCancelButtonClicked(){
         MoneyManager.Instance.AddCurrency(cancelCurrency,cancelAmount);
-        CloseListing();
+        StopActiveListing();
         Destroy(gameObject);
         ShopManager.Instance.RemoveListing(uniqueID);
     }
     public void OnCollectButtonClicked(){
         MoneyManager.Instance.AddCurrency(CurrencyTypes.money, sellingAmount);
-        CloseListing();
+        ShopManager.Instance.UpdateCollectAmount(sellingAmount, false);
+        StopActiveListing();
         Destroy(gameObject);
         ShopManager.Instance.RemoveListing(uniqueID);
     }
@@ -75,6 +83,7 @@ public class ListingHandler : MonoBehaviour
 
     private void StartListing()
     {
+        if(itemDidSell) return;
         if (ListingCoroutine == null)
         {
             ListingCoroutine = StartCoroutine(CheckForSoldItem());
@@ -84,7 +93,8 @@ public class ListingHandler : MonoBehaviour
             timerCoroutine = StartCoroutine(UpdateTimer());
         }
     }
-    public void CloseListing()
+
+    public void StopActiveListing()
     {
         if (ListingCoroutine != null)
         {
@@ -100,23 +110,22 @@ public class ListingHandler : MonoBehaviour
     }
 private IEnumerator CheckForSoldItem()
 {
-    while (timeRemaining > 0f)
+    while (timeRemaining > 0f && !itemDidSell)
     {
         yield return new WaitForSeconds(timeBetweenSellChecks);
 
-        // Only check for sale, do NOT subtract timeRemaining here
         itemDidSell = ItemSold();
         if (itemDidSell)
         {
-            print("listingsold = true");
-            CloseListing();
+            ShopManager.Instance.UpdateCollectAmount(sellingAmount,true);
+            ShopManager.Instance.UpdateListing(uniqueID,true);
+            StopActiveListing();
             yield break;
         }
 
-        // Debug.Log("Item not sold!");
     }
 
-    CloseListing(); // time ran out
+    StopActiveListing(); // time ran out
 }
 
 private IEnumerator UpdateTimer()
@@ -138,6 +147,7 @@ private IEnumerator UpdateTimer()
     {
         if (itemDidSell)
         {
+            header_txt.text = "Sold!";
             collectButton.SetActive(true);
             cancellButton.SetActive(false);
             soldImage.SetActive(true);

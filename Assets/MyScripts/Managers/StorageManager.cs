@@ -7,12 +7,18 @@ using LargeNumbers;
 public enum SpecialStorageType{
     furnaceStorageCap,
     flourPerDoughCap,
+    shopAmountListings,
 }
 
 
 [System.Serializable]
 public struct TESTINGSTORAGE{
     public CurrencyTypes currencyType;
+    public AlphabeticNotation testNumber;
+}
+[System.Serializable]
+public struct TESTINGSPECIALSTORAGE{
+    public SpecialStorageType specialStorageType;
     public AlphabeticNotation testNumber;
 }
 
@@ -23,6 +29,7 @@ public class StorageManager : MonoBehaviour
 
     public event Action <CurrencyTypes> OnStorageChange;
     [SerializeField] private List<TESTINGSTORAGE> SpecificStartStorage_TESTING;
+    [SerializeField] private List<TESTINGSPECIALSTORAGE> SpecificSpecialStartStorage_TESTING;
     public Dictionary<CurrencyTypes, AlphabeticNotation> storageAmount = new();
     public Dictionary<CurrencyTypes, AlphabeticNotation> storageUnit = new();
     public Dictionary<SpecialStorageType, AlphabeticNotation> specialStorageAmount = new();
@@ -62,10 +69,18 @@ public class StorageManager : MonoBehaviour
             }
         }
     }
-
     public void InitializeSpecialStorage(){
         foreach(SpecialStorageType type in Enum.GetValues(typeof(SpecialStorageType))){
-            specialStorageAmount[type] = defaultSpecialStorageAmount;
+                        var testEntry = SpecificSpecialStartStorage_TESTING.Find(e => e.specialStorageType == type);
+
+            if (testEntry.testNumber != 0){
+
+                specialStorageAmount[type] = testEntry.testNumber;
+            }
+            else{
+
+                specialStorageAmount[type] = defaultSpecialStorageAmount;
+            }
         }
     }
 

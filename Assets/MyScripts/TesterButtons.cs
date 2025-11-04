@@ -14,16 +14,16 @@ public class TesterButtons : MonoBehaviour
 //testing largenumbers
     private void Start(){
         AlphabeticNotation testAlphaValue = new AlphabeticNotation(value_to_test);
-        print("startvalue = " + testAlphaValue);
+        // print("startvalue = " + testAlphaValue);
 
         string myAlphaString = testAlphaValue.ToString();
 
-        print("stringified value = " + myAlphaString);
+        // print("stringified value = " + myAlphaString);
 
         // AlphabeticNotation test2 = new AlphabeticNotation(Double.Parse(myAlphaString));
         // print("test2 = "+ test2);
         AlphabeticNotation.GetAlphabeticNotationFromString(myAlphaString, out var newNumber);
-        print("testing newNumber = "+ newNumber);
+        // print("testing newNumber = "+ newNumber);
 
 
     }

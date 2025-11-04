@@ -11,12 +11,15 @@ public class ShopManager : MonoBehaviour
     public static ShopManager Instance {get; private set;}
 
     [SerializeField] private TMP_Text currentListingAmount_txt;
+    [SerializeField] private TMP_Text currentCollectAmount_txt;
+    [SerializeField] private GameObject collectAllButton;
     public Dictionary<string, ListingData> listingObjects = new Dictionary<string, ListingData>();
     [SerializeField] private Transform ShopCardHolder;
     public List<ShopCardHandler> shopCardList;
     
-    private int maxAmountOfListings;
+    private AlphabeticNotation collectAmount;
     private int currentListings;
+    
     [System.Serializable]
     public class ListingData{
         public AlphabeticNotation result;
@@ -40,12 +43,11 @@ void Awake()
     foreach(Transform child in ShopCardHolder){
         shopCardList.Add(child.GetComponent<ShopCardHandler>());
     }
+    UpdateCollectAmount(new AlphabeticNotation(0),true);
 }
     public void AddListing(string id, ListingData data){ // add all information about the listing object for save/load
         listingObjects[id] = data;
-        // print($"listing info : result = {listingObjects[listing].result} time = {listingObjects[listing].currentTime} cancelam = {listingObjects[listing].cancelAmount} type = {listingObjects[listing].cancelType} id = {listingObjects[listing].uniqueID}");
         currentListings++;
-        // print($"ShopManager instance: {GetInstanceID()} | listings count = {listingObjects.Count}");
         UpdateUI();
     }
 
@@ -55,16 +57,46 @@ void Awake()
         UpdateUI();
     }
 
+    public void UpdateListing(string id, bool state){
+        if(listingObjects.ContainsKey(id)){
+            listingObjects[id].listingSold = state;
+        }
+        
 
+    }
+
+    public void UpdateCollectAmount(AlphabeticNotation amount, bool addSub){
+        collectAmount = collectAmount +(addSub ? amount : -amount);
+        if(collectAmount > 0)
+        {
+            collectAllButton.SetActive(true);
+        }else{
+            collectAllButton.SetActive(false);
+        }
+        currentCollectAmount_txt.text = collectAmount.ToStringSmart(1);
+    }
+
+    public void OnCollectAllClick(){
+        List<string> keys = new List<string>(listingObjects.Keys);
+        foreach(string key in keys){
+            if(listingObjects[key].listingSold){
+                listingObjects[key].listingHandler.OnCollectButtonClicked();
+            }
+        }
+        // UpdateCollectAmount();
+    }
 
     private void UpdateUI(){
-        currentListingAmount_txt.text = currentListings.ToString() +"/" +  maxAmountOfListings.ToString();
+        currentListingAmount_txt.text = currentListings.ToString() +"/" +  StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.shopAmountListings).ToString();
     }
 
 
 
     public void Save(ref ShopManagerSaveData data){
         data.listingSaveDatas = new List<ListingSaveData>();
+
+        //data.collectAllButton = collectAllButton.activeSelf;
+        //data.collectAmount = collectAmount;
 
         foreach(KeyValuePair<string,ListingData> pair in listingObjects){
         pair.Value.currentTime = pair.Value.listingHandler.GetCurrentTime();
@@ -83,10 +115,18 @@ void Awake()
         }
     }
     public void Load(ShopManagerSaveData data){
+        //collectAllButton.SetActive(data.collectAllButton);
+        // UpdateCollectAmount(data.collectAmount, true);
+
         foreach(var pair in listingObjects){
-            // pair.Value.listingHandler.CloseListing();
+            pair.Value.listingHandler.StopActiveListing();
             Destroy(pair.Value.listingHandler.gameObject);
         }
+
+        collectAmount = new AlphabeticNotation(0);
+        collectAllButton.SetActive(false);
+        currentCollectAmount_txt.text = collectAmount.ToStringSmart(0);
+
         listingObjects.Clear();
         currentListings = 0;
 
@@ -107,6 +147,8 @@ void Awake()
 
 [System.Serializable]
 public struct ShopManagerSaveData{
+    public bool collectAllButton;
+    public AlphabeticNotation collectAmount;
     public List<ListingSaveData> listingSaveDatas;
 }
 [System.Serializable]
