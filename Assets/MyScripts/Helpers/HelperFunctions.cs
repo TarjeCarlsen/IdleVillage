@@ -30,14 +30,9 @@ public class HelperFunctions : MonoBehaviour
     }
 
 //Generates a unique id for objects. Send it the object name to get "name" + uniqueid as the new unique id
-    public string GenerateUniqueId(string prefix = "")
+    public string GenerateUniqueId()
     {
-        // Format: <prefix>_<timestamp>_<GUID>
-        string guidPart = Guid.NewGuid().ToString("N").Substring(0, 8); // shorter but still unique
-        string timePart = DateTime.UtcNow.Ticks.ToString("X");          // based on time
-        return string.IsNullOrEmpty(prefix)
-            ? $"{timePart}_{guidPart}"
-            : $"{prefix}_{timePart}_{guidPart}";
+        return System.Guid.NewGuid().ToString();
     }
 
     public string ConvertSecondsToTime(float totalSeconds)

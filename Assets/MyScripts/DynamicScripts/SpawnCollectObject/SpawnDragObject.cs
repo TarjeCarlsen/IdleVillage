@@ -8,8 +8,9 @@ public class SpawnDragObject : MonoBehaviour
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private RectTransform creationHitBox;
     [SerializeField] private RectTransform parentToSpawnUnder;
-
     private GameObject spawnedObject;
+    public bool condition = true;
+    public void SetCondition(bool state) => condition = state;
 
     void Update()
     {
@@ -24,8 +25,8 @@ public class SpawnDragObject : MonoBehaviour
     }
 
     public void SpawnObject(){
-                GameObject selected = EventSystem.current.currentSelectedGameObject;
-                if (selected != null && selected.transform.IsChildOf(transform))
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+            if (selected != null && selected.transform.IsChildOf(transform))
         {
             SpawnObjectOnMouse();
         }
@@ -33,6 +34,7 @@ public class SpawnDragObject : MonoBehaviour
 
     private void SpawnObjectOnMouse()
     {
+        if(!condition) return;
         spawnedObject = Instantiate(objectPrefab, parentToSpawnUnder);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             parentToSpawnUnder,

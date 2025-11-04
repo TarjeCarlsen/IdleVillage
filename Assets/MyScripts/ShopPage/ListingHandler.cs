@@ -12,7 +12,7 @@ public class ListingHandler : MonoBehaviour
     [SerializeField] private GameObject cancellButton;
     [SerializeField] private GameObject collectButton;
     [SerializeField] private GameObject soldImage;
-        [SerializeField] private GameObject listingObject;
+    // [SerializeField] private GameObject listingObject;
     public double chance;
     public AlphabeticNotation cancelAmount;
     public CurrencyTypes cancelCurrency;
@@ -20,24 +20,34 @@ public class ListingHandler : MonoBehaviour
     private Coroutine ListingCoroutine;
     private Coroutine timerCoroutine;
     private float timeRemaining;
-    private bool itemDidSell = false;
+
     [SerializeField] private float totalListingTime = 10f;
     [SerializeField] private float timeBetweenSellChecks = 1f; // static time check between listings, can be changed with upgradable                                             
 
 
     public void SetTime(float amount) => timeRemaining = amount;
+    public float GetCurrentTime() => timeRemaining;
     public void SetChance(double amount) => chance = amount;
     public void SetCancelAmount(AlphabeticNotation amount) => cancelAmount = amount;
     public void SetCancelCurrency(CurrencyTypes type) => cancelCurrency = type;
+    public string uniqueID;
+    public string SetUniqueID(string id) => uniqueID = id;
+    public string GetUniqueID() => uniqueID;
+    public bool itemDidSell = false;
+    public void SetListingSold(bool state) => itemDidSell = state;
+    public bool GetListingSold() => itemDidSell;
         public void SetSellingAmount(AlphabeticNotation amount) 
     {
         sellingAmount = amount;
         amount_txt.text = amount.ToStringSmart(1);
     }
+
+    private void Awake(){
+        if(itemDidSell) CloseListing();
+    }
     private void Start()
     {
         if(timeRemaining == 0){
-            print("SET TIME TO 10");
         timeRemaining = totalListingTime;
         }
         StartListing();
@@ -47,18 +57,19 @@ public class ListingHandler : MonoBehaviour
     public void OnCancelButtonClicked(){
         MoneyManager.Instance.AddCurrency(cancelCurrency,cancelAmount);
         CloseListing();
-        Destroy(listingObject);
+        Destroy(gameObject);
+        ShopManager.Instance.RemoveListing(uniqueID);
     }
     public void OnCollectButtonClicked(){
         MoneyManager.Instance.AddCurrency(CurrencyTypes.money, sellingAmount);
         CloseListing();
-        Destroy(listingObject);
+        Destroy(gameObject);
+        ShopManager.Instance.RemoveListing(uniqueID);
     }
 
     private bool ItemSold()
     {
         float randomValue = Random.value;
-        print($"chance was {chance} rolled - {randomValue}");
         return randomValue <= chance;
     }
 
@@ -73,7 +84,7 @@ public class ListingHandler : MonoBehaviour
             timerCoroutine = StartCoroutine(UpdateTimer());
         }
     }
-    private void CloseListing()
+    public void CloseListing()
     {
         if (ListingCoroutine != null)
         {
@@ -97,12 +108,12 @@ private IEnumerator CheckForSoldItem()
         itemDidSell = ItemSold();
         if (itemDidSell)
         {
-            Debug.Log("Item sold!");
+            print("listingsold = true");
             CloseListing();
             yield break;
         }
 
-        Debug.Log("Item not sold!");
+        // Debug.Log("Item not sold!");
     }
 
     CloseListing(); // time ran out

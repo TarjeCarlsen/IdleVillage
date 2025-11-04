@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 8806295337686717368}
   - component: {fileID: 4055587907125361557}
   - component: {fileID: 331512867731911946}
+  - component: {fileID: 3062837768510799247}
   m_Layer: 5
   m_Name: display_img
   m_TagString: Untagged
@@ -237,6 +238,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &3062837768510799247
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3240105202440191869}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 757b3e6becef5704ba0a0b23683a5b5d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4489347448525403907
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +315,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragHitBox: {fileID: 8328553826692638460}
   dropZoneTag: DropZoneFarm
+  useFindTag: 1
+  useGetTagInParent: 0
   objectImage: {fileID: 331512867731911946}
   draggingColor: {r: 0, g: 1, b: 0, a: 1}
   overlapColor: {r: 1, g: 0, b: 0, a: 1}
@@ -750,6 +775,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7119601391361965071, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
+      propertyPath: chimneySmokeAnimator
+      value: 
+      objectReference: {fileID: 3062837768510799247}
     - target: {fileID: 7798363362677861602, guid: fed96b5ac5827e8419ec4585e9279f60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

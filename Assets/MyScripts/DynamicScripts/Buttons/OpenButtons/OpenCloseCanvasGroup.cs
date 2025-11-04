@@ -38,7 +38,6 @@ public class OpenCloseCanvasGroup : MonoBehaviour
         disableDraggable.draggableEnabled = true;
     }
     public void ShowCanvas(){
-        print("inside show");
         canvasToShow.alpha = 1;
         canvasToShow.interactable = true;
         canvasToShow.blocksRaycasts = true;

@@ -13,6 +13,7 @@ public class SaveSystem
         public upgradeManagerSaveData upgradeManagerSaveData;
         public HouseManagerSaveData houseManagerSaveData;
         public StorageManagerSaveData storageManagerSaveData;
+        public ShopManagerSaveData shopManagerSaveData;
         public InventoryHandlerSaveData[] inventoryHandlerSaveData;
     }
 
@@ -63,6 +64,7 @@ public class SaveSystem
         GameManager.Instance.upgradeManager.Save(ref _saveData.upgradeManagerSaveData);
         GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Save(ref _saveData.storageManagerSaveData);
+        GameManager.Instance.shopManager.Save(ref _saveData.shopManagerSaveData);
 
         InventoryHandler[]inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
         _saveData.inventoryHandlerSaveData = new InventoryHandlerSaveData[inventoryHandlers.Length];
@@ -79,6 +81,7 @@ public class SaveSystem
         GameManager.Instance.upgradeManager.Load(_saveData.upgradeManagerSaveData);
         GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Load(_saveData.storageManagerSaveData);
+        GameManager.Instance.shopManager.Load(_saveData.shopManagerSaveData);
 
         InventoryHandler[] inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
         for (int i = 0; i < inventoryHandlers.Length; i++)
