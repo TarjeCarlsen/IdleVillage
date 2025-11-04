@@ -18,8 +18,8 @@ public class ShopManager : MonoBehaviour
     public List<ShopCardHandler> shopCardList;
     
     private AlphabeticNotation collectAmount;
-    private int currentListings;
-    
+    public int currentListings;
+    public int GetCurrentListingAmount()=> currentListings;
     [System.Serializable]
     public class ListingData{
         public AlphabeticNotation result;
@@ -31,6 +31,7 @@ public class ShopManager : MonoBehaviour
         public ListingHandler listingHandler;
         public string shopCardName;
         public bool listingSold;
+        public int amountOfCustomersInterested;
     }
 void Awake()
 {
@@ -43,9 +44,10 @@ void Awake()
     foreach(Transform child in ShopCardHolder){
         shopCardList.Add(child.GetComponent<ShopCardHandler>());
     }
+    UpdateUI();
     UpdateCollectAmount(new AlphabeticNotation(0),true);
 }
-    public void AddListing(string id, ListingData data){ // add all information about the listing object for save/load
+    public void AddListing(string id, ListingData data){
         listingObjects[id] = data;
         currentListings++;
         UpdateUI();
@@ -73,7 +75,7 @@ void Awake()
         }else{
             collectAllButton.SetActive(false);
         }
-        currentCollectAmount_txt.text = collectAmount.ToStringSmart(1);
+        UpdateUI();
     }
 
     public void OnCollectAllClick(){
@@ -87,6 +89,7 @@ void Awake()
     }
 
     private void UpdateUI(){
+        currentCollectAmount_txt.text = collectAmount.ToStringSmart(1);
         currentListingAmount_txt.text = currentListings.ToString() +"/" +  StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.shopAmountListings).ToString();
     }
 
@@ -101,6 +104,7 @@ void Awake()
         foreach(KeyValuePair<string,ListingData> pair in listingObjects){
         pair.Value.currentTime = pair.Value.listingHandler.GetCurrentTime();
         pair.Value.listingSold = pair.Value.listingHandler.GetListingSold();
+        pair.Value.amountOfCustomersInterested = pair.Value.listingHandler.GetAmountCustomers();
 
             data.listingSaveDatas.Add( new ListingSaveData {
                 result = pair.Value.result,
@@ -111,6 +115,7 @@ void Awake()
                 uniqueID = pair.Value.uniqueID,
                 shopCardName = pair.Value.shopCardName,
                 listingSold = pair.Value.listingSold,
+                amountOfCustomersInterested = pair.Value.amountOfCustomersInterested,
             });
         }
     }
@@ -125,7 +130,7 @@ void Awake()
 
         collectAmount = new AlphabeticNotation(0);
         collectAllButton.SetActive(false);
-        currentCollectAmount_txt.text = collectAmount.ToStringSmart(0);
+        // currentCollectAmount_txt.text = collectAmount.ToStringSmart(0);
 
         listingObjects.Clear();
         currentListings = 0;
@@ -137,11 +142,14 @@ void Awake()
                     card.CreateListingFromLoad(listingData.result,listingData.currentTime,
                                                 listingData.chance, listingData.cancelAmount,
                                                 listingData.cancelType, listingData.uniqueID,
-                                                listingData.shopCardName, listingData.listingSold);
+                                                listingData.shopCardName, listingData.listingSold,
+                                                listingData.amountOfCustomersInterested
+                                                );
                                                 break;
                 }
             }
         }
+        UpdateUI();
     }
 }
 
@@ -161,4 +169,5 @@ public struct ListingSaveData{
         public string uniqueID;
         public string shopCardName;
         public bool listingSold;
+        public int amountOfCustomersInterested;
 }

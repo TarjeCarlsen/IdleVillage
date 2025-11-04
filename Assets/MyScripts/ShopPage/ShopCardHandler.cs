@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ShopCardHandler : MonoBehaviour
 {
-    
+    [SerializeField] PopUpTextHandler popUpTextHandler;
     [SerializeField] private GameObject prefabListingToCreate;
     [SerializeField] private Transform parentToSpawnUnder;
     [SerializeField] private Color percentColor;
@@ -17,7 +17,7 @@ public class ShopCardHandler : MonoBehaviour
     [SerializeField] private TMP_Text result_txt;
 
     [SerializeField] private AlphabeticNotation startPrice;
-    [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(10);
+    [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(10); // HARDCODED MAX AMOUNT OF MARKETPRICE SLIDER SHOULD MOVE
     private AlphabeticNotation currentPrice;
     private AlphabeticNotation result;
     // [SerializeField]private float defaultTime = 60; 
@@ -53,15 +53,17 @@ public class ShopCardHandler : MonoBehaviour
     }
     private void OnEnable(){
         sliderHandlerPrice.OnSliderDragging += CalculatePercent;
-        sliderHandlerPrice.OnStoppedSliderDrag += CalculatePercent;        
+        sliderHandlerAmount.OnSliderDragging += CalculatePercent;
+        // sliderHandlerPrice.OnStoppedSliderDrag += CalculatePercent;        
         sliderHandlerPrice.OnStoppedSliderDrag += UpdateUI;        
-        sliderHandlerAmount.OnStoppedSliderDrag += UpdateUI;        
+        // sliderHandlerAmount.OnStoppedSliderDrag += UpdateUI;        
     }
     private void OnDisable(){
         sliderHandlerPrice.OnSliderDragging -= CalculatePercent;
-        sliderHandlerPrice.OnStoppedSliderDrag -= CalculatePercent;        
+        sliderHandlerAmount.OnSliderDragging -= CalculatePercent;
+        // sliderHandlerPrice.OnStoppedSliderDrag -= CalculatePercent;        
         sliderHandlerPrice.OnStoppedSliderDrag -= UpdateUI;        
-        sliderHandlerAmount.OnStoppedSliderDrag -= UpdateUI;        
+        // sliderHandlerAmount.OnStoppedSliderDrag -= UpdateUI;        
     }
 
     public void OnListButtonClicked(){
@@ -69,6 +71,12 @@ public class ShopCardHandler : MonoBehaviour
     }
 
     private void CreateListing(){
+        AlphabeticNotation maxListings = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.shopAmountListings);
+        int currentListingAmount = ShopManager.Instance.GetCurrentListingAmount();
+        if(currentListingAmount >= maxListings){
+            if(popUpTextHandler != null)popUpTextHandler.RunPopUp("Max listings active!");
+            return;
+        }
         if(CanAfford() && sliderHandlerAmount.sliderValue > 0 && rawTimeFloat > 0 && sliderHandlerPrice.sliderValue > 0){
             ShopManager.ListingData listingData= new ShopManager.ListingData();
             MoneyManager.Instance.SubtractCurrency(sliderHandlerAmount.maxValueCurrencytype, sliderHandlerAmount.sliderValue);
@@ -94,16 +102,16 @@ public class ShopCardHandler : MonoBehaviour
             sliderHandlerPrice.ResetSliderValues();
             handler.SetUniqueID(uniqueID);
             ShopManager.Instance.AddListing(uniqueID, listingData);
-
             ShopManager.Instance.UpdateCollectAmount(result,true);
         }else{
+            if(popUpTextHandler != null)popUpTextHandler.RunPopUp("Invalid amount chosen!");
         }
     }
 
     public void CreateListingFromLoad(
         AlphabeticNotation loadResult, float loadRawTimeFloat, double loadChance,
         AlphabeticNotation loadCancelAmount, CurrencyTypes loadMaxValueCurrencyType,
-        string loadUniqueID, string loadShopCardName, bool loadListingSold
+        string loadUniqueID, string loadShopCardName, bool loadListingSold, int loadAmountOfCustomers
         ){
         ShopManager.ListingData listingData = new ShopManager.ListingData();
         GameObject newListing = Instantiate(prefabListingToCreate,parentToSpawnUnder);
@@ -118,6 +126,7 @@ public class ShopCardHandler : MonoBehaviour
             listingData.shopCardName = loadShopCardName;
             listingData.listingSold = loadListingSold;
             listingData.listingHandler = handler;
+            listingData.amountOfCustomersInterested = loadAmountOfCustomers;
 
             handler.SetSellingAmount(loadResult);
             handler.SetTime(loadRawTimeFloat);
@@ -126,6 +135,7 @@ public class ShopCardHandler : MonoBehaviour
             handler.SetCancelCurrency(loadMaxValueCurrencyType);
             handler.SetUniqueID(loadUniqueID);
             handler.SetListingSold(loadListingSold);
+            handler.SetAmountCustomers(loadAmountOfCustomers);
 
             if(loadListingSold)
             {

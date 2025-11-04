@@ -14,15 +14,7 @@ public enum TimeUpgradeTypes
     furnaceBakingTime,
     windmillGrainTime,
     windmillFlourTime,
-    schoolChildFarmerTime,
-    schoolChildElectricianTime,
-    schoolChildMinerTime,
-    schoolChildAdventurerTime,
-    schoolMaxTime,
-    farmerTimePerTask,
-    electricianTimePerTask,
-    minerTimePerTask,
-    AdventurerTimePerTask,
+    timeBetweenCustomerChecks,
 
 }
 

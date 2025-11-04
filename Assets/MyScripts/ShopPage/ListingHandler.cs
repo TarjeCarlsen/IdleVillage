@@ -6,9 +6,13 @@ using UnityEngine.UI;
 
 public class ListingHandler : MonoBehaviour
 {
+    [SerializeField] private Sprite sellingIconSprite;
+    [SerializeField] private Sprite expiredIconSprite;
+    [SerializeField] private Image resultIcon;
     [SerializeField] private TMP_Text header_txt;
     [SerializeField] private TMP_Text time_txt;
     [SerializeField] private TMP_Text amount_txt;
+    [SerializeField] private TMP_Text amountOfCustomers_txt;
     [SerializeField] private GameObject cancellButton;
     [SerializeField] private GameObject collectButton;
     [SerializeField] private GameObject soldImage;
@@ -21,9 +25,9 @@ public class ListingHandler : MonoBehaviour
     private Coroutine timerCoroutine;
     private float timeRemaining;
 
-    [SerializeField] private float totalListingTime = 10f;
-    [SerializeField] private float timeBetweenSellChecks = 1f; // static time check between listings, can be changed with upgradable                                             
-
+    // [SerializeField] private float totalListingTime = 10f;
+    [SerializeField] private float timeBetweenSellChecks;  
+    private int amountOfCustomersInterested;                                       
 
     public void SetTime(float amount) => timeRemaining = amount;
     public float GetCurrentTime() => timeRemaining;
@@ -36,6 +40,8 @@ public class ListingHandler : MonoBehaviour
     public bool itemDidSell = false;
     public void SetListingSold(bool state) => itemDidSell = state;
     public bool GetListingSold() => itemDidSell;
+    public int GetAmountCustomers() => amountOfCustomersInterested;
+    public int SetAmountCustomers(int amount) => amountOfCustomersInterested = amount;
     public void SetSellingAmount(AlphabeticNotation amount) 
     {
         sellingAmount = amount;
@@ -45,13 +51,14 @@ public class ListingHandler : MonoBehaviour
 
     private void Awake(){
         if(itemDidSell) StopActiveListing();
+        resultIcon.sprite = sellingIconSprite;
     }
     private void Start()
     {
-        if(timeRemaining == 0){
-        timeRemaining = totalListingTime;
-        }
-
+        // if(timeRemaining == 0){
+        // timeRemaining = totalListingTime;
+        // }
+        timeBetweenSellChecks = UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks);
         StartCoroutine(WaitForOneFrame());
     }
 
@@ -112,8 +119,10 @@ private IEnumerator CheckForSoldItem()
 {
     while (timeRemaining > 0f && !itemDidSell)
     {
-        yield return new WaitForSeconds(timeBetweenSellChecks);
-
+    float randomTimeBetweenChecks = UnityEngine.Random.Range(0, timeBetweenSellChecks);
+        yield return new WaitForSeconds(randomTimeBetweenChecks);
+        amountOfCustomersInterested++; // USE THIS FOR DISPLAYING AMOUNT OF BUYERS INTERESTED
+        if(amountOfCustomers_txt != null)amountOfCustomers_txt.text = amountOfCustomersInterested.ToString();
         itemDidSell = ItemSold();
         if (itemDidSell)
         {
@@ -156,6 +165,12 @@ private IEnumerator UpdateTimer()
             collectButton.SetActive(false);
             cancellButton.SetActive(true);
             soldImage.SetActive(false);
+            if(timeRemaining == 0){
+            header_txt.text = "Offer Expired!";
+            resultIcon.sprite = expiredIconSprite;
+            amount_txt.text = cancelAmount.ToStringSmart(1);
+            }
         }
+        amountOfCustomers_txt.text = amountOfCustomersInterested.ToString();
     }
 }

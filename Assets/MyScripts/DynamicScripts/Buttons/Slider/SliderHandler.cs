@@ -1,4 +1,4 @@
-using LargeNumbers;
+                            using LargeNumbers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +18,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     *   serilizefield for input. use currencytype
     ***/
 
-
+    [SerializeField] private int sliderSteps = 100;
     [SerializeField] public CurrencyTypes maxValueCurrencytype;
     [SerializeField] private bool useCurrencyTypeMaxValue = false;
     [SerializeField] private AlphabeticNotation customMaxValue;
@@ -28,6 +28,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     public AlphabeticNotation maxValueFromScript;
     [SerializeField] private Slider slider;
     [SerializeField] private TMP_Text sliderAmount_txt;
+    [SerializeField] private bool useWholeNumbers;
     public AlphabeticNotation sliderValue;
     public event Action OnStoppedSliderDrag;
     public event Action OnSliderDragging;
@@ -78,9 +79,18 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     }
 
     public void OnSliderDragger(){
+        if(useWholeNumbers)
+        {
+        sliderValue = GetValue().Round(); 
+        }else{
         sliderValue = GetValue(); 
+        }
         sliderAmount_txt.text = sliderValue.ToStringSmart(1);
         OnSliderDragging?.Invoke();
+    }
+
+    public void OnSliderDraggerPercent(){
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)

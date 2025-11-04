@@ -757,7 +757,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1357,6 +1357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15ee151ddebe748910df47b01e4233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderSteps: 100
   maxValueCurrencytype: 1
   useCurrencyTypeMaxValue: 1
   customMaxValue:
@@ -1370,6 +1371,7 @@ MonoBehaviour:
     magnitude: 0
   slider: {fileID: 8735964719936957682}
   sliderAmount_txt: {fileID: 1067926534259150164}
+  useWholeNumbers: 1
   sliderValue:
     coefficient: 0
     magnitude: 0
@@ -1447,8 +1449,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291490724
+  m_fontColor: {r: 0.6427109, g: 0.9528302, b: 0.79403675, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1933,8 +1935,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291556260
+  m_fontColor: {r: 0.6431373, g: 0.9529412, b: 0.79607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2625,6 +2627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9d3db3af3994940b0a32d20d6304a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popUpTextHandler: {fileID: 0}
+  prefabListingToCreate: {fileID: 9170196569199488353, guid: 3ae7b41ced8381148b949a80c77cab9c, type: 3}
+  parentToSpawnUnder: {fileID: 0}
+  percentColor: {r: 0, g: 0, b: 0, a: 0}
   marketPrice_txt: {fileID: 1370879802810977231}
   time_txt: {fileID: 2823693412705360020}
   percent_txt: {fileID: 3789470238356549169}
@@ -2637,10 +2643,6 @@ MonoBehaviour:
     magnitude: 0
   sliderHandlerPrice: {fileID: 6952984396966463677}
   sliderHandlerAmount: {fileID: 2120808898669172615}
-  prefabListingToCreate: {fileID: 9170196569199488353, guid: 3ae7b41ced8381148b949a80c77cab9c, type: 3}
-  parentToSpawnUnder: {fileID: 0}
-  percentColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultTime: 60
   steepness: 5
   midpoint: 2.5
   minChance: 0.001
@@ -2718,8 +2720,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291556260
+  m_fontColor: {r: 0.6431373, g: 0.9529412, b: 0.79607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3331,6 +3333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15ee151ddebe748910df47b01e4233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderSteps: 100
   maxValueCurrencytype: 0
   useCurrencyTypeMaxValue: 0
   customMaxValue:
@@ -3344,6 +3347,7 @@ MonoBehaviour:
     magnitude: 0
   slider: {fileID: 4695897931522054565}
   sliderAmount_txt: {fileID: 5279263884874863760}
+  useWholeNumbers: 0
   sliderValue:
     coefficient: 0
     magnitude: 0
@@ -3421,8 +3425,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291556260
+  m_fontColor: {r: 0.6431373, g: 0.9529412, b: 0.79607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4159,8 +4163,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4279598033
+  m_fontColor: {r: 0.8207547, g: 0.4828336, b: 0.081301175, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4183,7 +4187,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4416,14 +4420,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1297569894, guid: 1982d4352cd942344845d1c264b41a6c, type: 3}
+  m_Sprite: {fileID: 1501093476, guid: 362cc59c0850b9348a4a43da19c88a4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4609,7 +4613,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4913,7 +4917,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 60
+          m_FloatArgument: 2
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -5119,7 +5123,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5231,8 +5235,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5367,8 +5371,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4291556260
+  m_fontColor: {r: 0.6431373, g: 0.9529412, b: 0.79607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
