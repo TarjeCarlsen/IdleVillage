@@ -15,11 +15,6 @@ public enum CurrencyTypes{
     flour,
     dough,
     bread,
-    child,
-    farmer,
-    electrician,
-    miner,
-    adventurer,
 }
 
 [System.Serializable]

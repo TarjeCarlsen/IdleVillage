@@ -17,14 +17,16 @@ public class OpenCloseCanvas : MonoBehaviour
         }
     }
 
-    private void OnButtonClick(){
+    public void OnButtonClick(){
         ShowCanvas();
         HideCanvas();
     }
 
 
     public void ShowCanvas(){
+        print("inside show");
         if(canvasToShow == null) return;
+        print("inside show SHOW!");
         canvasToShow.gameObject.SetActive(true);
         canvasToShow.enabled = true;
         showRaycaster.enabled = true;
