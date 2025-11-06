@@ -12,6 +12,8 @@ public class ListingHandler : MonoBehaviour
     [SerializeField] private TMP_Text percentageCustomers_txt; // - percentage within customer box
     [SerializeField] private Sprite sellingIconSprite;
     [SerializeField] private Sprite expiredIconSprite;
+    [SerializeField] private Image originalCurrencyUsed;
+    [SerializeField] private Image expiredCurrencyCollect;
     [SerializeField] private Image resultIcon;
     [SerializeField] private TMP_Text header_txt;
     [SerializeField] private TMP_Text time_txt;
@@ -19,6 +21,7 @@ public class ListingHandler : MonoBehaviour
     [SerializeField] private TMP_Text amountOfCustomers_txt;
     [SerializeField] private GameObject cancellButton;
     [SerializeField] private GameObject collectButton;
+    [SerializeField] private GameObject expiredButton;
     [SerializeField] private GameObject soldImage;
     // [SerializeField] private GameObject listingObject;
     public double chance;
@@ -65,6 +68,8 @@ public class ListingHandler : MonoBehaviour
         // if(timeRemaining == 0){
         // timeRemaining = totalListingTime;
         // }
+        originalCurrencyUsed.sprite = expiredIconSprite;
+        expiredCurrencyCollect.sprite = expiredIconSprite;
         timeBetweenSellChecks = UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks);
         StartCoroutine(WaitForOneFrame());
     }
@@ -193,14 +198,19 @@ private void PercentVisuals(){
             header_txt.text = "";
             collectButton.SetActive(true);
             cancellButton.SetActive(false);
+            expiredButton.SetActive(false);
             soldImage.SetActive(true);
         }else{
             header_txt.text = "Time remaining";
             collectButton.SetActive(false);
+            expiredButton.SetActive(false);
             cancellButton.SetActive(true);
             soldImage.SetActive(false);
             if(timeRemaining == 0){
             header_txt.text = "Offer Expired!";
+            expiredButton.SetActive(true);
+            cancellButton.SetActive(false);
+            collectButton.SetActive(false);
             resultIcon.sprite = expiredIconSprite;
             amount_txt.text = cancelAmount.ToStringSmart(1);
             }
