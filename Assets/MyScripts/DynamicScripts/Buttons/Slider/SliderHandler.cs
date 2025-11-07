@@ -18,7 +18,6 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     *   serilizefield for input. use currencytype
     ***/
 
-    [SerializeField] private int sliderSteps = 100;
     [SerializeField] public CurrencyTypes maxValueCurrencytype;
     [SerializeField] private bool useCurrencyTypeMaxValue = false;
     [SerializeField] private AlphabeticNotation customMaxValue;
@@ -71,7 +70,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
         }
         slider.minValue = 0;
         slider.maxValue = 1f;
-        slider.value = 0;
+        slider.value = 0f;
     }
 
     private AlphabeticNotation GetValue(){

@@ -44,6 +44,7 @@ public class ShopCardHandler : MonoBehaviour
 
     private void Awake(){
         sliderHandlerPrice.SetMaxValueFromScript(startPrice * maxAdjustPriceMulti);
+        sliderHandlerPrice.ResetSliderValues();
         originalPercentColor = percent_txt.color;
     }
 
@@ -164,7 +165,6 @@ public class ShopCardHandler : MonoBehaviour
     private void CalculatePercent()
     {
         float averageAmountOfCustomers = rawTimeFloat / (UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks) / 2);
-        print("average amount of customers  = "+ averageAmountOfCustomers);
         currentPrice = sliderHandlerPrice.sliderValue;
 
         // --- Convert to double ratio safely ---
@@ -186,7 +186,6 @@ public class ShopCardHandler : MonoBehaviour
 
         // --- Convert to % and display ---
         float percent = (float)(chance * 100f);
-        print("chance = "+ chance);
         double atLeastOneSaleChance = 1.0 - System.Math.Pow(1.0 - chance, averageAmountOfCustomers);
         atLeastOneSalePercent = (float)(atLeastOneSaleChance * 100f);
 
