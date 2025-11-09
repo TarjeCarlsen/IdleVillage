@@ -1532,7 +1532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15ee151ddebe748910df47b01e4233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderSteps: 100
   maxValueCurrencytype: 1
   useCurrencyTypeMaxValue: 1
   customMaxValue:
@@ -1540,6 +1539,7 @@ MonoBehaviour:
     magnitude: 0
   useCustomMaxValue: 0
   useMaxValueFromOtherScript: 0
+  resetValuesOnStart: 1
   showOutputAsPercent: 0
   maxValueFromScript:
     coefficient: 0
@@ -2815,12 +2815,12 @@ MonoBehaviour:
     coefficient: 5
     magnitude: 0
   maxAdjustPriceMulti:
-    coefficient: 10
+    coefficient: 2
     magnitude: 0
   sliderHandlerPrice: {fileID: 6952984396966463677}
   sliderHandlerAmount: {fileID: 2120808898669172615}
   steepness: 5
-  midpoint: 1.2
+  midpoint: 0.3
   minChance: 0.0001
 --- !u!1 &5101625063723408566
 GameObject:
@@ -3509,7 +3509,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15ee151ddebe748910df47b01e4233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderSteps: 100
   maxValueCurrencytype: 0
   useCurrencyTypeMaxValue: 0
   customMaxValue:
@@ -3517,6 +3516,7 @@ MonoBehaviour:
     magnitude: 0
   useCustomMaxValue: 0
   useMaxValueFromOtherScript: 1
+  resetValuesOnStart: 0
   showOutputAsPercent: 1
   maxValueFromScript:
     coefficient: 0

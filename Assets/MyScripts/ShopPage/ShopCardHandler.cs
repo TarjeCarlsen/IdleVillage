@@ -17,7 +17,7 @@ public class ShopCardHandler : MonoBehaviour
     [SerializeField] private TMP_Text result_txt;
 
     [SerializeField] private AlphabeticNotation startPrice;
-    [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(10); // HARDCODED MAX AMOUNT OF MARKETPRICE SLIDER SHOULD MOVE
+    [SerializeField] private AlphabeticNotation maxAdjustPriceMulti = new AlphabeticNotation(2); // HARDCODED MAX AMOUNT OF MARKETPRICE SLIDER SHOULD MOVE
     private AlphabeticNotation currentPrice;
     private AlphabeticNotation result;
     // [SerializeField]private float defaultTime = 60; 
@@ -45,12 +45,14 @@ public class ShopCardHandler : MonoBehaviour
     private void Awake(){
         sliderHandlerPrice.SetMaxValueFromScript(startPrice * maxAdjustPriceMulti);
         sliderHandlerPrice.ResetSliderValues();
+        sliderHandlerPrice.SetSliderSpecific(startPrice, .5f);
         originalPercentColor = percent_txt.color;
     }
 
     private void Start(){
         time = HelperFunctions.Instance.ConvertSecondsToTime(rawTimeFloat);
         cardName = gameObject.name;
+        CalculatePercent();
         UpdateUI();
     }
     private void OnEnable(){
@@ -102,6 +104,7 @@ public class ShopCardHandler : MonoBehaviour
             handler.SetCancelCurrency(sliderHandlerAmount.maxValueCurrencytype);
             sliderHandlerAmount.ResetSliderValues();
             sliderHandlerPrice.ResetSliderValues();
+            sliderHandlerPrice.SetSliderSpecific(startPrice, .5f);
             handler.SetUniqueID(uniqueID);
             ShopManager.Instance.AddListing(uniqueID, listingData);
             ShopManager.Instance.UpdateCollectAmount(result,true);

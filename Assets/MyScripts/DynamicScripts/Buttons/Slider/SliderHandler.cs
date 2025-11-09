@@ -23,6 +23,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     [SerializeField] private AlphabeticNotation customMaxValue;
     [SerializeField]private bool useCustomMaxValue;
     [SerializeField] private bool useMaxValueFromOtherScript;
+    [SerializeField] private bool resetValuesOnStart = true;
     [SerializeField] private bool showOutputAsPercent;
     public AlphabeticNotation maxValueFromScript;
     [SerializeField] private Slider slider;
@@ -35,8 +36,10 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
 
     public void SetMaxValueFromScript(AlphabeticNotation amount) => maxValueFromScript = amount; 
     private void Start(){
-        ResetSliderValues();
-        sliderAmount_txt.text = "0";
+        if(resetValuesOnStart){
+            ResetSliderValues();
+            sliderAmount_txt.text = "0";
+        }
     }
 
     private void OnEnable(){
@@ -75,6 +78,11 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
 
     private AlphabeticNotation GetValue(){
         return maxValue * slider.value;
+    }
+
+    public void SetSliderSpecific(AlphabeticNotation marketPrice, float sliderStart){
+        slider.value = sliderStart;
+        sliderAmount_txt.text = marketPrice.ToString();
     }
 
     public void OnSliderDragger(){
