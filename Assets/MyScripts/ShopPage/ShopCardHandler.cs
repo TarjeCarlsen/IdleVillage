@@ -198,6 +198,7 @@ public class ShopCardHandler : MonoBehaviour
     private void UpdateUI(){
         marketPrice_txt.text = startPrice.ToStringSmart(1);
         result = sliderHandlerPrice.sliderValue * sliderHandlerAmount.sliderValue;
+        print($"slidervalue = {sliderHandlerPrice.sliderValue} amount = {sliderHandlerAmount.sliderValue} result = {result}");
         result_txt.text = result.ToStringSmart(1);
         time_txt.text = time;
 

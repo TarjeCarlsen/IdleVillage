@@ -1541,6 +1541,8 @@ MonoBehaviour:
   useMaxValueFromOtherScript: 0
   resetValuesOnStart: 1
   showOutputAsPercent: 0
+  useColorsOnFill: 0
+  fillImage: {fileID: 0}
   maxValueFromScript:
     coefficient: 0
     magnitude: 0
@@ -3518,6 +3520,8 @@ MonoBehaviour:
   useMaxValueFromOtherScript: 1
   resetValuesOnStart: 0
   showOutputAsPercent: 1
+  useColorsOnFill: 1
+  fillImage: {fileID: 7427531436004846199}
   maxValueFromScript:
     coefficient: 0
     magnitude: 0
