@@ -64,4 +64,13 @@ public class ProgressBarHandler : MonoBehaviour
         onComplete?.Invoke();
         progressCoroutine = null;
     }
+
+    /// <summary>
+/// Instantly sets the progress bar to a given percentage (0 to 1).
+/// </summary>
+/// <param name="percentage">The target fill percentage (0.0 to 1.0)</param>
+public void SetProgress(float percentage)
+{
+    fillImage.fillAmount = Mathf.Clamp01(percentage);
+}
 }
