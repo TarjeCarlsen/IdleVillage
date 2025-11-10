@@ -102,6 +102,7 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
 
     private AlphabeticNotation GetValue()
     {
+        // print($"maxvalue = {maxValue} slider value = {slider.value} result = {maxValue * slider.value}");
         return maxValue * slider.value;
     }
 
@@ -124,7 +125,8 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     {
         if (useWholeNumbers)
         {
-            sliderValue = GetValue().Round();
+    double rounded = Math.Round(GetValue().Standard(), 0, MidpointRounding.AwayFromZero);
+    sliderValue = new AlphabeticNotation(rounded);
         }
         else
         {
