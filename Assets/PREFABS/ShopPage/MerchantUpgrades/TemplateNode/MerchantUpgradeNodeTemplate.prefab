@@ -55,7 +55,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagForWhereToCenter: ShopPage
-  anchoredPosition: {x: 10, y: -430}
+  objectForWhereToCenter: {fileID: 0}
+  anchoredPosition: {x: 10, y: -450}
 --- !u!114 &3048991629278545814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,8 +74,10 @@ MonoBehaviour:
   merchant: 0
   currencyToUpgrade: 1
   pointCost_txt: {fileID: 4330870929773822487}
+  header_lvl_txt: {fileID: 3937799054314338907}
   cardObejct: {fileID: 603474152258064399}
   skillPointCost: 5
+  maxLevel: 10
 --- !u!114 &4332482802693078744
 MonoBehaviour:
   m_ObjectHideFlags: 0
