@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 public class BakeryManager : MonoBehaviour
 {
+    [SerializeField] private SpawnDragObject flourSpawnDragObject;
+    [SerializeField] private SpawnDragObject doughSpawnDragObject;
+
     [SerializeField] private TMP_Text flourCounter_txt;
     [SerializeField] private TMP_Text flourToDoughCounter_txt;
     [SerializeField] private TMP_Text doughInsideFurnace_txt;
@@ -25,7 +28,7 @@ public class BakeryManager : MonoBehaviour
     [SerializeField] private Animator doughToCrateAnim;
     [SerializeField] private Animator cookingAnimator;
     [SerializeField] private Animator doughPressAnimator;
-
+    [SerializeField] private Animator chimneySmokeAnimator;
     public event Action OnFlourDropped;
 
     public AlphabeticNotation flourCounter;
@@ -37,17 +40,51 @@ public class BakeryManager : MonoBehaviour
     private AlphabeticNotation breadDoneAmount;
     public void SetBreadDoneAmount(AlphabeticNotation amount) => breadDoneAmount = amount;
 
-    private void Start(){
+    private void Start()
+    {
         UpdateUI();
     }
 
-    public void OnEnable(){
+    public void OnEnable()
+    {
+        MoneyManager.Instance.OnCurrencyChanged += SetCondition;
         UpgradeManager.Instance.OnActivationUnlock += ActivateDoughPress;
     }
-    public void OnDisable(){
+    public void OnDisable()
+    {
         UpgradeManager.Instance.OnActivationUnlock -= ActivateDoughPress;
+        MoneyManager.Instance.OnCurrencyChanged += SetCondition;
+
     }
-    
+    private void SetCondition(CurrencyTypes type)
+    {
+        if (type == CurrencyTypes.flour)
+        {
+            if (MoneyManager.Instance.GetCurrency(type) > 0)
+            {
+                flourSpawnDragObject.SetCondition(true);
+            }
+            else
+            {
+                flourSpawnDragObject.SetCondition(false);
+            }
+        }
+        else if (type == CurrencyTypes.dough)
+        {
+            if (MoneyManager.Instance.GetCurrency(type) > 0)
+            {
+                doughSpawnDragObject.SetCondition(true);
+            }
+            else
+            {
+                doughSpawnDragObject.SetCondition(false);
+            }
+        }
+    }
+
+
+
+
     public void AddFlourToBowl()
     {
         prevCounter = flourCounter;
@@ -64,33 +101,33 @@ public class BakeryManager : MonoBehaviour
         }
     }
 
-public void AddFlourToDough()
-{
-    prevCounter = flourCounter;
-
-    AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
-    AlphabeticNotation amountToAdd = BowlCalculateAmountLeft(SpecialUpgradeTypes.flourToDoughClickPower);
-
-    if (amountToAdd <= 0)
-        return;
-
-    flourToDoughCounter += amountToAdd;
-    flourCounter -= amountToAdd;
-
-    if (flourToDoughCounter >= maxStorage)
+    public void AddFlourToDough()
     {
-        MoneyManager.Instance.AddCurrency(CurrencyTypes.dough, new AlphabeticNotation(1));
-        doughToCrateAnim.Play("PlusOneDough");
-        flourToDoughCounter = new AlphabeticNotation(0);
-    }
+        prevCounter = flourCounter;
 
-    UpdateUI();
-}
+        AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap);
+        AlphabeticNotation amountToAdd = BowlCalculateAmountLeft(SpecialUpgradeTypes.flourToDoughClickPower);
+
+        if (amountToAdd <= 0)
+            return;
+
+        flourToDoughCounter += amountToAdd;
+        flourCounter -= amountToAdd;
+
+        if (flourToDoughCounter >= maxStorage)
+        {
+            MoneyManager.Instance.AddCurrency(CurrencyTypes.dough, new AlphabeticNotation(1));
+            doughToCrateAnim.Play("PlusOneDough");
+            flourToDoughCounter = new AlphabeticNotation(0);
+        }
+
+        UpdateUI();
+    }
 
     public void AddDoughToFurnace()
     {
         // Debug.Log($"{name} animator id: {cookingAnimator.GetInstanceID()} on object {cookingAnimator.gameObject.name}");
-        if(BreadDone) return;
+        if (BreadDone) return;
         AlphabeticNotation maxStorage = StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
         AlphabeticNotation amountToAdd = DoughCalculateAmountLeft(SpecialUpgradeTypes.doughDragAmount);
         if (doughInsideFurCounter + amountToAdd > maxStorage) return;
@@ -98,7 +135,7 @@ public void AddFlourToDough()
         {
             doughInsideFurCounter += amountToAdd;
             MoneyManager.Instance.SubtractCurrency(CurrencyTypes.dough, amountToAdd);
-            cookingAnimator.SetBool("DoughInside",true);
+            cookingAnimator.SetBool("DoughInside", true);
             UpdateUI();
         }
     }
@@ -143,15 +180,17 @@ public void AddFlourToDough()
 
     }
 
-    private void ActivateDoughPress(){
+    private void ActivateDoughPress()
+    {
         doughPress.SetActive(true);
         bowl.SetActive(false);
         UpgradeManager.Instance.OnActivationUnlock -= ActivateDoughPress;
     }
 
-    private void FillStagesBowl(){
+    private void FillStagesBowl()
+    {
 
-        for (AlphabeticNotation i = prevCounter; i < flourCounter; i=i+1)
+        for (AlphabeticNotation i = prevCounter; i < flourCounter; i = i + 1)
         {
             int index = (int)i;
             if (index >= fillStages.Count)
@@ -161,72 +200,85 @@ public void AddFlourToDough()
         }
     }
 
-private void EmptyStagesBowl()
-{
-    for (AlphabeticNotation i = prevCounter - 1; i >= flourCounter; i = i - 1)
+    private void EmptyStagesBowl()
     {
-        int index = (int)i;
-        if (index < 0 || index >= fillStages.Count)
-            continue;
+        for (AlphabeticNotation i = prevCounter - 1; i >= flourCounter; i = i - 1)
+        {
+            int index = (int)i;
+            if (index < 0 || index >= fillStages.Count)
+                continue;
 
-        fillStages[index].SetActive(false);
+            fillStages[index].SetActive(false);
+        }
     }
-}
-    public void StartCookingAnim(){
-        cookingAnimator.SetBool("TurnedOn",true);
-       cookingAnimator.SetBool("DoughInside", false);
-        cookingAnimator.SetBool("Empty",false);
-        cookingAnimator.SetBool("BreadDone",false);
+    public void StartCookingAnim()
+    {
+        cookingAnimator.SetBool("TurnedOn", true);
+        cookingAnimator.SetBool("DoughInside", false);
+        cookingAnimator.SetBool("Empty", false);
+        cookingAnimator.SetBool("BreadDone", false);
+        chimneySmokeAnimator.SetBool("ChimneyOn", true);
     }
-    public void StopCookingAnim(){
-        cookingAnimator.SetBool("BreadDone",true);
-        cookingAnimator.SetBool("TurnedOn",false);
-       cookingAnimator.SetBool("DoughInside", false);
-        cookingAnimator.SetBool("Empty",false);
+    public void StopCookingAnim()
+    {
+        cookingAnimator.SetBool("BreadDone", true);
+        cookingAnimator.SetBool("TurnedOn", false);
+        cookingAnimator.SetBool("DoughInside", false);
+        cookingAnimator.SetBool("Empty", false);
+        chimneySmokeAnimator.SetBool("ChimneyOn", false);
         BreadDone = true;
     }
-    public void HarvestBreadAnim(){
-        cookingAnimator.SetBool("Empty",true);
-        cookingAnimator.SetBool("BreadDone",false);
+    public void HarvestBreadAnim()
+    {
+        cookingAnimator.SetBool("Empty", true);
+        cookingAnimator.SetBool("BreadDone", false);
         BreadDone = false;
 
     }
 
-    public void StartPressAnim(){
+    public void StartPressAnim()
+    {
         doughPressAnimator.SetBool("hasFlour", true);
     }
-    public void StopPressAnim(){
+    public void StopPressAnim()
+    {
         doughPressAnimator.SetBool("hasFlour", false);
     }
 
     public void UpdateUI()
     {
         flourCounter_txt.text = flourCounter.ToString() + "/" + StorageManager.Instance.GetMaxStorage(CurrencyTypes.flour);
-        flourToDoughCounter_txt.text = flourToDoughCounter.ToString() + "/" +StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap).ToString();
+        flourToDoughCounter_txt.text = flourToDoughCounter.ToString() + "/" + StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.flourPerDoughCap).ToString();
         doughInsideFurnace_txt.text = doughInsideFurCounter.ToString() + "/" + StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.furnaceStorageCap);
         breadDone_txt.text = breadDoneAmount.ToString();
 
-        if(MoneyManager.Instance.GetCurrency(CurrencyTypes.flour) > new AlphabeticNotation(0.5,0)){
+        if (MoneyManager.Instance.GetCurrency(CurrencyTypes.flour) > new AlphabeticNotation(0.5, 0))
+        {
             flourFullImage.SetActive(true);
             flourEmptyImage.SetActive(false);
 
-        }else{
+        }
+        else
+        {
             flourEmptyImage.SetActive(true);
             flourFullImage.SetActive(false);
         }
 
-    if(UpgradeManager.Instance.GetActivationUnlock(ActivationUnlocks.doughpress)){
-        ActivateDoughPress();
-    }else{
+        if (UpgradeManager.Instance.GetActivationUnlock(ActivationUnlocks.doughpress))
+        {
+            ActivateDoughPress();
+        }
+        else
+        {
 
-        if (flourCounter > prevCounter)
-        {
-            FillStagesBowl();
+            if (flourCounter > prevCounter)
+            {
+                FillStagesBowl();
+            }
+            else if (flourCounter < prevCounter)
+            {
+                EmptyStagesBowl();
+            }
         }
-        else if (flourCounter < prevCounter)
-        {
-            EmptyStagesBowl();
-        }
-    }
     }
 }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public HouseManager houseManager {get; set;}
     public StorageManager storageManager {get; set;}
     public UpgradeManager upgradeManager{get; set;}
-
+    public ShopManager shopManager {get; set;}
 
     private void Awake(){
         if(Instance == null){
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         upgradeManager = FindFirstObjectByType<UpgradeManager>();
         houseManager = FindFirstObjectByType<HouseManager>();
         storageManager = FindFirstObjectByType<StorageManager>();
+        shopManager = FindFirstObjectByType<ShopManager>();
     }
 
 

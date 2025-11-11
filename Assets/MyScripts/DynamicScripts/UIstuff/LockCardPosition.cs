@@ -3,6 +3,7 @@ using UnityEngine;
 public class LockCardPosition : MonoBehaviour
 {
     [SerializeField] private string tagForWhereToCenter; // e.g. "FarmingCanvas"
+    [SerializeField] private GameObject objectForWhereToCenter;
     [SerializeField] private Vector2 anchoredPosition;   // editable in Inspector (UI units)
 
     private RectTransform targetCanvas;
@@ -10,9 +11,13 @@ public class LockCardPosition : MonoBehaviour
 
     private void Awake()
     {
-        var canvasObj = GameObject.FindGameObjectWithTag(tagForWhereToCenter);
-        if (canvasObj != null)
-            targetCanvas = canvasObj.GetComponent<RectTransform>();
+        if(objectForWhereToCenter == null){
+            var canvasObj = GameObject.FindGameObjectWithTag(tagForWhereToCenter);
+            if (canvasObj != null)
+                targetCanvas = canvasObj.GetComponent<RectTransform>();
+        }else{
+            targetCanvas = objectForWhereToCenter.GetComponent<RectTransform>();
+        }
 
         thisRect = GetComponent<RectTransform>();
 

@@ -846,7 +846,6 @@ RectTransform:
   - {fileID: 8325467853224717148}
   - {fileID: 354819122964965775}
   - {fileID: 8178789770539569159}
-  - {fileID: 4608185460825148737}
   - {fileID: 7510865273934433355}
   - {fileID: 3607828996258295088}
   - {fileID: 3320378588883070192}
@@ -872,6 +871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a41535c58f731d429f3e6faae874aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flourSpawnDragObject: {fileID: 6567201620589856406}
+  doughSpawnDragObject: {fileID: 4612649048460614150}
   flourCounter_txt: {fileID: 1654903779749562212}
   flourToDoughCounter_txt: {fileID: 6084988598905539763}
   doughInsideFurnace_txt: {fileID: 4709155989124218682}
@@ -894,6 +895,7 @@ MonoBehaviour:
   doughToCrateAnim: {fileID: 2023303276842799279}
   cookingAnimator: {fileID: 5479748028335352807}
   doughPressAnimator: {fileID: 6170684494112212274}
+  chimneySmokeAnimator: {fileID: 0}
   flourCounter:
     coefficient: 0
     magnitude: 0
@@ -1132,7 +1134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2965995159346403883
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3096,6 +3098,7 @@ RectTransform:
   m_Children:
   - {fileID: 1325119841486746334}
   - {fileID: 5660924457718850216}
+  - {fileID: 4608185460825148737}
   - {fileID: 1390174010164475994}
   - {fileID: 275322842771887903}
   m_Father: {fileID: 7542098529186601864}
@@ -3925,11 +3928,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7542098529186601864}
+  m_Father: {fileID: 354819122964965775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -219}
+  m_AnchoredPosition: {x: -828, y: -244}
   m_SizeDelta: {x: 1200, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3987603419414782775
@@ -4469,6 +4472,7 @@ MonoBehaviour:
   objectPrefab: {fileID: 7516817307261678876, guid: f207f7ece50500d4da2d033a4db7ba3d, type: 3}
   creationHitBox: {fileID: 1775646285267310323}
   parentToSpawnUnder: {fileID: 1312902068020323283}
+  condition: 1
 --- !u!1 &7355478226536892891
 GameObject:
   m_ObjectHideFlags: 0
@@ -5031,6 +5035,9 @@ MonoBehaviour:
       coefficient: 0
       magnitude: 0
     currencyType: 3
+  value_to_test:
+    coefficient: 0
+    magnitude: 0
 --- !u!1 &8009170714346737068
 GameObject:
   m_ObjectHideFlags: 0
@@ -5444,6 +5451,7 @@ MonoBehaviour:
   objectPrefab: {fileID: 9009609496739046089, guid: d83fcd57ca5dff147a8261af3716771f, type: 3}
   creationHitBox: {fileID: 312014271058004830}
   parentToSpawnUnder: {fileID: 1390174010164475994}
+  condition: 1
 --- !u!1 &8742930557784377768
 GameObject:
   m_ObjectHideFlags: 0

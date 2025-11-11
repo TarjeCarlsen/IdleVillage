@@ -14,15 +14,7 @@ public enum TimeUpgradeTypes
     furnaceBakingTime,
     windmillGrainTime,
     windmillFlourTime,
-    schoolChildFarmerTime,
-    schoolChildElectricianTime,
-    schoolChildMinerTime,
-    schoolChildAdventurerTime,
-    schoolMaxTime,
-    farmerTimePerTask,
-    electricianTimePerTask,
-    minerTimePerTask,
-    AdventurerTimePerTask,
+    timeBetweenCustomerChecks,
 
 }
 
@@ -33,6 +25,7 @@ public enum SpecialUpgradeTypes{
     doughCreatePower,
 
 }
+
 
 public enum ActivationUnlocks{
     doughpress,
@@ -45,6 +38,7 @@ public class UpgradeManager : MonoBehaviour
     public Dictionary<CurrencyTypes, AlphabeticNotation> productionPower;
     public Dictionary<CurrencyTypes, AlphabeticNotation> storagePower;
     public Dictionary<SpecialUpgradeTypes, AlphabeticNotation> specialProductionPower;
+    [SerializeField] private AlphabeticNotation defaultMerchantPower = new AlphabeticNotation(1);
     public Dictionary<ActivationUnlocks, bool> activationUnlocks;
     public Dictionary<TimeUpgradeTypes, float> upgradeTime;
     [SerializeField] private AlphabeticNotation defaultProductionPower = new AlphabeticNotation(1);
@@ -65,6 +59,7 @@ public class UpgradeManager : MonoBehaviour
         InitializeTime();
         InitializeSpecialPowers();
     }
+
 
 
     private void InitializePowers(){
@@ -96,6 +91,8 @@ public class UpgradeManager : MonoBehaviour
             activationUnlocks[type] = defaultActivationUnlock;
         }
     }
+
+
 
 
 
@@ -156,12 +153,16 @@ public class UpgradeManager : MonoBehaviour
         activationUnlocks[type] = state;
         OnActivationUnlock?.Invoke();
     }
+
+
+    // ------------------------ SAVE & LOAD --------------------- //
     public void Save(ref upgradeManagerSaveData data)
     {
         data.activationUnlocks = new List<ActivationDataList>();
         data.productionData = new List<UpgradeDataList>();
         data.storageData = new List<UpgradeDataList>();
         data.timeData = new List<UpgradeDataList>();
+
 
         foreach (var pair in activationUnlocks){
             data.activationUnlocks.Add(new ActivationDataList{
@@ -225,6 +226,7 @@ public class UpgradeManager : MonoBehaviour
                     upgradeTime[type] = float.Parse(entry.amount);
             }
         }
+
 
         Debug.Log("[UpgradeManager] All data loaded successfully!");
     }

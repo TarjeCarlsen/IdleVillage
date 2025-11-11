@@ -36,8 +36,8 @@ public class CardInfo : MonoBehaviour
     }
 
         private void Awake(){
-        houseManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();;
-                    rectTransform = GetComponent<RectTransform>();
+        houseManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();
+        rectTransform = GetComponent<RectTransform>();
         uiCamera = Camera.main; 
         Init();  
     }
