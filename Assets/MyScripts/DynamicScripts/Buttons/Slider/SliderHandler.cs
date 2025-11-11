@@ -125,8 +125,8 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
     {
         if (useWholeNumbers)
         {
-    double rounded = Math.Round(GetValue().Standard(), 0, MidpointRounding.AwayFromZero);
-    sliderValue = new AlphabeticNotation(rounded);
+            double rounded = Math.Round(GetValue().Standard(), 0, MidpointRounding.AwayFromZero);
+            sliderValue = new AlphabeticNotation(rounded);
         }
         else
         {

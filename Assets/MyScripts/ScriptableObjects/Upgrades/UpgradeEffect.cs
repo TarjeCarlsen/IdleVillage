@@ -5,6 +5,8 @@ public enum UpgradeTypes{
     SetActivationState,
     AddPowerFlat,
     AddPowerMulti,
+    AddMerchantPower,
+    AddMerchantMulti,
 }
 
 public interface IUpgradeEffect
@@ -21,6 +23,11 @@ public class UpgradeEffect : ScriptableObject
     public AlphabeticNotation flat;
     public AlphabeticNotation multi;
     public bool activationState;
+    [Header("Spesific upgrades for the merchants at barter trades. Ignore this if not for merchant")]
+    public Merchants merchants;
+    public MerchantUpgradeTypes merchantUpgradeTypes;
+    public BobUpgradeTypes bobUpgradeTypes;
+
 
     public void Apply(GameObject target = null){
 
@@ -40,6 +47,13 @@ public class UpgradeEffect : ScriptableObject
                 break;
             case UpgradeTypes.AddPowerMulti:
                 UpgradeManager.Instance.AddPowerMulti(currencyTypes, multi);
+                break;
+            // -------- MERCHANT UPGRADES-------- //
+            case UpgradeTypes.AddMerchantPower:
+                MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
+                break;
+            case UpgradeTypes.AddMerchantMulti: // adding more to the multiplier for bobs rewards
+                MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
                 break;
         }
     }
