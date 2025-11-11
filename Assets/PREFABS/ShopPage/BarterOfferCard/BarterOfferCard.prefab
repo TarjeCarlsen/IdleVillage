@@ -1133,6 +1133,23 @@ MonoBehaviour:
   levelFactor: 0.9
   valueFactor: 1.5
   randomFactor: 0
+  minRandom: 0.7
+  maxRandom: 1.5
+  isTesting: 1
+  _TESTING_indexForMerchant: 0
+  _TESTING_chosenPriceIndex: 0
+  _TESTING_chosenRewardIndex: 1
+  _TESTING_priceValue: 1
+  _TESTING_rewardValue: 1
+  _TESTING_level: 1
+  _TESTING_priceAmount:
+    coefficient: 1
+    magnitude: 0
+  _TESTING_rewardAmount:
+    coefficient: 0
+    magnitude: 0
+  _TESTING_minRandom: 1
+  _TESTING_maxRandom: 1
 --- !u!1 &6028625075046051180
 GameObject:
   m_ObjectHideFlags: 0

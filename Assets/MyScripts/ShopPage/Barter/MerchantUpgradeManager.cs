@@ -10,7 +10,7 @@ public enum BobUpgradeTypes{
     rewardFlatBob,
 }
 public enum CarlUpgradeTypes{
-
+    
 }
 public enum ChloeUpgradeTypes{
     

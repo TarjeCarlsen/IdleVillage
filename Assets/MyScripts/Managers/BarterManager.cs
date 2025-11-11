@@ -39,6 +39,7 @@ public class BarterManager : MonoBehaviour
 
     public event Action<Merchants> OnBarterLevelUp;
     public event Action<Merchants> OnBarterXpGain;
+    public event Action<Merchants> OnUpgradeBought;
 
     [System.Serializable]
     public class MerchantInfo
@@ -55,12 +56,14 @@ public class BarterManager : MonoBehaviour
     {
         public Dictionary<CurrencyTypes, AlphabeticNotation> rewardMultiplier = new();
         public Dictionary<CurrencyTypes, AlphabeticNotation> rewardBaseFlatIncrease = new();
+        public Dictionary<CurrencyTypes, AlphabeticNotation> totalBonus = new();
         public void InitializeDefaults()
         {
             foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
             {
                 rewardMultiplier[type] = UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusMulti); // 1 means no multiplier (neutral)
                 rewardBaseFlatIncrease[type] = UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusFlat); // 0 means no flat bonus
+                totalBonus[type] = rewardMultiplier[type] * rewardBaseFlatIncrease[type];
             }
         }
     }
@@ -108,30 +111,54 @@ public class BarterManager : MonoBehaviour
         OnBarterXpGain?.Invoke(merchant);
     }
 
-    public void UpgradeBought(Merchants merchant, CurrencyTypes types){ // SETS THE UPGRADE FOR EACH OF THE MERCHANTS
-        switch(merchant){
+    public void UpgradeBought(Merchants merchant, CurrencyTypes types)
+    { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS
+        switch (merchant)
+        {
             case Merchants.BobTheMerchant:
                 merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob);
                 merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
-                print("FLAT BOB = "+merchantBonuses[merchant].rewardBaseFlatIncrease[types]);
-                print("MULTI BOB = "+merchantBonuses[merchant].rewardMultiplier[types]);
-            break;
+
+                merchantBonuses[merchant].totalBonus[types] = merchantBonuses[merchant].rewardBaseFlatIncrease[types] *
+                                                              merchantBonuses[merchant].rewardMultiplier[types];
+                break;
             case Merchants.CarlTheMerchant:
-            break;
+                break;
             case Merchants.ChloeTheMerchant:
-            break;
+                break;
             case Merchants.FredTheMerchant:
-            break;
+                break;
             case Merchants.SamTheMerchant:
-            break;
+                break;
             case Merchants.RogerTheMerchant:
-            break;
+                break;
+
         }
 
-
-        foreach(Merchants merchants in Enum.GetValues(typeof(Merchants))){
-            print("upgrade amount "+ UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusFlat));
-            print($"merchant: {merchants} flat bonus = {merchantBonuses[merchants].rewardBaseFlatIncrease[CurrencyTypes.wheat]}");
+        // foreach(Merchants merchants in Enum.GetValues(typeof(Merchants))){
+        //     print("upgrade amount "+ UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusFlat));
+        //     print($"merchant: {merchants} flat bonus = {merchantBonuses[merchants].rewardBaseFlatIncrease[CurrencyTypes.wheat]}");
+        // }
+        RefreshBonusesForMerchant(merchant);
+        OnUpgradeBought?.Invoke(merchant);
+    }
+    public void RefreshBonusesForMerchant(Merchants merchant)
+    {
+        foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
+        {
+            switch (merchant)
+            {
+                case Merchants.BobTheMerchant:
+                    merchantBonuses[merchant].rewardBaseFlatIncrease[type] =
+                        MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob);
+                    merchantBonuses[merchant].rewardMultiplier[type] =
+                        MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
+                    break;
+                case Merchants.CarlTheMerchant:
+                    // TODO: Add Carl logic
+                    break;
+                    // Add other merchants here as needed
+            }
         }
     }
     public void MerchantLevelUp(Merchants merchant, float xpAmount)

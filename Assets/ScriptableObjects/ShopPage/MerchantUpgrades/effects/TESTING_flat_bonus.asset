@@ -16,7 +16,7 @@ MonoBehaviour:
   currencyTypes: 0
   activationUnlocks: 0
   flat:
-    coefficient: 15
+    coefficient: 1
     magnitude: 0
   multi:
     coefficient: 0
