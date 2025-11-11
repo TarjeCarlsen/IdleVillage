@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using LargeNumbers;
 using TMPro;
 using Unity.VisualScripting;
@@ -13,15 +14,13 @@ public class MerchantStatHandler : MonoBehaviour
     [SerializeField] private TMP_Text level_txt;
     [SerializeField] private Merchants merchant;
     [SerializeField] private List<StatInfo> statBonuses;
+    
 
     [System.Serializable]
     public class StatInfo{
-        public AlphabeticNotation currentValue;
         public CurrencyTypes type;
-        public  GameObject statInfoObjects;
-        public  TMP_Text  statText_txt;
-        public  Image statIcon_img;
-        public  Sprite statIcon_sprite;
+        public  TMP_Text  flatIncrease_txt;
+        public  TMP_Text  currencyMulti_txt;
     }
     private void Start(){
         UpdateUI(merchant);
@@ -43,7 +42,15 @@ public class MerchantStatHandler : MonoBehaviour
             level_txt.text ="Lv."+ barterManager.merchantInfos[merchant].merchantLevel.ToString();
 
             foreach(StatInfo stat in statBonuses){
-                stat.statText_txt.text = barterManager.merchantBonuses[merchant].totalBonus[stat.type].ToStringSmart(1);
+                print($"stat type {stat.type} bartermanager = {barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type]}");
+                stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type].ToStringSmart(1);
+                stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] -1)*100).ToStringSmart(1) + "%";
+
+                if(barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] < 1){
+                    stat.currencyMulti_txt.color = new Color(1f,0f,0f,1f);
+                }else{
+                    stat.currencyMulti_txt.color = new Color(0f,1f,0f,1f);
+                }
             }
         // myText.text = $"testing my new text with bonus - {barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[CurrencyTypes.wheat]}";
         

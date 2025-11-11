@@ -26,10 +26,6 @@ public enum SpecialUpgradeTypes{
 
 }
 
-public enum MerchantUpgradeTypes{
-    rewardBonusFlat,
-    rewardBonusMulti,
-}
 
 public enum ActivationUnlocks{
     doughpress,
@@ -42,7 +38,6 @@ public class UpgradeManager : MonoBehaviour
     public Dictionary<CurrencyTypes, AlphabeticNotation> productionPower;
     public Dictionary<CurrencyTypes, AlphabeticNotation> storagePower;
     public Dictionary<SpecialUpgradeTypes, AlphabeticNotation> specialProductionPower;
-    public Dictionary<MerchantUpgradeTypes, AlphabeticNotation> merchantUpgradePower;
     [SerializeField] private AlphabeticNotation defaultMerchantPower = new AlphabeticNotation(1);
     public Dictionary<ActivationUnlocks, bool> activationUnlocks;
     public Dictionary<TimeUpgradeTypes, float> upgradeTime;
@@ -63,7 +58,6 @@ public class UpgradeManager : MonoBehaviour
         InitializePowers();
         InitializeTime();
         InitializeSpecialPowers();
-        InitializeMerchantPowers();
     }
 
 
@@ -98,15 +92,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    private void InitializeMerchantPowers(){
-        merchantUpgradePower = new Dictionary<MerchantUpgradeTypes, AlphabeticNotation>();
-        foreach(MerchantUpgradeTypes type in Enum.GetValues(typeof(MerchantUpgradeTypes))){
-            merchantUpgradePower[type] = defaultMerchantPower;
-        }
-        {
-            
-        }
-    }
+
 
 
 
@@ -167,16 +153,6 @@ public class UpgradeManager : MonoBehaviour
         activationUnlocks[type] = state;
         OnActivationUnlock?.Invoke();
     }
-    // ------------------------ MERCHANT UPGRADE TYPES --------------------- //
-    public AlphabeticNotation GetMerchantPower(MerchantUpgradeTypes type) => merchantUpgradePower[type];
-
-    public void AddMerchantPower(MerchantUpgradeTypes type, AlphabeticNotation amount) => merchantUpgradePower[type] += amount; 
-
-    public void AddMerchantMulti(MerchantUpgradeTypes type, double multiplier)
-    {
-        AlphabeticNotation result = merchantUpgradePower[type] * multiplier;
-        merchantUpgradePower[type] = result;
-    }
 
 
     // ------------------------ SAVE & LOAD --------------------- //
@@ -186,7 +162,7 @@ public class UpgradeManager : MonoBehaviour
         data.productionData = new List<UpgradeDataList>();
         data.storageData = new List<UpgradeDataList>();
         data.timeData = new List<UpgradeDataList>();
-        data.merchantData = new List<UpgradeDataList>();
+
 
         foreach (var pair in activationUnlocks){
             data.activationUnlocks.Add(new ActivationDataList{
@@ -221,14 +197,7 @@ public class UpgradeManager : MonoBehaviour
                 amount = pair.Value.ToString("R") // "R" = round-trip float format
             });
         }
-        foreach (var pair in merchantUpgradePower)
-        {
-            data.merchantData.Add(new UpgradeDataList
-            {
-                type = pair.Key.ToString(),
-                amount = pair.Value.ToString()
-            });
-        }
+
 
     }
 
@@ -237,7 +206,6 @@ public class UpgradeManager : MonoBehaviour
         // Initialize first to ensure no null issues
         InitializePowers();
         InitializeTime();
-        InitializeMerchantPowers();
 
         foreach (var entry in data.productionData)
         {
@@ -259,12 +227,6 @@ public class UpgradeManager : MonoBehaviour
             }
         }
 
-        foreach (var entry in data.merchantData)
-        {
-            if (Enum.TryParse(entry.type, out MerchantUpgradeTypes type))
-                merchantUpgradePower[type] = new AlphabeticNotation(Double.Parse(entry.amount));
-        }
-
 
         Debug.Log("[UpgradeManager] All data loaded successfully!");
     }
@@ -277,7 +239,6 @@ public struct upgradeManagerSaveData
     public List<UpgradeDataList> storageData;
     public List<UpgradeDataList> timeData;
     public List<ActivationDataList> activationUnlocks;
-    public List<UpgradeDataList> merchantData;
 }
 
 [Serializable]

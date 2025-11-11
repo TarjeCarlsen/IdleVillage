@@ -1,5 +1,6 @@
-using System.Runtime.CompilerServices;
-using NUnit.Framework;
+
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private BarterManager barterManager;
     [SerializeField] UpgradeApplier upgradeApplier;
     [SerializeField] private Merchants merchant;
-    [SerializeField] private CurrencyTypes currencyToUpgrade;
+    [SerializeField] private List<CurrencyTypes> currenciesToUpgrade;
 
     [SerializeField] private TMP_Text pointCost_txt;
     [SerializeField] private TMP_Text header_lvl_txt;
@@ -61,7 +62,9 @@ public void OnUpgradeClick(){
     if(CanAfford() && upgradeLevel < maxLevel){
         barterManager.merchantInfos[merchant].skillPoints -= skillPointCost;
         upgradeApplier.ApplyUpgrade();
-        barterManager.UpgradeBought(merchant,currencyToUpgrade);
+        foreach(CurrencyTypes type in currenciesToUpgrade){
+            barterManager.UpgradeBought(merchant,type);
+        }
         upgradeLevel++;
         UpdateUI();
         print("bought upgrade!");

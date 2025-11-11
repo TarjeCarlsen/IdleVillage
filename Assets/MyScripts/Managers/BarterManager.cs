@@ -61,8 +61,8 @@ public class BarterManager : MonoBehaviour
         {
             foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
             {
-                rewardMultiplier[type] = UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusMulti); // 1 means no multiplier (neutral)
-                rewardBaseFlatIncrease[type] = UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusFlat); // 0 means no flat bonus
+                rewardMultiplier[type] = new AlphabeticNotation(1); // 1 means no multiplier (neutral)
+                rewardBaseFlatIncrease[type] = new AlphabeticNotation(0); // 0 means no flat bonus
                 totalBonus[type] = rewardMultiplier[type] * rewardBaseFlatIncrease[type];
             }
         }
@@ -112,26 +112,34 @@ public class BarterManager : MonoBehaviour
     }
 
     public void UpgradeBought(Merchants merchant, CurrencyTypes types)
-    { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS
+    { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
         switch (merchant)
         {
             case Merchants.BobTheMerchant:
                 merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob);
                 merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
-
-                merchantBonuses[merchant].totalBonus[types] = merchantBonuses[merchant].rewardBaseFlatIncrease[types] *
-                                                              merchantBonuses[merchant].rewardMultiplier[types];
                 break;
             case Merchants.CarlTheMerchant:
+                merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.CarlGetRewardPower(CarlUpgradeTypes.rewardFlatCarl);
+                merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.CarlGetRewardPower(CarlUpgradeTypes.rewardMultiCarl);
                 break;
             case Merchants.ChloeTheMerchant:
+                merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.ChloeGetRewardPower(ChloeUpgradeTypes.rewardFlatChloe);
+                merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.ChloeGetRewardPower(ChloeUpgradeTypes.rewardMultiChloe);
                 break;
             case Merchants.FredTheMerchant:
+                merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardFlatFred);
+                merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardMultiFred);
                 break;
             case Merchants.SamTheMerchant:
+                merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.SamGetRewardPower(SamUpgradeTypes.rewardFlatSam);
+                merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.SamGetRewardPower(SamUpgradeTypes.rewardMultiSam);
                 break;
             case Merchants.RogerTheMerchant:
+                merchantBonuses[merchant].rewardBaseFlatIncrease[types] = MerchantUpgradeManager.Instance.RogerGetRewardPower(RogerUpgradeTypes.rewardFlatRoger);
+                merchantBonuses[merchant].rewardMultiplier[types] = MerchantUpgradeManager.Instance.RogerGetRewardPower(RogerUpgradeTypes.rewardMultiRoger);
                 break;
+
 
         }
 
@@ -139,28 +147,28 @@ public class BarterManager : MonoBehaviour
         //     print("upgrade amount "+ UpgradeManager.Instance.GetMerchantPower(MerchantUpgradeTypes.rewardBonusFlat));
         //     print($"merchant: {merchants} flat bonus = {merchantBonuses[merchants].rewardBaseFlatIncrease[CurrencyTypes.wheat]}");
         // }
-        RefreshBonusesForMerchant(merchant);
+        // RefreshBonusesForMerchant(merchant);
         OnUpgradeBought?.Invoke(merchant);
     }
-    public void RefreshBonusesForMerchant(Merchants merchant)
-    {
-        foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
-        {
-            switch (merchant)
-            {
-                case Merchants.BobTheMerchant:
-                    merchantBonuses[merchant].rewardBaseFlatIncrease[type] =
-                        MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob);
-                    merchantBonuses[merchant].rewardMultiplier[type] =
-                        MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
-                    break;
-                case Merchants.CarlTheMerchant:
-                    // TODO: Add Carl logic
-                    break;
-                    // Add other merchants here as needed
-            }
-        }
-    }
+    // public void RefreshBonusesForMerchant(Merchants merchant)
+    // {
+    //     foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
+    //     {
+    //         switch (merchant)
+    //         {
+    //             case Merchants.BobTheMerchant:
+    //                 merchantBonuses[merchant].rewardBaseFlatIncrease[type] =
+    //                     MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob);
+    //                 merchantBonuses[merchant].rewardMultiplier[type] =
+    //                     MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
+    //                 break;
+    //             case Merchants.CarlTheMerchant:
+    //                 // TODO: Add Carl logic
+    //                 break;
+    //                 // Add other merchants here as needed
+    //         }
+    //     }
+    // }
     public void MerchantLevelUp(Merchants merchant, float xpAmount)
     {
         float nextRequiredXp = startValues[(int)merchant].requiredXp * Mathf.Pow(growthRate, merchantInfos[merchant].merchantLevel);

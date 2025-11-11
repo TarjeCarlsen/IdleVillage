@@ -109,8 +109,8 @@ public class BarterCardHandler : MonoBehaviour
         }
 
 
-        rewardAmount = CalculateReward();
-        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex,rewardAmount);
+        originalRewardAmount = CalculateReward();
+        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex,originalRewardAmount);
 
         UpdateUI();
     }
@@ -175,12 +175,13 @@ public class BarterCardHandler : MonoBehaviour
 
     private void UpdateBonuses(Merchants _merchants){
         if(_merchants != (Merchants)chosenMerchantIndex) return;
-        rewardAmount =  ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex, rewardAmount);
+        rewardAmount =  ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
         UpdateUI();
     }
     private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex,int currencyIndex, AlphabeticNotation amount){
-        var bonuses = barterManager.merchantBonuses[(Merchants)merchantIndex];
-        AlphabeticNotation result = barterManager.merchantBonuses[(Merchants)merchantIndex].totalBonus[(CurrencyTypes)chosenRewardIndex];
+        // var bonuses = barterManager.merchantBonuses[(Merchants)merchantIndex]; // unused
+        AlphabeticNotation result = (amount+ barterManager.merchantBonuses[(Merchants)merchantIndex].rewardBaseFlatIncrease[(CurrencyTypes)chosenRewardIndex])*
+                                    barterManager.merchantBonuses[(Merchants)merchantIndex].rewardMultiplier[(CurrencyTypes)chosenRewardIndex];
         return result;
     }
     public void OnClaimClick()
@@ -202,7 +203,7 @@ public class BarterCardHandler : MonoBehaviour
         if (TESTING_DONT_DESTROY) return;
         Destroy(barterCard);
     }
-
+    
     private void MadeBarter()
     {
         barterManager.BarterOfferBought((Merchants)chosenMerchantIndex, xpReward);
