@@ -42,7 +42,6 @@ public class MerchantStatHandler : MonoBehaviour
             level_txt.text ="Lv."+ barterManager.merchantInfos[merchant].merchantLevel.ToString();
 
             foreach(StatInfo stat in statBonuses){
-                print($"stat type {stat.type} bartermanager = {barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type]}");
                 stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type].ToStringSmart(1);
                 stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] -1)*100).ToStringSmart(1) + "%";
 

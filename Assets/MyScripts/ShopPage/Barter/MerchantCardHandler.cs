@@ -15,8 +15,8 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private TMP_Text header_lvl_txt;
     [SerializeField] private GameObject cardObejct;
     [SerializeField] private int skillPointCost;
-
-    private int upgradeLevel = 0;
+    public event Action OnBought;
+    public int upgradeLevel = 0;
     [SerializeField] private int maxLevel = 10;
     public static event System.Action<MerchantCardHandler> OnAnyCardOpened;
 private void Awake(){
@@ -41,7 +41,6 @@ private bool CanAfford(){
 
     private void HandleOtherCardOpened(MerchantCardHandler openedCard)
     {
-        print("inside handle other ");
         if (openedCard != this)
         {
             // Close this card if it's not the one clicked
@@ -67,6 +66,7 @@ public void OnUpgradeClick(){
         }
         upgradeLevel++;
         UpdateUI();
+        OnBought?.Invoke();
         print("bought upgrade!");
     }else{
         print("Cannot afford upgrade or reached max lvl!");

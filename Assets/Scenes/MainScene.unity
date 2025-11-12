@@ -3953,15 +3953,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_Interactable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_BlocksRaycasts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 854969152597686908, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5137,6 +5137,7 @@ MonoBehaviour:
   allCanvasesToHide: []
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!224 &450709061 stripped
@@ -6678,6 +6679,30 @@ PrefabInstance:
       propertyPath: canvasToShow
       value: 
       objectReference: {fileID: 1924586177}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: allCanvasesToHide.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1709655129}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[1]'
+      value: 
+      objectReference: {fileID: 340120275}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[2]'
+      value: 
+      objectReference: {fileID: 632632460}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[3]'
+      value: 
+      objectReference: {fileID: 522983750}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1732657399}
     - target: {fileID: 3663425191839443009, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Name
       value: Sam_info
@@ -6688,7 +6713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7591765341177358803, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCanvas
+      value: ShowAndHideAll
       objectReference: {fileID: 0}
     - target: {fileID: 8491398477210873993, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7899,6 +7924,34 @@ PrefabInstance:
       propertyPath: canvasToShow
       value: 
       objectReference: {fileID: 340120275}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: useCanvasList
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: allCanvasesToHide.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1709655129}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[1]'
+      value: 
+      objectReference: {fileID: 632632460}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[2]'
+      value: 
+      objectReference: {fileID: 522983750}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1924586177}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1732657399}
     - target: {fileID: 3663425191839443009, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Name
       value: Carl_info
@@ -7909,7 +7962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7591765341177358803, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCanvas
+      value: ShowAndHideAll
       objectReference: {fileID: 0}
     - target: {fileID: 8793526852807975036, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Pivot.x
@@ -8534,6 +8587,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756141510}
   m_CullTransparentMesh: 1
+--- !u!1 &772780661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3454833831035642224, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+  m_PrefabInstance: {fileID: 4739958840574955719}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &774551163 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 68799015368231075, guid: f953e393bb45a0544b87f02da8fb7812, type: 3}
@@ -9832,6 +9890,7 @@ MonoBehaviour:
   - {fileID: 2003715754}
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!224 &899985649 stripped
@@ -10724,6 +10783,7 @@ MonoBehaviour:
   - {fileID: 2006437171}
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!1 &919277921 stripped
@@ -10745,9 +10805,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasToShow: {fileID: 1709655129}
   canvasToHide: {fileID: 0}
-  allCanvasesToHide: []
+  allCanvasesToHide:
+  - {fileID: 340120275}
+  - {fileID: 632632460}
+  - {fileID: 522983750}
+  - {fileID: 1924586177}
+  - {fileID: 1732657399}
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!1 &937283899
@@ -11662,6 +11728,7 @@ MonoBehaviour:
   allCanvasesToHide: []
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!224 &1011868554 stripped
@@ -11739,6 +11806,30 @@ PrefabInstance:
       propertyPath: canvasToShow
       value: 
       objectReference: {fileID: 632632460}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: allCanvasesToHide.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1709655129}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[1]'
+      value: 
+      objectReference: {fileID: 340120275}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[2]'
+      value: 
+      objectReference: {fileID: 522983750}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1924586177}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1732657399}
     - target: {fileID: 3663425191839443009, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Name
       value: Chloe_info
@@ -11749,7 +11840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7591765341177358803, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCanvas
+      value: ShowAndHideAll
       objectReference: {fileID: 0}
     - target: {fileID: 8793526852807975036, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Pivot.x
@@ -12001,6 +12092,7 @@ MonoBehaviour:
   - {fileID: 795418871}
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!1 &1031792797
@@ -13137,9 +13229,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasToShow: {fileID: 1732657399}
   canvasToHide: {fileID: 0}
-  allCanvasesToHide: []
+  allCanvasesToHide:
+  - {fileID: 1709655129}
+  - {fileID: 340120275}
+  - {fileID: 632632460}
+  - {fileID: 522983750}
+  - {fileID: 1924586177}
   useCanvasList: 1
   disableDraggable: {fileID: 0}
+  findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
 --- !u!114 &1331666975
@@ -13188,7 +13286,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1331666974}
         m_TargetAssemblyTypeName: OpenCloseCanvasGroup, Assembly-CSharp
-        m_MethodName: ShowCanvas
+        m_MethodName: ShowAndHideAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14205,6 +14303,30 @@ PrefabInstance:
       propertyPath: canvasToShow
       value: 
       objectReference: {fileID: 522983750}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: allCanvasesToHide.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1709655129}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[1]'
+      value: 
+      objectReference: {fileID: 340120275}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[2]'
+      value: 
+      objectReference: {fileID: 632632460}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1924586177}
+    - target: {fileID: 3306234234102751900, guid: e427057c56a73934496b661cb8e779d8, type: 3}
+      propertyPath: 'allCanvasesToHide.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1732657399}
     - target: {fileID: 3663425191839443009, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Name
       value: Fred_info
@@ -14215,7 +14337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7591765341177358803, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCanvas
+      value: ShowAndHideAll
       objectReference: {fileID: 0}
     - target: {fileID: 8491398477210873993, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_SizeDelta.x
@@ -14979,6 +15101,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594115873}
   m_CullTransparentMesh: 1
+--- !u!114 &1599363688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8402882924196298615, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+  m_PrefabInstance: {fileID: 4739958840574955719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d44edfdc4628604f871b0176b66c764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1620575353 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1612380344931427037, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
@@ -18552,15 +18685,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_Alpha
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212173531742724466, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_BlocksRaycasts
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 331085269041862442, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_text
@@ -18693,6 +18826,14 @@ PrefabInstance:
     - target: {fileID: 2143852506240637130, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146034789136652358, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: useNormalUpgradeNode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146034789136652358, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: useMerchantUpgradeNode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2252881028923850700, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_AnchorMax.y
@@ -18846,6 +18987,42 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: defaultUnlocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: objectToSetInactive
+      value: 
+      objectReference: {fileID: 772780661}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: useNormalUpgradeNode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: useMerchantUpgradeNode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: requirementDatas.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: setObjectInactiveUntilUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: requirementDatas.Array.data[0].requiredLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: requirementDatas.Array.data[0].moveToSceneLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927195467331062852, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: requirementDatas.Array.data[0].merchantCardFromPreNode
+      value: 
+      objectReference: {fileID: 1599363688}
     - target: {fileID: 3972141648251967611, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -19193,6 +19370,10 @@ PrefabInstance:
     - target: {fileID: 6583330665170573180, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636326503397786337, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -283.3
       objectReference: {fileID: 0}
     - target: {fileID: 6905431388464245621, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: currencyToUpgrade
@@ -20359,7 +20540,7 @@ PrefabInstance:
       objectReference: {fileID: 919277927}
     - target: {fileID: 7591765341177358803, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCanvas
+      value: ShowAndHideAll
       objectReference: {fileID: 0}
     - target: {fileID: 8793526852807975036, guid: e427057c56a73934496b661cb8e779d8, type: 3}
       propertyPath: m_Pivot.x

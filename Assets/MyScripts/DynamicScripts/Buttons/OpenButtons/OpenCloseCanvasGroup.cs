@@ -9,6 +9,7 @@ public class OpenCloseCanvasGroup : MonoBehaviour
     [SerializeField] private bool useCanvasList = true;
     [SerializeField] private Draggable disableDraggable;
 
+    [SerializeField] private bool findCanvasFromTag = false;
     [SerializeField] private string canvasToHideTag;
     [SerializeField] private string canvasToShowTag;
 
@@ -23,7 +24,7 @@ public class OpenCloseCanvasGroup : MonoBehaviour
             Debug.LogWarning($"[OpenCloseCanvasGroup] No object found with tag '{canvasToHideTag}'", this);
     }
 
-    if (canvasToShow == null)
+    if (canvasToShow == null && findCanvasFromTag)
     {
 
         GameObject obj = GameObject.FindGameObjectWithTag(canvasToShowTag);
