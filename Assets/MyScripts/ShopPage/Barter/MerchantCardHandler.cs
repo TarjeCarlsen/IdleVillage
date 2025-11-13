@@ -21,6 +21,7 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private bool isAlphabeticnotationDatatype = true;
     [SerializeField] private bool isFloatDatatype = false;
     [SerializeField] private bool isPercentageUpgrade = false;
+    [SerializeField] private bool isBasedOfBarterTrades = false;
     [SerializeField] private BobUpgradeTypesInt bobUpgradeTypesInt;
     [SerializeField] private BobUpgradeTypesFloats bobUpgradeTypesFloat;
     [SerializeField] private BobUpgradeTypes bobUpgradeTypes;
@@ -43,11 +44,13 @@ public class MerchantCardHandler : MonoBehaviour
     private void OnEnable()
     {
         OnAnyCardOpened += HandleOtherCardOpened;
+        barterManager.OnBarterClaimed += UpdateUIOnBarterComplete;
     }
 
     private void OnDisable()
     {
         OnAnyCardOpened -= HandleOtherCardOpened;
+        barterManager.OnBarterClaimed -= UpdateUIOnBarterComplete;
     }
 
     private bool CanAfford()
@@ -86,17 +89,82 @@ public class MerchantCardHandler : MonoBehaviour
                 {
                     barterManager.UpgradeBoughtCurrency(merchant, type);
                 }
-            }else if(isGeneralUpgrade){
+            }
+            else if (isGeneralUpgrade)
+            {
                 barterManager.UpgradeBoughtGeneral(merchant);
             }
             upgradeLevel++;
-            UpdateUI();
+
+            if (isBasedOfBarterTrades)
+            {
+                UpdateUIOnBarterComplete(merchant);
+            }
+            else
+            {
+                UpdateUI();
+            }
+
             OnBought?.Invoke();
             print("bought upgrade!");
         }
         else
         {
             print("Cannot afford upgrade or reached max lvl!");
+        }
+    }
+
+
+
+    private void UpdateUIOnBarterComplete(Merchants merchant)
+    {
+        if (affectedUpgradeText_txt != null)
+        {
+            pointCost_txt.text = barterManager.merchantInfos[merchant].skillPoints.ToString() + "/" + skillPointCost.ToString();
+            header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
+            string oldText = affectedUpgradeText_txt.text;
+            string updatedText = "";
+
+            if (isBasedOfBarterTrades && isPercentageUpgrade && isAlphabeticnotationDatatype)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        print("barters completeCOMOOEd = " + barterManager.merchantInfos[merchant].completedInArow);
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{(.*?)\}",
+                            match =>
+                            {
+                                string placeholder = match.Groups[1].Value;
+                                switch (placeholder)
+                                {
+                                    case "bonus1":
+                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - 1) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
+                                    case "bonus2":
+                                        return $"<color=green>{barterManager.merchantInfos[merchant].completedInArow}</color>";
+                                    default:
+                                        return match.Value; // leave unknown placeholders as-is
+                                }
+                            }
+                        );
+                        affectedUpgradeText_txt.text = updatedText;
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        break;
+                    case Merchants.FredTheMerchant:
+                        break;
+                    case Merchants.SamTheMerchant:
+                        break;
+                    case Merchants.RogerTheMerchant:
+                        break;
+
+
+                }
+            }
         }
     }
 
@@ -155,6 +223,7 @@ public class MerchantCardHandler : MonoBehaviour
 
                 }
             }
+
             if (isFloatDatatype && !isPercentageUpgrade)
             {
                 switch (merchant)
@@ -178,13 +247,15 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)- 1) * 100).ToString("F0")}</color>"
+                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - 1) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here
 
                 }
             }
+
+
             affectedUpgradeText_txt.text = updatedText;
         }
     }

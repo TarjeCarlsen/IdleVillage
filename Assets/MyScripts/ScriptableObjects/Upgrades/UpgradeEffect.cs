@@ -1,6 +1,7 @@
 using UnityEngine;
 using LargeNumbers;
 using System;
+using UnityEngine.Assertions.Must;
 public enum UpgradeTypes{
     UnlockArea,
     SetActivationState,
@@ -10,6 +11,7 @@ public enum UpgradeTypes{
     BobAddFlatToMulti,
     BobIncreaseChanceForMoneyReward,
     BobUpgradeXpForAllMerchants,
+    BobStackMultiFlat_ResetOnOtherBarter,
     CarlAddFlat,
     CarlAddFlatToMulti,
     ChloeAddFlat,
@@ -101,6 +103,9 @@ public class UpgradeEffect : ScriptableObject
                 MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                break;
+            case UpgradeTypes.BobStackMultiFlat_ResetOnOtherBarter:
+                MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
                 break;
                     //..CARL..//
             case UpgradeTypes.CarlAddFlat:

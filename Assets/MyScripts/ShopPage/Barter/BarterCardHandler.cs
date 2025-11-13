@@ -40,6 +40,7 @@ public class BarterCardHandler : MonoBehaviour
     private int amountOfCurrencies;
     private int chosenMerchantIndex;
 
+    public event Action <Merchants> OnBarterClaimed;
     [SerializeField] float tradeValue;
     [SerializeField] float baseXp = 10f;
     [SerializeField] float originalXp;
@@ -121,7 +122,7 @@ public class BarterCardHandler : MonoBehaviour
         originalXp = xpReward;
 
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
-        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
+        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
 
         UpdateUI();
     }
@@ -131,6 +132,8 @@ public class BarterCardHandler : MonoBehaviour
         barterManager.OnBarterXpGain -= UpdateXpGain;
         barterManager.OnBarterLevelUp -= UpdateReward;
         barterManager.OnUpgradeBought -= UpdateBonuses;
+        barterManager.UnsubscribeFromCard(this);
+
     }
 
     private int GetRandomIndex()
@@ -231,17 +234,25 @@ public class BarterCardHandler : MonoBehaviour
     private void UpdateBonuses(Merchants _merchants)
     {
         if (_merchants != (Merchants)chosenMerchantIndex) return;
-        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
+        rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
         print($"{chosenMerchantIndex} - {chosenRewardIndex} - {originalRewardAmount}");
         UpdateUI();
     }
-    private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, int currencyIndex, AlphabeticNotation amount)
+    private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
     {
+        int bartersInArow = barterManager.merchantInfos[(Merchants)merchantIndex].completedInArow;
+        AlphabeticNotation stackingMulti = barterManager.merchantBonuses[(Merchants)merchantIndex].stackingMulit -1;
+
+        AlphabeticNotation stackingBonus = new AlphabeticNotation(1) + (stackingMulti * bartersInArow);
+
         // var bonuses = barterManager.merchantBonuses[(Merchants)merchantIndex]; // unused
-        AlphabeticNotation result = (amount + barterManager.merchantBonuses[(Merchants)merchantIndex].rewardBaseFlatIncreaseBonus[(CurrencyTypes)chosenRewardIndex]) *
-                                    barterManager.merchantBonuses[(Merchants)merchantIndex].rewardMultiplierBonus[(CurrencyTypes)chosenRewardIndex];
-                                    print("result = "+ result);
+        print($"stacking multi bonus = {stackingMulti} completed = {bartersInArow} stacking bonus = {stackingBonus}");
+        
+        AlphabeticNotation result = ((amount + barterManager.merchantBonuses[(Merchants)merchantIndex].rewardBaseFlatIncreaseBonus[(CurrencyTypes)chosenRewardIndex]) *
+                                    barterManager.merchantBonuses[(Merchants)merchantIndex].rewardMultiplierBonus[(CurrencyTypes)chosenRewardIndex])* stackingBonus;
+                                    print("result = "+ result);     
+
         return result;
     }
 
@@ -256,6 +267,15 @@ public class BarterCardHandler : MonoBehaviour
         if (MoneyManager.Instance.GetCurrency(barterManager.barterCurrencyValues[chosenPriceIndex].currencyType) >= priceAmount)
         {
             MadeBarter();
+            barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedBartersForMerchant++;
+            if(barterManager.isMerchantSameAsLast((Merchants)chosenMerchantIndex)){
+                barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow++;
+            }else{
+                barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow = 1;
+            }
+            OnBarterClaimed?.Invoke((Merchants)chosenMerchantIndex);
+            print($"amount in a row for {(Merchants)chosenMerchantIndex} = {barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow}");
+            print($"amount of barters completed for {(Merchants)chosenMerchantIndex} = {barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedBartersForMerchant}");
             DestroyCard();
         }
         else
@@ -267,6 +287,7 @@ public class BarterCardHandler : MonoBehaviour
     public void DestroyCard()
     {
         if (TESTING_DONT_DESTROY) return;
+        barterManager.UnsubscribeFromCard(this);
         Destroy(barterCard);
     }
 

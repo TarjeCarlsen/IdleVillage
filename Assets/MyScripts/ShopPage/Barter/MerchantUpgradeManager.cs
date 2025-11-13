@@ -9,6 +9,7 @@ public enum BobUpgradeTypes{
     rewardMultiBob,
     rewardFlatBob,
     rewardFlatBob_2,
+    multiAll_resetOnOther,
 }
 public enum BobUpgradeTypesInt{
     moneyWeightChanceBob,
@@ -109,75 +110,193 @@ public class MerchantUpgradeManager : MonoBehaviour
         else Destroy(gameObject);
         InitializeMerchantUpgrades();
     }
+//------------------------------------------------ ALPHABETIC NOTATION DATATYPE ------------------------------------------ //
+private AlphabeticNotation GetDefaultValueForBob(BobUpgradeTypes type)
+{
+    return type switch
+    {
+        BobUpgradeTypes.rewardMultiBob => new AlphabeticNotation(1),
+        BobUpgradeTypes.rewardFlatBob => new AlphabeticNotation(0),
+        BobUpgradeTypes.rewardFlatBob_2 => new AlphabeticNotation(0),
+        BobUpgradeTypes.multiAll_resetOnOther => new AlphabeticNotation(1f),
+        _ => new AlphabeticNotation(0)
+    };
+}
 
-    private void InitializeMerchantUpgrades(){
-         bobUpgrades = new Dictionary<BobUpgradeTypes, AlphabeticNotation>();
-         bobUpgradesInt = new Dictionary<BobUpgradeTypesInt, int>();
-         bobUpgradesFloat = new Dictionary<BobUpgradeTypesFloats, float>();
-        chloeUpgrades = new Dictionary<ChloeUpgradeTypes, AlphabeticNotation>();
-         chloeUpgradesFloat = new Dictionary<ChloeUpgradeTypesFloats, float>();
-        carlUpgrades = new Dictionary<CarlUpgradeTypes, AlphabeticNotation>();
-         carlUpgradesFloat = new Dictionary<CarlUpgradeTypesFloats, float>();
-        fredUpgrades = new Dictionary<FredUpgradeTypes, AlphabeticNotation>();
-         fredUpgradesFloat = new Dictionary<FredUpgradeTypesFloats, float>();
-        samUpgrades = new Dictionary<SamUpgradeTypes, AlphabeticNotation>();
-         samUpgradesFloat = new Dictionary<SamUpgradeTypesFloats, float>();
-        rogerUpgrades = new Dictionary<RogerUpgradeTypes, AlphabeticNotation>();
-         rogerUpgradesFloat = new Dictionary<RogerUpgradeTypesFloats, float>();
+private AlphabeticNotation GetDefaultValueForCarl(CarlUpgradeTypes type)
+{
+    return type switch
+    {
+        CarlUpgradeTypes.rewardMultiCarl => new AlphabeticNotation(1),
+        CarlUpgradeTypes.rewardFlatCarl => new AlphabeticNotation(0),
+        _ => new AlphabeticNotation(0)
+    };
+}
 
-// -------------------------------------- BOB ----------------------------------------- //
-        foreach(BobUpgradeTypes upgradeTypes in Enum.GetValues(typeof(BobUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            bobUpgrades[upgradeTypes] = name.Contains("multi") ? bobMultiStartValues : bobStartValues;
-        }
-        foreach(BobUpgradeTypesInt upgradeTypes in Enum.GetValues(typeof(BobUpgradeTypesInt))){
-            bobUpgradesInt[upgradeTypes] = bobStartValuesInts;
-        }
-        foreach(BobUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(BobUpgradeTypesFloats))){
-            bobUpgradesFloat[upgradeTypes] = bobFloatStartValues; 
-        }
+private AlphabeticNotation GetDefaultValueForChloe(ChloeUpgradeTypes type)
+{
+    return type switch
+    {
+        ChloeUpgradeTypes.rewardMultiChloe => new AlphabeticNotation(1),
+        ChloeUpgradeTypes.rewardFlatChloe => new AlphabeticNotation(0),
+        _ => new AlphabeticNotation(0)
+    };
+}
 
-// -------------------------------------- CARL ----------------------------------------- //
-        foreach(CarlUpgradeTypes upgradeTypes in Enum.GetValues(typeof(CarlUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            carlUpgrades[upgradeTypes] = name.Contains("multi") ? carlMultiStartValues : carlStartValues;
-        }
-        foreach(CarlUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(CarlUpgradeTypesFloats))){
-            carlUpgradesFloat[upgradeTypes] = carlFloatStartValues; 
-        }
-// -------------------------------------- CHLOE ----------------------------------------- //
-        foreach(ChloeUpgradeTypes upgradeTypes in Enum.GetValues(typeof(ChloeUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            chloeUpgrades[upgradeTypes] = name.Contains("multi") ? chloeMultiStartValues : chloeStartValues;
-        }
-        foreach(ChloeUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(ChloeUpgradeTypesFloats))){
-            chloeUpgradesFloat[upgradeTypes] = chloeFloatStartValues; 
-        }
-// -------------------------------------- FRED ----------------------------------------- //
-        foreach(FredUpgradeTypes upgradeTypes in Enum.GetValues(typeof(FredUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            fredUpgrades[upgradeTypes] = name.Contains("multi") ? fredMultiStartValues : fredStartValues;
-        }
-        foreach(FredUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(FredUpgradeTypesFloats))){
-            fredUpgradesFloat[upgradeTypes] = fredFloatStartValues; 
-        }
-// -------------------------------------- SAM ----------------------------------------- //
-        foreach(SamUpgradeTypes upgradeTypes in Enum.GetValues(typeof(SamUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            samUpgrades[upgradeTypes] = name.Contains("multi") ? samMultiStartValues : samStartValues;
-        }
-        foreach(SamUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(SamUpgradeTypesFloats))){
-            samUpgradesFloat[upgradeTypes] = samFloatStartValues; 
-        }
-// -------------------------------------- ROGER ----------------------------------------- //
-        foreach(RogerUpgradeTypes upgradeTypes in Enum.GetValues(typeof(RogerUpgradeTypes))){
-            string name = upgradeTypes.ToString().ToLower();
-            rogerUpgrades[upgradeTypes] = name.Contains("multi") ? rogerMultiStartValues : rogerStartvalues;
-        }
-        foreach(RogerUpgradeTypesFloats upgradeTypes in Enum.GetValues(typeof(RogerUpgradeTypesFloats))){
-            rogerUpgradesFloat[upgradeTypes] = rogerFloatStartValues; 
-        }
-    }
+private AlphabeticNotation GetDefaultValueForFred(FredUpgradeTypes type)
+{
+    return type switch
+    {
+        FredUpgradeTypes.rewardMultiFred => new AlphabeticNotation(1),
+        FredUpgradeTypes.rewardFlatFred => new AlphabeticNotation(0),
+        _ => new AlphabeticNotation(0)
+    };
+}
+
+private AlphabeticNotation GetDefaultValueForSam(SamUpgradeTypes type)
+{
+    return type switch
+    {
+        SamUpgradeTypes.rewardMultiSam => new AlphabeticNotation(1),
+        SamUpgradeTypes.rewardFlatSam => new AlphabeticNotation(0),
+        _ => new AlphabeticNotation(0)
+    };
+}
+
+private AlphabeticNotation GetDefaultValueForRoger(RogerUpgradeTypes type)
+{
+    return type switch
+    {
+        RogerUpgradeTypes.rewardMultiRoger => new AlphabeticNotation(1),
+        RogerUpgradeTypes.rewardFlatRoger => new AlphabeticNotation(0),
+        _ => new AlphabeticNotation(0)
+    };
+}
+//------------------------------------------------ INT DATATYPE ------------------------------------------ //
+private int GetDefaultValueForBob(BobUpgradeTypesInt type)
+{
+    return type switch
+    {
+        BobUpgradeTypesInt.moneyWeightChanceBob => 0,
+        _ => 0
+    };
+}
+
+//------------------------------------------------ FLOAT DATATYPE ------------------------------------------ //
+private float GetDefaultValueForBob(BobUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        BobUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+
+private float GetDefaultValueForCarl(CarlUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        CarlUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+
+private float GetDefaultValueForChloe(ChloeUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        ChloeUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+
+private float GetDefaultValueForFred(FredUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        FredUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+
+private float GetDefaultValueForSam(SamUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        SamUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+
+private float GetDefaultValueForRoger(RogerUpgradeTypesFloats type)
+{
+    return type switch
+    {
+        RogerUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        _ => 1f
+    };
+}
+private void InitializeMerchantUpgrades()
+{
+    // --- Init dictionaries ---
+    bobUpgrades = new Dictionary<BobUpgradeTypes, AlphabeticNotation>();
+    bobUpgradesInt = new Dictionary<BobUpgradeTypesInt, int>();
+    bobUpgradesFloat = new Dictionary<BobUpgradeTypesFloats, float>();
+
+    carlUpgrades = new Dictionary<CarlUpgradeTypes, AlphabeticNotation>();
+    carlUpgradesFloat = new Dictionary<CarlUpgradeTypesFloats, float>();
+
+    chloeUpgrades = new Dictionary<ChloeUpgradeTypes, AlphabeticNotation>();
+    chloeUpgradesFloat = new Dictionary<ChloeUpgradeTypesFloats, float>();
+
+    fredUpgrades = new Dictionary<FredUpgradeTypes, AlphabeticNotation>();
+    fredUpgradesFloat = new Dictionary<FredUpgradeTypesFloats, float>();
+
+    samUpgrades = new Dictionary<SamUpgradeTypes, AlphabeticNotation>();
+    samUpgradesFloat = new Dictionary<SamUpgradeTypesFloats, float>();
+
+    rogerUpgrades = new Dictionary<RogerUpgradeTypes, AlphabeticNotation>();
+    rogerUpgradesFloat = new Dictionary<RogerUpgradeTypesFloats, float>();
+
+    // --- BOB ---
+    foreach (BobUpgradeTypes type in Enum.GetValues(typeof(BobUpgradeTypes)))
+        bobUpgrades[type] = GetDefaultValueForBob(type);
+    foreach (BobUpgradeTypesInt type in Enum.GetValues(typeof(BobUpgradeTypesInt)))
+        bobUpgradesInt[type] = GetDefaultValueForBob(type);
+    foreach (BobUpgradeTypesFloats type in Enum.GetValues(typeof(BobUpgradeTypesFloats)))
+        bobUpgradesFloat[type] = GetDefaultValueForBob(type);
+
+    // --- CARL ---
+    foreach (CarlUpgradeTypes type in Enum.GetValues(typeof(CarlUpgradeTypes)))
+        carlUpgrades[type] = GetDefaultValueForCarl(type);
+    foreach (CarlUpgradeTypesFloats type in Enum.GetValues(typeof(CarlUpgradeTypesFloats)))
+        carlUpgradesFloat[type] = GetDefaultValueForCarl(type);
+
+    // --- CHLOE ---
+    foreach (ChloeUpgradeTypes type in Enum.GetValues(typeof(ChloeUpgradeTypes)))
+        chloeUpgrades[type] = GetDefaultValueForChloe(type);
+    foreach (ChloeUpgradeTypesFloats type in Enum.GetValues(typeof(ChloeUpgradeTypesFloats)))
+        chloeUpgradesFloat[type] = GetDefaultValueForChloe(type);
+
+    // --- FRED ---
+    foreach (FredUpgradeTypes type in Enum.GetValues(typeof(FredUpgradeTypes)))
+        fredUpgrades[type] = GetDefaultValueForFred(type);
+    foreach (FredUpgradeTypesFloats type in Enum.GetValues(typeof(FredUpgradeTypesFloats)))
+        fredUpgradesFloat[type] = GetDefaultValueForFred(type);
+
+    // --- SAM ---
+    foreach (SamUpgradeTypes type in Enum.GetValues(typeof(SamUpgradeTypes)))
+        samUpgrades[type] = GetDefaultValueForSam(type);
+    foreach (SamUpgradeTypesFloats type in Enum.GetValues(typeof(SamUpgradeTypesFloats)))
+        samUpgradesFloat[type] = GetDefaultValueForSam(type);
+
+    // --- ROGER ---
+    foreach (RogerUpgradeTypes type in Enum.GetValues(typeof(RogerUpgradeTypes)))
+        rogerUpgrades[type] = GetDefaultValueForRoger(type);
+    foreach (RogerUpgradeTypesFloats type in Enum.GetValues(typeof(RogerUpgradeTypesFloats)))
+        rogerUpgradesFloat[type] = GetDefaultValueForRoger(type);
+}
+
 
 
 // ---------------------------- BOB ----------------------------//

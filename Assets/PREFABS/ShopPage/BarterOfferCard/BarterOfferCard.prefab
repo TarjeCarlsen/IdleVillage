@@ -1129,10 +1129,11 @@ MonoBehaviour:
   startValue: 50
   tradeValue: 0
   baseXp: 25
+  originalXp: 0
   randomFactor: 0
   minRandom: 0.7
   maxRandom: 1.5
-  isTesting: 1
+  isTesting: 0
   _TESTING_indexForMerchant: 0
   _TESTING_chosenPriceIndex: 1
   _TESTING_chosenRewardIndex: 0
