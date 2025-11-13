@@ -37,15 +37,18 @@ public class MerchantStatHandler : MonoBehaviour
     }
 
     private void UpdateUI(Merchants _merchants){
+                print("testing OUTSIDE IF! ");
         if(_merchants != merchant) return;
             availableSkillpoints_txt.text = barterManager.merchantInfos[merchant].skillPoints.ToString();
             level_txt.text ="Lv."+ barterManager.merchantInfos[merchant].merchantLevel.ToString();
 
+                print("testing OUTSIDE FOREACH ");
             foreach(StatInfo stat in statBonuses){
-                stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type].ToStringSmart(1);
-                stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] -1)*100).ToStringSmart(1) + "%";
+                print("testing "+barterManager.merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[stat.type]);
+                stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[stat.type].ToStringSmart(1);
+                stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplierBonus[stat.type] -1)*100).ToStringSmart(1) + "%";
 
-                if(barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] < 1){
+                if(barterManager.merchantBonuses[merchant].rewardMultiplierBonus[stat.type] < 1){
                     stat.currencyMulti_txt.color = new Color(1f,0f,0f,1f);
                 }else{
                     stat.currencyMulti_txt.color = new Color(0f,1f,0f,1f);

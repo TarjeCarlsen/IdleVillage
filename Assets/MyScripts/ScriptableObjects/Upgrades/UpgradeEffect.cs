@@ -1,5 +1,6 @@
 using UnityEngine;
 using LargeNumbers;
+using System;
 public enum UpgradeTypes{
     UnlockArea,
     SetActivationState,
@@ -7,6 +8,8 @@ public enum UpgradeTypes{
     AddPowerMulti,
     BobAddFlat,
     BobAddFlatToMulti,
+    BobIncreaseChanceForMoneyReward,
+    BobUpgradeXpForAllMerchants,
     CarlAddFlat,
     CarlAddFlatToMulti,
     ChloeAddFlat,
@@ -17,7 +20,8 @@ public enum UpgradeTypes{
     SamAddFlatToMulti,
     RogerAddFlat,
     RogerAddFlatToMulti,
-    RogerAddAllCurrencyFlat
+    RogerAddAllCurrencyFlat,
+
 }
 
 public interface IUpgradeEffect
@@ -41,16 +45,25 @@ public class UpgradeEffect : ScriptableObject
     public Merchants merchants;
     [Header("Chose Type")]
     public BobUpgradeTypes bobUpgradeTypes;
+    public BobUpgradeTypesInt bobUpgradeTypesInt;
+    public BobUpgradeTypesFloats bobUpgradeTypesFloat;
     public CarlUpgradeTypes carlUpgradeTypes;
+    public CarlUpgradeTypesFloats carlUpgradeTypesFloat;
     public ChloeUpgradeTypes chloeUpgradeTypes;
+    public ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
     public FredUpgradeTypes fredUpgradeTypes;
+    public FredUpgradeTypesFloats fredUpgradeTypesFloat;
     public SamUpgradeTypes samUpgradeTypes;
+    public SamUpgradeTypesFloats samUpgradeTypesFloat;
     public RogerUpgradeTypes rogerUpgradeTypes;
+    public RogerUpgradeTypesFloats rogerUpgradeTypesFloat;
 
 
     [Header("Define the amount of the upgrade")]
     public AlphabeticNotation flat;
     public AlphabeticNotation multi;
+    public int flat_forIntUpgrades;
+    public float flat_forFloatUpgrades;
     public void Apply(GameObject target = null){
 
 
@@ -76,7 +89,18 @@ public class UpgradeEffect : ScriptableObject
                 MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
                 break;
             case UpgradeTypes.BobAddFlatToMulti: // adding more to the multiplier for bobs rewards
-                MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
+                MerchantUpgradeManager.Instance.BobAddToMultiReward(bobUpgradeTypes, flat);
+                break;
+            case UpgradeTypes.BobIncreaseChanceForMoneyReward: // adding more to the multiplier for bobs rewards
+                MerchantUpgradeManager.Instance.BobAddFlatRewardInt(bobUpgradeTypesInt, flat_forIntUpgrades);
+                break;
+            case UpgradeTypes.BobUpgradeXpForAllMerchants:
+                MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 break;
                     //..CARL..//
             case UpgradeTypes.CarlAddFlat:

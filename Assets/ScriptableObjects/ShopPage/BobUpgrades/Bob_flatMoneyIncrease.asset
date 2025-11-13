@@ -18,14 +18,23 @@ MonoBehaviour:
   activationState: 0
   merchants: 0
   bobUpgradeTypes: 1
+  bobUpgradeTypesInt: 0
+  bobUpgradeTypesFloat: 0
   carlUpgradeTypes: 0
+  carlUpgradeTypesFloat: 0
   chloeUpgradeTypes: 0
+  chloeUpgradeTypesFloat: 0
   fredUpgradeTypes: 0
+  fredUpgradeTypesFloat: 0
   samUpgradeTypes: 0
+  samUpgradeTypesFloat: 0
   rogerUpgradeTypes: 0
+  rogerUpgradeTypesFloat: 0
   flat:
-    coefficient: 1
+    coefficient: 20
     magnitude: 0
   multi:
     coefficient: 0
     magnitude: 0
+  flat_forIntUpgrades: 0
+  flat_forFloatUpgrades: 0

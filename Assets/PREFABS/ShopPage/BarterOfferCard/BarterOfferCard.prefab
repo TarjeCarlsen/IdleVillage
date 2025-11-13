@@ -1123,25 +1123,23 @@ MonoBehaviour:
   rewardIcon_img: {fileID: 4828737620382037351}
   barterCard: {fileID: 5674346112453640164}
   TESTING_DONT_DESTROY: 1
-  randomValueModifier: 1
   amountModifier: 4
   growthFactor: 3
   level: 0
   startValue: 50
   tradeValue: 0
   baseXp: 25
-  levelFactor: 0.9
-  valueFactor: 1.5
   randomFactor: 0
   minRandom: 0.7
   maxRandom: 1.5
   isTesting: 1
   _TESTING_indexForMerchant: 0
-  _TESTING_chosenPriceIndex: 0
-  _TESTING_chosenRewardIndex: 1
+  _TESTING_chosenPriceIndex: 1
+  _TESTING_chosenRewardIndex: 0
   _TESTING_priceValue: 1
   _TESTING_rewardValue: 1
   _TESTING_level: 1
+  _TESTING_xpReward: 100
   _TESTING_priceAmount:
     coefficient: 100
     magnitude: 0

@@ -18,6 +18,7 @@ MonoBehaviour:
   activationState: 0
   merchants: 0
   bobUpgradeTypes: 0
+  bobUpgradeTypesInt: 0
   carlUpgradeTypes: 0
   chloeUpgradeTypes: 0
   fredUpgradeTypes: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   multi:
     coefficient: 0
     magnitude: 0
+  flat_forIntUpgrades: 0
