@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using LargeNumbers;
 using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Analytics;
+using System.Collections;
 
 public enum Merchants
 {
@@ -39,6 +41,14 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private Transform barterParentContainer;
     private List<BarterCardHandler> barterCardHandlers = new();
 
+    [SerializeField] private TMP_Text refreshAmount_txt;
+    [SerializeField] private TMP_Text refreshTimer_txt;
+    private Coroutine refreshCoroutine;
+    [SerializeField] private int refreshAmount = 1;
+    [SerializeField] private int maxAmountRefresh = 10;
+    [SerializeField] private float refreshTimerStart = 5f;
+    private float refreshTimer;
+
     [SerializeField] private float growthRate; // tweak this to adjust scaling for how fast lvl requirement xp increases
     [SerializeField] private int maxAmountOfBarters;
 
@@ -50,7 +60,6 @@ public class BarterManager : MonoBehaviour
     public event Action<Merchants> OnBarterXpGain;
     public event Action<Merchants> OnUpgradeBought;
     public event Action<Merchants> OnBarterClaimed;
-    public event Action<Merchants> OnXpUpgradeBought;
 
     [System.Serializable]
     public class MerchantInfo
@@ -98,6 +107,7 @@ public class BarterManager : MonoBehaviour
         public float xpRewardBonus = 1f;
         public float specialBarterOfferMulti = 100;
         public float specialBarterChance = 0f;
+        public int refreshAditionBonus = 0;
         public void InitializeDefaults()
         {
             foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
@@ -120,6 +130,10 @@ public class BarterManager : MonoBehaviour
         }
     }
 
+    private void Start(){
+        StartRefreshTimer();
+        UpdateUI();
+    }
 
 
     private void InitializeMerchantInfos()
@@ -217,6 +231,18 @@ public class BarterManager : MonoBehaviour
                         print("UPGRADED FLAT TO MULT FOR Carl!");
                         merchantBonuses[merchant].rewardMultiplierBonus[types] = MerchantUpgradeManager.Instance.CarlGetRewardPower(CarlUpgradeTypes.rewardMultiCarl);
                         break;
+                    case UpgradeTypes.CarlAddRefreshCount:
+                        print("UPGRADED REFRESH COUNT Carl!");
+                        int newBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(CarlUpgradeTypesInt.refreshCountCarl);
+                        maxAmountRefresh -= merchantBonuses[merchant].refreshAditionBonus; // Remove the old bonus to apply the new one
+
+                        merchantBonuses[merchant].refreshAditionBonus = newBonus;
+                        maxAmountRefresh += merchantBonuses[merchant].refreshAditionBonus;
+
+                        print("new max refresh = "+maxAmountRefresh);
+                        StartRefreshTimer();
+                        UpdateUI();
+                        break; 
 
                 }
                 break;
@@ -307,19 +333,30 @@ public class BarterManager : MonoBehaviour
 
     public void OnRefreshClick()
     {
-        foreach (var card in barterCardHandlers)
+        if (refreshAmount > 0)
         {
-            if (card != null)
-            {
-                card.DestroyCard();
-            }
-        }
-        barterCardHandlers.Clear();
 
-        for (int i = 0; i < maxAmountOfBarters; i++)
-        {
-            CreateBarterOffers();
+            foreach (var card in barterCardHandlers)
+            {
+                if (card != null)
+                {
+                    card.DestroyCard();
+                }
+            }
+            barterCardHandlers.Clear();
+
+            for (int i = 0; i < maxAmountOfBarters; i++)
+            {
+                CreateBarterOffers();
+            }
+            refreshAmount--;
+            StartRefreshTimer();
         }
+        else
+        {
+            print("No more refreshes available!"); // ADD POPUP TEXT HERE!
+        }
+        UpdateUI();
     }
 
     public void TESTING_CREATE_TESTINGBARTER()
@@ -413,8 +450,54 @@ public class BarterManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private void StartRefreshTimer()
+    {
+        if (refreshCoroutine == null)
+        {
+            refreshTimer = refreshTimerStart;
+            refreshCoroutine = StartCoroutine(RefreshTimerCoroutine());
+        }
+    }
+    private void StopRefreshTimer()
+    {
+        if (refreshCoroutine != null)
+        {
+            StopCoroutine(refreshCoroutine);
+            refreshCoroutine = null;
+        }
+    }
 
 
+
+    private IEnumerator RefreshTimerCoroutine()
+    {
+
+        while (true)
+        {
+            refreshTimer_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(refreshTimer);
+            yield return new WaitForSeconds(1f);
+
+            refreshTimer -= 1f;
+            if (refreshTimer <= 0f)
+            {
+                refreshTimer = 0f;
+                refreshAmount++;
+                UpdateUI();
+                if(refreshAmount >= maxAmountRefresh){
+                    StopRefreshTimer();
+                }else{
+                    refreshTimer = refreshTimerStart;
+                }
+            }
+        }
+        // refreshTimer_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(0f);
+    }
+
+    private void UpdateUI()
+    {
+        refreshAmount_txt.text = refreshAmount.ToString() + " / " + maxAmountRefresh.ToString();
     }
 
 }

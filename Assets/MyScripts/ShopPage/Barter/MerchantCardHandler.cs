@@ -28,12 +28,19 @@ public class MerchantCardHandler : MonoBehaviour
                                                                    // VALUE AT 1, WHILE STILL WANTING TO DISPLAY PERCENTAGE FOR THE VALUE.
                                                                    // SETTING THIS TO 0 WILL THEN LET THE PERCENTAGE START FROM 0 WITHOUT MODIFYING 
                                                                    // THE ACTUALL BONUS VALUE
-    [SerializeField] private BobUpgradeTypesInt bobUpgradeTypesInt;
-    [SerializeField] private BobUpgradeTypesFloats bobUpgradeTypesFloat;
-    [SerializeField] private BobUpgradeTypes bobUpgradeTypes;
+
     [SerializeField] private bool isCurrencyUpgrade;
     [SerializeField] private bool isGeneralUpgrade;
     [SerializeField] private List<CurrencyTypes> currenciesToUpgrade;
+
+    [Header("BOB DISPLAYS")]
+    [SerializeField] private BobUpgradeTypesInt bobUpgradeTypesInt;
+    [SerializeField] private BobUpgradeTypesFloats bobUpgradeTypesFloat;
+    [SerializeField] private BobUpgradeTypes bobUpgradeTypes;
+    [Header("CARL DISPLAYS")]
+    [SerializeField] private CarlUpgradeTypesInt carlUpgradeTypesInt;
+    [SerializeField] private CarlUpgradeTypesFloats carlUpgradeTypesFloat;
+    [SerializeField] private CarlUpgradeTypes carlUpgradeTypes;
 
     private string templateText;
     public event Action OnBought;
@@ -156,8 +163,26 @@ public class MerchantCardHandler : MonoBehaviour
                         );
                         affectedUpgradeText_txt.text = updatedText;
                         break;
-                    //add all merchants here
+
                     case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{(.*?)\}",
+                            match =>
+                            {
+                                string placeholder = match.Groups[1].Value;
+                                switch (placeholder)
+                                {
+                                    case "bonus1":
+                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes) - minusThis_forDisplayValue) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
+                                    case "bonus2":
+                                        return $"<color=green>{barterManager.merchantInfos[merchant].completedInArow}</color>";
+                                    default:
+                                        return match.Value; // leave unknown placeholders as-is
+                                }
+                            }
+                        );
+                        affectedUpgradeText_txt.text = updatedText;
                         break;
                     case Merchants.ChloeTheMerchant:
                         break;
@@ -197,6 +222,14 @@ public class MerchantCardHandler : MonoBehaviour
                         );
                         break;
                         //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                                $"<color=green> {MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(carlUpgradeTypesInt).ToString()}</color>"
+                        );
+                        break;
+                        //add all merchants here
                 }
             }
             if (isAlphabeticnotationDatatype && isPercentageUpgrade)
@@ -208,6 +241,14 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                             $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                        //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
                         );
                         break;
                         //add all merchants here
@@ -223,6 +264,14 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                             $"<color=green>{MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                        //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes).ToStringSmart(0)}</color>"
                         );
                         break;
                         //add all merchants here
@@ -242,6 +291,14 @@ public class MerchantCardHandler : MonoBehaviour
                         );
                         break;
                         //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat).ToString()}</color>"
+                        );
+                        break;
+                        //add all merchants here
 
                 }
             }
@@ -254,6 +311,14 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                             $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
+                        );
+                        break;
+                        //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here

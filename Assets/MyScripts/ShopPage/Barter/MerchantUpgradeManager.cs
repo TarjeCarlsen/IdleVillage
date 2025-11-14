@@ -25,6 +25,9 @@ public enum CarlUpgradeTypes{
     rewardMultiCarl,
     rewardFlatCarl,
 }
+public enum CarlUpgradeTypesInt{
+    refreshCountCarl,
+}
 public enum CarlUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
@@ -87,6 +90,7 @@ public class MerchantUpgradeManager : MonoBehaviour
     [SerializeField] public AlphabeticNotation carlStartValues = new AlphabeticNotation(1);
     [SerializeField] public AlphabeticNotation carlMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
     [SerializeField] public float carlFloatStartValues = 1f; 
+    [SerializeField] public Dictionary<CarlUpgradeTypesInt, int> carlUpgradesInt;
     [SerializeField] public Dictionary<CarlUpgradeTypesFloats, float> carlUpgradesFloat;
 
     // ---------------------------- CHLOE ----------------------------//
@@ -189,6 +193,14 @@ private int GetDefaultValueForBob(BobUpgradeTypesInt type)
         _ => 0
     };
 }
+private int GetDefaultValueForCarl(CarlUpgradeTypesInt type)
+{
+    return type switch
+    {
+        CarlUpgradeTypesInt.refreshCountCarl => 0,
+        _ => 0
+    };
+}
 
 //------------------------------------------------ FLOAT DATATYPE ------------------------------------------ //
 private float GetDefaultValueForBob(BobUpgradeTypesFloats type)
@@ -259,6 +271,7 @@ private void InitializeMerchantUpgrades()
     bobUpgradesFloat = new Dictionary<BobUpgradeTypesFloats, float>();
 
     carlUpgrades = new Dictionary<CarlUpgradeTypes, AlphabeticNotation>();
+    carlUpgradesInt = new Dictionary<CarlUpgradeTypesInt, int>();
     carlUpgradesFloat = new Dictionary<CarlUpgradeTypesFloats, float>();
 
     chloeUpgrades = new Dictionary<ChloeUpgradeTypes, AlphabeticNotation>();
@@ -284,6 +297,8 @@ private void InitializeMerchantUpgrades()
     // --- CARL ---
     foreach (CarlUpgradeTypes type in Enum.GetValues(typeof(CarlUpgradeTypes)))
         carlUpgrades[type] = GetDefaultValueForCarl(type);
+    foreach (CarlUpgradeTypesInt type in Enum.GetValues(typeof(CarlUpgradeTypesInt)))
+        carlUpgradesInt[type] = GetDefaultValueForCarl(type);
     foreach (CarlUpgradeTypesFloats type in Enum.GetValues(typeof(CarlUpgradeTypesFloats)))
         carlUpgradesFloat[type] = GetDefaultValueForCarl(type);
 
@@ -331,6 +346,10 @@ private void InitializeMerchantUpgrades()
     public AlphabeticNotation CarlGetRewardPower(CarlUpgradeTypes type) => carlUpgrades[type];
     public void CarlAddFlatReward(CarlUpgradeTypes type, AlphabeticNotation amount) => carlUpgrades[type] += amount; 
     public void CarlMultiplyReward(CarlUpgradeTypes type, AlphabeticNotation amount) => carlUpgrades[type] *= amount;
+        // ----------int upgrades ---------//
+    public int CarlGetRewardPowerInt(CarlUpgradeTypesInt type) => carlUpgradesInt[type];
+    public void CarlAddFlatRewardInt(CarlUpgradeTypesInt type, int amount) => carlUpgradesInt[type] += amount; 
+    public void CarlMultiplyRewardInt(CarlUpgradeTypesInt type, int amount) => carlUpgradesInt[type] *= amount;
         // ----------float upgrades ---------//
     public float CarlGetRewardPowerFloat(CarlUpgradeTypesFloats type) => carlUpgradesFloat[type];
     public void CarlAddFlatRewardFloat(CarlUpgradeTypesFloats type, float amount) => carlUpgradesFloat[type] += amount; 

@@ -15,6 +15,7 @@ public enum UpgradeTypes{
     BobIncreaseAllChanceForSpecial,
     CarlAddFlat,
     CarlAddFlatToMulti,
+    CarlAddRefreshCount,
     ChloeAddFlat,
     ChloeAddFlatToMulti,
     FredAddFlat,
@@ -48,17 +49,25 @@ public class UpgradeEffect : ScriptableObject
     [Header("Chose merchant")]
     public Merchants merchants;
     [Header("Chose Type")]
+
+    [Header("BOB UPGRADES")]
     public BobUpgradeTypes bobUpgradeTypes;
     public BobUpgradeTypesInt bobUpgradeTypesInt;
     public BobUpgradeTypesFloats bobUpgradeTypesFloat;
+    [Header("CARL UPGRADES")]
     public CarlUpgradeTypes carlUpgradeTypes;
+    public CarlUpgradeTypesInt carlUpgradeTypesInt;
     public CarlUpgradeTypesFloats carlUpgradeTypesFloat;
+    [Header("CHLOE UPGRADES")]
     public ChloeUpgradeTypes chloeUpgradeTypes;
     public ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
+    [Header("FRED UPGRADES")]
     public FredUpgradeTypes fredUpgradeTypes;
     public FredUpgradeTypesFloats fredUpgradeTypesFloat;
+    [Header("SAM UPGRADES")]
     public SamUpgradeTypes samUpgradeTypes;
     public SamUpgradeTypesFloats samUpgradeTypesFloat;
+    [Header("ROGER UPGRADES")]
     public RogerUpgradeTypes rogerUpgradeTypes;
     public RogerUpgradeTypesFloats rogerUpgradeTypesFloat;
 
@@ -100,24 +109,12 @@ public class UpgradeEffect : ScriptableObject
                 break;
             case UpgradeTypes.BobUpgradeXpForAllMerchants:
                 MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(bobUpgradeTypesFloat,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 break;
             case UpgradeTypes.BobStackMultiFlat_ResetOnOtherBarter:
                 MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
                 break;
             case UpgradeTypes.BobIncreaseAllChanceForSpecial:
                 MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(bobUpgradeTypesFloat, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
-                // MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
                 break;
                     //..CARL..//
             case UpgradeTypes.CarlAddFlat:
@@ -125,6 +122,9 @@ public class UpgradeEffect : ScriptableObject
                 break;
             case UpgradeTypes.CarlAddFlatToMulti: // adding more to the multiplier for bobs rewards
                 MerchantUpgradeManager.Instance.CarlAddFlatReward(carlUpgradeTypes, flat);
+                break;
+            case UpgradeTypes.CarlAddRefreshCount:
+                MerchantUpgradeManager.Instance.CarlAddFlatRewardInt(carlUpgradeTypesInt,flat_forIntUpgrades);
                 break;
                     //..CHLOE..//
             case UpgradeTypes.ChloeAddFlat:
