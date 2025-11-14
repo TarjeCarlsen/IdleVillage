@@ -22,6 +22,10 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private bool isFloatDatatype = false;
     [SerializeField] private bool isPercentageUpgrade = false;
     [SerializeField] private bool isBasedOfBarterTrades = false;
+    [SerializeField] private float minusThis_forDisplayValue = 1f; // USED FOR INITIATING DISPLAYED VALUES. FOR EXAMPLE SOME VALUES WILL HAVE A START
+                                                                   // VALUE AT 1, WHILE STILL WANTING TO DISPLAY PERCENTAGE FOR THE VALUE.
+                                                                   // SETTING THIS TO 0 WILL THEN LET THE PERCENTAGE START FROM 0 WITHOUT MODIFYING 
+                                                                   // THE ACTUALL BONUS VALUE
     [SerializeField] private BobUpgradeTypesInt bobUpgradeTypesInt;
     [SerializeField] private BobUpgradeTypesFloats bobUpgradeTypesFloat;
     [SerializeField] private BobUpgradeTypes bobUpgradeTypes;
@@ -140,7 +144,7 @@ public class MerchantCardHandler : MonoBehaviour
                                 switch (placeholder)
                                 {
                                     case "bonus1":
-                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - 1) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
+                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
                                     case "bonus2":
                                         return $"<color=green>{barterManager.merchantInfos[merchant].completedInArow}</color>";
                                     default:
@@ -201,7 +205,7 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - 1) * 100).ToStringSmart(0)}</color>"
+                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
                         );
                         break;
                         //add all merchants here
@@ -247,7 +251,7 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - 1) * 100).ToString("F0")}</color>"
+                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here

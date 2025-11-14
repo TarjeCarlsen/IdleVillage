@@ -16,6 +16,8 @@ public enum BobUpgradeTypesInt{
 }
 public enum BobUpgradeTypesFloats{
     xpGainBonusMulti,
+    increaseAllSpecialBarterChance,
+    chanceForSpecialBarter,
 
 }
 public enum CarlUpgradeTypes{
@@ -24,6 +26,7 @@ public enum CarlUpgradeTypes{
 }
 public enum CarlUpgradeTypesFloats{
     xpGainBonusMulti,
+    chanceForSpecialBarter,
 
 }
 
@@ -33,6 +36,7 @@ public enum ChloeUpgradeTypes{
 }
 public enum ChloeUpgradeTypesFloats{
     xpGainBonusMulti,
+    chanceForSpecialBarter,
 
 }
 public enum FredUpgradeTypes{
@@ -41,6 +45,7 @@ public enum FredUpgradeTypes{
 }
 public enum FredUpgradeTypesFloats{
     xpGainBonusMulti,
+    chanceForSpecialBarter,
 
 }
 public enum SamUpgradeTypes{
@@ -49,6 +54,7 @@ public enum SamUpgradeTypes{
 }
 public enum SamUpgradeTypesFloats{
     xpGainBonusMulti,
+    chanceForSpecialBarter,
 
 }
 public enum RogerUpgradeTypes{
@@ -59,6 +65,7 @@ public enum RogerUpgradeTypes{
 public enum RogerUpgradeTypesFloats{
     xpGainBonusMulti,
 
+    chanceForSpecialBarter,
 }
 
 
@@ -188,6 +195,8 @@ private float GetDefaultValueForBob(BobUpgradeTypesFloats type)
     return type switch
     {
         BobUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        BobUpgradeTypesFloats.increaseAllSpecialBarterChance => 0f,
+        BobUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }
@@ -197,6 +206,7 @@ private float GetDefaultValueForCarl(CarlUpgradeTypesFloats type)
     return type switch
     {
         CarlUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        CarlUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }
@@ -206,6 +216,7 @@ private float GetDefaultValueForChloe(ChloeUpgradeTypesFloats type)
     return type switch
     {
         ChloeUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        ChloeUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }
@@ -215,6 +226,7 @@ private float GetDefaultValueForFred(FredUpgradeTypesFloats type)
     return type switch
     {
         FredUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        FredUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }
@@ -224,6 +236,7 @@ private float GetDefaultValueForSam(SamUpgradeTypesFloats type)
     return type switch
     {
         SamUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        SamUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }
@@ -233,6 +246,7 @@ private float GetDefaultValueForRoger(RogerUpgradeTypesFloats type)
     return type switch
     {
         RogerUpgradeTypesFloats.xpGainBonusMulti => 1f,
+        RogerUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         _ => 1f
     };
 }

@@ -12,6 +12,7 @@ public enum UpgradeTypes{
     BobIncreaseChanceForMoneyReward,
     BobUpgradeXpForAllMerchants,
     BobStackMultiFlat_ResetOnOtherBarter,
+    BobIncreaseAllChanceForSpecial,
     CarlAddFlat,
     CarlAddFlatToMulti,
     ChloeAddFlat,
@@ -23,6 +24,7 @@ public enum UpgradeTypes{
     RogerAddFlat,
     RogerAddFlatToMulti,
     RogerAddAllCurrencyFlat,
+
 
 }
 
@@ -106,6 +108,15 @@ public class UpgradeEffect : ScriptableObject
                 break;
             case UpgradeTypes.BobStackMultiFlat_ResetOnOtherBarter:
                 MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);
+                break;
+            case UpgradeTypes.BobIncreaseAllChanceForSpecial:
+                MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(bobUpgradeTypesFloat, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.chanceForSpecialBarter, flat_forFloatUpgrades);
                 break;
                     //..CARL..//
             case UpgradeTypes.CarlAddFlat:

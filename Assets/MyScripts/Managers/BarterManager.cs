@@ -33,6 +33,8 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private List<MerchantInfo> startValues;
 
     [SerializeField] private GameObject barterOfferPrefab;
+    [SerializeField] private GameObject specialBarterOfferPrefab;
+
     [SerializeField] private GameObject TESTING_barterOfferPrefab;
     [SerializeField] private Transform barterParentContainer;
     private List<BarterCardHandler> barterCardHandlers = new();
@@ -41,13 +43,13 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private int maxAmountOfBarters;
 
     public Merchants previousMerchantCompleted; // STOPPED HERE. NEED TO IMPLEMENT A PREVIOUS MERCHANT POINTER TO CHECK IF THE
-                                                    // CLAIMED BARTER IS GOING TO ADD TO THE COMPLETED IN A ROW COUNTER OR RESET IT 
-                                                    // AND SET PREVIOUS MERCHANT COMPLETED TO THIS ONE
+                                                // CLAIMED BARTER IS GOING TO ADD TO THE COMPLETED IN A ROW COUNTER OR RESET IT 
+                                                // AND SET PREVIOUS MERCHANT COMPLETED TO THIS ONE
 
     public event Action<Merchants> OnBarterLevelUp;
     public event Action<Merchants> OnBarterXpGain;
     public event Action<Merchants> OnUpgradeBought;
-    public event Action <Merchants> OnBarterClaimed;
+    public event Action<Merchants> OnBarterClaimed;
 
     [System.Serializable]
     public class MerchantInfo
@@ -63,6 +65,8 @@ public class BarterManager : MonoBehaviour
                                        // depending on how big slice of the wheel he should take
         public int completedBartersForMerchant = 0;
         public int completedInArow = 0;
+
+
 
         public Dictionary<CurrencyTypes, int> rewardCurrencyWeigth;
 
@@ -89,8 +93,10 @@ public class BarterManager : MonoBehaviour
         public Dictionary<CurrencyTypes, AlphabeticNotation> rewardBaseFlatIncreaseBonus = new();
         public Dictionary<CurrencyTypes, AlphabeticNotation> totalBonus = new();
         public Dictionary<CurrencyTypes, int> rewardCurrencyWeigthBonus = new();
-        public AlphabeticNotation stackingMulit = new AlphabeticNotation (1);
+        public AlphabeticNotation stackingMulit = new AlphabeticNotation(1);
         public float xpRewardBonus = 1f;
+        public float specialBarterOfferMulti = 100;
+        public float specialBarterChance = 0f;
         public void InitializeDefaults()
         {
             foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
@@ -154,12 +160,12 @@ public class BarterManager : MonoBehaviour
         switch (merchant)
         {
             case Merchants.BobTheMerchant:
-                merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob)+
+                merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob) +
                                                                                MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardFlatBob_2);
                 merchantBonuses[merchant].rewardMultiplierBonus[types] = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.rewardMultiBob);
                 merchantBonuses[merchant].rewardCurrencyWeigthBonus[types] = MerchantUpgradeManager.Instance.BobGetRewardPowerInt(BobUpgradeTypesInt.moneyWeightChanceBob);
                 merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.xpGainBonusMulti);
-                
+
                 break;
             case Merchants.CarlTheMerchant:
                 merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.CarlGetRewardPower(CarlUpgradeTypes.rewardFlatCarl);
@@ -174,7 +180,7 @@ public class BarterManager : MonoBehaviour
             case Merchants.FredTheMerchant:
                 merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardFlatFred);
                 merchantBonuses[merchant].rewardMultiplierBonus[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardMultiFred);
-                merchantBonuses[merchant].xpRewardBonus= MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(FredUpgradeTypesFloats.xpGainBonusMulti);
+                merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(FredUpgradeTypesFloats.xpGainBonusMulti);
                 break;
             case Merchants.SamTheMerchant:
                 merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.SamGetRewardPower(SamUpgradeTypes.rewardFlatSam);
@@ -197,6 +203,11 @@ public class BarterManager : MonoBehaviour
             case Merchants.BobTheMerchant:
                 merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.xpGainBonusMulti);
                 merchantBonuses[merchant].stackingMulit = MerchantUpgradeManager.Instance.BobGetRewardPower(BobUpgradeTypes.multiAll_resetOnOther);
+                // merchantBonuses[merchant].specialBarterChance = MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.increaseAllSpecialBarterChance);
+                foreach (Merchants merch in Enum.GetValues(typeof(Merchants)))
+                {
+                    UpdateAllSpecialBarterChances(merch, MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.increaseAllSpecialBarterChance));
+                }
                 break;
             case Merchants.CarlTheMerchant:
                 merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.xpGainBonusMulti);
@@ -205,7 +216,7 @@ public class BarterManager : MonoBehaviour
                 merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(ChloeUpgradeTypesFloats.xpGainBonusMulti);
                 break;
             case Merchants.FredTheMerchant:
-                merchantBonuses[merchant].xpRewardBonus= MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(FredUpgradeTypesFloats.xpGainBonusMulti);
+                merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(FredUpgradeTypesFloats.xpGainBonusMulti);
                 break;
             case Merchants.SamTheMerchant:
                 merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.SamGetRewardPowerFloat(SamUpgradeTypesFloats.xpGainBonusMulti);
@@ -217,6 +228,15 @@ public class BarterManager : MonoBehaviour
         OnUpgradeBought?.Invoke(merchant);
     }
 
+
+    private void UpdateAllSpecialBarterChances(Merchants merchant, float amount)
+    {
+        foreach (Merchants merch in Enum.GetValues(typeof(Merchants)))
+        {
+            merchantBonuses[merchant].specialBarterChance = amount;
+            print($"chance for {merch} = {merchantBonuses[merchant].specialBarterChance}");
+        }
+    }
 
     public void MerchantLevelUp(Merchants merchant, float xpAmount)
     {
@@ -245,32 +265,88 @@ public class BarterManager : MonoBehaviour
         }
     }
 
-    public void TESTING_CREATE_TESTINGBARTER(){
+    public void TESTING_CREATE_TESTINGBARTER()
+    {
         GameObject newBarterOffer = Instantiate(TESTING_barterOfferPrefab, barterParentContainer);
         BarterCardHandler barterHandler = newBarterOffer.GetComponent<BarterCardHandler>();
         barterCardHandlers.Add(barterHandler);
         barterHandler.OnBarterClaimed += ForwardEventRaised;
     }
+
+    private int GetRandomMerchant()
+    {
+
+        int totalWeigth = 0;
+        foreach (var segment in merchantInfos.Values)
+        {
+            totalWeigth += segment.appearChanceWeigth;
+        }
+        int randomValue = UnityEngine.Random.Range(0, totalWeigth);
+        int currentSum = 0;
+        int currentIndex = 0;
+        foreach (var segment in merchantInfos.Values)
+        {
+            currentSum += segment.appearChanceWeigth;
+            if (randomValue < currentSum)
+            {
+                return currentIndex;
+            }
+            currentIndex++;
+        }
+
+        // Safety fallback
+        return 0;
+    }
+
+    private bool isBarterSpecial(int chosenMerchant)
+    {
+        float chance = merchantBonuses[(Merchants)chosenMerchant].specialBarterChance;
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        if (roll < chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void CreateBarterOffers()
     {
-        GameObject newBarterOffer = Instantiate(barterOfferPrefab, barterParentContainer);
-        BarterCardHandler barterHandler = newBarterOffer.GetComponent<BarterCardHandler>();
+        int randomChosenMerchant = GetRandomMerchant();
+        GameObject newBarterOffer;
+        BarterCardHandler barterHandler;
+
+        if(isBarterSpecial(randomChosenMerchant)){
+        newBarterOffer = Instantiate(specialBarterOfferPrefab, barterParentContainer);
+            
+        }else{
+        newBarterOffer = Instantiate(barterOfferPrefab, barterParentContainer);
+        }
+
+        barterHandler = newBarterOffer.GetComponent<BarterCardHandler>();
+        barterHandler.chosenMerchantIndex = randomChosenMerchant;
         barterCardHandlers.Add(barterHandler);
         barterHandler.OnBarterClaimed += ForwardEventRaised;
     }
 
-    public void UnsubscribeFromCard(BarterCardHandler handler){
+    public void UnsubscribeFromCard(BarterCardHandler handler)
+    {
         handler.OnBarterClaimed -= ForwardEventRaised;
     }
 
-    private void ForwardEventRaised(Merchants _merchant){
+    private void ForwardEventRaised(Merchants _merchant)
+    {
         OnBarterClaimed?.Invoke(_merchant);
     }
 
-    public bool isMerchantSameAsLast(Merchants _merchant){
-        if(previousMerchantCompleted != _merchant){
+    public bool isMerchantSameAsLast(Merchants _merchant)
+    {
+        if (previousMerchantCompleted != _merchant)
+        {
             previousMerchantCompleted = _merchant;
-            foreach(Merchants merchant in Enum.GetValues(typeof(Merchants))){
+            foreach (Merchants merchant in Enum.GetValues(typeof(Merchants)))
+            {
                 merchantInfos[merchant].completedInArow = 0;
                 OnBarterClaimed?.Invoke(merchant);
             }
