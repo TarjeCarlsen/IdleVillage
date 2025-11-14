@@ -48,6 +48,7 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private int maxAmountRefresh = 10;
     [SerializeField] private float refreshTimerStart = 5f;
     private float refreshTimer;
+    public float freeRefreshChance = 0;
 
     [SerializeField] private float growthRate; // tweak this to adjust scaling for how fast lvl requirement xp increases
     [SerializeField] private int maxAmountOfBarters;
@@ -106,8 +107,11 @@ public class BarterManager : MonoBehaviour
         public AlphabeticNotation stackingMulit = new AlphabeticNotation(1);
         public float xpRewardBonus = 1f;
         public float specialBarterOfferMulti = 100;
-        public float specialBarterChance = 0f;
+        public float specialBarterChanceBonus = 0f;
         public int refreshAditionBonus = 0;
+        public float freeRefreshChanceBonus = 0;
+        public float reducedRefreshTimeBonus = 0;
+
         public void InitializeDefaults()
         {
             foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
@@ -130,7 +134,8 @@ public class BarterManager : MonoBehaviour
         }
     }
 
-    private void Start(){
+    private void Start()
+    {
         StartRefreshTimer();
         UpdateUI();
     }
@@ -233,16 +238,42 @@ public class BarterManager : MonoBehaviour
                         break;
                     case UpgradeTypes.CarlAddRefreshCount:
                         print("UPGRADED REFRESH COUNT Carl!");
-                        int newBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(CarlUpgradeTypesInt.refreshCountCarl);
+                        int new_carlAddRefreshBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(CarlUpgradeTypesInt.refreshCountCarl);
                         maxAmountRefresh -= merchantBonuses[merchant].refreshAditionBonus; // Remove the old bonus to apply the new one
 
-                        merchantBonuses[merchant].refreshAditionBonus = newBonus;
+                        merchantBonuses[merchant].refreshAditionBonus = new_carlAddRefreshBonus;
                         maxAmountRefresh += merchantBonuses[merchant].refreshAditionBonus;
 
-                        print("new max refresh = "+maxAmountRefresh);
+                        print("new max refresh = " + maxAmountRefresh);
                         StartRefreshTimer();
                         UpdateUI();
-                        break; 
+                        break;
+                    case UpgradeTypes.CarlFreeRefreshChance:
+                        print("UPGRADED FREE REFRESH CHANCE Carl!");
+                        float new_carlAddFreeRefreshChance = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.chanceForFreeRefresh);
+                        freeRefreshChance -= merchantBonuses[merchant].freeRefreshChanceBonus;
+
+                        merchantBonuses[merchant].freeRefreshChanceBonus = new_carlAddFreeRefreshChance;
+                        freeRefreshChance += merchantBonuses[merchant].freeRefreshChanceBonus;
+
+                        print("new chance for free refresh = " + freeRefreshChance);
+
+                        break;
+                    case UpgradeTypes.CarlReduceRefreshTime:
+                        print("UPGRADED FREE REFRESH CHANCE Carl!");
+                        float new_carlReduceRefreshTime = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.reduceRefreshTime);
+                        if(merchantBonuses[merchant].reducedRefreshTimeBonus > 0){
+                            refreshTimerStart = refreshTimerStart / merchantBonuses[merchant].reducedRefreshTimeBonus; // add back the reduced time
+                        }
+                        print($"bonus: {MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.reduceRefreshTime)}");
+                        merchantBonuses[merchant].reducedRefreshTimeBonus = new_carlReduceRefreshTime;
+                        refreshTimerStart = refreshTimerStart * merchantBonuses[merchant].reducedRefreshTimeBonus; //add back the improved bonus
+
+                        StopRefreshTimer();
+                        StartRefreshTimer();
+                        print("new reduced time = " + refreshTimerStart);
+
+                        break;
 
                 }
                 break;
@@ -316,7 +347,7 @@ public class BarterManager : MonoBehaviour
 
     private void UpdateAllSpecialBarterChances(Merchants merchant, float amount)
     {
-        merchantBonuses[merchant].specialBarterChance = amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT WHEN MORE 
+        merchantBonuses[merchant].specialBarterChanceBonus = amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT WHEN MORE 
                                                                 // MERCHANTS THEN BOB AFFECT SPECIAL BARTER TRADE CHANCES
 
     }
@@ -329,6 +360,19 @@ public class BarterManager : MonoBehaviour
         merchantInfos[merchant].merchantLevel += 1;
         merchantInfos[merchant].bonus += .05f;
         OnBarterLevelUp?.Invoke(merchant);
+    }
+
+    private bool isRefreshFree()
+    {
+        float roll = UnityEngine.Random.Range(0, 1f);
+        if (roll < freeRefreshChance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void OnRefreshClick()
@@ -349,8 +393,11 @@ public class BarterManager : MonoBehaviour
             {
                 CreateBarterOffers();
             }
-            refreshAmount--;
-            StartRefreshTimer();
+            if (!isRefreshFree())
+            {
+                refreshAmount--;
+                StartRefreshTimer();
+            }
         }
         else
         {
@@ -394,7 +441,7 @@ public class BarterManager : MonoBehaviour
 
     private bool isBarterSpecial(int chosenMerchant)
     {
-        float chance = merchantBonuses[(Merchants)chosenMerchant].specialBarterChance;
+        float chance = merchantBonuses[(Merchants)chosenMerchant].specialBarterChanceBonus;
         float roll = UnityEngine.Random.Range(0f, 1f);
         if (roll < chance)
         {
@@ -485,9 +532,12 @@ public class BarterManager : MonoBehaviour
                 refreshTimer = 0f;
                 refreshAmount++;
                 UpdateUI();
-                if(refreshAmount >= maxAmountRefresh){
+                if (refreshAmount >= maxAmountRefresh)
+                {
                     StopRefreshTimer();
-                }else{
+                }
+                else
+                {
                     refreshTimer = refreshTimerStart;
                 }
             }

@@ -31,6 +31,8 @@ public enum CarlUpgradeTypesInt{
 public enum CarlUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
+    chanceForFreeRefresh,
+    reduceRefreshTime,
 
 }
 
@@ -220,6 +222,8 @@ private float GetDefaultValueForCarl(CarlUpgradeTypesFloats type)
     {
         CarlUpgradeTypesFloats.xpGainBonusMulti => 1f,
         CarlUpgradeTypesFloats.chanceForSpecialBarter => 0f,
+        CarlUpgradeTypesFloats.chanceForFreeRefresh => 0f,
+        CarlUpgradeTypesFloats.reduceRefreshTime => 1f,
         _ => 1f
     };
 }
@@ -353,6 +357,7 @@ private void InitializeMerchantUpgrades()
         // ----------float upgrades ---------//
     public float CarlGetRewardPowerFloat(CarlUpgradeTypesFloats type) => carlUpgradesFloat[type];
     public void CarlAddFlatRewardFloat(CarlUpgradeTypesFloats type, float amount) => carlUpgradesFloat[type] += amount; 
+    public void CarlSubtractFlatRewardFloat(CarlUpgradeTypesFloats type, float amount) => carlUpgradesFloat[type] -= amount; 
     public void CarlMultiplyRewardFloat(CarlUpgradeTypesFloats type, float amount) => carlUpgradesFloat[type] *= amount;
 // ---------------------------- Chloe ----------------------------//
     public AlphabeticNotation ChloeGetRewardPower(ChloeUpgradeTypes type) => chloeUpgrades[type];

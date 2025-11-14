@@ -24,6 +24,9 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private bool isFloatDatatype = false;
     [SerializeField] private bool isPercentageUpgrade = false;
     [SerializeField] private bool isBasedOfBarterTrades = false;
+    [SerializeField] private bool reverseCounting = false; //reverses the way its displayed. If for example the upgrade is a 5% time reduction, the bonus will go down
+                                                           //toggling reverseCounting makes the displayed number go up. So it displays 5%->10% instead of -5% -> -10%
+                                                           //Only implemented for percentage floats!
     [SerializeField] private float minusThis_forDisplayValue = 1f; // USED FOR INITIATING DISPLAYED VALUES. FOR EXAMPLE SOME VALUES WILL HAVE A START
                                                                    // VALUE AT 1, WHILE STILL WANTING TO DISPLAY PERCENTAGE FOR THE VALUE.
                                                                    // SETTING THIS TO 0 WILL THEN LET THE PERCENTAGE START FROM 0 WITHOUT MODIFYING 
@@ -310,7 +313,7 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)) :MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)  - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here
@@ -318,7 +321,7 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here
