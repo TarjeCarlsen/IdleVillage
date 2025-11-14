@@ -185,6 +185,7 @@ public class BarterManager : MonoBehaviour
                         foreach (Merchants merch in Enum.GetValues(typeof(Merchants)))
                         {
                             UpdateAllMerchantsXpGain(merch, MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.increaseAllXpBonusMulti));
+                            OnUpgradeBought?.Invoke(merch);
                         }
                         // merchantBonuses[merchant].xpRewardBonus = MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.xpGainBonusMulti);
                         break;
@@ -199,6 +200,7 @@ public class BarterManager : MonoBehaviour
                         foreach (Merchants merch in Enum.GetValues(typeof(Merchants)))
                         {
                             UpdateAllSpecialBarterChances(merch, MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(BobUpgradeTypesFloats.increaseAllSpecialBarterChance));
+                            OnUpgradeBought?.Invoke(merch);
                         }
                         break;
                 }
@@ -282,9 +284,8 @@ public class BarterManager : MonoBehaviour
 
     private void UpdateAllMerchantsXpGain(Merchants merchant, float amount)
     {
-        float originalxpRewardMulti = merchantBonuses[merchant].xpRewardBonus;
-        print("original amount = " + originalxpRewardMulti);
-        merchantBonuses[merchant].xpRewardBonus += amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT
+        merchantBonuses[merchant].xpRewardBonus = amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT WHEN MORE 
+                                                          // MERCHANTS THEN BOB AFFECT XP RATES
     }
 
     private void UpdateAllSpecialBarterChances(Merchants merchant, float amount)
