@@ -3166,6 +3166,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: affectedUpgradeText_txt
       value: 
       objectReference: {fileID: 995185218}
@@ -3183,7 +3187,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 41ddfe168e6f7e4448211be5c1bcc9e3, type: 2}
     - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: defaultUnlocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: objectToSetInactive
@@ -3203,7 +3207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: setObjectInactiveUntilUnlock
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: requirementDatas.Array.data[0].requiredLevel
@@ -10169,6 +10173,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: bobUpgradeTypesFloat
       value: 1
       objectReference: {fileID: 0}
@@ -10188,6 +10196,42 @@ PrefabInstance:
       propertyPath: upgradeEffect
       value: 
       objectReference: {fileID: 11400000, guid: 6f79850b51d1c4e4196ec95a866b8ac9, type: 2}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: defaultUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: objectToSetInactive
+      value: 
+      objectReference: {fileID: 924926574}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: useNormalUpgradeNode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: useMerchantUpgradeNode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: requirementDatas.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: setObjectInactiveUntilUnlock
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: requirementDatas.Array.data[0].requiredLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: requirementDatas.Array.data[0].moveToSceneLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829274426086072487, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: requirementDatas.Array.data[0].merchantCardFromPreNode
+      value: 
+      objectReference: {fileID: 1524142225}
     - target: {fileID: 6518747060615138707, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: m_Name
       value: AllSpecialChance
@@ -10394,6 +10438,10 @@ PrefabInstance:
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: isCurrencyUpgrade
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: affectedUpgradeText_txt
@@ -11632,6 +11680,11 @@ MonoBehaviour:
   findCanvasFromTag: 0
   canvasToHideTag: 
   canvasToShowTag: 
+--- !u!1 &924926574 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6518747060615138707, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+  m_PrefabInstance: {fileID: 834569720}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &924926575 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2998767546967977474, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
@@ -13521,6 +13574,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: isBasedOfBarterTrades
       value: 1
       objectReference: {fileID: 0}
@@ -14015,6 +14072,10 @@ PrefabInstance:
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: isCurrencyUpgrade
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
       propertyPath: affectedUpgradeText_txt
@@ -15982,6 +16043,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515060067}
   m_CullTransparentMesh: 1
+--- !u!114 &1524142225 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3048991629278545814, guid: 266839c6616a11c4aa51e77d59cc9ef5, type: 3}
+  m_PrefabInstance: {fileID: 1150272493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d44edfdc4628604f871b0176b66c764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1529557975
 GameObject:
   m_ObjectHideFlags: 0
@@ -21177,6 +21249,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6905431388464245621, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905431388464245621, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: affectedUpgradeText_txt
       value: 
       objectReference: {fileID: 997688319}
@@ -21311,6 +21387,10 @@ PrefabInstance:
     - target: {fileID: 8402882924196298615, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: isCurrencyUpgrade
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402882924196298615, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
+      propertyPath: UpgradeTypeToUpgrade
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8402882924196298615, guid: 3968b5980fd4ad14cbc9d3ed84d86fed, type: 3}
       propertyPath: affectedUpgradeText_txt

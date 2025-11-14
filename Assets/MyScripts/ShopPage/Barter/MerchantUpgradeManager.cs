@@ -15,6 +15,7 @@ public enum BobUpgradeTypesInt{
     moneyWeightChanceBob,
 }
 public enum BobUpgradeTypesFloats{
+    increaseAllXpBonusMulti,
     xpGainBonusMulti,
     increaseAllSpecialBarterChance,
     chanceForSpecialBarter,

@@ -17,6 +17,8 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private GameObject cardObejct;
     [SerializeField] private int skillPointCost;
 
+    [Header("Important! Send in the upgradetype that is going to be upgraded from the click!")]
+    [SerializeField] private UpgradeTypes UpgradeTypeToUpgrade;
     [SerializeField] private bool isIntDatatype = false;
     [SerializeField] private bool isAlphabeticnotationDatatype = true;
     [SerializeField] private bool isFloatDatatype = false;
@@ -91,12 +93,14 @@ public class MerchantCardHandler : MonoBehaviour
             {
                 foreach (CurrencyTypes type in currenciesToUpgrade)
                 {
-                    barterManager.UpgradeBoughtCurrency(merchant, type);
+                    barterManager.UpgradeBought(merchant, type, UpgradeTypeToUpgrade);
                 }
             }
             else if (isGeneralUpgrade)
             {
-                barterManager.UpgradeBoughtGeneral(merchant);
+                barterManager.UpgradeBought(merchant,CurrencyTypes.money,UpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
+                                                                                                // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
+                                                                                                // CURRENCY. 
             }
             upgradeLevel++;
 
@@ -110,7 +114,6 @@ public class MerchantCardHandler : MonoBehaviour
             }
 
             OnBought?.Invoke();
-            print("bought upgrade!");
         }
         else
         {
@@ -134,7 +137,6 @@ public class MerchantCardHandler : MonoBehaviour
                 switch (merchant)
                 {
                     case Merchants.BobTheMerchant:
-                        print("barters completeCOMOOEd = " + barterManager.merchantInfos[merchant].completedInArow);
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{(.*?)\}",

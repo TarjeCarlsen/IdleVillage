@@ -19,7 +19,7 @@ MonoBehaviour:
   merchants: 0
   bobUpgradeTypes: 0
   bobUpgradeTypesInt: 0
-  bobUpgradeTypesFloat: 1
+  bobUpgradeTypesFloat: 2
   carlUpgradeTypes: 0
   carlUpgradeTypesFloat: 0
   chloeUpgradeTypes: 0

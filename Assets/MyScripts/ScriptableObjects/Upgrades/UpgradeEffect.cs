@@ -99,12 +99,13 @@ public class UpgradeEffect : ScriptableObject
                 MerchantUpgradeManager.Instance.BobAddFlatRewardInt(bobUpgradeTypesInt, flat_forIntUpgrades);
                 break;
             case UpgradeTypes.BobUpgradeXpForAllMerchants:
-                MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(bobUpgradeTypesFloat,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.BobAddFlatRewardFloat(BobUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(CarlUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
+                // MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 break;
             case UpgradeTypes.BobStackMultiFlat_ResetOnOtherBarter:
                 MerchantUpgradeManager.Instance.BobAddFlatReward(bobUpgradeTypes, flat);

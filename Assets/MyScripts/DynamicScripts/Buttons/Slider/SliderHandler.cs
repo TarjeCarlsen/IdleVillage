@@ -102,7 +102,6 @@ public class SliderHandler : MonoBehaviour, IPointerUpHandler
 
     private AlphabeticNotation GetValue()
     {
-        // print($"maxvalue = {maxValue} slider value = {slider.value} result = {maxValue * slider.value}");
         return maxValue * slider.value;
     }
 

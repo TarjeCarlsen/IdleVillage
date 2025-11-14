@@ -216,7 +216,6 @@ public class BarterCardHandler : MonoBehaviour
         if (_merchants != (Merchants)chosenMerchantIndex) return;
         rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
-        print($"{chosenMerchantIndex} - {chosenRewardIndex} - {originalRewardAmount}");
         UpdateUI();
     }
     private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
@@ -226,7 +225,6 @@ public class BarterCardHandler : MonoBehaviour
         AlphabeticNotation stackingMulti = barterManager.merchantBonuses[(Merchants)merchantIndex].stackingMulit -1;
 
         AlphabeticNotation stackingBonus = new AlphabeticNotation(1) + (stackingMulti * bartersInArow);
-        // print("APPLY BONUSES CALLED");
         if(isSpecialBarterOffer){
             result = (((amount + barterManager.merchantBonuses[(Merchants)merchantIndex].rewardBaseFlatIncreaseBonus[(CurrencyTypes)chosenRewardIndex]) *
                     barterManager.merchantBonuses[(Merchants)merchantIndex].rewardMultiplierBonus[(CurrencyTypes)chosenRewardIndex])
@@ -241,7 +239,6 @@ public class BarterCardHandler : MonoBehaviour
 
     private float ApplyBonusesToXp(int merchantIndex, int currencyIndex, AlphabeticNotation amount){
         float result = originalXp * barterManager.merchantBonuses[(Merchants)merchantIndex].xpRewardBonus; // HARDCODED FOR TESTING
-        print("bonus for xp  = "+ barterManager.merchantBonuses[(Merchants)merchantIndex].xpRewardBonus);
         return result;
     }
 
@@ -257,13 +254,10 @@ public class BarterCardHandler : MonoBehaviour
                 barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow = 1;
             }
             OnBarterClaimed?.Invoke((Merchants)chosenMerchantIndex);
-            print($"amount in a row for {(Merchants)chosenMerchantIndex} = {barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow}");
-            print($"amount of barters completed for {(Merchants)chosenMerchantIndex} = {barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedBartersForMerchant}");
             DestroyCard();
         }
         else
         {
-            print("Cant afford barter!");
         }
     }
 
@@ -282,7 +276,6 @@ public class BarterCardHandler : MonoBehaviour
         float reqXp = barterManager.merchantInfos[(Merchants)chosenMerchantIndex].requiredXp;
 
         xpProgressBar.SetProgress(xp / reqXp);
-        // print("inside card xp = "+ barterManager.merchantInfos[(Merchants)chosenMerchantIndex].merchantXp);
 
         UpdateUI();
     }
