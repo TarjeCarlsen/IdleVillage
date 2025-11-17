@@ -242,6 +242,19 @@ public class BarterCardHandler : MonoBehaviour
         return result;
     }
 
+    private bool isClaimConsumed(){
+        float chance = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].chanceToNotConsumeClaimBonus;
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        if (roll > chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void OnClaimClick()
     {
         if (MoneyManager.Instance.GetCurrency(barterManager.barterCurrencyValues[chosenPriceIndex].currencyType) >= priceAmount)
@@ -254,7 +267,9 @@ public class BarterCardHandler : MonoBehaviour
                 barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow = 1;
             }
             OnBarterClaimed?.Invoke((Merchants)chosenMerchantIndex);
-            DestroyCard();
+            if(isClaimConsumed()){
+                DestroyCard();
+            }
         }
         else
         {

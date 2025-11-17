@@ -61,7 +61,6 @@ public class BarterManager : MonoBehaviour
     public event Action<Merchants> OnBarterXpGain;
     public event Action<Merchants> OnUpgradeBought;
     public event Action<Merchants> OnBarterClaimed;
-
     [System.Serializable]
     public class MerchantInfo
     {
@@ -111,6 +110,7 @@ public class BarterManager : MonoBehaviour
         public int refreshAditionBonus = 0;
         public float freeRefreshChanceBonus = 0;
         public float reducedRefreshTimeBonus = 0;
+        public float chanceToNotConsumeClaimBonus = 0f;
 
         public void InitializeDefaults()
         {
@@ -274,9 +274,17 @@ public class BarterManager : MonoBehaviour
                         print("new reduced time = " + refreshTimerStart);
 
                         break;
+                    case UpgradeTypes.CarlChanceToNotConsumeClaim:
+                        print("CLAIM FREE CHANCE Carl!");
+                        foreach (Merchants merch in Enum.GetValues(typeof(Merchants)))
+                        {
+                            merchantBonuses[(Merchants)merch].chanceToNotConsumeClaimBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.chanceNotConsumeOnClaim);
+                        }
+                        break;
 
                 }
                 break;
+                
             case Merchants.ChloeTheMerchant:
                 switch (upgradeType)
                 {

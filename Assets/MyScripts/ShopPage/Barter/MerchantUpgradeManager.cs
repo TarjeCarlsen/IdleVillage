@@ -33,6 +33,8 @@ public enum CarlUpgradeTypesFloats{
     chanceForSpecialBarter,
     chanceForFreeRefresh,
     reduceRefreshTime,
+    chanceNotConsumeOnClaim,
+
 
 }
 
@@ -224,6 +226,7 @@ private float GetDefaultValueForCarl(CarlUpgradeTypesFloats type)
         CarlUpgradeTypesFloats.chanceForSpecialBarter => 0f,
         CarlUpgradeTypesFloats.chanceForFreeRefresh => 0f,
         CarlUpgradeTypesFloats.reduceRefreshTime => 1f,
+        CarlUpgradeTypesFloats.chanceNotConsumeOnClaim => 0f,
         _ => 1f
     };
 }

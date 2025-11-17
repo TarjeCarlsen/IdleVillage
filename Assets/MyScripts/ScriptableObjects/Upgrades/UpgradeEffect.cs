@@ -18,6 +18,7 @@ public enum UpgradeTypes{
     CarlAddRefreshCount,
     CarlFreeRefreshChance,
     CarlReduceRefreshTime,
+    CarlChanceToNotConsumeClaim,
     ChloeAddFlat,
     ChloeAddFlatToMulti,
     FredAddFlat,
@@ -133,6 +134,9 @@ public class UpgradeEffect : ScriptableObject
                 break;
             case UpgradeTypes.CarlReduceRefreshTime:
                 MerchantUpgradeManager.Instance.CarlSubtractFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
+                break;
+            case UpgradeTypes.CarlChanceToNotConsumeClaim:
+                MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
                 break;
                     //..CHLOE..//
             case UpgradeTypes.ChloeAddFlat:

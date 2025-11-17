@@ -1122,11 +1122,13 @@ MonoBehaviour:
   priceIcon_img: {fileID: 3950014557112202339}
   rewardIcon_img: {fileID: 4828737620382037351}
   barterCard: {fileID: 5674346112453640164}
-  TESTING_DONT_DESTROY: 1
+  isSpecialBarterOffer: 0
+  TESTING_DONT_DESTROY: 0
   amountModifier: 4
   growthFactor: 3
   level: 0
   startValue: 50
+  chosenMerchantIndex: 0
   tradeValue: 0
   baseXp: 25
   originalXp: 0
