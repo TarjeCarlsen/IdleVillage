@@ -76,40 +76,34 @@ public class UnlockNode : MonoBehaviour
 
     }
 
-    private void CheckRequirements()
+private void CheckRequirements()
+{
+    bool allReadyToMove = true;
+    bool allReadyToUnlock = true;
+
+    for (int i = 0; i < requirementDatas.Count; i++)
     {
-        for (int i = 0; i < requirementDatas.Count; i++)
-        {
+        int level = useNormalUpgradeNode ?
+            requirementDatas[i].cardFromPreNode.level :
+            requirementDatas[i].merchantCardFromPreNode.upgradeLevel;
 
-            if (useNormalUpgradeNode)
-            {
-                currentlevel = requirementDatas[i].cardFromPreNode.level;
-                // if (requirementDatas[i].requiredLevel > requirementDatas[i].cardFromPreNode.level)
-                // {
-                //     return;
-                // }
-            }
-            else if (useMerchantUpgradeNode)
-            {
-                currentlevel = requirementDatas[i].merchantCardFromPreNode.upgradeLevel;
-                // if (requirementDatas[i].requiredLevel > requirementDatas[i].merchantCardFromPreNode.upgradeLevel)
-                // {
-                //     return;
-                // }
-            }
+        // Check move-to-scene requirement
+        if (level < requirementDatas[i].moveToSceneLevel)
+            allReadyToMove = false;
 
-            if (!isMovedIntoScene && currentlevel >= requirementDatas[i].moveToSceneLevel)
-            {
-                MoveIntoScene();
-            }
-            if (!isFullyUnlocked && currentlevel >= requirementDatas[i].requiredLevel)
-            {
-                FullUnlock();
-            }
-
-            // UnlockMyNode();
-        }
+        // Check full unlock requirement
+        if (level < requirementDatas[i].requiredLevel)
+            allReadyToUnlock = false;
     }
+
+    // Only move when ALL requirements are satisfied
+    if (!isMovedIntoScene && allReadyToMove)
+        MoveIntoScene();
+
+    // Only unlock when ALL requirements are satisfied
+    if (!isFullyUnlocked && allReadyToUnlock)
+        FullUnlock();
+}
 
     private void MoveIntoScene()
     {

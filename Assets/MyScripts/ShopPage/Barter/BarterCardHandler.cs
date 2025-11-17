@@ -115,6 +115,7 @@ public class BarterCardHandler : MonoBehaviour
             level = barterManager.merchantInfos[(Merchants)chosenMerchantIndex].merchantLevel; // if problems occur with chosenmerchantindex
                                                                                                // initialize the chosenmerchantindex with a  getter from bartermanager
             priceAmount = GetRandomAmount(level);
+            ApplyBonusesToPrice(priceAmount);
         }
 
 
@@ -193,6 +194,10 @@ public class BarterCardHandler : MonoBehaviour
         return finalAmount;
     }
 
+    private void ApplyBonusesToPrice(AlphabeticNotation amount){
+        priceAmount =  barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier * priceAmount;
+    }
+
     private AlphabeticNotation CalculateReward()
     {
         float valueRatio = priceValue / rewardValue;
@@ -216,6 +221,7 @@ public class BarterCardHandler : MonoBehaviour
         if (_merchants != (Merchants)chosenMerchantIndex) return;
         rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
+        ApplyBonusesToPrice(priceAmount);
         UpdateUI();
     }
     private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)

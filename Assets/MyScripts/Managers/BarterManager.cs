@@ -111,6 +111,7 @@ public class BarterManager : MonoBehaviour
         public float freeRefreshChanceBonus = 0;
         public float reducedRefreshTimeBonus = 0;
         public float chanceToNotConsumeClaimBonus = 0f;
+        public float priceMultiplier = 1f;
 
         public void InitializeDefaults()
         {
@@ -281,6 +282,11 @@ public class BarterManager : MonoBehaviour
                             merchantBonuses[(Merchants)merch].chanceToNotConsumeClaimBonus = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.chanceNotConsumeOnClaim);
                         }
                         break;
+                    case UpgradeTypes.CarlMultiPriceMultiXp:
+                        print("MULTI PRICE MULTI REWARD Carl!");
+                        UpdateAllMerchantsXpGain(merchant, MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.multiPriceMultiXp)); 
+                        UpdateAllPriceMultipliers(merchant,MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.multiPriceMultiXp));
+                        break;
 
                 }
                 break;
@@ -349,14 +355,27 @@ public class BarterManager : MonoBehaviour
 
     private void UpdateAllMerchantsXpGain(Merchants merchant, float amount)
     {
-        merchantBonuses[merchant].xpRewardBonus = amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT WHEN MORE 
-                                                          // MERCHANTS THEN BOB AFFECT XP RATES
+    float oldMultiplier = merchantBonuses[merchant].xpRewardBonus;
+
+    float delta = amount - oldMultiplier;
+    merchantBonuses[merchant].xpRewardBonus += delta;
+        print($"xp bonus for {merchant} = {merchantBonuses[merchant].xpRewardBonus}");
+    }
+    private void UpdateAllPriceMultipliers(Merchants merchant, float amount)
+    {
+    float oldMultiplier = merchantBonuses[merchant].priceMultiplier;
+
+    float delta = amount - oldMultiplier;
+    merchantBonuses[merchant].priceMultiplier += delta;
+        print($"price multi for {merchant} = {merchantBonuses[merchant].priceMultiplier}");
     }
 
     private void UpdateAllSpecialBarterChances(Merchants merchant, float amount)
     {
-        merchantBonuses[merchant].specialBarterChanceBonus = amount; // RIGHT NOW SETS IT STATICALLY. HAVE TO ADD TO THE ORIGINAL AMOUNT WHEN MORE 
-                                                                // MERCHANTS THEN BOB AFFECT SPECIAL BARTER TRADE CHANCES
+        float oldMultiplier = merchantBonuses[merchant].specialBarterChanceBonus;
+
+        float delta = amount - oldMultiplier;
+        merchantBonuses[merchant].specialBarterChanceBonus += delta;
 
     }
 

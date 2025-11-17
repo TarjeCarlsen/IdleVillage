@@ -72,11 +72,29 @@ MonoBehaviour:
   barterManager: {fileID: 0}
   upgradeApplier: {fileID: 4332482802693078744}
   merchant: 0
-  currencyToUpgrade: 1
   pointCost_txt: {fileID: 4330870929773822487}
   header_lvl_txt: {fileID: 3937799054314338907}
+  affectedUpgradeText_txt: {fileID: 8150799221951118281}
   cardObejct: {fileID: 603474152258064399}
   skillPointCost: 5
+  UpgradeTypeToUpgrade: 0
+  isIntDatatype: 0
+  isAlphabeticnotationDatatype: 1
+  isFloatDatatype: 0
+  isPercentageUpgrade: 0
+  isBasedOfBarterTrades: 0
+  reverseCounting: 0
+  minusThis_forDisplayValue: 1
+  isCurrencyUpgrade: 0
+  isGeneralUpgrade: 0
+  currenciesToUpgrade: 
+  bobUpgradeTypesInt: 0
+  bobUpgradeTypesFloat: 0
+  bobUpgradeTypes: 0
+  carlUpgradeTypesInt: 0
+  carlUpgradeTypesFloat: 0
+  carlUpgradeTypes: 0
+  upgradeLevel: 0
   maxLevel: 10
 --- !u!114 &4332482802693078744
 MonoBehaviour:
@@ -352,7 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -969,6 +987,10 @@ MonoBehaviour:
   nodeImage: {fileID: 1752567504980797900}
   buttonObject: {fileID: 8542663443837426362}
   defaultUnlocked: 1
+  useNormalUpgradeNode: 1
+  useMerchantUpgradeNode: 0
+  setObjectInactiveUntilUnlock: 0
+  objectToSetInactive: {fileID: 0}
   requirementDatas: []
 --- !u!1 &6835560838978368632
 GameObject:
@@ -1140,8 +1162,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.211, y: 1.221}
-  m_SizeDelta: {x: 85.0494, y: 169.1031}
+  m_AnchoredPosition: {x: -0.4943, y: 1.1043}
+  m_SizeDelta: {x: 83.6161, y: 168.8698}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1361281967464633475
 CanvasRenderer:

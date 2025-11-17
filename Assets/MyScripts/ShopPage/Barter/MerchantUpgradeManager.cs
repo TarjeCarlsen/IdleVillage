@@ -34,7 +34,7 @@ public enum CarlUpgradeTypesFloats{
     chanceForFreeRefresh,
     reduceRefreshTime,
     chanceNotConsumeOnClaim,
-
+    multiPriceMultiXp,
 
 }
 

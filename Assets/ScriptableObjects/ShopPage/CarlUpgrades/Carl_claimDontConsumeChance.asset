@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215bfe629d58e814cb0412648f0b5828, type: 3}
   m_Name: Carl_claimDontConsumeChance
   m_EditorClassIdentifier: 
-  upgradeTypes: 0
+  upgradeTypes: 15
   currencyTypes: 0
   activationUnlocks: 0
   activationState: 0
-  merchants: 0
+  merchants: 1
   bobUpgradeTypes: 0
   bobUpgradeTypesInt: 0
   bobUpgradeTypesFloat: 0
   carlUpgradeTypes: 0
   carlUpgradeTypesInt: 0
-  carlUpgradeTypesFloat: 0
+  carlUpgradeTypesFloat: 4
   chloeUpgradeTypes: 0
   chloeUpgradeTypesFloat: 0
   fredUpgradeTypes: 0
@@ -38,4 +38,4 @@ MonoBehaviour:
     coefficient: 0
     magnitude: 0
   flat_forIntUpgrades: 0
-  flat_forFloatUpgrades: 0
+  flat_forFloatUpgrades: 0.02
