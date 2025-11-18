@@ -42,11 +42,10 @@ public class MerchantStatHandler : MonoBehaviour
             level_txt.text ="Lv."+ barterManager.merchantInfos[merchant].merchantLevel.ToString();
 
             foreach(StatInfo stat in statBonuses){
-                print($"stat type {stat.type} bartermanager = {barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type]}");
-                stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncrease[stat.type].ToStringSmart(1);
-                stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] -1)*100).ToStringSmart(1) + "%";
+                stat.flatIncrease_txt.text = "+" + barterManager.merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[stat.type].ToStringSmart(1);
+                stat.currencyMulti_txt.text = ((barterManager.merchantBonuses[merchant].rewardMultiplierBonus[stat.type] -1)*100).ToStringSmart(1) + "%";
 
-                if(barterManager.merchantBonuses[merchant].rewardMultiplier[stat.type] < 1){
+                if(barterManager.merchantBonuses[merchant].rewardMultiplierBonus[stat.type] < 1){
                     stat.currencyMulti_txt.color = new Color(1f,0f,0f,1f);
                 }else{
                     stat.currencyMulti_txt.color = new Color(0f,1f,0f,1f);

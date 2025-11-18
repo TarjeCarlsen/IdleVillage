@@ -3,8 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using System;
-using Microsoft.Unity.VisualStudio.Editor;
-
+using UnityEngine.UI;
 public class InventoryHandler : MonoBehaviour
 {
 

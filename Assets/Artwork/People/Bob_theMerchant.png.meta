@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7d4b65ce98c894c4fb87a06ebd03e8cd
+guid: 1a41df3b154b7f04098162f5053c247f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChatGPT Image 9. nov. 2025, 22_46_26_0
+      name: Bob_theMerchant_0
       rect:
         serializedVersion: 2
         x: 0
@@ -105,15 +105,15 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4073dca5ae6ad649971091b61d2a922
-      internalID: -506826089
+      spriteID: 3f469b14fe978054aa40887182267029
+      internalID: -2029324830
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b3da2aefd5a0c274899eff2302b700ed
+    spriteID: c8fba7014f6dced4bb29804d0f9b80af
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ChatGPT Image 9. nov. 2025, 22_46_26_0: -506826089
+      Bob_theMerchant_0: -2029324830
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

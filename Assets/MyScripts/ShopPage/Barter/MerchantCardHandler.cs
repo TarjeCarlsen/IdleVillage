@@ -3,45 +3,85 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MerchantCardHandler : MonoBehaviour
 {
     [SerializeField] private BarterManager barterManager;
     [SerializeField] UpgradeApplier upgradeApplier;
     [SerializeField] private Merchants merchant;
-    [SerializeField] private List<CurrencyTypes> currenciesToUpgrade;
+
 
     [SerializeField] private TMP_Text pointCost_txt;
     [SerializeField] private TMP_Text header_lvl_txt;
+    [SerializeField] private TMP_Text affectedUpgradeText_txt;
     [SerializeField] private GameObject cardObejct;
     [SerializeField] private int skillPointCost;
 
-    private int upgradeLevel = 0;
+    [Header("Important! Send in the upgradetype that is going to be upgraded from the click!")]
+    [SerializeField] private MerchantUpgradeTypes merchantUpgradeTypeToUpgrade;
+    [SerializeField] private bool isAlphabeticnotationDatatype = true;
+    [SerializeField] private bool isIntDatatype = false;
+    [SerializeField] private bool isFloatDatatype = false;
+    [SerializeField] private bool isBoolDatatype = false;
+    [SerializeField] private bool isPercentageUpgrade = false;
+    [SerializeField] private bool isBasedOfBarterTrades = false;
+    [SerializeField] private bool reverseCounting = false; //reverses the way its displayed. If for example the upgrade is a 5% time reduction, the bonus will go down
+                                                           //toggling reverseCounting makes the displayed number go up. So it displays 5%->10% instead of -5% -> -10%
+                                                           //Only implemented for percentage floats!
+    [SerializeField] private float minusThis_forDisplayValue = 1f; // USED FOR INITIATING DISPLAYED VALUES. FOR EXAMPLE SOME VALUES WILL HAVE A START
+                                                                   // VALUE AT 1, WHILE STILL WANTING TO DISPLAY PERCENTAGE FOR THE VALUE.
+                                                                   // SETTING THIS TO 0 WILL THEN LET THE PERCENTAGE START FROM 0 WITHOUT MODIFYING 
+                                                                   // THE ACTUALL BONUS VALUE
+
+    [SerializeField] private bool isCurrencyUpgrade;
+    [SerializeField] private bool isGeneralUpgrade;
+    [SerializeField] private List<CurrencyTypes> currenciesToUpgrade;
+
+    [Header("BOB DISPLAYS")]
+    [SerializeField] private BobUpgradeTypesInt bobUpgradeTypesInt;
+    [SerializeField] private BobUpgradeTypesFloats bobUpgradeTypesFloat;
+    [SerializeField] private BobUpgradeTypes bobUpgradeTypes;
+    [Header("CARL DISPLAYS")]
+    [SerializeField] private CarlUpgradeTypesInt carlUpgradeTypesInt;
+    [SerializeField] private CarlUpgradeTypesFloats carlUpgradeTypesFloat;
+    [SerializeField] private CarlUpgradeTypes carlUpgradeTypes;
+    [Header("Chloe DISPLAYS")]
+    [SerializeField] private ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
+    [SerializeField] private ChloeUpgradeTypes chloeUpgradeTypes;
+
+    private string templateText;
+    public event Action OnBought;
+    public int upgradeLevel = 0;
     [SerializeField] private int maxLevel = 10;
     public static event System.Action<MerchantCardHandler> OnAnyCardOpened;
-private void Awake(){
-    barterManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<BarterManager>();
-    UpdateUI();
-}
+    private void Awake()
+    {
+        barterManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<BarterManager>();
+        templateText = affectedUpgradeText_txt.text;
+        UpdateUI();
+    }
 
     private void OnEnable()
     {
         OnAnyCardOpened += HandleOtherCardOpened;
+        barterManager.OnBarterClaimed += UpdateUIOnBarterComplete;
     }
 
     private void OnDisable()
     {
         OnAnyCardOpened -= HandleOtherCardOpened;
+        barterManager.OnBarterClaimed -= UpdateUIOnBarterComplete;
     }
 
-private bool CanAfford(){
-    return barterManager.merchantInfos[merchant].skillPoints >= skillPointCost;
-}
+    private bool CanAfford()
+    {
+        return barterManager.merchantInfos[merchant].skillPoints >= skillPointCost;
+    }
 
 
     private void HandleOtherCardOpened(MerchantCardHandler openedCard)
     {
-        print("inside handle other ");
         if (openedCard != this)
         {
             // Close this card if it's not the one clicked
@@ -58,24 +98,284 @@ private bool CanAfford(){
     }
 
 
-public void OnUpgradeClick(){
-    if(CanAfford() && upgradeLevel < maxLevel){
-        barterManager.merchantInfos[merchant].skillPoints -= skillPointCost;
-        upgradeApplier.ApplyUpgrade();
-        foreach(CurrencyTypes type in currenciesToUpgrade){
-            barterManager.UpgradeBought(merchant,type);
-        }
-        upgradeLevel++;
-        UpdateUI();
-        print("bought upgrade!");
-    }else{
-        print("Cannot afford upgrade or reached max lvl!");
-    }
-}
+    public void OnUpgradeClick()
+    {
+        if (CanAfford() && upgradeLevel < maxLevel)
+        {
+            barterManager.merchantInfos[merchant].skillPoints -= skillPointCost;
+            upgradeApplier.ApplyUpgrade();
+            if (isCurrencyUpgrade)
+            {
+                foreach (CurrencyTypes type in currenciesToUpgrade)
+                {
+                    barterManager.UpgradeBought(merchant, type, merchantUpgradeTypeToUpgrade);
+                }
+            }
+            else if (isGeneralUpgrade)
+            {
+                barterManager.UpgradeBought(merchant, CurrencyTypes.money, merchantUpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
+                                                                                                          // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
+                                                                                                          // CURRENCY. 
+            }
+            upgradeLevel++;
 
-private void UpdateUI(){
-    pointCost_txt.text =barterManager.merchantInfos[merchant].skillPoints.ToString() + "/"+ skillPointCost.ToString();
-    header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
-}
+            if (isBasedOfBarterTrades)
+            {
+                UpdateUIOnBarterComplete(merchant);
+            }
+            else
+            {
+                UpdateUI();
+            }
+
+            OnBought?.Invoke();
+        }
+        else
+        {
+            print("Cannot afford upgrade or reached max lvl!");
+        }
+    }
+
+
+
+    private void UpdateUIOnBarterComplete(Merchants merchant)
+    {
+        if (affectedUpgradeText_txt != null)
+        {
+            pointCost_txt.text = barterManager.merchantInfos[merchant].skillPoints.ToString() + "/" + skillPointCost.ToString();
+            header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
+            string oldText = affectedUpgradeText_txt.text;
+            string updatedText = "";
+
+            if (isBasedOfBarterTrades && isPercentageUpgrade && isAlphabeticnotationDatatype)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{(.*?)\}",
+                            match =>
+                            {
+                                string placeholder = match.Groups[1].Value;
+                                switch (placeholder)
+                                {
+                                    case "bonus1":
+                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
+                                    case "bonus2":
+                                        return $"<color=green>{barterManager.merchantInfos[merchant].completedInArow}</color>";
+                                    default:
+                                        return match.Value; // leave unknown placeholders as-is
+                                }
+                            }
+                        );
+                        affectedUpgradeText_txt.text = updatedText;
+                        break;
+
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{(.*?)\}",
+                            match =>
+                            {
+                                string placeholder = match.Groups[1].Value;
+                                switch (placeholder)
+                                {
+                                    case "bonus1":
+                                        return $"<color=green>{((((MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes) - minusThis_forDisplayValue) * 100) * barterManager.merchantInfos[merchant].completedInArow)).ToStringSmart(0)}</color>";
+                                    case "bonus2":
+                                        return $"<color=green>{barterManager.merchantInfos[merchant].completedInArow}</color>";
+                                    default:
+                                        return match.Value; // leave unknown placeholders as-is
+                                }
+                            }
+                        );
+                        affectedUpgradeText_txt.text = updatedText;
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        break;
+                    case Merchants.FredTheMerchant:
+                        break;
+                    case Merchants.SamTheMerchant:
+                        break;
+                    case Merchants.RogerTheMerchant:
+                        break;
+
+
+                }
+            }
+        }
+    }
+
+    private void UpdateUI()
+    {
+        pointCost_txt.text = barterManager.merchantInfos[merchant].skillPoints.ToString() + "/" + skillPointCost.ToString();
+        header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
+        if (affectedUpgradeText_txt != null)
+        {
+            string oldText = affectedUpgradeText_txt.text;
+            string updatedText = "";
+
+            // ------------------------- ADD ALL MERCHANTS UPGRADE DISPLAYS HERE ----------------------- //
+            if (isBoolDatatype)
+            {
+                switch (merchant)
+                {
+                    case Merchants.ChloeTheMerchant:
+                        // affectedUpgradeText_txt.text = oldText;
+                        // print("old text = "+ oldText);
+                        return;
+                        //add all merchants here
+                }
+            }
+            if (isIntDatatype)
+            {
+
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                                $"<color=green> {MerchantUpgradeManager.Instance.BobGetRewardPowerInt(bobUpgradeTypesInt).ToString()}</color>"
+                        );
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                                $"<color=green> {MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(carlUpgradeTypesInt).ToString()}</color>"
+                        );
+                        break;
+                        //add all merchants here
+                }
+            }
+            if (isAlphabeticnotationDatatype && isPercentageUpgrade)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.ChloeGetRewardPower(chloeUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                        //add all merchants here
+
+                }
+            }
+            if (isAlphabeticnotationDatatype && !isPercentageUpgrade)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.ChloeGetRewardPower(chloeUpgradeTypes).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                        //add all merchants here
+
+                }
+            }
+
+            if (isFloatDatatype && !isPercentageUpgrade)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat).ToString()}</color>"
+                        );
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat).ToString()}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat).ToString()}</color>"
+                        );
+                        break;
+                        //add all merchants here
+
+                }
+            }
+            if (isFloatDatatype && isPercentageUpgrade)
+            {
+                switch (merchant)
+                {
+                    case Merchants.BobTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)) : MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
+                        );
+                        break;
+                    //add all merchants here
+                    case Merchants.CarlTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString("F0")}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString("F0")}</color>"
+                        );
+                        break;
+                        //add all merchants here
+
+                }
+            }
+
+
+            affectedUpgradeText_txt.text = updatedText;
+        }
+    }
 
 }
