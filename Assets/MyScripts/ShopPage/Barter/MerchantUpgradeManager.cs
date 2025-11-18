@@ -43,12 +43,16 @@ public enum CarlUpgradeTypesFloats{
 
 public enum ChloeUpgradeTypes{
 }
+
+public enum ChloeUpgradeTypesBool{
+    doubleXpOnNextBarter,
+}
 public enum ChloeUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
     increaseAllXpBonusMulti,
     priceMulti,
-
+    multiAllOnFavorPassed,
 }
 public enum FredUpgradeTypes{
     rewardMultiFred,
@@ -91,43 +95,25 @@ public class MerchantUpgradeManager : MonoBehaviour
 
     // ---------------------------- BOB ----------------------------//
     [SerializeField] public Dictionary<BobUpgradeTypes, AlphabeticNotation> bobUpgrades;
-    [SerializeField] public AlphabeticNotation bobStartValues = new AlphabeticNotation(0); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public AlphabeticNotation bobMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float bobFloatStartValues = 1f; 
     [SerializeField] public Dictionary<BobUpgradeTypesInt, int> bobUpgradesInt;
     [SerializeField] public Dictionary<BobUpgradeTypesFloats, float> bobUpgradesFloat;
-    [SerializeField] public int bobStartValuesInts = 0;
     // ---------------------------- CARL ----------------------------//
     [SerializeField] public Dictionary <CarlUpgradeTypes, AlphabeticNotation> carlUpgrades;
-    [SerializeField] public AlphabeticNotation carlStartValues = new AlphabeticNotation(1);
-    [SerializeField] public AlphabeticNotation carlMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float carlFloatStartValues = 1f; 
     [SerializeField] public Dictionary<CarlUpgradeTypesInt, int> carlUpgradesInt;
     [SerializeField] public Dictionary<CarlUpgradeTypesFloats, float> carlUpgradesFloat;
 
     // ---------------------------- CHLOE ----------------------------//
     [SerializeField] public Dictionary <ChloeUpgradeTypes, AlphabeticNotation> chloeUpgrades;
-    [SerializeField] public AlphabeticNotation chloeStartValues = new AlphabeticNotation(1);
-    [SerializeField] public AlphabeticNotation chloeMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float chloeFloatStartValues = 1f; 
     [SerializeField] public Dictionary<ChloeUpgradeTypesFloats, float> chloeUpgradesFloat;
+    [SerializeField] public Dictionary<ChloeUpgradeTypesBool,bool> chloeUpgradesBool;
     // ---------------------------- FRED ----------------------------//
     [SerializeField] public Dictionary <FredUpgradeTypes, AlphabeticNotation> fredUpgrades;
-    [SerializeField] public AlphabeticNotation fredStartValues = new AlphabeticNotation(1);
-    [SerializeField] public AlphabeticNotation fredMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float fredFloatStartValues = 1f; 
     [SerializeField] public Dictionary<FredUpgradeTypesFloats, float> fredUpgradesFloat;
     // ---------------------------- SAM ----------------------------//
     [SerializeField] public Dictionary <SamUpgradeTypes, AlphabeticNotation> samUpgrades;
-    [SerializeField] public AlphabeticNotation samStartValues = new AlphabeticNotation(1);
-    [SerializeField] public AlphabeticNotation samMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float samFloatStartValues = 1f; 
     [SerializeField] public Dictionary<SamUpgradeTypesFloats, float> samUpgradesFloat;
     // ---------------------------- ROGER ----------------------------//
     [SerializeField] public Dictionary <RogerUpgradeTypes, AlphabeticNotation>rogerUpgrades;
-    [SerializeField] public AlphabeticNotation rogerStartvalues = new AlphabeticNotation(1);
-    [SerializeField] public AlphabeticNotation rogerMultiStartValues = new AlphabeticNotation(1); // MIGHT NEED TO REDO, SOME VALUES SHOULDNT BE 1 AT START
-    [SerializeField] public float rogerFloatStartValues = 1f; 
     [SerializeField] public Dictionary<RogerUpgradeTypesFloats, float> rogerUpgradesFloat;
     private void Awake(){
         if (Instance == null) Instance = this;
@@ -278,6 +264,17 @@ private float GetDefaultValueForRoger(RogerUpgradeTypesFloats type)
         _ => 1f
     };
 }
+//------------------------------------------------ Bool DATATYPE ------------------------------------------ //
+
+private bool GetDefaultValueForChloe(ChloeUpgradeTypesBool type)
+{
+    return type switch
+    {
+        
+        ChloeUpgradeTypesBool.doubleXpOnNextBarter => false,
+        _ => false
+    };
+}
 private void InitializeMerchantUpgrades()
 {
     // --- Init dictionaries ---
@@ -291,6 +288,7 @@ private void InitializeMerchantUpgrades()
 
     chloeUpgrades = new Dictionary<ChloeUpgradeTypes, AlphabeticNotation>();
     chloeUpgradesFloat = new Dictionary<ChloeUpgradeTypesFloats, float>();
+    chloeUpgradesBool = new Dictionary<ChloeUpgradeTypesBool, bool>();
 
     fredUpgrades = new Dictionary<FredUpgradeTypes, AlphabeticNotation>();
     fredUpgradesFloat = new Dictionary<FredUpgradeTypesFloats, float>();
@@ -322,6 +320,8 @@ private void InitializeMerchantUpgrades()
         chloeUpgrades[type] = GetDefaultValueForChloe(type);
     foreach (ChloeUpgradeTypesFloats type in Enum.GetValues(typeof(ChloeUpgradeTypesFloats)))
         chloeUpgradesFloat[type] = GetDefaultValueForChloe(type);
+    foreach (ChloeUpgradeTypesBool type in Enum.GetValues(typeof(ChloeUpgradeTypesBool)))
+        chloeUpgradesBool[type] = GetDefaultValueForChloe(type);
 
     // --- FRED ---
     foreach (FredUpgradeTypes type in Enum.GetValues(typeof(FredUpgradeTypes)))
@@ -380,6 +380,9 @@ private void InitializeMerchantUpgrades()
     public float ChloeGetRewardPowerFloat(ChloeUpgradeTypesFloats type) => chloeUpgradesFloat[type];
     public void ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats type, float amount) => chloeUpgradesFloat[type] += amount; 
     public void ChloeMultiplyRewardFloat(ChloeUpgradeTypesFloats type, float amount) => chloeUpgradesFloat[type] *= amount;
+        // ----------bool upgrades ---------//
+    public bool ChloeGetRewardPowerBool(ChloeUpgradeTypesBool type) => chloeUpgradesBool[type];
+    public void ChloeRewardSetBool(ChloeUpgradeTypesBool type, bool state) => chloeUpgradesBool[type] = state; 
 // ---------------------------- FRED ----------------------------//
     public AlphabeticNotation FredGetRewardPower(FredUpgradeTypes type) => fredUpgrades[type];
     public void FredAddFlatReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] += amount; 

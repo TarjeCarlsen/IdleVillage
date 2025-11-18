@@ -20,6 +20,8 @@ public enum MerchantUpgradeTypes{
     ChloeAddFlat,
     ChloeAddFlatToMulti,
     ChloeUpgradeXpForAllMerchants,
+    ChloeMultiAllOnFavorPassed,
+    ChloeDoubleXpOnNextBarter,
     FredAddFlat,
     FredAddFlatToMulti,
     SamAddFlat,
@@ -60,6 +62,7 @@ public class UpgradeEffectMerchants : ScriptableObject
     [Header("CHLOE UPGRADES")]
     public ChloeUpgradeTypes chloeUpgradeTypes;
     public ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
+    public ChloeUpgradeTypesBool chloeUpgradeTypesBool;
     [Header("FRED UPGRADES")]
     public FredUpgradeTypes fredUpgradeTypes;
     public FredUpgradeTypesFloats fredUpgradeTypesFloat;
@@ -76,6 +79,7 @@ public class UpgradeEffectMerchants : ScriptableObject
     public AlphabeticNotation multi;
     public int flat_forIntUpgrades;
     public float flat_forFloatUpgrades;
+    public bool stateForUpgrade = false;
     public void Apply(GameObject target = null){
 
 
@@ -159,6 +163,13 @@ public class UpgradeEffectMerchants : ScriptableObject
 
                 MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.increaseAllXpBonusMulti,flat_forFloatUpgrades); //only used for displaying 
                                                                                                                                                 //total bonus in description
+                break;
+            case MerchantUpgradeTypes.ChloeMultiAllOnFavorPassed:
+                MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.multiAllOnFavorPassed,flat_forFloatUpgrades); //only used for displaying 
+                                                                                                                                                //total bonus in description
+                break;
+            case MerchantUpgradeTypes.ChloeDoubleXpOnNextBarter:
+                MerchantUpgradeManager.Instance.ChloeRewardSetBool(ChloeUpgradeTypesBool.doubleXpOnNextBarter,stateForUpgrade);
                 break;
 
                     //..FRED..//

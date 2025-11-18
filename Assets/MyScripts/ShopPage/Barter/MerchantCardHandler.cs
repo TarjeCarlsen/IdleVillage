@@ -20,9 +20,10 @@ public class MerchantCardHandler : MonoBehaviour
 
     [Header("Important! Send in the upgradetype that is going to be upgraded from the click!")]
     [SerializeField] private MerchantUpgradeTypes merchantUpgradeTypeToUpgrade;
-    [SerializeField] private bool isIntDatatype = false;
     [SerializeField] private bool isAlphabeticnotationDatatype = true;
+    [SerializeField] private bool isIntDatatype = false;
     [SerializeField] private bool isFloatDatatype = false;
+    [SerializeField] private bool isBoolDatatype = false;
     [SerializeField] private bool isPercentageUpgrade = false;
     [SerializeField] private bool isBasedOfBarterTrades = false;
     [SerializeField] private bool reverseCounting = false; //reverses the way its displayed. If for example the upgrade is a 5% time reduction, the bonus will go down
@@ -112,9 +113,9 @@ public class MerchantCardHandler : MonoBehaviour
             }
             else if (isGeneralUpgrade)
             {
-                barterManager.UpgradeBought(merchant,CurrencyTypes.money,merchantUpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
-                                                                                                // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
-                                                                                                // CURRENCY. 
+                barterManager.UpgradeBought(merchant, CurrencyTypes.money, merchantUpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
+                                                                                                          // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
+                                                                                                          // CURRENCY. 
             }
             upgradeLevel++;
 
@@ -216,6 +217,17 @@ public class MerchantCardHandler : MonoBehaviour
             string updatedText = "";
 
             // ------------------------- ADD ALL MERCHANTS UPGRADE DISPLAYS HERE ----------------------- //
+            if (isBoolDatatype)
+            {
+                switch (merchant)
+                {
+                    case Merchants.ChloeTheMerchant:
+                        // affectedUpgradeText_txt.text = oldText;
+                        // print("old text = "+ oldText);
+                        return;
+                        //add all merchants here
+                }
+            }
             if (isIntDatatype)
             {
 
@@ -228,7 +240,7 @@ public class MerchantCardHandler : MonoBehaviour
                                 $"<color=green> {MerchantUpgradeManager.Instance.BobGetRewardPowerInt(bobUpgradeTypesInt).ToString()}</color>"
                         );
                         break;
-                        //add all merchants here
+                    //add all merchants here
                     case Merchants.CarlTheMerchant:
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
@@ -250,7 +262,7 @@ public class MerchantCardHandler : MonoBehaviour
                             $"<color=green>{((MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
                         );
                         break;
-                        //add all merchants here
+                    //add all merchants here
                     case Merchants.CarlTheMerchant:
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
@@ -280,7 +292,7 @@ public class MerchantCardHandler : MonoBehaviour
                             $"<color=green>{MerchantUpgradeManager.Instance.BobGetRewardPower(bobUpgradeTypes).ToStringSmart(0)}</color>"
                         );
                         break;
-                        //add all merchants here
+                    //add all merchants here
                     case Merchants.CarlTheMerchant:
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
@@ -311,7 +323,7 @@ public class MerchantCardHandler : MonoBehaviour
                             $"<color=green>{MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat).ToString()}</color>"
                         );
                         break;
-                        //add all merchants here
+                    //add all merchants here
                     case Merchants.CarlTheMerchant:
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
@@ -338,10 +350,10 @@ public class MerchantCardHandler : MonoBehaviour
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
                             @"\{.*?\}",
-                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)) :MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)  - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat)) : MerchantUpgradeManager.Instance.BobGetRewardPowerFloat(bobUpgradeTypesFloat) - minusThis_forDisplayValue) * 100).ToString("F0")}</color>"
                         );
                         break;
-                        //add all merchants here
+                    //add all merchants here
                     case Merchants.CarlTheMerchant:
                         updatedText = System.Text.RegularExpressions.Regex.Replace(
                             templateText,
