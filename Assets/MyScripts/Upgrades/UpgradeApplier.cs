@@ -6,6 +6,7 @@ public class UpgradeApplier : MonoBehaviour
     [SerializeField] GameObject areaToUnlock;
     [SerializeField] CardInfo cardInfo;
     public UpgradeEffect upgradeEffect;
+    public UpgradeEffectMerchants upgradeEffectMerchants;
     
 
     private void OnEnable(){
@@ -29,6 +30,9 @@ public class UpgradeApplier : MonoBehaviour
             {
                 upgradeEffect.Apply();
             }
+        }
+        if(upgradeEffectMerchants != null){
+                upgradeEffectMerchants.Apply();
         }
     }
 }

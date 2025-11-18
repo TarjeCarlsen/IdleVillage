@@ -23,6 +23,7 @@ public enum UpgradeTypes{
     CarlGiveWheatOnComplete,
     ChloeAddFlat,
     ChloeAddFlatToMulti,
+    ChloeUpgradeXpForAllMerchants,
     FredAddFlat,
     FredAddFlatToMulti,
     SamAddFlat,
@@ -146,12 +147,10 @@ public class UpgradeEffect : ScriptableObject
                 MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
                 break;
                     //..CHLOE..//
-            case UpgradeTypes.ChloeAddFlat:
-                MerchantUpgradeManager.Instance.ChloeAddFlatReward(chloeUpgradeTypes,flat);
+            case UpgradeTypes.ChloeUpgradeXpForAllMerchants:
+                MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(chloeUpgradeTypesFloat,flat_forFloatUpgrades);
                 break;
-            case UpgradeTypes.ChloeAddFlatToMulti: // adding more to the multiplier for bobs rewards
-                MerchantUpgradeManager.Instance.ChloeAddFlatReward(chloeUpgradeTypes, flat);
-                break;
+
                     //..FRED..//
             case UpgradeTypes.FredAddFlat:
                 MerchantUpgradeManager.Instance.FredAddFlatReward(fredUpgradeTypes,flat);

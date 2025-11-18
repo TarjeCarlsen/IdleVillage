@@ -19,7 +19,7 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private int skillPointCost;
 
     [Header("Important! Send in the upgradetype that is going to be upgraded from the click!")]
-    [SerializeField] private UpgradeTypes UpgradeTypeToUpgrade;
+    [SerializeField] private MerchantUpgradeTypes merchantUpgradeTypeToUpgrade;
     [SerializeField] private bool isIntDatatype = false;
     [SerializeField] private bool isAlphabeticnotationDatatype = true;
     [SerializeField] private bool isFloatDatatype = false;
@@ -45,6 +45,9 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private CarlUpgradeTypesInt carlUpgradeTypesInt;
     [SerializeField] private CarlUpgradeTypesFloats carlUpgradeTypesFloat;
     [SerializeField] private CarlUpgradeTypes carlUpgradeTypes;
+    [Header("Chloe DISPLAYS")]
+    [SerializeField] private ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
+    [SerializeField] private ChloeUpgradeTypes chloeUpgradeTypes;
 
     private string templateText;
     public event Action OnBought;
@@ -104,12 +107,12 @@ public class MerchantCardHandler : MonoBehaviour
             {
                 foreach (CurrencyTypes type in currenciesToUpgrade)
                 {
-                    barterManager.UpgradeBought(merchant, type, UpgradeTypeToUpgrade);
+                    barterManager.UpgradeBought(merchant, type, merchantUpgradeTypeToUpgrade);
                 }
             }
             else if (isGeneralUpgrade)
             {
-                barterManager.UpgradeBought(merchant,CurrencyTypes.money,UpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
+                barterManager.UpgradeBought(merchant,CurrencyTypes.money,merchantUpgradeTypeToUpgrade); // SENDING IN CURRENCYTYPE money EVEN THO ITS NOT USED
                                                                                                 // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
                                                                                                 // CURRENCY. 
             }
@@ -255,6 +258,13 @@ public class MerchantCardHandler : MonoBehaviour
                             $"<color=green>{((MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
                         );
                         break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((MerchantUpgradeManager.Instance.ChloeGetRewardPower(chloeUpgradeTypes) - minusThis_forDisplayValue) * 100).ToStringSmart(0)}</color>"
+                        );
+                        break;
                         //add all merchants here
 
                 }
@@ -276,6 +286,13 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                             $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPower(carlUpgradeTypes).ToStringSmart(0)}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.ChloeGetRewardPower(chloeUpgradeTypes).ToStringSmart(0)}</color>"
                         );
                         break;
                         //add all merchants here
@@ -302,6 +319,13 @@ public class MerchantCardHandler : MonoBehaviour
                             $"<color=green>{MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat).ToString()}</color>"
                         );
                         break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat).ToString()}</color>"
+                        );
+                        break;
                         //add all merchants here
 
                 }
@@ -323,6 +347,13 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                             $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(carlUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString("F0")}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                            $"<color=green>{((reverseCounting ? (1f - MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(chloeUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString("F0")}</color>"
                         );
                         break;
                         //add all merchants here

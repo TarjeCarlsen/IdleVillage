@@ -40,12 +40,11 @@ public enum CarlUpgradeTypesFloats{
 }
 
 public enum ChloeUpgradeTypes{
-    rewardMultiChloe,
-    rewardFlatChloe,
 }
 public enum ChloeUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
+    increaseAllXpBonusMulti,
 
 }
 public enum FredUpgradeTypes{
@@ -154,8 +153,6 @@ private AlphabeticNotation GetDefaultValueForChloe(ChloeUpgradeTypes type)
 {
     return type switch
     {
-        ChloeUpgradeTypes.rewardMultiChloe => new AlphabeticNotation(1),
-        ChloeUpgradeTypes.rewardFlatChloe => new AlphabeticNotation(0),
         _ => new AlphabeticNotation(0)
     };
 }
@@ -212,6 +209,7 @@ private float GetDefaultValueForBob(BobUpgradeTypesFloats type)
 {
     return type switch
     {
+        BobUpgradeTypesFloats.increaseAllXpBonusMulti => 1f,
         BobUpgradeTypesFloats.xpGainBonusMulti => 1f,
         BobUpgradeTypesFloats.increaseAllSpecialBarterChance => 0f,
         BobUpgradeTypesFloats.chanceForSpecialBarter => 0f,
@@ -237,8 +235,8 @@ private float GetDefaultValueForChloe(ChloeUpgradeTypesFloats type)
 {
     return type switch
     {
-        ChloeUpgradeTypesFloats.xpGainBonusMulti => 1f,
-        ChloeUpgradeTypesFloats.chanceForSpecialBarter => 0f,
+        
+        ChloeUpgradeTypesFloats.increaseAllXpBonusMulti => 1f,
         _ => 1f
     };
 }
