@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using LargeNumbers;
 using TMPro;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +41,10 @@ public class BarterCardHandler : MonoBehaviour
     private int chosenRewardIndex;
     private int amountOfCurrencies;
     public int chosenMerchantIndex;
+
+    private Dictionary<CurrencyTypes, float> giveCurrencies = new();
+    private List<CurrencyTypes>giveCurrenciesTypes;
+    private float giveCurrencyPercentage;
 
     public event Action <Merchants> OnBarterClaimed;
     [SerializeField] float tradeValue;
@@ -118,7 +124,7 @@ public class BarterCardHandler : MonoBehaviour
             ApplyBonusesToPrice(priceAmount);
         }
 
-
+        InitializeGiveBonuses();
         originalRewardAmount = CalculateReward();
         originalXp = xpReward;
 
@@ -215,13 +221,20 @@ public class BarterCardHandler : MonoBehaviour
 
         return rewardAmount;
     }
-
+    private void InitializeGiveBonuses(){
+        foreach(CurrencyTypes type in barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].giveCurrencies){
+            giveCurrencies[type] = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].giveCurrencyOnBarterCompletion[type];
+        }
+    }
     private void UpdateBonuses(Merchants _merchants)
     {
         if (_merchants != (Merchants)chosenMerchantIndex) return;
         rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
         ApplyBonusesToPrice(priceAmount);
+        InitializeGiveBonuses();
+
+
         UpdateUI();
     }
     private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
@@ -239,6 +252,7 @@ public class BarterCardHandler : MonoBehaviour
             result = ((amount + barterManager.merchantBonuses[(Merchants)merchantIndex].rewardBaseFlatIncreaseBonus[(CurrencyTypes)chosenRewardIndex]) *
                                     barterManager.merchantBonuses[(Merchants)merchantIndex].rewardMultiplierBonus[(CurrencyTypes)chosenRewardIndex])* stackingBonus;
         }
+
 
         return result;
     }
@@ -261,6 +275,14 @@ public class BarterCardHandler : MonoBehaviour
         }
     }
 
+    private void ApplyBonusGiveCurrency(){
+        foreach(var kvp in giveCurrencies){
+        AlphabeticNotation amount = kvp.Value * MoneyManager.Instance.GetCurrency(kvp.Key);
+        MoneyManager.Instance.AddCurrency(kvp.Key,amount);
+        }
+
+    }
+
     public void OnClaimClick()
     {
         if (MoneyManager.Instance.GetCurrency(barterManager.barterCurrencyValues[chosenPriceIndex].currencyType) >= priceAmount)
@@ -272,14 +294,13 @@ public class BarterCardHandler : MonoBehaviour
             }else{
                 barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedInArow = 1;
             }
+            ApplyBonusGiveCurrency();
             OnBarterClaimed?.Invoke((Merchants)chosenMerchantIndex);
             if(isClaimConsumed()){
                 DestroyCard();
             }
         }
-        else
-        {
-        }
+
     }
 
     public void DestroyCard()

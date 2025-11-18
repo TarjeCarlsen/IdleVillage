@@ -35,6 +35,7 @@ public enum CarlUpgradeTypesFloats{
     reduceRefreshTime,
     chanceNotConsumeOnClaim,
     multiPriceMultiXp,
+    giveWheatOnComplete,
 
 }
 
@@ -227,6 +228,7 @@ private float GetDefaultValueForCarl(CarlUpgradeTypesFloats type)
         CarlUpgradeTypesFloats.chanceForFreeRefresh => 0f,
         CarlUpgradeTypesFloats.reduceRefreshTime => 1f,
         CarlUpgradeTypesFloats.chanceNotConsumeOnClaim => 0f,
+        CarlUpgradeTypesFloats.giveWheatOnComplete => 0f,
         _ => 1f
     };
 }

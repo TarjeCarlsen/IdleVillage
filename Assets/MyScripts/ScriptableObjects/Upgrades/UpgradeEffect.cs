@@ -20,6 +20,7 @@ public enum UpgradeTypes{
     CarlReduceRefreshTime,
     CarlChanceToNotConsumeClaim,
     CarlMultiPriceMultiXp,
+    CarlGiveWheatOnComplete,
     ChloeAddFlat,
     ChloeAddFlatToMulti,
     FredAddFlat,
@@ -29,7 +30,6 @@ public enum UpgradeTypes{
     RogerAddFlat,
     RogerAddFlatToMulti,
     RogerAddAllCurrencyFlat,
-
 
 }
 
@@ -140,6 +140,9 @@ public class UpgradeEffect : ScriptableObject
                 MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
                 break;
             case UpgradeTypes.CarlMultiPriceMultiXp:
+                MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
+                break;
+            case UpgradeTypes.CarlGiveWheatOnComplete:
                 MerchantUpgradeManager.Instance.CarlAddFlatRewardFloat(carlUpgradeTypesFloat,flat_forFloatUpgrades);
                 break;
                     //..CHLOE..//

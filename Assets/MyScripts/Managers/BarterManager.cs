@@ -103,6 +103,8 @@ public class BarterManager : MonoBehaviour
         public Dictionary<CurrencyTypes, AlphabeticNotation> rewardBaseFlatIncreaseBonus = new();
         public Dictionary<CurrencyTypes, AlphabeticNotation> totalBonus = new();
         public Dictionary<CurrencyTypes, int> rewardCurrencyWeigthBonus = new();
+        public Dictionary<CurrencyTypes, float> giveCurrencyOnBarterCompletion = new();
+        public List<CurrencyTypes> giveCurrencies = new();
         public AlphabeticNotation stackingMulit = new AlphabeticNotation(1);
         public float xpRewardBonus = 1f;
         public float specialBarterOfferMulti = 100;
@@ -119,6 +121,7 @@ public class BarterManager : MonoBehaviour
             {
                 rewardMultiplierBonus[type] = new AlphabeticNotation(1); // 1 means no multiplier (neutral)
                 rewardBaseFlatIncreaseBonus[type] = new AlphabeticNotation(0); // 0 means no flat bonus
+                giveCurrencyOnBarterCompletion[type] = 0f;
                 totalBonus[type] = rewardMultiplierBonus[type] * rewardBaseFlatIncreaseBonus[type];
                 rewardCurrencyWeigthBonus[type] = 0;
             }
@@ -287,6 +290,15 @@ public class BarterManager : MonoBehaviour
                         UpdateAllMerchantsXpGain(merchant, MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.multiPriceMultiXp)); 
                         UpdateAllPriceMultipliers(merchant,MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.multiPriceMultiXp));
                         break;
+                    case UpgradeTypes.CarlGiveWheatOnComplete:
+                        print("GIVE WHEAT ON COMPLETE Carl!");
+                        if(!merchantBonuses[merchant].giveCurrencies.Contains(CurrencyTypes.wheat)){
+                            merchantBonuses[merchant].giveCurrencies.Add(CurrencyTypes.wheat);
+                            print("adding wheat to list");
+                        }
+                        print("bonus = "+ MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.giveWheatOnComplete));
+                        merchantBonuses[merchant].giveCurrencyOnBarterCompletion[types] = MerchantUpgradeManager.Instance.CarlGetRewardPowerFloat(CarlUpgradeTypesFloats.giveWheatOnComplete);
+                        break;
 
                 }
                 break;
@@ -369,6 +381,14 @@ public class BarterManager : MonoBehaviour
     merchantBonuses[merchant].priceMultiplier += delta;
         print($"price multi for {merchant} = {merchantBonuses[merchant].priceMultiplier}");
     }
+    // private void UpdateGiveOnComplete(Merchants merchant, float amount)
+    // {
+    // float oldMultiplier = merchantBonuses[merchant].priceMultiplier;
+
+    // float delta = amount - oldMultiplier;
+    // merchantBonuses[merchant].priceMultiplier += delta;
+    //     print($"price multi for {merchant} = {merchantBonuses[merchant].priceMultiplier}");
+    // }
 
     private void UpdateAllSpecialBarterChances(Merchants merchant, float amount)
     {
