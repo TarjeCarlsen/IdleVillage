@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using LargeNumbers;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Analytics;
 using System.Collections;
 
 public enum Merchants
@@ -36,6 +33,7 @@ public class BarterManager : MonoBehaviour
 
     [SerializeField] private GameObject barterOfferPrefab;
     [SerializeField] private GameObject specialBarterOfferPrefab;
+    [SerializeField] private GameObject timedBarterOfferPrefab;
 
     [SerializeField] private GameObject TESTING_barterOfferPrefab;
     [SerializeField] private Transform barterParentContainer;
@@ -47,30 +45,35 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private int refreshAmount = 1;
     [SerializeField] private int maxAmountRefresh = 10;
     [SerializeField] private float refreshTimerStart = 5f;
+    [SerializeField] private float chanceForTimedOffer = 0.05f;
     private float refreshTimer;
     public float freeRefreshChance = 0;
 
     [SerializeField] private float growthRate; // tweak this to adjust scaling for how fast lvl requirement xp increases
     [SerializeField] private int maxAmountOfBarters;
 
-    public Merchants previousMerchantCompleted; // STOPPED HERE. NEED TO IMPLEMENT A PREVIOUS MERCHANT POINTER TO CHECK IF THE
-                                                // CLAIMED BARTER IS GOING TO ADD TO THE COMPLETED IN A ROW COUNTER OR RESET IT 
-                                                // AND SET PREVIOUS MERCHANT COMPLETED TO THIS ONE
+    public Merchants previousMerchantCompleted; 
+
 
     public event Action<Merchants> OnBarterLevelUp;
     public event Action<Merchants> OnBarterXpGain;
     public event Action<Merchants> OnUpgradeBought;
     public event Action<Merchants> OnBarterClaimed;
+    public event Action<Merchants,int> OnFavorGained;
+    public event Action<Merchants,int> OnFavorLost;
+
+
     [System.Serializable]
     public class MerchantInfo
     {
         public string merchantName; // name is just for testing, not used anywhere important
         public Sprite merchantIcon_sprite;
-        public float bonus;
+        public int favor;
         public int skillPoints;
         public int merchantLevel;
         public float merchantXp;
         public float requiredXp;
+        public float timedBarterChance;
         public int appearChanceWeigth; // To increase chance of a merchant appearing increase weight by +1, +2, +3...
                                        // depending on how big slice of the wheel he should take
         public int completedBartersForMerchant = 0;
@@ -114,6 +117,7 @@ public class BarterManager : MonoBehaviour
         public float reducedRefreshTimeBonus = 0;
         public float chanceToNotConsumeClaimBonus = 0f;
         public float priceMultiplier = 1f;
+        public float favorMultiBonus= 1f;
 
         public void InitializeDefaults()
         {
@@ -132,6 +136,10 @@ public class BarterManager : MonoBehaviour
     {
         InitializeMerchantInfos();
         InitializeMerchantBonuses();
+        foreach(Merchants merchant in Enum.GetValues(typeof(Merchants))){
+            merchantInfos[merchant].timedBarterChance = chanceForTimedOffer;
+        }
+
         for (int i = 0; i < maxAmountOfBarters; i++)
         {
             CreateBarterOffers();
@@ -171,7 +179,7 @@ public class BarterManager : MonoBehaviour
     public void BarterOfferBought(Merchants merchant, float xpAmount)
     {
         merchantInfos[merchant].merchantXp += xpAmount;
-        if (merchantInfos[merchant].merchantXp >= merchantInfos[merchant].requiredXp)
+        while (merchantInfos[merchant].merchantXp >= merchantInfos[merchant].requiredXp)
         {
             float overflowXp = merchantInfos[merchant].merchantXp - merchantInfos[merchant].requiredXp;
             MerchantLevelUp(merchant, overflowXp);
@@ -428,7 +436,6 @@ public class BarterManager : MonoBehaviour
         merchantInfos[merchant].requiredXp = nextRequiredXp;
         merchantInfos[merchant].merchantXp = xpAmount;
         merchantInfos[merchant].merchantLevel += 1;
-        merchantInfos[merchant].bonus += .05f;
         OnBarterLevelUp?.Invoke(merchant);
     }
 
@@ -482,6 +489,8 @@ public class BarterManager : MonoBehaviour
         BarterCardHandler barterHandler = newBarterOffer.GetComponent<BarterCardHandler>();
         barterCardHandlers.Add(barterHandler);
         barterHandler.OnBarterClaimed += ForwardEventRaised;
+        barterHandler.OnDecreaseFavor += ForwardEventRaisedLoseFavor;
+        barterHandler.OnGainFavor += ForwardEventRaisedGainFavor;
     }
 
     private int GetRandomMerchant()
@@ -522,6 +531,21 @@ public class BarterManager : MonoBehaviour
             return false;
         }
     }
+    private bool isBarterTimed(int chosenMerchant)
+    {
+        float chance = merchantInfos[(Merchants)chosenMerchant].timedBarterChance;
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        if (roll < chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
     private void CreateBarterOffers()
     {
         int randomChosenMerchant = GetRandomMerchant();
@@ -532,6 +556,8 @@ public class BarterManager : MonoBehaviour
         {
             newBarterOffer = Instantiate(specialBarterOfferPrefab, barterParentContainer);
 
+        }else if(isBarterTimed(randomChosenMerchant)){
+            newBarterOffer = Instantiate(timedBarterOfferPrefab,barterParentContainer);
         }
         else
         {
@@ -541,17 +567,34 @@ public class BarterManager : MonoBehaviour
         barterHandler = newBarterOffer.GetComponent<BarterCardHandler>();
         barterHandler.chosenMerchantIndex = randomChosenMerchant;
         barterCardHandlers.Add(barterHandler);
+
+        // UnsubscribeFromCard(barterHandler);
+        barterHandler.OnGainFavor += ForwardEventRaisedGainFavor;
+        barterHandler.OnDecreaseFavor += ForwardEventRaisedLoseFavor;
         barterHandler.OnBarterClaimed += ForwardEventRaised;
     }
 
     public void UnsubscribeFromCard(BarterCardHandler handler)
     {
         handler.OnBarterClaimed -= ForwardEventRaised;
+        handler.OnDecreaseFavor -= ForwardEventRaisedLoseFavor;
+        handler.OnGainFavor -= ForwardEventRaisedGainFavor;
     }
 
     private void ForwardEventRaised(Merchants _merchant)
     {
+        print("claimed!");
         OnBarterClaimed?.Invoke(_merchant);
+    }
+    private void ForwardEventRaisedGainFavor(Merchants _merchant, int amount){
+        print("gained favor in bartermanager from " + _merchant + "amount - "+ amount);
+        merchantInfos[_merchant].favor += amount;
+        OnFavorGained?.Invoke(_merchant,merchantInfos[_merchant].favor);
+    }
+    private void ForwardEventRaisedLoseFavor(Merchants _merchant, int amount){
+        print("Lost favor on " + _merchant);
+        merchantInfos[_merchant].favor -= amount;
+        OnFavorGained?.Invoke(_merchant, merchantInfos[_merchant].favor);
     }
 
     public bool isMerchantSameAsLast(Merchants _merchant)

@@ -273,16 +273,22 @@ MonoBehaviour:
   price_txt: {fileID: 4223975551483552016}
   reward_txt: {fileID: 5115461972827510315}
   xp_txt: {fileID: 316848473815140054}
+  timer_txt: {fileID: 0}
   xpReward_txt: {fileID: 2944622193775708600}
   merchantIcon_img: {fileID: 1419196681982432938}
   priceIcon_img: {fileID: 6004089500302681069}
   rewardIcon_img: {fileID: 6181702147248500958}
   barterCard: {fileID: 1146081009961537537}
+  timedOutButton: {fileID: 0}
+  isSpecialBarterOffer: 0
+  isTimedBarterOffer: 0
+  startTime: 0
   TESTING_DONT_DESTROY: 1
   amountModifier: 4
   growthFactor: 3
   level: 0
   startValue: 50
+  chosenMerchantIndex: 0
   tradeValue: 0
   baseXp: 25
   originalXp: 0
@@ -1872,7 +1878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -506826089, guid: 7d4b65ce98c894c4fb87a06ebd03e8cd, type: 3}
+  m_Sprite: {fileID: -2029324830, guid: 1a41df3b154b7f04098162f5053c247f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

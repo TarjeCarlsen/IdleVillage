@@ -156,9 +156,9 @@ public class UpgradeEffectMerchants : ScriptableObject
                 MerchantUpgradeManager.Instance.FredAddFlatRewardFloat(FredUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 MerchantUpgradeManager.Instance.SamAddFlatRewardFloat(SamUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
                 MerchantUpgradeManager.Instance.RogerAddFlatRewardFloat(RogerUpgradeTypesFloats.xpGainBonusMulti,flat_forFloatUpgrades);
-                
+
                 MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats.increaseAllXpBonusMulti,flat_forFloatUpgrades); //only used for displaying 
-                                                                                                                                        //total bonus in description
+                                                                                                                                                //total bonus in description
                 break;
 
                     //..FRED..//

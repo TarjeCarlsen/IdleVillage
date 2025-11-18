@@ -6,6 +6,7 @@ using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BarterCardHandler : MonoBehaviour
 {
@@ -17,12 +18,20 @@ public class BarterCardHandler : MonoBehaviour
     [SerializeField] private TMP_Text price_txt;
     [SerializeField] private TMP_Text reward_txt;
     [SerializeField] private TMP_Text xp_txt;
+    [SerializeField] private TMP_Text timer_txt;
     [SerializeField] private TMP_Text xpReward_txt;
+    [SerializeField] private TMP_Text favorGain_txt;
     [SerializeField] private Image merchantIcon_img;
     [SerializeField] private Image priceIcon_img;
     [SerializeField] private Image rewardIcon_img;
     [SerializeField] private GameObject barterCard;
+    [SerializeField] private GameObject timedOutButton;
     [SerializeField] private bool isSpecialBarterOffer = false;
+    [SerializeField] private bool isTimedBarterOffer = false;
+    private Coroutine timedBarter_coroutine;
+    [SerializeField] private float startTime;
+    private float timeRemaining;
+    
 
     // [Header]
     [SerializeField] private bool TESTING_DONT_DESTROY;
@@ -42,12 +51,14 @@ public class BarterCardHandler : MonoBehaviour
     private int chosenRewardIndex;
     private int amountOfCurrencies;
     public int chosenMerchantIndex;
-
+    private int favor;
+    [SerializeField] private int baseFavorGain;
+    [SerializeField] private float favorRangeMultiplier;
     private Dictionary<CurrencyTypes, float> giveCurrencies = new();
-    private List<CurrencyTypes>giveCurrenciesTypes;
-    private float giveCurrencyPercentage;
 
     public event Action <Merchants> OnBarterClaimed;
+    public event Action <Merchants,int> OnGainFavor;
+    public event Action <Merchants,int> OnDecreaseFavor;
     [SerializeField] float tradeValue;
     [SerializeField] float baseXp = 10f;
     [SerializeField] float originalXp;
@@ -117,6 +128,7 @@ public class BarterCardHandler : MonoBehaviour
                     maxRandomIterations = 0;
                 }
             }
+
             priceValue = GetRandomValue(chosenPriceIndex);
             rewardValue = GetRandomValue(chosenRewardIndex);
             level = barterManager.merchantInfos[(Merchants)chosenMerchantIndex].merchantLevel; // if problems occur with chosenmerchantindex
@@ -133,6 +145,13 @@ public class BarterCardHandler : MonoBehaviour
         xpReward = ApplyBonusesToXp(chosenMerchantIndex, chosenRewardIndex, originalRewardAmount);
         rewardAmount = ApplyBonusesToRewards(chosenMerchantIndex, originalRewardAmount);
 
+        if(isTimedBarterOffer){
+            StartTimedBarterOffer();
+            priceAmount = priceAmount*2; // multipliers for timed barter offers
+            rewardAmount = rewardAmount *2; // multipliers for timed barter offers
+            xpReward = xpReward * 3; // multipliers for timed barter offers
+            favor = GetRandomFavor();
+        }
         UpdateUI();
     }
 
@@ -176,7 +195,7 @@ public class BarterCardHandler : MonoBehaviour
             int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];
             int effectiveWeigth = baseWeight + bonusWeigth;
             currentSum += effectiveWeigth;
-            if(randomValue < currentSum){ //DOESNT ENTER THE IF, BUG FOUND!
+            if(randomValue < currentSum){
                 return currentIndex;
             }
             currentIndex++;
@@ -202,8 +221,15 @@ public class BarterCardHandler : MonoBehaviour
         return finalAmount;
     }
 
+    private int GetRandomFavor(){
+        float roll = UnityEngine.Random.Range(0,1f);
+        float result = roll * baseFavorGain;
+        int res = (int)Mathf.Round(result); 
+        print("random favor gain/lost = "+ res);
+        return res;
+    }
+
     private void ApplyBonusesToPrice(AlphabeticNotation amount){
-        print($"applying multi: {barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier} * priceamount: {originalPriceAmount}");
         priceAmount =  barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier * originalPriceAmount;
     }
 
@@ -299,12 +325,20 @@ public class BarterCardHandler : MonoBehaviour
             }
             ApplyBonusGiveCurrency();
             OnBarterClaimed?.Invoke((Merchants)chosenMerchantIndex);
+            if(isTimedBarterOffer){
+                OnGainFavor?.Invoke((Merchants)chosenMerchantIndex, favor);
+                StopTimedBarterOffer();
+            }
+
             if(isClaimConsumed()){
                 DestroyCard();
             }
         }
-
     }
+    public void OnTimedOutClick(){
+        DestroyCard();
+    }
+
 
     public void DestroyCard()
     {
@@ -323,6 +357,42 @@ public class BarterCardHandler : MonoBehaviour
         xpProgressBar.SetProgress(xp / reqXp);
 
         UpdateUI();
+    }
+
+
+    private float GetRandomTime(){
+        float randomMultiplier = UnityEngine.Random.Range(.5f,1.5f);
+        float chosenTime = randomMultiplier * startTime;
+        return chosenTime;
+    }
+    private void StopTimedBarterOffer(){
+        if(timedBarter_coroutine != null){
+            StopCoroutine(timedBarter_coroutine);
+            timedBarter_coroutine = null;
+        }
+    }
+
+    private void StartTimedBarterOffer(){
+        timeRemaining = GetRandomTime();
+        if(timedBarter_coroutine == null){
+            timedBarter_coroutine = StartCoroutine(StartTimedBarter_Coroutine()); 
+        }
+    }
+
+    private IEnumerator StartTimedBarter_Coroutine(){
+        while (true)
+        {
+            timer_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(timeRemaining);
+            yield return new WaitForSeconds(1f);
+            timeRemaining -= 1f;
+            if (timeRemaining <= 0f)
+            {
+                timeRemaining = 0f;
+                timedOutButton.SetActive(true);
+                OnDecreaseFavor?.Invoke((Merchants)chosenMerchantIndex, favor);
+                StopTimedBarterOffer();
+            }
+        }
     }
 
     private void UpdateReward(Merchants merchants)
@@ -372,5 +442,7 @@ public class BarterCardHandler : MonoBehaviour
 
         priceIcon_img.sprite = barterManager.barterCurrencyValues[chosenPriceIndex].currencySprite;
         rewardIcon_img.sprite = barterManager.barterCurrencyValues[chosenRewardIndex].currencySprite;
+
+        if(isTimedBarterOffer && favorGain_txt != null) favorGain_txt.text = favor.ToString();
     }
 }
