@@ -32,6 +32,7 @@ public class BarterCardHandler : MonoBehaviour
     [SerializeField] private int startValue;
 
     private AlphabeticNotation priceAmount;
+    private AlphabeticNotation originalPriceAmount;
     private float priceValue;
     private int chosenPriceIndex;
     private AlphabeticNotation rewardAmount;
@@ -121,6 +122,7 @@ public class BarterCardHandler : MonoBehaviour
             level = barterManager.merchantInfos[(Merchants)chosenMerchantIndex].merchantLevel; // if problems occur with chosenmerchantindex
                                                                                                // initialize the chosenmerchantindex with a  getter from bartermanager
             priceAmount = GetRandomAmount(level);
+            originalPriceAmount = priceAmount;
             ApplyBonusesToPrice(priceAmount);
         }
 
@@ -201,7 +203,8 @@ public class BarterCardHandler : MonoBehaviour
     }
 
     private void ApplyBonusesToPrice(AlphabeticNotation amount){
-        priceAmount =  barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier * priceAmount;
+        print($"applying multi: {barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier} * priceamount: {originalPriceAmount}");
+        priceAmount =  barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].priceMultiplier * originalPriceAmount;
     }
 
     private AlphabeticNotation CalculateReward()

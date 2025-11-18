@@ -19,6 +19,7 @@ public enum BobUpgradeTypesFloats{
     xpGainBonusMulti,
     increaseAllSpecialBarterChance,
     chanceForSpecialBarter,
+    priceMulti,
 
 }
 public enum CarlUpgradeTypes{
@@ -36,6 +37,7 @@ public enum CarlUpgradeTypesFloats{
     chanceNotConsumeOnClaim,
     multiPriceMultiXp,
     giveWheatOnComplete,
+    priceMulti,
 
 }
 
@@ -45,6 +47,7 @@ public enum ChloeUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
     increaseAllXpBonusMulti,
+    priceMulti,
 
 }
 public enum FredUpgradeTypes{
@@ -54,6 +57,7 @@ public enum FredUpgradeTypes{
 public enum FredUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
+    priceMulti,
 
 }
 public enum SamUpgradeTypes{
@@ -63,6 +67,7 @@ public enum SamUpgradeTypes{
 public enum SamUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
+    priceMulti,
 
 }
 public enum RogerUpgradeTypes{
@@ -74,12 +79,15 @@ public enum RogerUpgradeTypesFloats{
     xpGainBonusMulti,
 
     chanceForSpecialBarter,
+    priceMulti,
 }
 
 
 public class MerchantUpgradeManager : MonoBehaviour
 {
     public static MerchantUpgradeManager Instance {get;private set;}
+
+    [SerializeField] private Merchants merchants;
 
     // ---------------------------- BOB ----------------------------//
     [SerializeField] public Dictionary<BobUpgradeTypes, AlphabeticNotation> bobUpgrades;
@@ -333,6 +341,8 @@ private void InitializeMerchantUpgrades()
     foreach (RogerUpgradeTypesFloats type in Enum.GetValues(typeof(RogerUpgradeTypesFloats)))
         rogerUpgradesFloat[type] = GetDefaultValueForRoger(type);
 }
+
+
 
 
 
