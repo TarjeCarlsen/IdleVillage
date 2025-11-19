@@ -53,7 +53,7 @@ public class BarterCardHandler : MonoBehaviour
     public int chosenMerchantIndex;
     private int favor;
     [SerializeField] private int baseFavorGain;
-    [SerializeField] private float favorRangeMultiplier;
+    private int unModifiedFavor;
     private Dictionary<CurrencyTypes, float> giveCurrencies = new();
 
     public event Action <Merchants> OnBarterClaimed;
@@ -153,6 +153,7 @@ public class BarterCardHandler : MonoBehaviour
             rewardAmount = rewardAmount *2; // multipliers for timed barter offers
             xpReward = xpReward * 3; // multipliers for timed barter offers
             favor = GetRandomFavor();
+            favor = ApplyBonusToFavor();
         }
         UpdateUI();
     }
@@ -224,10 +225,18 @@ public class BarterCardHandler : MonoBehaviour
         return finalAmount;
     }
 
+
     private int GetRandomFavor(){
         float roll = UnityEngine.Random.Range(0,1f);
         float result = roll * baseFavorGain;
         if(result < 1) result = 1;
+        int res = (int)Mathf.Round(result); 
+        unModifiedFavor = res;
+        return res;
+    }
+
+    private int ApplyBonusToFavor(){
+        float result  = unModifiedFavor * barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].favorMultiBonus;
         int res = (int)Mathf.Round(result); 
         return res;
     }
@@ -269,6 +278,7 @@ public class BarterCardHandler : MonoBehaviour
     }
     private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
     {
+        favor = ApplyBonusToFavor();
         AlphabeticNotation result;
         int bartersInArow = barterManager.merchantInfos[(Merchants)merchantIndex].completedInArow;
         AlphabeticNotation stackingMulti = barterManager.merchantBonuses[(Merchants)merchantIndex].stackingMulit -1;

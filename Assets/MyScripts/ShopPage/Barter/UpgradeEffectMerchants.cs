@@ -22,6 +22,8 @@ public enum MerchantUpgradeTypes{
     ChloeUpgradeXpForAllMerchants,
     ChloeMultiAllOnFavorPassed,
     ChloeDoubleXpOnNextBarter,
+    ChloeAddFlatMultiFavor,
+    ChloeAddChanceOfAppearing,
     FredAddFlat,
     FredAddFlatToMulti,
     SamAddFlat,
@@ -61,16 +63,20 @@ public class UpgradeEffectMerchants : ScriptableObject
     public CarlUpgradeTypesFloats carlUpgradeTypesFloat;
     [Header("CHLOE UPGRADES")]
     public ChloeUpgradeTypes chloeUpgradeTypes;
+    public ChloeUpgradeTypesInt chloeUpgradeTypesInt;
     public ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
     public ChloeUpgradeTypesBool chloeUpgradeTypesBool;
     [Header("FRED UPGRADES")]
     public FredUpgradeTypes fredUpgradeTypes;
+    public FredUpgradeTypesInt fredUpgradeTypesInt;
     public FredUpgradeTypesFloats fredUpgradeTypesFloat;
     [Header("SAM UPGRADES")]
     public SamUpgradeTypes samUpgradeTypes;
+    public SamUpgradeTypesInt samUpgradeTypesInt;
     public SamUpgradeTypesFloats samUpgradeTypesFloat;
     [Header("ROGER UPGRADES")]
     public RogerUpgradeTypes rogerUpgradeTypes;
+    public RogerUpgradeTypesInt rogerUpgradeTypesInt;
     public RogerUpgradeTypesFloats rogerUpgradeTypesFloat;
 
 
@@ -170,6 +176,12 @@ public class UpgradeEffectMerchants : ScriptableObject
                 break;
             case MerchantUpgradeTypes.ChloeDoubleXpOnNextBarter:
                 MerchantUpgradeManager.Instance.ChloeRewardSetBool(ChloeUpgradeTypesBool.doubleXpOnNextBarter,stateForUpgrade);
+                break;
+            case MerchantUpgradeTypes.ChloeAddFlatMultiFavor:
+                MerchantUpgradeManager.Instance.ChloeAddFlatRewardFloat(chloeUpgradeTypesFloat,flat_forFloatUpgrades);
+                break;
+            case MerchantUpgradeTypes.ChloeAddChanceOfAppearing:
+                MerchantUpgradeManager.Instance.ChloeAddFlatRewardInt(chloeUpgradeTypesInt,flat_forIntUpgrades);
                 break;
 
                     //..FRED..//

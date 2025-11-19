@@ -48,6 +48,7 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private CarlUpgradeTypes carlUpgradeTypes;
     [Header("Chloe DISPLAYS")]
     [SerializeField] private ChloeUpgradeTypesFloats chloeUpgradeTypesFloat;
+    [SerializeField] private ChloeUpgradeTypesInt chloeUpgradeTypesInt;
     [SerializeField] private ChloeUpgradeTypes chloeUpgradeTypes;
 
     private string templateText;
@@ -246,6 +247,13 @@ public class MerchantCardHandler : MonoBehaviour
                             templateText,
                             @"\{.*?\}",
                                 $"<color=green> {MerchantUpgradeManager.Instance.CarlGetRewardPowerInt(carlUpgradeTypesInt).ToString()}</color>"
+                        );
+                        break;
+                    case Merchants.ChloeTheMerchant:
+                        updatedText = System.Text.RegularExpressions.Regex.Replace(
+                            templateText,
+                            @"\{.*?\}",
+                                $"<color=green> {MerchantUpgradeManager.Instance.ChloeGetRewardPowerInt(chloeUpgradeTypesInt).ToString()}</color>"
                         );
                         break;
                         //add all merchants here

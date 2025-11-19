@@ -13,6 +13,7 @@ public enum BobUpgradeTypes{
 }
 public enum BobUpgradeTypesInt{
     moneyWeightChanceBob,
+    appearChanceWeigthMulti,
 }
 public enum BobUpgradeTypesFloats{
     increaseAllXpBonusMulti,
@@ -28,6 +29,7 @@ public enum CarlUpgradeTypes{
 }
 public enum CarlUpgradeTypesInt{
     refreshCountCarl,
+    appearChanceWeigthMulti,
 }
 public enum CarlUpgradeTypesFloats{
     xpGainBonusMulti,
@@ -43,6 +45,9 @@ public enum CarlUpgradeTypesFloats{
 
 public enum ChloeUpgradeTypes{
 }
+public enum ChloeUpgradeTypesInt{
+    appearChanceWeigthMulti,
+}
 
 public enum ChloeUpgradeTypesBool{
     doubleXpOnNextBarter,
@@ -53,10 +58,14 @@ public enum ChloeUpgradeTypesFloats{
     increaseAllXpBonusMulti,
     priceMulti,
     multiAllOnFavorPassed,
+    multiForAllFavorGain,
 }
 public enum FredUpgradeTypes{
     rewardMultiFred,
     rewardFlatFred,
+}
+public enum FredUpgradeTypesInt{
+    appearChanceWeigthMulti,
 }
 public enum FredUpgradeTypesFloats{
     xpGainBonusMulti,
@@ -68,6 +77,9 @@ public enum SamUpgradeTypes{
     rewardMultiSam,
     rewardFlatSam,
 }
+public enum SamUpgradeTypesInt{
+    appearChanceWeigthMulti,
+}
 public enum SamUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
@@ -78,6 +90,9 @@ public enum RogerUpgradeTypes{
     rewardMultiRoger,
     rewardFlatRoger,
     
+}
+public enum RogerUpgradeTypesInt{
+    appearChanceWeigthMulti,
 }
 public enum RogerUpgradeTypesFloats{
     xpGainBonusMulti,
@@ -104,16 +119,20 @@ public class MerchantUpgradeManager : MonoBehaviour
 
     // ---------------------------- CHLOE ----------------------------//
     [SerializeField] public Dictionary <ChloeUpgradeTypes, AlphabeticNotation> chloeUpgrades;
+    [SerializeField] public Dictionary <ChloeUpgradeTypesInt, int> chloeUpgradesInt;
     [SerializeField] public Dictionary<ChloeUpgradeTypesFloats, float> chloeUpgradesFloat;
     [SerializeField] public Dictionary<ChloeUpgradeTypesBool,bool> chloeUpgradesBool;
     // ---------------------------- FRED ----------------------------//
     [SerializeField] public Dictionary <FredUpgradeTypes, AlphabeticNotation> fredUpgrades;
+    [SerializeField] public Dictionary <FredUpgradeTypesInt, int> fredUpgradesInt;
     [SerializeField] public Dictionary<FredUpgradeTypesFloats, float> fredUpgradesFloat;
     // ---------------------------- SAM ----------------------------//
     [SerializeField] public Dictionary <SamUpgradeTypes, AlphabeticNotation> samUpgrades;
+    [SerializeField] public Dictionary <SamUpgradeTypesInt, int> samUpgradesInt;
     [SerializeField] public Dictionary<SamUpgradeTypesFloats, float> samUpgradesFloat;
     // ---------------------------- ROGER ----------------------------//
     [SerializeField] public Dictionary <RogerUpgradeTypes, AlphabeticNotation>rogerUpgrades;
+    [SerializeField] public Dictionary <RogerUpgradeTypesInt, int> rogerUpgradesInt;
     [SerializeField] public Dictionary<RogerUpgradeTypesFloats, float> rogerUpgradesFloat;
     private void Awake(){
         if (Instance == null) Instance = this;
@@ -147,6 +166,7 @@ private AlphabeticNotation GetDefaultValueForChloe(ChloeUpgradeTypes type)
 {
     return type switch
     {
+        
         _ => new AlphabeticNotation(0)
     };
 }
@@ -185,6 +205,7 @@ private int GetDefaultValueForBob(BobUpgradeTypesInt type)
 {
     return type switch
     {
+        BobUpgradeTypesInt.appearChanceWeigthMulti => 1,
         BobUpgradeTypesInt.moneyWeightChanceBob => 0,
         _ => 0
     };
@@ -193,10 +214,44 @@ private int GetDefaultValueForCarl(CarlUpgradeTypesInt type)
 {
     return type switch
     {
+        CarlUpgradeTypesInt.appearChanceWeigthMulti => 1,
         CarlUpgradeTypesInt.refreshCountCarl => 0,
         _ => 0
     };
 }
+private int GetDefaultValueForChloe(ChloeUpgradeTypesInt type)
+{
+    return type switch
+    {
+        ChloeUpgradeTypesInt.appearChanceWeigthMulti => 1,
+        _ => 0
+    };
+}
+private int GetDefaultValueForFred(FredUpgradeTypesInt type)
+{
+    return type switch
+    {
+        FredUpgradeTypesInt.appearChanceWeigthMulti => 1,
+        _ => 0
+    };
+}
+private int GetDefaultValueForSam(SamUpgradeTypesInt type)
+{
+    return type switch
+    {
+        SamUpgradeTypesInt.appearChanceWeigthMulti => 1,
+        _ => 0
+    };
+}
+private int GetDefaultValueForRoger(RogerUpgradeTypesInt type)
+{
+    return type switch
+    {
+        RogerUpgradeTypesInt.appearChanceWeigthMulti => 1,
+        _ => 0
+    };
+}
+
 
 //------------------------------------------------ FLOAT DATATYPE ------------------------------------------ //
 private float GetDefaultValueForBob(BobUpgradeTypesFloats type)
@@ -231,6 +286,7 @@ private float GetDefaultValueForChloe(ChloeUpgradeTypesFloats type)
     {
         
         ChloeUpgradeTypesFloats.increaseAllXpBonusMulti => 1f,
+        ChloeUpgradeTypesFloats.multiAllOnFavorPassed => 1f,
         _ => 1f
     };
 }
@@ -287,16 +343,20 @@ private void InitializeMerchantUpgrades()
     carlUpgradesFloat = new Dictionary<CarlUpgradeTypesFloats, float>();
 
     chloeUpgrades = new Dictionary<ChloeUpgradeTypes, AlphabeticNotation>();
+    chloeUpgradesInt = new Dictionary<ChloeUpgradeTypesInt, int>();
     chloeUpgradesFloat = new Dictionary<ChloeUpgradeTypesFloats, float>();
     chloeUpgradesBool = new Dictionary<ChloeUpgradeTypesBool, bool>();
 
     fredUpgrades = new Dictionary<FredUpgradeTypes, AlphabeticNotation>();
+    fredUpgradesInt = new Dictionary<FredUpgradeTypesInt, int>();
     fredUpgradesFloat = new Dictionary<FredUpgradeTypesFloats, float>();
 
     samUpgrades = new Dictionary<SamUpgradeTypes, AlphabeticNotation>();
+    samUpgradesInt = new Dictionary<SamUpgradeTypesInt, int>();
     samUpgradesFloat = new Dictionary<SamUpgradeTypesFloats, float>();
 
     rogerUpgrades = new Dictionary<RogerUpgradeTypes, AlphabeticNotation>();
+    rogerUpgradesInt = new Dictionary<RogerUpgradeTypesInt, int>();
     rogerUpgradesFloat = new Dictionary<RogerUpgradeTypesFloats, float>();
 
     // --- BOB ---
@@ -318,6 +378,8 @@ private void InitializeMerchantUpgrades()
     // --- CHLOE ---
     foreach (ChloeUpgradeTypes type in Enum.GetValues(typeof(ChloeUpgradeTypes)))
         chloeUpgrades[type] = GetDefaultValueForChloe(type);
+    foreach (ChloeUpgradeTypesInt type in Enum.GetValues(typeof(ChloeUpgradeTypesInt)))
+        chloeUpgradesInt[type] = GetDefaultValueForChloe(type);
     foreach (ChloeUpgradeTypesFloats type in Enum.GetValues(typeof(ChloeUpgradeTypesFloats)))
         chloeUpgradesFloat[type] = GetDefaultValueForChloe(type);
     foreach (ChloeUpgradeTypesBool type in Enum.GetValues(typeof(ChloeUpgradeTypesBool)))
@@ -326,18 +388,24 @@ private void InitializeMerchantUpgrades()
     // --- FRED ---
     foreach (FredUpgradeTypes type in Enum.GetValues(typeof(FredUpgradeTypes)))
         fredUpgrades[type] = GetDefaultValueForFred(type);
+    foreach (FredUpgradeTypesInt type in Enum.GetValues(typeof(FredUpgradeTypesInt)))
+        fredUpgradesInt[type] = GetDefaultValueForFred(type);
     foreach (FredUpgradeTypesFloats type in Enum.GetValues(typeof(FredUpgradeTypesFloats)))
         fredUpgradesFloat[type] = GetDefaultValueForFred(type);
 
     // --- SAM ---
     foreach (SamUpgradeTypes type in Enum.GetValues(typeof(SamUpgradeTypes)))
         samUpgrades[type] = GetDefaultValueForSam(type);
+    foreach (SamUpgradeTypesInt type in Enum.GetValues(typeof(SamUpgradeTypesInt)))
+        samUpgradesInt[type] = GetDefaultValueForSam(type);
     foreach (SamUpgradeTypesFloats type in Enum.GetValues(typeof(SamUpgradeTypesFloats)))
         samUpgradesFloat[type] = GetDefaultValueForSam(type);
 
     // --- ROGER ---
     foreach (RogerUpgradeTypes type in Enum.GetValues(typeof(RogerUpgradeTypes)))
         rogerUpgrades[type] = GetDefaultValueForRoger(type);
+    foreach (RogerUpgradeTypesInt type in Enum.GetValues(typeof(RogerUpgradeTypesInt)))
+        rogerUpgradesInt[type] = GetDefaultValueForRoger(type);
     foreach (RogerUpgradeTypesFloats type in Enum.GetValues(typeof(RogerUpgradeTypesFloats)))
         rogerUpgradesFloat[type] = GetDefaultValueForRoger(type);
 }
@@ -376,6 +444,10 @@ private void InitializeMerchantUpgrades()
     public AlphabeticNotation ChloeGetRewardPower(ChloeUpgradeTypes type) => chloeUpgrades[type];
     public void ChloeAddFlatReward(ChloeUpgradeTypes type, AlphabeticNotation amount) => chloeUpgrades[type] += amount; 
     public void ChloeMultiplyReward(ChloeUpgradeTypes type, AlphabeticNotation amount) => chloeUpgrades[type] *= amount;
+        // ----------int upgrades ---------//
+    public int ChloeGetRewardPowerInt(ChloeUpgradeTypesInt type) => chloeUpgradesInt[type];
+    public void ChloeAddFlatRewardInt(ChloeUpgradeTypesInt type, int amount) => chloeUpgradesInt[type] += amount; 
+    public void ChloeMultiplyRewardInt(ChloeUpgradeTypesInt type, int amount) => chloeUpgradesInt[type] *= amount;
         // ----------float upgrades ---------//
     public float ChloeGetRewardPowerFloat(ChloeUpgradeTypesFloats type) => chloeUpgradesFloat[type];
     public void ChloeAddFlatRewardFloat(ChloeUpgradeTypesFloats type, float amount) => chloeUpgradesFloat[type] += amount; 
@@ -387,6 +459,10 @@ private void InitializeMerchantUpgrades()
     public AlphabeticNotation FredGetRewardPower(FredUpgradeTypes type) => fredUpgrades[type];
     public void FredAddFlatReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] += amount; 
     public void FredMultiplyReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] *= amount;
+        // ----------int upgrades ---------//
+    public int FredGetRewardPowerInt(FredUpgradeTypesInt type) => fredUpgradesInt[type];
+    public void FredAddFlatRewardInt(FredUpgradeTypesInt type, int amount) => fredUpgradesInt[type] += amount; 
+    public void FredMultiplyRewardInt(FredUpgradeTypesInt type, int amount) => fredUpgradesInt[type] *= amount;
         // ----------float upgrades ---------//
     public float FredGetRewardPowerFloat(FredUpgradeTypesFloats type) => fredUpgradesFloat[type];
     public void FredAddFlatRewardFloat(FredUpgradeTypesFloats type, float amount) => fredUpgradesFloat[type] += amount; 
@@ -395,6 +471,10 @@ private void InitializeMerchantUpgrades()
     public AlphabeticNotation SamGetRewardPower(SamUpgradeTypes type) => samUpgrades[type];
     public void SamAddFlatReward(SamUpgradeTypes type, AlphabeticNotation amount) => samUpgrades[type] += amount; 
     public void SamMultiplyReward(SamUpgradeTypes type, AlphabeticNotation amount) => samUpgrades[type] *= amount;
+        // ----------int upgrades ---------//
+    public int SamGetRewardPowerInt(SamUpgradeTypesInt type) => samUpgradesInt[type];
+    public void SamAddFlatRewardInt(SamUpgradeTypesInt type, int amount) => samUpgradesInt[type] += amount; 
+    public void SamMultiplyRewardInt(SamUpgradeTypesInt type, int amount) => samUpgradesInt[type] *= amount;
         // ----------float upgrades ---------//
     public float SamGetRewardPowerFloat(SamUpgradeTypesFloats type) => samUpgradesFloat[type];
     public void SamAddFlatRewardFloat(SamUpgradeTypesFloats type, float amount) => samUpgradesFloat[type] += amount; 
@@ -403,6 +483,10 @@ private void InitializeMerchantUpgrades()
     public AlphabeticNotation RogerGetRewardPower(RogerUpgradeTypes type) => rogerUpgrades[type];
     public void RogerAddFlatReward(RogerUpgradeTypes type, AlphabeticNotation amount) => rogerUpgrades[type] += amount; 
     public void RogerMultiplyReward(RogerUpgradeTypes type, AlphabeticNotation amount) => rogerUpgrades[type] *= amount;
+        // ----------int upgrades ---------//
+    public int RogerGetRewardPowerInt(RogerUpgradeTypesInt type) => rogerUpgradesInt[type];
+    public void RogerAddFlatRewardInt(RogerUpgradeTypesInt type, int amount) => rogerUpgradesInt[type] += amount; 
+    public void RogerMultiplyRewardInt(RogerUpgradeTypesInt type, int amount) => rogerUpgradesInt[type] *= amount;
         // ----------float upgrades ---------//
     public float RogerGetRewardPowerFloat(RogerUpgradeTypesFloats type) => rogerUpgradesFloat[type];
     public void RogerAddFlatRewardFloat(RogerUpgradeTypesFloats type, float amount) => rogerUpgradesFloat[type] += amount; 

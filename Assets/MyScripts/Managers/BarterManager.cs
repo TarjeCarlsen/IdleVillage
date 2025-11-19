@@ -76,6 +76,7 @@ public class BarterManager : MonoBehaviour
         public float timedBarterChance;
         public int appearChanceWeigth = 10; // To increase chance of a merchant appearing increase weight by +1, +2, +3...
                                             // depending on how big slice of the wheel he should take
+        public int originalAppearChanceWeight;
         public int completedBartersForMerchant = 0;
         public int completedInArow = 0;
 
@@ -370,6 +371,20 @@ public class BarterManager : MonoBehaviour
                     case MerchantUpgradeTypes.ChloeDoubleXpOnNextBarter:
                         print("UPGRADED double xp on next barter Chloe!");
 
+                        break;
+                    case MerchantUpgradeTypes.ChloeAddFlatMultiFavor:
+                        print("UPGRADED double xp on next barter Chloe!");
+                        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){ // HARDCODED FOR ALL MERCHANTS. MIGHT REDO IF OTHER MERCHANTS WANT TO AFFECT FAVOR GAIN
+                            merchantBonuses[merch].favorMultiBonus = MerchantUpgradeManager.Instance.ChloeGetRewardPowerFloat(ChloeUpgradeTypesFloats.multiForAllFavorGain);
+                            OnUpgradeBought?.Invoke(merch);
+                        }
+                        break;
+                    case MerchantUpgradeTypes.ChloeAddChanceOfAppearing:
+                        print("UPGRADED double xp on next barter Chloe!");
+                        print("old appear chance for chloe = "+ merchantInfos[merchant].appearChanceWeigth);
+                        print($"{merchantInfos[merchant].originalAppearChanceWeight} * {MerchantUpgradeManager.Instance.ChloeGetRewardPowerInt(ChloeUpgradeTypesInt.appearChanceWeigthMulti)} = {merchantInfos[merchant].appearChanceWeigth} ");
+                        merchantInfos[merchant].appearChanceWeigth = merchantInfos[merchant].originalAppearChanceWeight * MerchantUpgradeManager.Instance.ChloeGetRewardPowerInt(ChloeUpgradeTypesInt.appearChanceWeigthMulti);
+                        print("new appear chance for chloe = "+ merchantInfos[merchant].appearChanceWeigth);
                         break;
                 }
                 break;
