@@ -71,6 +71,7 @@ public enum FredUpgradeTypesFloats{
     xpGainBonusMulti,
     chanceForSpecialBarter,
     priceMulti,
+    chanceToRecieveNothing,
 
 }
 public enum SamUpgradeTypes{
@@ -297,6 +298,7 @@ private float GetDefaultValueForFred(FredUpgradeTypesFloats type)
     {
         FredUpgradeTypesFloats.xpGainBonusMulti => 1f,
         FredUpgradeTypesFloats.chanceForSpecialBarter => 0f,
+        FredUpgradeTypesFloats.chanceToRecieveNothing => 1f,
         _ => 1f
     };
 }
@@ -458,6 +460,7 @@ private void InitializeMerchantUpgrades()
 // ---------------------------- FRED ----------------------------//
     public AlphabeticNotation FredGetRewardPower(FredUpgradeTypes type) => fredUpgrades[type];
     public void FredAddFlatReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] += amount; 
+    public void FredSubtractFlatReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] -= amount; 
     public void FredMultiplyReward(FredUpgradeTypes type, AlphabeticNotation amount) => fredUpgrades[type] *= amount;
         // ----------int upgrades ---------//
     public int FredGetRewardPowerInt(FredUpgradeTypesInt type) => fredUpgradesInt[type];
@@ -466,6 +469,7 @@ private void InitializeMerchantUpgrades()
         // ----------float upgrades ---------//
     public float FredGetRewardPowerFloat(FredUpgradeTypesFloats type) => fredUpgradesFloat[type];
     public void FredAddFlatRewardFloat(FredUpgradeTypesFloats type, float amount) => fredUpgradesFloat[type] += amount; 
+    public void FredSubtractFlatRewardFloat(FredUpgradeTypesFloats type, float amount) => fredUpgradesFloat[type] -= amount; 
     public void FredMultiplyRewardFloat(FredUpgradeTypesFloats type, float amount) => fredUpgradesFloat[type] *= amount;
 // ---------------------------- SAM ----------------------------//
     public AlphabeticNotation SamGetRewardPower(SamUpgradeTypes type) => samUpgrades[type];

@@ -79,6 +79,8 @@ public class BarterManager : MonoBehaviour
         public int originalAppearChanceWeight;
         public int completedBartersForMerchant = 0;
         public int completedInArow = 0;
+        public float rewardRecieveChance = 1f;
+        public float originalRecieveChance = 1f;
 
 
     
@@ -391,14 +393,14 @@ public class BarterManager : MonoBehaviour
             case Merchants.FredTheMerchant:
                 switch (merchantUpgradeType)
                 {
-                    case MerchantUpgradeTypes.FredAddFlat:
-                        print("UPGRADED FLAT FOR FRED!");
-                        merchantBonuses[merchant].rewardBaseFlatIncreaseBonus[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardFlatFred);
-
-                        break;
-                    case MerchantUpgradeTypes.FredAddFlatToMulti:
-                        print("UPGRADED FLAT TO MULT FOR FRED!");
-                        merchantBonuses[merchant].rewardMultiplierBonus[types] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardMultiFred);
+                    case MerchantUpgradeTypes.FredMultiRewardChanceToRecieveNothing: // add popup for this upgrade when nothing is recieved
+                        print("UPGRADED CHANCE TO RECIEVE NOTHIGN FRED!");
+                        //amount multiplied is hardcoded in merchantupgradeeffects to +0.3 each upgrade
+                        merchantInfos[merchant].rewardRecieveChance = merchantInfos[merchant].originalRecieveChance * MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(FredUpgradeTypesFloats.chanceToRecieveNothing);
+                        foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
+                            merchantBonuses[merchant].rewardMultiplierBonus[type] = MerchantUpgradeManager.Instance.FredGetRewardPower(FredUpgradeTypes.rewardMultiFred); 
+                        }
+                        OnUpgradeBought?.Invoke(merchant);
                         break;
                 }
                 break;

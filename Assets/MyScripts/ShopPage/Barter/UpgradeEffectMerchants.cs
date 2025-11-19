@@ -24,8 +24,7 @@ public enum MerchantUpgradeTypes{
     ChloeDoubleXpOnNextBarter,
     ChloeAddFlatMultiFavor,
     ChloeAddChanceOfAppearing,
-    FredAddFlat,
-    FredAddFlatToMulti,
+    FredMultiRewardChanceToRecieveNothing,
     SamAddFlat,
     SamAddFlatToMulti,
     RogerAddFlat,
@@ -185,12 +184,12 @@ public class UpgradeEffectMerchants : ScriptableObject
                 break;
 
                     //..FRED..//
-            case MerchantUpgradeTypes.FredAddFlat:
-                MerchantUpgradeManager.Instance.FredAddFlatReward(fredUpgradeTypes,flat);
+            case MerchantUpgradeTypes.FredMultiRewardChanceToRecieveNothing:
+                MerchantUpgradeManager.Instance.FredAddFlatReward(FredUpgradeTypes.rewardMultiFred, new AlphabeticNotation(0.3f));
+                MerchantUpgradeManager.Instance.FredSubtractFlatRewardFloat(fredUpgradeTypesFloat,flat_forFloatUpgrades); // hardcoded to simplify. Can redo
+                                                                                                                          // if more upgrades will work like this
                 break;
-            case MerchantUpgradeTypes.FredAddFlatToMulti: // adding more to the multiplier for bobs rewards
-                MerchantUpgradeManager.Instance.FredAddFlatReward(fredUpgradeTypes, flat);
-                break;
+
                     //..SAM..//
             case MerchantUpgradeTypes.SamAddFlat:
                 MerchantUpgradeManager.Instance.SamAddFlatReward(samUpgradeTypes,flat);

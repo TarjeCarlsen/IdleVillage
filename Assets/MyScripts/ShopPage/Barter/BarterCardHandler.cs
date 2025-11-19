@@ -13,6 +13,7 @@ public class BarterCardHandler : MonoBehaviour
     private BarterManager barterManager;
     [SerializeField] private ProgressBarHandler xpProgressBar;
     [SerializeField] private ProgressBarHandler xpIncreaseProgressBar;
+    [SerializeField] private PopUpTextHandler popUpTextHandler;
 
     [SerializeField] private TMP_Text Lvl_text_txt;
     [SerializeField] private TMP_Text price_txt;
@@ -335,10 +336,28 @@ public class BarterCardHandler : MonoBehaviour
 
     }
 
+    private bool NoRewardCheck(){
+        float roll = UnityEngine.Random.Range(0,1f);
+        float chance = barterManager.merchantInfos[(Merchants)chosenMerchantIndex].rewardRecieveChance;
+        print($"rolled = {roll} chance = {chance}");
+        if(roll < chance){
+            print("REWARD GIVEN!");
+            return false;
+        }else{
+                popUpTextHandler.RunPopUpFadeUp($"No reward for you!");
+                print("NO REWARD GIVEN!");
+            return true;
+        }
+    }
+
     public void OnClaimClick()
     {
         if (MoneyManager.Instance.GetCurrency(barterManager.barterCurrencyValues[chosenPriceIndex].currencyType) >= priceAmount)
         {
+            if(NoRewardCheck()){
+                // DestroyCard();
+                return;
+            }
             MadeBarter();
             barterManager.merchantInfos[(Merchants)chosenMerchantIndex].completedBartersForMerchant++;
             if(barterManager.isMerchantSameAsLast((Merchants)chosenMerchantIndex)){
