@@ -66,6 +66,8 @@ public enum FredUpgradeTypes{
 }
 public enum FredUpgradeTypesInt{
     appearChanceWeigthMulti,
+    decreaseAllOtherFavor,
+    increaseFredFavor,
 }
 public enum FredUpgradeTypesFloats{
     xpGainBonusMulti,
@@ -233,6 +235,8 @@ private int GetDefaultValueForFred(FredUpgradeTypesInt type)
     return type switch
     {
         FredUpgradeTypesInt.appearChanceWeigthMulti => 1,
+        FredUpgradeTypesInt.decreaseAllOtherFavor => 100,
+        FredUpgradeTypesInt.increaseFredFavor => 200,
         _ => 0
     };
 }

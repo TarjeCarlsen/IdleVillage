@@ -485,6 +485,7 @@ public class BarterCardHandler : MonoBehaviour
         priceIcon_img.sprite = barterManager.barterCurrencyValues[chosenPriceIndex].currencySprite;
         rewardIcon_img.sprite = barterManager.barterCurrencyValues[chosenRewardIndex].currencySprite;
 
+        OnGainFavor?.Invoke((Merchants)chosenMerchantIndex,0);
         if(isTimedBarterOffer && favorGain_txt != null) favorGain_txt.text = favor.ToString();
     }
 }

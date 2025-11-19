@@ -25,6 +25,7 @@ public enum MerchantUpgradeTypes{
     ChloeAddFlatMultiFavor,
     ChloeAddChanceOfAppearing,
     FredMultiRewardChanceToRecieveNothing,
+    FredDecreaseFavorOnEveryonFredRecieveFavor,
     SamAddFlat,
     SamAddFlatToMulti,
     RogerAddFlat,
@@ -188,6 +189,10 @@ public class UpgradeEffectMerchants : ScriptableObject
                 MerchantUpgradeManager.Instance.FredAddFlatReward(FredUpgradeTypes.rewardMultiFred, new AlphabeticNotation(0.3f));
                 MerchantUpgradeManager.Instance.FredSubtractFlatRewardFloat(fredUpgradeTypesFloat,flat_forFloatUpgrades); // hardcoded to simplify. Can redo
                                                                                                                           // if more upgrades will work like this
+                break;
+            case MerchantUpgradeTypes.FredDecreaseFavorOnEveryonFredRecieveFavor:
+                // MerchantUpgradeManager.Instance.FredAddFlatRewardInt(FredUpgradeTypesInt.decreaseAllOtherFavor,100);
+                // MerchantUpgradeManager.Instance.FredAddFlatRewardInt(FredUpgradeTypesInt.increaseFredFavor, 200);
                 break;
 
                     //..SAM..//
