@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: moneyFlatUpp_00
   m_EditorClassIdentifier: 
   merchantUpgradeTypes: 0
-  merchant: 0
-  currencyType: 0
-  unifiedMulties: 0
+  merchants: 0000000001000000
+  currencyTypes: 0000000001000000
+  upgradeID: 0
+  upgradeOperation: 0
   flat:
     coefficient: 20
     magnitude: 0

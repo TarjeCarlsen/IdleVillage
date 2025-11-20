@@ -14,7 +14,6 @@ public enum Merchants
     SamTheMerchant,
     RogerTheMerchant,
 }
-
 [System.Serializable]
 public struct BarterCurrencyValues
 {
@@ -56,7 +55,7 @@ public class BarterManager : MonoBehaviour
 
     public event Action<Merchants> OnBarterLevelUp;
     public event Action<Merchants> OnBarterXpGain;
-    public event Action<Merchants, CurrencyTypes> OnUpgradeBought;
+    public event Action<UpgradeID,IsWhatDatatype,Merchants, CurrencyTypes> OnUpgradeBought;
     public event Action<Merchants> OnBarterClaimed;
     public event Action<Merchants, int> OnFavorGained;
 
@@ -201,12 +200,13 @@ public class BarterManager : MonoBehaviour
         OnBarterXpGain?.Invoke(merchant);
     }
 
-    public void UpgradeBought(Merchants merchant, CurrencyTypes types)
+    public void UpgradeBought(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants merchant, CurrencyTypes types)
     { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
         // switch(merchant){
         // }
-        print("INSIDE UPGRADES!");
-        OnUpgradeBought?.Invoke(merchant,types);
+        // print("INSIDE UPGRADES!");
+        print($"INVOKE UPGRADE BOUGHT from {merchant} id {upgradeID}");
+        OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);
     }
 
 

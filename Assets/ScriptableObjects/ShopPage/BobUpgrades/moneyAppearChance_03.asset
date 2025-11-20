@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
   m_Name: moneyAppearChance_03
   m_EditorClassIdentifier: 
-  merchantUpgradeTypes: 0
-  merchant: 0
-  currencyType: 0
-  unifiedMulties: 0
+  merchantUpgradeTypes: 2
+  merchants: 00000000
+  currencyTypes: 00000000
+  upgradeID: 2
+  upgradeOperation: 0
   flat:
     coefficient: 0
     magnitude: 0
-  flat_forIntUpgrades: 0
+  flat_forIntUpgrades: 5
   flat_forFloatUpgrades: 0
   stateForUpgrade: 0

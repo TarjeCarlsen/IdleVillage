@@ -49,6 +49,7 @@ public class BarterCardHandler : MonoBehaviour
     private AlphabeticNotation originalRewardAmount;
     private float rewardValue;
     private float xpReward;
+    private float originalXpReward;
     private CurrencyTypes chosenReward;
     private int amountOfCurrencies;
     public Merchants chosenMerchant;
@@ -68,7 +69,8 @@ public class BarterCardHandler : MonoBehaviour
     [SerializeField] private float maxRandom = 1.5f;
     // [SerializeField] private int chloeFavorThresholdForMulti = 200;
 
-
+    private UpgradeID unUsedUpgradeID = UpgradeID.RewardFlat;
+    private IsWhatDatatype unUsedIsWhatDatatype = IsWhatDatatype.isAlphabeticnotationDatatype;
 
     [Header("TESTING VALUES")]
     [SerializeField] private bool isTesting;
@@ -107,7 +109,7 @@ public class BarterCardHandler : MonoBehaviour
         barterManager.OnUpgradeBought += UpdateBonuses;
         // barterManager.OnBarterClaimed += ApplyBonusesToXpBaseOnPrevious;
         InitializeBarterOffer();
-        UpdateBonuses(chosenMerchant,chosenReward);
+        UpdateBonuses(unUsedUpgradeID,unUsedIsWhatDatatype,chosenMerchant,chosenReward);
 
 
         // InitializeGiveBonuses();
@@ -155,6 +157,7 @@ public class BarterCardHandler : MonoBehaviour
             priceAmount = GetRandomAmount(level);
             originalPriceAmount = priceAmount;
             originalRewardAmount = CalculateReward();
+            originalXpReward = xpReward;
             // ApplyBonusesToPrice();
         }
 
@@ -191,43 +194,71 @@ public class BarterCardHandler : MonoBehaviour
         float randomValue = UnityEngine.Random.Range(defaultValue / 2, defaultValue * 2);
         return randomValue;
     }
+    // private int GetRandomRewardIndex()
+    // {
+        
+    //     int totalWeigth = 0;
+    //         print($"outside "+MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths.Count);
+    //     foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths)
+    //     {
+    //         print($"bonus weigths for {chosenMerchant} type {kvp.Key} = {kvp.Value}");
+    //         int baseWeight = kvp.Value;
+    //         // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];
+    //         // int effectiveWeigth = baseWeight + bonusWeigth;//REMOVED WHEN WORKING ON UNIFIED
+    //         int effectiveWeigth = baseWeight;
+
+    //         totalWeigth += effectiveWeigth;
+    //     }
+
+    //     int randomValue = UnityEngine.Random.Range(0, totalWeigth);
+    //     int currentSum = 0;
+    //     int currentIndex = 0;
+
+    //     foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths)
+    //     {
+    //         print($"bonus weigths for {chosenMerchant} type {kvp.Key} = {kvp.Value}");
+    //         int baseWeight = kvp.Value;
+    //         // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];//REMOVED WHEN WORKING ON UNIFIED
+    //         // int effectiveWeigth = baseWeight + bonusWeigth; //REMOVED WHEN WORKING ON UNIFIED
+    //         int effectiveWeigth = baseWeight;
+    //         currentSum += effectiveWeigth;
+    //         if (randomValue < currentSum)
+    //         {
+    //             return currentIndex;
+    //         }
+    //         currentIndex++;
+    //     }
+
+    //     // Safety fallback
+    //     return 0;
+
+    // }
     private int GetRandomRewardIndex()
     {
-        int totalWeigth = 0;
-        foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].unifiedRewardWeigths)
+        int totalWeight = 0;    
+        // 1. Sum all weights
+        foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
         {
-             print($"bonus weigths for {chosenMerchant} type {kvp.Key} = {kvp.Value}");
-            int baseWeight = kvp.Value;
-            // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];
-            // int effectiveWeigth = baseWeight + bonusWeigth;//REMOVED WHEN WORKING ON UNIFIED
-            int effectiveWeigth = baseWeight;
-
-            totalWeigth += effectiveWeigth;
-        }
-
-        int randomValue = UnityEngine.Random.Range(0, totalWeigth);
+            int weight = MerchantUpgradeManager.Instance
+                .GetInt(UpgradeID.RewardWeight, chosenMerchant, type);  
+            totalWeight += weight;
+        }   
+        // 2. Pick random number
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
         int currentSum = 0;
-        int currentIndex = 0;
-
-        foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].unifiedRewardWeigths)
+        int index = 0;  
+        // 3. Select reward based on random weight
+        foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
         {
-            int baseWeight = kvp.Value;
-            // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];//REMOVED WHEN WORKING ON UNIFIED
-            // int effectiveWeigth = baseWeight + bonusWeigth; //REMOVED WHEN WORKING ON UNIFIED
-            int effectiveWeigth = baseWeight;
-            currentSum += effectiveWeigth;
+            int weight = MerchantUpgradeManager.Instance
+                .GetInt(UpgradeID.RewardWeight, chosenMerchant, type);  
+            currentSum += weight;   
             if (randomValue < currentSum)
-            {
-                return currentIndex;
-            }
-            currentIndex++;
-        }
-
-        // Safety fallback
-        return 0;
-
+                return index;   
+            index++;
+        }   
+        return 0; // fallback
     }
-
 
     private AlphabeticNotation GetRandomAmount(int level)
     {
@@ -270,24 +301,31 @@ public class BarterCardHandler : MonoBehaviour
 
         return rewardAmount;
     }
-    private void UpdateBonuses(Merchants _merchants, CurrencyTypes types)
+    private void UpdateBonuses(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants _merchants, CurrencyTypes types)
     {
         if (_merchants != chosenMerchant) return;
         ApplyBonusesToReward(chosenMerchant, types);
-        // xpReward = ApplyBonusesToXp(chosenMerchantIndex);
+        ApplyBonusesToXp(chosenMerchant,types);
         // ApplyBonusesToPrice();
         // InitializeGiveBonuses();
         UpdateUI();
     }
 
-    private void ApplyBonusesToReward(Merchants merchant, CurrencyTypes type){
+    private void ApplyBonusesToReward( Merchants merchant, CurrencyTypes type){
         if(type != chosenReward || merchant != chosenMerchant) return;
-        print($"getting from {merchant} type {type} amount {MerchantUpgradeManager.Instance.AnyGetRewardFlat(merchant, type)}");
-        AlphabeticNotation flat = MerchantUpgradeManager.Instance.AnyGetRewardFlat(merchant, type);
-        float multi = MerchantUpgradeManager.Instance.AnyGetRewardMulti(merchant, type);
-        rewardAmount = (originalRewardAmount + flat) * multi;
+        // print($"gotten value from type {type} = {MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat,merchant, type)}");
+        AlphabeticNotation flat = MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat,merchant, type);
+        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti,merchant, type); 
+        rewardAmount = (originalRewardAmount + flat) * multi; 
     }
 
+    private void ApplyBonusesToXp(Merchants merchant, CurrencyTypes currencyType){
+        if(merchant != chosenMerchant) return;
+        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti,merchant,currencyType);
+
+        xpReward = originalXpReward * multi;
+
+    }
 
     // private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
     // {

@@ -1,16 +1,17 @@
 
 using System;
 using System.Collections.Generic;
+using LargeNumbers;
 using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum IsWhatType{
-    isFlatUpgrade,
-    isMultiUpgrade,
-    isMultiPercentage,
-    isFlatIntUpgrade,
+
+public enum IsWhatDatatype{
+    isInt,
+    isFloatDatatype,
+    isAlphabeticnotationDatatype,
 }
 
 public class MerchantCardHandler : MonoBehaviour
@@ -23,17 +24,21 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private GameObject cardObejct;
     public int upgradeLevel = 0;
 
-    [Header("Define merchant and currency type, used for start function")]
-    [SerializeField] private Merchants merchant;
-    [SerializeField] private CurrencyTypes currencyTypes;
+
     [Header("Define what type to display")]
-    [SerializeField] private IsWhatType isWhatType;
+    [SerializeField] private bool isPercentage = false;
     [SerializeField] private bool useMinusValue = false;
     [SerializeField] private float minusThis_forDisplayValue;
     [Header("Define max level and cost")]
     [SerializeField] private int maxLevel = 10;
     [SerializeField] private int skillPointCost;
 
+    [SerializeField] private IsWhatDatatype isWhatDataType;
+    [SerializeField] private UpgradeID upgradeID;
+
+    [Header("Define what merchants and currencytypes to upgrade. Should correspond with scriptable object")]
+    [SerializeField] private List<Merchants> merchants;
+    [SerializeField] private List<CurrencyTypes> currencyTypes;
 
 
     private string templateText;
@@ -43,7 +48,7 @@ public class MerchantCardHandler : MonoBehaviour
     {
         barterManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<BarterManager>();
         templateText = affectedUpgradeText_txt.text;
-        UpdateUI(merchant, currencyTypes);
+        UpdateUI(upgradeID, isWhatDataType, merchants[0], currencyTypes[0]);
     }
 
     private void OnEnable()
@@ -62,7 +67,7 @@ public class MerchantCardHandler : MonoBehaviour
 
     private bool CanAfford()
     {
-        return barterManager.merchantInfos[merchant].skillPoints >= skillPointCost;
+        return barterManager.merchantInfos[merchants[0]].skillPoints >= skillPointCost;
     }
 
 
@@ -88,9 +93,25 @@ public class MerchantCardHandler : MonoBehaviour
     {
         if (CanAfford() && upgradeLevel < maxLevel)
         {
-            barterManager.merchantInfos[merchant].skillPoints -= skillPointCost;
+            barterManager.merchantInfos[merchants[0]].skillPoints -= skillPointCost; // only the first merchant pays for upgrade
             upgradeApplier.ApplyUpgrade();
-            barterManager.UpgradeBought(merchant, currencyTypes);
+
+            foreach(Merchants merch in merchants){
+                foreach(CurrencyTypes type in currencyTypes){
+                    barterManager.UpgradeBought(upgradeID, isWhatDataType, merch, type);
+
+            UpdateUI(upgradeID, isWhatDataType, merch,type);
+                }
+            }
+            upgradeLevel++;
+            OnBought?.Invoke();
+        }
+        else
+        {
+            print("Cannot afford upgrade or reached max lvl!");
+        }
+    }
+
             // if (isCurrencyUpgrade)
             // {
             //     foreach (CurrencyTypes type in currenciesToUpgrade)
@@ -104,7 +125,6 @@ public class MerchantCardHandler : MonoBehaviour
             //                                                                                               // THIS JUST BECAUSE ITS REQUIRED AND USED FOR UPGRADES THAT USE
             //                                                                                               // CURRENCY. 
             // }
-            upgradeLevel++;
 
             // if (isBasedOfBarterTrades)
             // {
@@ -112,72 +132,52 @@ public class MerchantCardHandler : MonoBehaviour
             // }
             // else
             // {
-            UpdateUI(merchant, currencyTypes);
+             // CHANGE THIS TO WORK FOR JUST THE ONE UPGRADE CLICKED!
+                // UpdateUI_TESTING(UpgradeID.RewardFlat,merchant, currencyTypes);
+            
             // }
 
-            OnBought?.Invoke();
-        }
-        else
-        {
-            print("Cannot afford upgrade or reached max lvl!");
-        }
-    }
 
 
 
-
-
-
-    private void UpdateUI(Merchants _merchant, CurrencyTypes _currencyTypes)
+    private void UpdateUI(UpgradeID _upgradeID, IsWhatDatatype isWhatDatatype, Merchants _merchant, CurrencyTypes _currencyTypes)
     {
-        print($"called from {_merchant} type {_currencyTypes} value = {MerchantUpgradeManager.Instance.AnyGetRewardFlat(_merchant, _currencyTypes)}");
-        pointCost_txt.text = barterManager.merchantInfos[merchant].skillPoints.ToString() + "/" + skillPointCost.ToString();
+        if(upgradeID != _upgradeID) return;
+        pointCost_txt.text = barterManager.merchantInfos[merchants[0]].skillPoints.ToString() + "/" + skillPointCost.ToString();
         header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
         if (affectedUpgradeText_txt != null)
         {
             string oldText = affectedUpgradeText_txt.text;
             string updatedText = "";
 
-
-            switch (isWhatType)
+            // print($"called from id - {_upgradeID} actuall id - {upgradeID} type - {_currencyTypes}");
+            switch (isWhatDataType)
             {
-                case IsWhatType.isFlatUpgrade:
+                case IsWhatDatatype.isAlphabeticnotationDatatype:
+                AlphabeticNotation alphaResult = MerchantUpgradeManager.Instance.GetAlphabetic(_upgradeID, _merchant, _currencyTypes);
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
                     @"\{.*?\}",          //((reverseCounting ? (1f - MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString
-                                $"<color=green>{(useMinusValue ? MerchantUpgradeManager.Instance.AnyGetRewardFlat(_merchant, _currencyTypes)- minusThis_forDisplayValue : MerchantUpgradeManager.Instance.AnyGetRewardFlat(_merchant, _currencyTypes)).ToString()}</color>");
+                                $"<color=green>{(useMinusValue ? alphaResult- minusThis_forDisplayValue : alphaResult).ToString()}</color>");
                 break;
-
-                case IsWhatType.isFlatIntUpgrade:
+                
+                case IsWhatDatatype.isInt:
+                int intResult = MerchantUpgradeManager.Instance.GetInt(_upgradeID, _merchant, _currencyTypes);
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
-                    @"\{.*?\}",
-                        $"<color=green> {(useMinusValue ? MerchantUpgradeManager.Instance.AnyGetRewardFlatInt(_merchant, _currencyTypes) - minusThis_forDisplayValue : MerchantUpgradeManager.Instance.AnyGetRewardFlatInt(_merchant, _currencyTypes)).ToString()}</color>");
+                    @"\{.*?\}",          //((reverseCounting ? (1f - MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString
+                                $"<color=green>{(useMinusValue ? intResult- minusThis_forDisplayValue : intResult).ToString()}</color>");
                 break;
-                case IsWhatType.isMultiUpgrade:
+                case IsWhatDatatype.isFloatDatatype:
+                float floatResult = MerchantUpgradeManager.Instance.GetFloat(_upgradeID, _merchant, _currencyTypes);
+                float finalValue = useMinusValue ? floatResult - minusThis_forDisplayValue : floatResult;
+                string formatted = isPercentage ? (finalValue * 100f).ToString("F0") + "%": finalValue.ToString();
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
-                    @"\{.*?\}",
-                        $"<color=green> {(useMinusValue ? MerchantUpgradeManager.Instance.AnyGetRewardMulti(_merchant, _currencyTypes) - minusThis_forDisplayValue : MerchantUpgradeManager.Instance.AnyGetRewardMulti(_merchant, _currencyTypes)).ToString()}</color>");
-                break;
-                case IsWhatType.isMultiPercentage:
-                updatedText = System.Text.RegularExpressions.Regex.Replace(
-                    templateText,
-                    @"\{.*?\}",
-                        $"<color=green> {(useMinusValue ? ((MerchantUpgradeManager.Instance.AnyGetRewardMulti(_merchant, _currencyTypes)- minusThis_forDisplayValue) * 100) : MerchantUpgradeManager.Instance.AnyGetRewardMulti(_merchant, _currencyTypes)).ToString("F0") + "%"}</color>");
+                    @"\{.*?\}",         
+                                $"<color=green>{formatted}</color>");
                 break;
             }
-            //  switch (merchant)
-            //  {
-            //      case Merchants.BobTheMerchant:
-            //          updatedText = System.Text.RegularExpressions.Regex.Replace(
-            //              templateText,
-            //              @"\{.*?\}",
-            //                  $"<color=green> {MerchantUpgradeManager.Instance.AnyGetRewardFlat(_merchant,_currencyTypes).ToString()}</color>"
-            //          );
-            //          break;
-
-            // }
             affectedUpgradeText_txt.text = updatedText;
         }
 
