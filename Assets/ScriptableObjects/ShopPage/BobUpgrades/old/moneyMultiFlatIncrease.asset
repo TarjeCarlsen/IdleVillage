@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
   m_Name: moneyMultiFlatIncrease
   m_EditorClassIdentifier: 
-  merchantUpgradeTypes: 1
+  merchant: 0
   currencyTypes: 0
-  merchants: 0
+  unifiedMulties: 0
+  merchantUpgradeTypes: 1
   bobUpgradeTypes: 0
   bobUpgradeTypesInt: 0
   bobUpgradeTypesFloat: 0
@@ -22,18 +23,24 @@ MonoBehaviour:
   carlUpgradeTypesInt: 0
   carlUpgradeTypesFloat: 0
   chloeUpgradeTypes: 0
+  chloeUpgradeTypesInt: 0
   chloeUpgradeTypesFloat: 0
+  chloeUpgradeTypesBool: 0
   fredUpgradeTypes: 0
+  fredUpgradeTypesInt: 0
   fredUpgradeTypesFloat: 0
   samUpgradeTypes: 0
+  samUpgradeTypesInt: 0
   samUpgradeTypesFloat: 0
   rogerUpgradeTypes: 0
+  rogerUpgradeTypesInt: 0
   rogerUpgradeTypesFloat: 0
   flat:
-    coefficient: 0.05
+    coefficient: 0
     magnitude: 0
   multi:
     coefficient: 0
     magnitude: 0
   flat_forIntUpgrades: 0
-  flat_forFloatUpgrades: 0
+  flat_forFloatUpgrades: 0.05
+  stateForUpgrade: 0
