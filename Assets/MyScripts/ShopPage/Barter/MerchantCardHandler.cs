@@ -29,6 +29,8 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private bool isPercentage = false;
     [SerializeField] private bool useMinusValue = false;
     [SerializeField] private float minusThis_forDisplayValue;
+    [Header("currently only implemented for floats")]
+    [SerializeField] private int amountOfDecimals;
     [Header("Define max level and cost")]
     [SerializeField] private int maxLevel = 10;
     [SerializeField] private int skillPointCost;
@@ -143,6 +145,7 @@ public class MerchantCardHandler : MonoBehaviour
     private void UpdateUI(UpgradeID _upgradeID, IsWhatDatatype isWhatDatatype, Merchants _merchant, CurrencyTypes _currencyTypes)
     {
         if(upgradeID != _upgradeID) return;
+        
         pointCost_txt.text = barterManager.merchantInfos[merchants[0]].skillPoints.ToString() + "/" + skillPointCost.ToString();
         header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
         if (affectedUpgradeText_txt != null)
@@ -171,7 +174,9 @@ public class MerchantCardHandler : MonoBehaviour
                 case IsWhatDatatype.isFloatDatatype:
                 float floatResult = MerchantUpgradeManager.Instance.GetFloat(_upgradeID, _merchant, _currencyTypes);
                 float finalValue = useMinusValue ? floatResult - minusThis_forDisplayValue : floatResult;
-                string formatted = isPercentage ? (finalValue * 100f).ToString("F0") + "%": finalValue.ToString();
+
+                string decimalFormat = "F" + amountOfDecimals;
+                string formatted = isPercentage ? (finalValue * 100f).ToString(decimalFormat) + "%": finalValue.ToString(decimalFormat);
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
                     @"\{.*?\}",         

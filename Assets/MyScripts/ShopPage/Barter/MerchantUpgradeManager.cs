@@ -11,23 +11,6 @@ public enum UpgradeOperation{
     Get,
     Subtract,
 }
-// public enum rewardFlat{
-//     bobRewardFlat,
-//     carlRewardFlat,
-//     chloeRewardFlat,
-//     fredRewardFlat,
-//     samRewardFlat,
-//     rogerRewardFlat,
-// }
-// public enum rewardMulti{
-//     bobRewardMulti,
-//     carlRewardMulti,
-//     chloeRewardMulti,
-//     fredRewardMulti,
-//     samRewardMulti,
-//     rogerRewardMulti,
-// }
-
 
 public enum UpgradeValueType
 {
@@ -92,6 +75,11 @@ public enum UpgradeID
     RewardWeight,
     XpGainMulti,
     XpGainFlat,
+    stackingMulti,
+    specialBarterChance,
+    specialBarterRewardMulti,
+    multiRewardBasedOnFavor,
+    merchantAppearWeigth,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -115,7 +103,6 @@ public class MerchantUpgradeManager : MonoBehaviour
 {
     public static MerchantUpgradeManager Instance {get;private set;}
 
-
     // ---------------------------- UNIFIED ----------------------------//
 
     //TESTING NEW SYSTEM:
@@ -138,12 +125,16 @@ public void InitializeDefaults()
 foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
 {
     upgrades[(UpgradeID.RewardFlat, type)] = new UpgradeValue { type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(0) };
-
     upgrades[(UpgradeID.RewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
     upgrades[(UpgradeID.XpGainMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
-
+    upgrades[(UpgradeID.stackingMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
     upgrades[(UpgradeID.RewardWeight, type)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 1 };
+    upgrades[(UpgradeID.specialBarterRewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 100 };
+    upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
 }
+    upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+    upgrades[(UpgradeID.merchantAppearWeigth, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 10 }; //start weigth for all merchants
+
 
 }
     }

@@ -8,8 +8,6 @@ public enum MerchantUpgradeTypes
     addRewardFlat,
     addRewardMulti,
     addRewardFlatInt,
-    // expMulti,
-    // currencyAppearChance,
 
 }
 

@@ -1666,20 +1666,18 @@ MonoBehaviour:
   isSpecialBarterOffer: 1
   isTimedBarterOffer: 0
   startTime: 0
-  TESTING_DONT_DESTROY: 1
+  TESTING_DONT_DESTROY: 0
   amountModifier: 4
   growthFactor: 3
   level: 0
   startValue: 50
-  chosenMerchantIndex: 0
+  chosenMerchant: 0
   baseFavorGain: 0
   tradeValue: 0
   baseXp: 25
-  originalXp: 0
   randomFactor: 0
   minRandom: 0.7
   maxRandom: 1.5
-  chloeFavorThresholdForMulti: 200
   isTesting: 0
   _TESTING_indexForMerchant: 0
   _TESTING_chosenPriceIndex: 1

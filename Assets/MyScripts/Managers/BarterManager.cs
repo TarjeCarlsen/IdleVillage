@@ -52,12 +52,16 @@ public class BarterManager : MonoBehaviour
     [SerializeField] private bool isTesting;
     public Merchants previousMerchantCompleted;
 
+    private UpgradeID unUsedUpgradeId;
+    private IsWhatDatatype unUsedIsWhatDatatype;
+    private CurrencyTypes unUsedCurrencytype;
 
     public event Action<Merchants> OnBarterLevelUp;
     public event Action<Merchants> OnBarterXpGain;
     public event Action<UpgradeID,IsWhatDatatype,Merchants, CurrencyTypes> OnUpgradeBought;
-    public event Action<Merchants> OnBarterClaimed;
+    public event Action<UpgradeID,IsWhatDatatype,Merchants, CurrencyTypes> OnBarterClaimed;
     public event Action<Merchants, int> OnFavorGained;
+    public event Action OnResetStackingMerchants;
 
 
     [System.Serializable]
@@ -280,32 +284,51 @@ public class BarterManager : MonoBehaviour
     private int GetRandomMerchant()
     {
         int totalWeigth = 0;
-        foreach (var segment in merchantInfos.Values)
-        {
-            totalWeigth += segment.appearChanceWeigth;
+
+        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+            totalWeigth += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth, merch, CurrencyDummy.Dummy);
+            print($"total weigth = {totalWeigth}");
         }
         int randomValue = UnityEngine.Random.Range(0, totalWeigth);
         int currentSum = 0;
         int currentIndex = 0;
-        foreach (var segment in merchantInfos.Values)
-        {
-            currentSum += segment.appearChanceWeigth;
-            if (randomValue < currentSum)
-            {
+
+        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+            currentSum += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth,merch,CurrencyDummy.Dummy);
+            if(randomValue < currentSum){
+                print("chosen index = "+ currentIndex);
                 return currentIndex;
             }
             currentIndex++;
         }
-
-        // Safety fallback
         return 0;
     }
+        // foreach (var segment in merchantInfos.Values)
+        // {
+        //     totalWeigth += segment.appearChanceWeigth;
+        // }
+        // int randomValue = UnityEngine.Random.Range(0, totalWeigth);
+        // int currentSum = 0;
+        // int currentIndex = 0;
+        // foreach (var segment in merchantInfos.Values)
+        // {
+        //     currentSum += segment.appearChanceWeigth;
+        //     if (randomValue < currentSum)
+        //     {
+        //         return currentIndex;
+        //     }
+        //     currentIndex++;
+        // }
+
+        // // Safety fallback
+        // return 0;
 
     private bool isBarterSpecial(Merchants chosenMerchant)
     {
         // float chance = merchantBonuses[chosenMerchant].specialBarterChanceBonus; // REMOVED WHEN WORKING ON UNIFIED
-        float chance = 0f; // REDO THIS WHEN GOTTEN THIS FAR FOR UPGRADES!
+        float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterChance,chosenMerchant,CurrencyDummy.Dummy); 
         float roll = UnityEngine.Random.Range(0f, 1f);
+            print($"roll = {roll} chance = {chance}");
         if (roll < chance)
         {
             return true;
@@ -339,7 +362,6 @@ public class BarterManager : MonoBehaviour
         if (isBarterSpecial(randomChosenMerchant))
         {
             newBarterOffer = Instantiate(specialBarterOfferPrefab, barterParentContainer);
-
         }
         else if (isBarterTimed(randomChosenMerchant))
         {
@@ -371,10 +393,12 @@ public class BarterManager : MonoBehaviour
 
 
 
-    private void ForwardEventRaised(Merchants _merchant)
+    private void ForwardEventRaised(Merchants _merchant, CurrencyTypes _type)
     {
-        print("claimed!");
-        OnBarterClaimed?.Invoke(_merchant);
+        // print("claimed!");
+        foreach(CurrencyTypes currency in Enum.GetValues(typeof(CurrencyTypes))){
+            OnBarterClaimed?.Invoke(unUsedUpgradeId,unUsedIsWhatDatatype,_merchant,currency);
+        }
     }
 
 
@@ -390,7 +414,9 @@ public class BarterManager : MonoBehaviour
     }
 
 
-
+    public void ResetStackingSameMerchant(){
+        OnResetStackingMerchants?.Invoke();
+    }
     public bool isMerchantSameAsLast(Merchants _merchant)
     {
         if (previousMerchantCompleted != _merchant)
@@ -399,7 +425,6 @@ public class BarterManager : MonoBehaviour
             foreach (Merchants merchant in Enum.GetValues(typeof(Merchants)))
             {
                 merchantInfos[merchant].completedInArow = 0;
-                OnBarterClaimed?.Invoke(merchant);
             }
             return false;
         }
