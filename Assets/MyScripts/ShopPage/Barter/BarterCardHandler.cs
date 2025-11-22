@@ -308,8 +308,9 @@ public class BarterCardHandler : MonoBehaviour
     {
         if (_merchants != chosenMerchant) return;
         ApplyBonusesToReward(chosenMerchant, types);
-        ApplyBonusesToXp(chosenMerchant, types);
-        // ApplyBonusesToPrice();
+        ApplyBonusesToXp(chosenMerchant);
+        ApplyBonusToFavor();
+        ApplyBonusesToPrice();
         // InitializeGiveBonuses();
         UpdateUI();
     }
@@ -323,7 +324,6 @@ public class BarterCardHandler : MonoBehaviour
         float baseMulti = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, type);
         float totalMulti = favorBasedMulti + stackingMulti + baseMulti;
         AlphabeticNotation flat = MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat, merchant, type);
-        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, type);
 
         if(isSpecialBarterOffer){
         rewardAmount = ((originalRewardAmount + flat) * totalMulti) * MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterRewardMulti,chosenMerchant,type);
@@ -333,6 +333,20 @@ public class BarterCardHandler : MonoBehaviour
 
         UpdateUI();
     }
+
+    private void ApplyBonusToFavor(){
+        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorGainMulti,chosenMerchant,CurrencyDummy.Dummy);
+        int flat = MerchantUpgradeManager.Instance.GetInt(UpgradeID.flatFavorGain,chosenMerchant,CurrencyDummy.Dummy);
+
+        float result = (unModifiedFavor + flat) * multi;
+        favor = (int) Mathf.Round(result);
+}
+
+private void ApplyBonusesToPrice(){ // have to add in flat when that gets implemented
+    float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.priceMulti,chosenMerchant,chosenPrice);
+    AlphabeticNotation result = originalPriceAmount * multi;
+    priceAmount = result;
+}
 
     // private AlphabeticNotation ApplyBonusesToRewards(int merchantIndex, AlphabeticNotation amount)
     // {
@@ -363,11 +377,11 @@ public class BarterCardHandler : MonoBehaviour
         }
     }
 
-    private void ApplyBonusesToXp(Merchants merchant, CurrencyTypes currencyType)
+    private void ApplyBonusesToXp(Merchants merchant)
     {
         if (merchant != chosenMerchant) return;
-        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, currencyType);
-
+        float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy);
+        print($"merchant {merchant} xp multi = {multi} bonus = {MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy)}");
         xpReward = originalXpReward * multi;
 
     }
@@ -432,12 +446,25 @@ public class BarterCardHandler : MonoBehaviour
                 StopTimedBarterOffer();
             }
 
-            // if(isClaimConsumed()){ // REMOVED WHEN WORKING ON UNIFIED
-            //     DestroyCard();
-            // }
+            if(isClaimConsumed()){
+                DestroyCard();
+            }
         }
     }
 
+    private bool isClaimConsumed(){// REMOVED WHEN WORKING ON UNIFIED
+        // float chance = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].chanceToNotConsumeClaimBonus;
+        float chance = 0f; // change to the upgradable once implemented
+        float roll = UnityEngine.Random.Range(0f, 1f);
+        if (roll > chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     private void CompleteBarter()
     {
@@ -590,18 +617,7 @@ public class BarterCardHandler : MonoBehaviour
 //     UpdateUI();
 // }
 
-// private bool isClaimConsumed(){// REMOVED WHEN WORKING ON UNIFIED
-//     float chance = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].chanceToNotConsumeClaimBonus;
-//     float roll = UnityEngine.Random.Range(0f, 1f);
-//     if (roll > chance)
-//     {
-//         return true;
-//     }
-//     else
-//     {
-//         return false;
-//     }
-// }
+
 
 // private void ApplyBonusGiveCurrency(){
 //     foreach(var kvp in giveCurrencies){

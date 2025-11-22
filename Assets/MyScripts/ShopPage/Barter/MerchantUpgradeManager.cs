@@ -6,7 +6,8 @@ using Mono.Cecil.Cil;
 using UnityEngine;
 
 
-public enum UpgradeOperation{
+public enum UpgradeOperation
+{
     Add,
     Get,
     Subtract,
@@ -80,6 +81,12 @@ public enum UpgradeID
     specialBarterRewardMulti,
     multiRewardBasedOnFavor,
     merchantAppearWeigth,
+    extraRefreshAmount,
+    chanceToNotConsumeRefresh,
+    refreshTimeReduction,
+    flatFavorGain,
+    favorGainMulti,
+    priceMulti,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -101,47 +108,55 @@ public enum UpgradeID
 
 public class MerchantUpgradeManager : MonoBehaviour
 {
-    public static MerchantUpgradeManager Instance {get;private set;}
+    public static MerchantUpgradeManager Instance { get; private set; }
 
     // ---------------------------- UNIFIED ----------------------------//
 
     //TESTING NEW SYSTEM:
-    [SerializeField] public Dictionary<Merchants,MerchantUpgrades> merchantUpgrades;
+    [SerializeField] public Dictionary<Merchants, MerchantUpgrades> merchantUpgrades;
     // [SerializeField] public Dictionary<Merchants,UpgradeOperation> upgradeOperations;
     //TESTING NEW SYSTEM:
 
 
 
     [System.Serializable]
-    public class MerchantUpgrades{
-   public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> upgrades = new();
+    public class MerchantUpgrades
+    {
+        public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> upgrades = new();
         // public Dictionary<CurrencyTypes, AlphabeticNotation> rewardFlat = new();
         // public Dictionary<CurrencyTypes, float> rewardMulti = new();
         // public Dictionary<CurrencyTypes, int> rewardWeigths = new();
         // public float xpGain;
 
-public void InitializeDefaults()
-{
-foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
-{
-    upgrades[(UpgradeID.RewardFlat, type)] = new UpgradeValue { type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(0) };
-    upgrades[(UpgradeID.RewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
-    upgrades[(UpgradeID.XpGainMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
-    upgrades[(UpgradeID.stackingMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
-    upgrades[(UpgradeID.RewardWeight, type)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 1 };
-    upgrades[(UpgradeID.specialBarterRewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 100 };
-    upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
-}
-    upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
-    upgrades[(UpgradeID.merchantAppearWeigth, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 10 }; //start weigth for all merchants
+        public void InitializeDefaults()
+        {
+            foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
+            {
+                upgrades[(UpgradeID.RewardFlat, type)] = new UpgradeValue { type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(0) };
+                upgrades[(UpgradeID.RewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+                upgrades[(UpgradeID.stackingMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+                upgrades[(UpgradeID.RewardWeight, type)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 1 };
+                upgrades[(UpgradeID.specialBarterRewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 100 };
+                upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+                upgrades[(UpgradeID.priceMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+            }
+            upgrades[(UpgradeID.XpGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+            upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+            upgrades[(UpgradeID.merchantAppearWeigth, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 10 }; //start weigth for all merchants
+            upgrades[(UpgradeID.extraRefreshAmount, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            upgrades[(UpgradeID.chanceToNotConsumeRefresh, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0 };
+            upgrades[(UpgradeID.refreshTimeReduction, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+            upgrades[(UpgradeID.flatFavorGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            upgrades[(UpgradeID.favorGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
 
 
-}
+        }
     }
 
 
 
-    private void Awake(){
+    private void Awake()
+    {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
         InitializeMerchantUpgradeTypes();
@@ -162,50 +177,51 @@ foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
     }
 
 
-public UpgradeValue Modify(
-    UpgradeID id,
-    UpgradeOperation op,
-    Merchants merchant,
-    CurrencyTypes currencyType,
-    object amount = null)
-{
-    var value = merchantUpgrades[merchant].upgrades[(id, currencyType)];
-
-    switch (op)
+    public UpgradeValue Modify(
+        UpgradeID id,
+        UpgradeOperation op,
+        Merchants merchant,
+        CurrencyTypes currencyType,
+        object amount = null)
     {
-        case UpgradeOperation.Get:
-            return value;
+        var value = merchantUpgrades[merchant].upgrades[(id, currencyType)];
 
-        case UpgradeOperation.Add:
-            value.Add(amount);
-            return value;
+        switch (op)
+        {
+            case UpgradeOperation.Get:
+                return value;
 
-        case UpgradeOperation.Subtract:
-            value.Sub(amount);
-            return value;
+            case UpgradeOperation.Add:
+                value.Add(amount);
+                return value;
 
-        default:
-            return value;
+            case UpgradeOperation.Subtract:
+                value.Sub(amount);
+                return value;
+
+            default:
+                return value;
+        }
     }
-}
 
-public float GetFloat(UpgradeID id, Merchants merchant,CurrencyTypes currencyType)
-{
-    return merchantUpgrades[merchant].upgrades[(id,currencyType)].floatValue;
-}
+    public float GetFloat(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
+    {
+        print($"called with merchant {merchant} id {id} type {currencyType}");
+        return merchantUpgrades[merchant].upgrades[(id, currencyType)].floatValue;
+    }
 
-public int GetInt(UpgradeID id, Merchants merchant,CurrencyTypes currencyType)
-{
-    return merchantUpgrades[merchant].upgrades[(id,currencyType)].intValue;
-}
+    public int GetInt(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
+    {
+        return merchantUpgrades[merchant].upgrades[(id, currencyType)].intValue;
+    }
 
-public AlphabeticNotation GetAlphabetic(UpgradeID id, Merchants merchant,CurrencyTypes currencyType)
-{
-    return merchantUpgrades[merchant].upgrades[(id,currencyType)].alphabetic;
-}
-// ---------------------------- UNIFIED MULTIES ----------------------------//
+    public AlphabeticNotation GetAlphabetic(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
+    {
+        return merchantUpgrades[merchant].upgrades[(id, currencyType)].alphabetic;
+    }
+    // ---------------------------- UNIFIED MULTIES ----------------------------//
 
-        // ------------------- rewards ------------------ //
+    // ------------------- rewards ------------------ //
     // public float AnyGetRewardMulti(Merchants merchant, CurrencyTypes type) => merchantUpgrades[merchant].rewardMulti[type];
     // public float AnyAddRewardMulti(Merchants merchant, CurrencyTypes type, float amount) => merchantUpgrades[merchant].rewardMulti[type] += amount;
     // public float AnySubtractRewardMulti(Merchants merchant, CurrencyTypes type, float amount) => merchantUpgrades[merchant].rewardMulti[type] -= amount;

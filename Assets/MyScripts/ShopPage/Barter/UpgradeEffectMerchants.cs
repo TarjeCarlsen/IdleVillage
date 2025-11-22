@@ -5,9 +5,12 @@ using UnityEngine.Assertions.Must;
 using System.Collections.Generic;
 public enum MerchantUpgradeTypes
 {
-    addRewardFlat,
-    addRewardMulti,
-    addRewardFlatInt,
+    addRewardAlpha,
+    addRewardFloat,
+    addRewardInt,
+    subRewardAlpha,
+    subRewardFloat,
+    subRewardInt,
 
 }
 
@@ -20,61 +23,96 @@ public interface IUpgradeEffectMerchants
 public class UpgradeEffectMerchants : ScriptableObject
 {
     //NEW SYSTEM
-    [Header("NEW SYSTEM USE THIS! Chose the merchant on the upgrade that is to be upgraded!")]
-    public MerchantUpgradeTypes merchantUpgradeTypes;
-    public List<Merchants> merchants;
-    public List<CurrencyTypes> currencyTypes;
-    public UpgradeID upgradeID;
-    public UpgradeOperation upgradeOperation;
+    // [Header("NEW SYSTEM USE THIS! Chose the merchant on the upgrade that is to be upgraded!")]
 
 
+    // public UpgradeOperation upgradeOperation;
 
-    [Header("Define the amount of the upgrade")]
-    public AlphabeticNotation flat;
-    public int flat_forIntUpgrades;
-    public float flat_forFloatUpgrades;
-    public bool stateForUpgrade = false;
+    public List<upgradeTypeInfo> merchantUpgradeTypeInfo;
+
+
+    [System.Serializable]
+    public class upgradeTypeInfo{
+        public List<MerchantUpgradeTypes> merchantUpgradeTypes;
+        public List<Merchants> merchants;
+        public List<CurrencyTypes> currencyTypes;
+        public UpgradeID upgradeID;
+        public AlphabeticNotation flat_alpha;
+        public int flat_forIntUpgrades;
+        public float flat_forFloatUpgrades;
+        public bool stateForUpgrade = false;        
+
+    }
     public void Apply(GameObject target = null)
+
     {
 
 
-        Debug.Log("bought upgrade" + merchantUpgradeTypes);
-        switch (merchantUpgradeTypes)
+        Debug.Log("bought upgrade" + merchantUpgradeTypeInfo);
+        foreach (var info in merchantUpgradeTypeInfo)
         {
-            // -------- MERCHANT UPGRADES-------- //
-            case MerchantUpgradeTypes.addRewardFlat:
-                foreach (Merchants merch in merchants)
-                {
-                    foreach (CurrencyTypes type in currencyTypes)
-                    {
-                        MerchantUpgradeManager.Instance.Modify(upgradeID, UpgradeOperation.Add, merch, type, flat);
-                    }
-                }
-                //  MerchantUpgradeManager.Instance.AnyAddRewardFlat(merchant,currencyType,flat);
-                break;
-            case MerchantUpgradeTypes.addRewardFlatInt:
-                foreach (Merchants merch in merchants)
-                {
-                    foreach (CurrencyTypes type in currencyTypes)
-                    {
-                        MerchantUpgradeManager.Instance.Modify(upgradeID, UpgradeOperation.Add, merch, type, flat_forIntUpgrades);
-                    }
-                }
-                break;
-            case MerchantUpgradeTypes.addRewardMulti:
-                foreach (Merchants merch in merchants)
-                {
-                    foreach (CurrencyTypes type in currencyTypes)
-                    {
-                        MerchantUpgradeManager.Instance.Modify(upgradeID, UpgradeOperation.Add, merch, type, flat_forFloatUpgrades);
-                    }
-                }
-                // MerchantUpgradeManager.Instance.AnyAddRewardMulti(merchant,currencyType,flat_forFloatUpgrades);
-                break;
-                // case MerchantUpgradeTypes.expMulti:
-                //     MerchantUpgradeManager.Instance.Modify(UpgradeIDmerchant,currencyType,flat_forFloatUpgrades);
-                //     break;
+            foreach(MerchantUpgradeTypes upgradeType in info.merchantUpgradeTypes){
 
+            switch (upgradeType)
+            {
+                // -------- MERCHANT UPGRADES-------- //
+                case MerchantUpgradeTypes.addRewardAlpha:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Add, merch, type, info.flat_alpha);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.subRewardAlpha:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Subtract, merch, type, info.flat_alpha);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.addRewardFloat:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Add, merch, type, info.flat_forFloatUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.subRewardFloat:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Subtract, merch, type, info.flat_forFloatUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.addRewardInt:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Add, merch, type, info.flat_forIntUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.subRewardInt:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Subtract, merch, type, info.flat_forIntUpgrades);
+                        }
+                    }
+                    break;
+
+            }
+            }
 
         }
     }

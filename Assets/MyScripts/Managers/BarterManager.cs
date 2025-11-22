@@ -41,11 +41,13 @@ public class BarterManager : MonoBehaviour
     private Coroutine refreshCoroutine;
     [SerializeField] private int refreshAmount = 1;
     [SerializeField] private int maxAmountRefresh = 10;
+    private int baseMaxRefreshes;
+    private float freeRefreshChance = 0f;
+    private float baseFreeRefreshChance = 0f;
     [SerializeField] private float refreshTimerStart = 5f;
+    [SerializeField] private float baseRefreshTimerStart;
     [SerializeField] private float chanceForTimedOffer = 0.05f;
     private float refreshTimer;
-    public float freeRefreshChance = 0;
-
     [SerializeField] private float growthRate; // tweak this to adjust scaling for how fast lvl requirement xp increases
     [SerializeField] private int maxAmountOfBarters;
 
@@ -87,73 +89,14 @@ public class BarterManager : MonoBehaviour
 
 
 
-        // public Dictionary<CurrencyTypes, int> rewardCurrencyWeigth;
-
-        // public void InitializeRewardWeights()
-        // {
-        //     rewardCurrencyWeigth = new Dictionary<CurrencyTypes, int>();
-        //     foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
-        //     {
-        //         if (type == CurrencyTypes.wheat)
-        //         {
-        //             rewardCurrencyWeigth[type] = 1; // TESTING, REMOVE WHEN DONE!
-        //         }
-        //         else
-        //         {
-        //             rewardCurrencyWeigth[type] = 1; // or whatever default weight you want
-        //         }
-        //     }
-        // }
-    // [System.Serializable]
-    // public class MerchantBonuses
-    // {
-    //     public Dictionary<CurrencyTypes, AlphabeticNotation> rewardMultiplierBonus = new();
-    //     public Dictionary<CurrencyTypes, AlphabeticNotation> rewardBaseFlatIncreaseBonus = new();
-    //     public Dictionary<CurrencyTypes, AlphabeticNotation> totalBonus = new();
-    //     public Dictionary<CurrencyTypes, int> rewardCurrencyWeigthBonus = new();
-    //     public Dictionary<CurrencyTypes, float> giveCurrencyOnBarterCompletion = new();
-    //     public List<CurrencyTypes> giveCurrencies = new();
-    //     public AlphabeticNotation stackingMulit = new AlphabeticNotation(1);
-    //     public float xpRewardBonus = 1f;
-    //     public float specialBarterOfferMulti = 100;
-    //     public float specialBarterChanceBonus = 0f;
-    //     public int refreshAditionBonus = 0;
-    //     public float freeRefreshChanceBonus = 0;
-    //     public float reducedRefreshTimeBonus = 0;
-    //     public float chanceToNotConsumeClaimBonus = 0f;
-    //     public float priceMultiplier = 1f;
-    //     public float favorMultiBonus = 1f;
-
-    //     public void InitializeDefaults()
-    //     {
-    //         foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
-    //         {
-    //             rewardMultiplierBonus[type] = new AlphabeticNotation(1); // 1 means no multiplier (neutral)
-    //             rewardBaseFlatIncreaseBonus[type] = new AlphabeticNotation(0); // 0 means no flat bonus
-    //             giveCurrencyOnBarterCompletion[type] = 0f;
-    //             totalBonus[type] = rewardMultiplierBonus[type] * rewardBaseFlatIncreaseBonus[type];
-    //             rewardCurrencyWeigthBonus[type] = 0;
-    //         }
-    //     }
-    // }
-
-    //     private void InitializeMerchantBonuses()
-    // {
-    //     merchantBonuses = new Dictionary<Merchants, MerchantBonuses>();
-
-    //     foreach (Merchants merchant in Enum.GetValues(typeof(Merchants)))
-    //     {
-    //         MerchantBonuses info = new MerchantBonuses();
-    //         info.InitializeDefaults();
-    //         merchantBonuses.Add(merchant, info);
-    //     }
-    // }
 
 
     private void Awake()
     {
         InitializeMerchantInfos();
         // InitializeMerchantBonuses();
+        baseMaxRefreshes = maxAmountRefresh;
+        baseRefreshTimerStart = refreshTimerStart;
         foreach (Merchants merchant in Enum.GetValues(typeof(Merchants)))
         {
             merchantInfos[merchant].timedBarterChance = chanceForTimedOffer;
@@ -206,11 +149,24 @@ public class BarterManager : MonoBehaviour
 
     public void UpgradeBought(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants merchant, CurrencyTypes types)
     { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
-        // switch(merchant){
-        // }
-        // print("INSIDE UPGRADES!");
         print($"INVOKE UPGRADE BOUGHT from {merchant} id {upgradeID}");
+
+        switch(upgradeID){ // call global upgrades for the shop page or production
+            case UpgradeID.extraRefreshAmount:
+            IncreaseMaxRefreshes(upgradeID);
+            break;
+
+            case UpgradeID.chanceToNotConsumeRefresh:
+            IncreaseFreeRefreshChance(upgradeID);
+            break;
+
+            case UpgradeID.refreshTimeReduction:
+            ReduceRefreshTime(upgradeID);
+            break;
+        }
+        
         OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);
+        UpdateUI();
     }
 
 
@@ -227,49 +183,9 @@ public class BarterManager : MonoBehaviour
         OnBarterLevelUp?.Invoke(merchant);
     }
 
-    private bool isRefreshFree()
-    {
-        float roll = UnityEngine.Random.Range(0, 1f);
-        if (roll < freeRefreshChance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
-    public void OnRefreshClick()
-    {
-        if (refreshAmount > 0)
-        {
 
-            foreach (var card in barterCardHandlers)
-            {
-                if (card != null)
-                {
-                    card.DestroyCard();
-                }
-            }
-            barterCardHandlers.Clear();
 
-            for (int i = 0; i < maxAmountOfBarters; i++)
-            {
-                CreateBarterOffers();
-            }
-            if (!isRefreshFree())
-            {
-                refreshAmount--;
-                StartRefreshTimer();
-            }
-        }
-        else
-        {
-            print("No more refreshes available!"); // ADD POPUP TEXT HERE!
-        }
-        UpdateUI();
-    }
 
     public void TESTING_CREATE_TESTINGBARTER()
     {
@@ -287,7 +203,7 @@ public class BarterManager : MonoBehaviour
 
         foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
             totalWeigth += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth, merch, CurrencyDummy.Dummy);
-            print($"total weigth = {totalWeigth}");
+            // print($"total weigth = {totalWeigth}");
         }
         int randomValue = UnityEngine.Random.Range(0, totalWeigth);
         int currentSum = 0;
@@ -296,7 +212,7 @@ public class BarterManager : MonoBehaviour
         foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
             currentSum += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth,merch,CurrencyDummy.Dummy);
             if(randomValue < currentSum){
-                print("chosen index = "+ currentIndex);
+                // print("chosen index = "+ currentIndex);
                 return currentIndex;
             }
             currentIndex++;
@@ -328,7 +244,7 @@ public class BarterManager : MonoBehaviour
         // float chance = merchantBonuses[chosenMerchant].specialBarterChanceBonus; // REMOVED WHEN WORKING ON UNIFIED
         float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterChance,chosenMerchant,CurrencyDummy.Dummy); 
         float roll = UnityEngine.Random.Range(0f, 1f);
-            print($"roll = {roll} chance = {chance}");
+            // print($"roll = {roll} chance = {chance}");
         if (roll < chance)
         {
             return true;
@@ -432,7 +348,81 @@ public class BarterManager : MonoBehaviour
     }
 
 
-// --------------- REFRESH TIMER LOGIC ---------------- //
+// --------------- REFRESH LOGIC ---------------- //
+    public void OnRefreshClick()
+    {
+        if (refreshAmount > 0)
+        {
+
+            foreach (var card in barterCardHandlers)
+            {
+                if (card != null)
+                {
+                    card.DestroyCard();
+                }
+            }
+            barterCardHandlers.Clear();
+
+            for (int i = 0; i < maxAmountOfBarters; i++)
+            {
+                CreateBarterOffers();
+            }
+            if (!isRefreshFree())
+            {
+                refreshAmount--;
+                StartRefreshTimer();
+            }
+        }
+        else
+        {
+            print("No more refreshes available!"); // ADD POPUP TEXT HERE!
+        }
+        UpdateUI();
+    }
+
+    private void IncreaseMaxRefreshes(UpgradeID upgradeID ){
+        if(upgradeID != UpgradeID.extraRefreshAmount) return;
+        int refreshCounter = 0;
+        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+            refreshCounter += MerchantUpgradeManager.Instance.GetInt(upgradeID,merch,CurrencyDummy.Dummy);
+        }
+        maxAmountRefresh = baseMaxRefreshes + refreshCounter;
+    }
+    private void IncreaseFreeRefreshChance(UpgradeID upgradeID ){
+        if(upgradeID != UpgradeID.chanceToNotConsumeRefresh) return;
+        float chanceCounter = 0f;
+        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+            chanceCounter += MerchantUpgradeManager.Instance.GetFloat(upgradeID,merch,CurrencyDummy.Dummy);
+        }
+            freeRefreshChance = baseFreeRefreshChance + chanceCounter;
+    }
+
+    private void ReduceRefreshTime(UpgradeID upgradeID){
+        float reductionCounter = 1f;
+        foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+            reductionCounter =  reductionCounter- MerchantUpgradeManager.Instance.GetFloat(upgradeID,merch,CurrencyDummy.Dummy);
+        }
+        refreshTimerStart = baseRefreshTimerStart * reductionCounter;
+        if(refreshTimerStart < 0.01) refreshTimerStart = 0.01f;
+
+        StopRefreshTimer();
+        StartRefreshTimer();
+    }
+
+    private bool isRefreshFree()
+    {
+        float roll = UnityEngine.Random.Range(0, 1f);
+        // print($"roll = {roll} chance = {freeRefreshChance}");
+        if (roll < freeRefreshChance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void StartRefreshTimer()
     {
         if (refreshCoroutine == null)
@@ -483,3 +473,68 @@ public class BarterManager : MonoBehaviour
     }
 
 }
+
+
+
+
+        // public Dictionary<CurrencyTypes, int> rewardCurrencyWeigth;
+
+        // public void InitializeRewardWeights()
+        // {
+        //     rewardCurrencyWeigth = new Dictionary<CurrencyTypes, int>();
+        //     foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
+        //     {
+        //         if (type == CurrencyTypes.wheat)
+        //         {
+        //             rewardCurrencyWeigth[type] = 1; // TESTING, REMOVE WHEN DONE!
+        //         }
+        //         else
+        //         {
+        //             rewardCurrencyWeigth[type] = 1; // or whatever default weight you want
+        //         }
+        //     }
+        // }
+    // [System.Serializable]
+    // public class MerchantBonuses
+    // {
+    //     public Dictionary<CurrencyTypes, AlphabeticNotation> rewardMultiplierBonus = new();
+    //     public Dictionary<CurrencyTypes, AlphabeticNotation> rewardBaseFlatIncreaseBonus = new();
+    //     public Dictionary<CurrencyTypes, AlphabeticNotation> totalBonus = new();
+    //     public Dictionary<CurrencyTypes, int> rewardCurrencyWeigthBonus = new();
+    //     public Dictionary<CurrencyTypes, float> giveCurrencyOnBarterCompletion = new();
+    //     public List<CurrencyTypes> giveCurrencies = new();
+    //     public AlphabeticNotation stackingMulit = new AlphabeticNotation(1);
+    //     public float xpRewardBonus = 1f;
+    //     public float specialBarterOfferMulti = 100;
+    //     public float specialBarterChanceBonus = 0f;
+    //     public int refreshAditionBonus = 0;
+    //     public float freeRefreshChanceBonus = 0;
+    //     public float reducedRefreshTimeBonus = 0;
+    //     public float chanceToNotConsumeClaimBonus = 0f;
+    //     public float priceMultiplier = 1f;
+    //     public float favorMultiBonus = 1f;
+
+    //     public void InitializeDefaults()
+    //     {
+    //         foreach (CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes)))
+    //         {
+    //             rewardMultiplierBonus[type] = new AlphabeticNotation(1); // 1 means no multiplier (neutral)
+    //             rewardBaseFlatIncreaseBonus[type] = new AlphabeticNotation(0); // 0 means no flat bonus
+    //             giveCurrencyOnBarterCompletion[type] = 0f;
+    //             totalBonus[type] = rewardMultiplierBonus[type] * rewardBaseFlatIncreaseBonus[type];
+    //             rewardCurrencyWeigthBonus[type] = 0;
+    //         }
+    //     }
+    // }
+
+    //     private void InitializeMerchantBonuses()
+    // {
+    //     merchantBonuses = new Dictionary<Merchants, MerchantBonuses>();
+
+    //     foreach (Merchants merchant in Enum.GetValues(typeof(Merchants)))
+    //     {
+    //         MerchantBonuses info = new MerchantBonuses();
+    //         info.InitializeDefaults();
+    //         merchantBonuses.Add(merchant, info);
+    //     }
+    // }

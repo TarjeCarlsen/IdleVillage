@@ -16,6 +16,20 @@ public enum IsWhatDatatype{
 
 public class MerchantCardHandler : MonoBehaviour
 {
+        [Header("Customize the upgrade display:")]
+    [SerializeField] private bool isPercentage = false;
+    [SerializeField] private bool useMinusValue = false;
+    [SerializeField] private float minusThis_forDisplayValue;
+    [SerializeField] private int amountOfDecimals; // currently only implemented for floats
+
+    [SerializeField] private IsWhatDatatype isWhatDataType;
+    [SerializeField] private UpgradeID upgradeID;
+    [SerializeField] private List<Merchants> merchants; // Define what merchants and currencytypes to upgrade. Should correspond with scriptable object
+    [SerializeField] private List<CurrencyTypes> currencyTypes;
+
+    [SerializeField] private int skillPointCost;
+    [SerializeField] private int maxLevel = 10; // Define max level and cost
+    [Header("preset settings")]
     [SerializeField] private BarterManager barterManager;
     [SerializeField] UpgradeApplier upgradeApplier;
     [SerializeField] private TMP_Text pointCost_txt;
@@ -25,22 +39,7 @@ public class MerchantCardHandler : MonoBehaviour
     public int upgradeLevel = 0;
 
 
-    [Header("Define what type to display")]
-    [SerializeField] private bool isPercentage = false;
-    [SerializeField] private bool useMinusValue = false;
-    [SerializeField] private float minusThis_forDisplayValue;
-    [Header("currently only implemented for floats")]
-    [SerializeField] private int amountOfDecimals;
-    [Header("Define max level and cost")]
-    [SerializeField] private int maxLevel = 10;
-    [SerializeField] private int skillPointCost;
 
-    [SerializeField] private IsWhatDatatype isWhatDataType;
-    [SerializeField] private UpgradeID upgradeID;
-
-    [Header("Define what merchants and currencytypes to upgrade. Should correspond with scriptable object")]
-    [SerializeField] private List<Merchants> merchants;
-    [SerializeField] private List<CurrencyTypes> currencyTypes;
 
 
     private string templateText;
