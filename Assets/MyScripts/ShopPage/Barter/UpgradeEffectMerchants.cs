@@ -22,11 +22,6 @@ public interface IUpgradeEffectMerchants
 [CreateAssetMenu(fileName = "UpgradeEffectMerchants", menuName = "Upgrade/Upgrade effect merchants")]
 public class UpgradeEffectMerchants : ScriptableObject
 {
-    //NEW SYSTEM
-    // [Header("NEW SYSTEM USE THIS! Chose the merchant on the upgrade that is to be upgraded!")]
-
-
-    // public UpgradeOperation upgradeOperation;
 
     public List<upgradeTypeInfo> merchantUpgradeTypeInfo;
 
@@ -48,7 +43,7 @@ public class UpgradeEffectMerchants : ScriptableObject
     {
 
 
-        Debug.Log("bought upgrade" + merchantUpgradeTypeInfo);
+        // Debug.Log("bought upgrade" + merchantUpgradeTypeInfo);
         foreach (var info in merchantUpgradeTypeInfo)
         {
             foreach(MerchantUpgradeTypes upgradeType in info.merchantUpgradeTypes){

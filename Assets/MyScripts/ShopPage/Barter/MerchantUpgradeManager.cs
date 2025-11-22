@@ -87,6 +87,7 @@ public enum UpgradeID
     flatFavorGain,
     favorGainMulti,
     priceMulti,
+    bonusGiveCurrency,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -139,6 +140,7 @@ public class MerchantUpgradeManager : MonoBehaviour
                 upgrades[(UpgradeID.specialBarterRewardMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 100 };
                 upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
                 upgrades[(UpgradeID.priceMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+                upgrades[(UpgradeID.bonusGiveCurrency, type)] = new UpgradeValue { type = UpgradeValueType.Float,floatValue =0f };
             }
             upgrades[(UpgradeID.XpGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
             upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };

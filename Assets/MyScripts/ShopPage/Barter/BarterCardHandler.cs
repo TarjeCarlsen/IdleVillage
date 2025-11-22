@@ -427,7 +427,6 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
                 // DestroyCard();
                 return;
             }
-            CompleteBarter();
             barterManager.merchantInfos[chosenMerchant].completedBartersForMerchant++;
             if (barterManager.isMerchantSameAsLast(chosenMerchant))
             {
@@ -439,7 +438,10 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
                 barterManager.merchantInfos[chosenMerchant].completedInArow = 1;
             }
             // ApplyBonusGiveCurrency();
+            CompleteBarter();
             OnBarterClaimed?.Invoke(chosenMerchant, chosenReward);
+            GiveBonusCurrenies(chosenMerchant);
+
             if (isTimedBarterOffer)
             {
                 OnGainFavor?.Invoke(chosenMerchant, favor);
@@ -452,6 +454,17 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
         }
     }
 
+
+    private void GiveBonusCurrenies(Merchants _merchant){
+        if(_merchant != chosenMerchant) return;
+        AlphabeticNotation amountToGive;
+        foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
+            print("amount from upgrade" + MerchantUpgradeManager.Instance.GetFloat(UpgradeID.bonusGiveCurrency,_merchant,type));
+            amountToGive = MoneyManager.Instance.GetCurrency(type) * MerchantUpgradeManager.Instance.GetFloat(UpgradeID.bonusGiveCurrency,_merchant,type);
+            MoneyManager.Instance.AddCurrency(type, amountToGive);
+            print($"gave amount {amountToGive} type {type}");
+        }
+    }
     private bool isClaimConsumed(){// REMOVED WHEN WORKING ON UNIFIED
         // float chance = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].chanceToNotConsumeClaimBonus;
         float chance = 0f; // change to the upgradable once implemented
