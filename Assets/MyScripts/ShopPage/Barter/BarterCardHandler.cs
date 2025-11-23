@@ -413,7 +413,7 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
     {
         if (MoneyManager.Instance.GetCurrency(barterManager.barterCurrencyValues[(int)chosenPrice].currencyType) >= priceAmount)
         {
-            if (NoRewardCheck())
+            if (RecieveNothing())
             {
                 // DestroyCard();
                 return;
@@ -445,18 +445,19 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
         }
     }
 
-    private bool NoRewardCheck()
+    private bool RecieveNothing()
     {
         float roll = UnityEngine.Random.Range(0, 1f);
-        float chance = barterManager.merchantInfos[chosenMerchant].rewardRecieveChance;
+        // float chance = barterManager.merchantInfos[chosenMerchant].rewardRecieveChance;//removed 23.11
+        float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.chanceForNothing,chosenMerchant,CurrencyDummy.Dummy);
         if (roll < chance)
-        {
-            return false;
-        }
-        else
         {
             popUpTextHandler.RunPopUpFadeUp($"No reward for you!");
             return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

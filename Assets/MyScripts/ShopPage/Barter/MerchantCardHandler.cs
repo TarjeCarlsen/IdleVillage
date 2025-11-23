@@ -24,7 +24,7 @@ public class MerchantCardHandler : MonoBehaviour
     [SerializeField] private int amountOfDecimals; // currently only implemented for floats
 
     [SerializeField] private IsWhatDatatype isWhatDataType;
-    [SerializeField] private UpgradeID upgradeID;
+    [SerializeField] private List<UpgradeID> upgradeID;
     [SerializeField] private List<Merchants> merchants; // Define what merchants and currencytypes to upgrade. Should correspond with scriptable object
     [SerializeField] private List<CurrencyTypes> currencyTypes;
 
@@ -50,7 +50,7 @@ public class MerchantCardHandler : MonoBehaviour
     {
         barterManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<BarterManager>();
         templateText = affectedUpgradeText_txt.text;
-        UpdateUI(upgradeID, isWhatDataType, merchants[0], currencyTypes[0]);
+        UpdateUI(upgradeID[0], isWhatDataType, merchants[0], currencyTypes[0]);
     }
 
     private void OnEnable()
@@ -99,11 +99,14 @@ public class MerchantCardHandler : MonoBehaviour
             upgradeApplier.ApplyUpgrade();
             upgradeLevel++;
 
+        foreach(UpgradeID id in Enum.GetValues(typeof(UpgradeID))){
+
             foreach(Merchants merch in merchants){
                 foreach(CurrencyTypes type in currencyTypes){
-                    barterManager.UpgradeBought(upgradeID, isWhatDataType, merch, type);
+                    barterManager.UpgradeBought(id, isWhatDataType, merch, type);
 
-            UpdateUI(upgradeID, isWhatDataType, merch,type);
+            UpdateUI(upgradeID[0], isWhatDataType, merch,type);
+        }
                 }
             }
             OnBought?.Invoke();
@@ -143,7 +146,7 @@ public class MerchantCardHandler : MonoBehaviour
 
     private void UpdateUI(UpgradeID _upgradeID, IsWhatDatatype isWhatDatatype, Merchants _merchant, CurrencyTypes _currencyTypes)
     {
-        if(upgradeID != _upgradeID || _merchant != merchants[0]) return;// hardcoded to currently only display the first merchants values
+        if(upgradeID[0] != _upgradeID || _merchant != merchants[0]) return;// hardcoded to currently only display the first merchants values
         
         pointCost_txt.text = barterManager.merchantInfos[merchants[0]].skillPoints.ToString() + "/" + skillPointCost.ToString();
         header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);

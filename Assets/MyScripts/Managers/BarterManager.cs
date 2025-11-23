@@ -149,7 +149,7 @@ public class BarterManager : MonoBehaviour
 
     public void UpgradeBought(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants merchant, CurrencyTypes types)
     { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
-
+        print($"upgrade id = {upgradeID} merchant {merchant}");
         switch(upgradeID){ // call global upgrades for the shop page or production
             case UpgradeID.extraRefreshAmount:
             IncreaseMaxRefreshes(upgradeID);
@@ -162,11 +162,17 @@ public class BarterManager : MonoBehaviour
             case UpgradeID.refreshTimeReduction:
             ReduceRefreshTime(upgradeID);
             break;
-            case UpgradeID.bonusBasedOnPrevActivationState:
-            foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
-                OnUpgradeBought?.Invoke(upgradeID,isWhatDatatype,merch,types);
-            }
-            break;
+             case UpgradeID.oneTimeFavorModifyLose:
+                foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+                    ForwardEventRaisedLoseFavor(merch,MerchantUpgradeManager.Instance.GetInt(UpgradeID.oneTimeFavorModifyLose,merch,CurrencyDummy.Dummy));
+                }                
+             break;
+             case UpgradeID.oneTimeFavorModifyGain:
+             print("inside gain for "+ merchant);
+                foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+                    ForwardEventRaisedGainFavor(merch,MerchantUpgradeManager.Instance.GetInt(UpgradeID.oneTimeFavorModifyGain,merch,CurrencyDummy.Dummy));
+                }                
+             break;
         }
         // print($"called from merchant {merchant}");
         OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);
@@ -348,6 +354,11 @@ public class BarterManager : MonoBehaviour
     }
 
 
+// --------------- OneTime upgrades LOGIC ---------------- //
+
+private void DecreaseFavor(){
+
+}
 // --------------- REFRESH LOGIC ---------------- //
     public void OnRefreshClick()
     {
