@@ -11,6 +11,7 @@ public enum UpgradeOperation
     Add,
     Get,
     Subtract,
+    Set,
 }
 
 public enum UpgradeValueType
@@ -68,6 +69,21 @@ public class UpgradeValue
                 break;
         }
     }
+    public void Set(object amount)
+    {
+        switch (type)
+        {
+            case UpgradeValueType.Float:
+                floatValue = (float)amount;
+                break;
+            case UpgradeValueType.Int:
+                intValue = (int)amount;
+                break;
+            case UpgradeValueType.Alphabetic:
+                alphabetic = (AlphabeticNotation)amount;
+                break;
+        }
+    }
 }
 public enum UpgradeID
 {
@@ -88,6 +104,10 @@ public enum UpgradeID
     favorGainMulti,
     priceMulti,
     bonusGiveCurrency,
+    chanceToNotConsumeBarterOffer,
+    favorThresholdBonusMulti,
+    favorThreshold_00,
+    favorThreshold_01,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -141,6 +161,7 @@ public class MerchantUpgradeManager : MonoBehaviour
                 upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
                 upgrades[(UpgradeID.priceMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
                 upgrades[(UpgradeID.bonusGiveCurrency, type)] = new UpgradeValue { type = UpgradeValueType.Float,floatValue =0f };
+                upgrades[(UpgradeID.favorThresholdBonusMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float,floatValue =0f };
             }
             upgrades[(UpgradeID.XpGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
             upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
@@ -150,6 +171,11 @@ public class MerchantUpgradeManager : MonoBehaviour
             upgrades[(UpgradeID.refreshTimeReduction, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
             upgrades[(UpgradeID.flatFavorGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             upgrades[(UpgradeID.favorGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
+            upgrades[(UpgradeID.chanceToNotConsumeBarterOffer, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+            upgrades[(UpgradeID.favorThreshold_00, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            upgrades[(UpgradeID.favorThreshold_01, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            // upgrades[(UpgradeID.favorThreshold_02, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            // upgrades[(UpgradeID.favorThreshold_03, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
 
 
         }
@@ -200,6 +226,9 @@ public class MerchantUpgradeManager : MonoBehaviour
             case UpgradeOperation.Subtract:
                 value.Sub(amount);
                 return value;
+            case UpgradeOperation.Set:
+                value.Set(amount);
+                return value;
 
             default:
                 return value;
@@ -208,7 +237,6 @@ public class MerchantUpgradeManager : MonoBehaviour
 
     public float GetFloat(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
     {
-        print($"called with merchant {merchant} id {id} type {currencyType}");
         return merchantUpgrades[merchant].upgrades[(id, currencyType)].floatValue;
     }
 

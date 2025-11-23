@@ -16,7 +16,6 @@ public class PopUpTextHandler : MonoBehaviour
     }
 
     public void RunPopUpFadeUp(string message){
-        print("playing animation from popuptextshandler");
         displayText_txt.text = message;
         PopUpAnimation.Play("FadeOutAndMoveUp");
     }

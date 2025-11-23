@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
   m_Name: 00_maxRefreshIncrease
   m_EditorClassIdentifier: 
-  merchantUpgradeTypeInfo: []
+  merchantUpgradeTypeInfo:
+  - merchantUpgradeTypes: 02000000
+    merchants: 01000000
+    currencyTypes: 00000000
+    upgradeID: 10
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 1
+    flat_forFloatUpgrades: 0
+    stateForUpgrade: 0

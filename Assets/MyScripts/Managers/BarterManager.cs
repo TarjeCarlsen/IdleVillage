@@ -149,7 +149,6 @@ public class BarterManager : MonoBehaviour
 
     public void UpgradeBought(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants merchant, CurrencyTypes types)
     { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
-        print($"INVOKE UPGRADE BOUGHT from {merchant} id {upgradeID}");
 
         switch(upgradeID){ // call global upgrades for the shop page or production
             case UpgradeID.extraRefreshAmount:
@@ -164,7 +163,7 @@ public class BarterManager : MonoBehaviour
             ReduceRefreshTime(upgradeID);
             break;
         }
-        
+        // print($"called from merchant {merchant}");
         OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);
         UpdateUI();
     }
@@ -203,7 +202,6 @@ public class BarterManager : MonoBehaviour
 
         foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
             totalWeigth += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth, merch, CurrencyDummy.Dummy);
-            // print($"total weigth = {totalWeigth}");
         }
         int randomValue = UnityEngine.Random.Range(0, totalWeigth);
         int currentSum = 0;
@@ -212,7 +210,6 @@ public class BarterManager : MonoBehaviour
         foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
             currentSum += MerchantUpgradeManager.Instance.GetInt(UpgradeID.merchantAppearWeigth,merch,CurrencyDummy.Dummy);
             if(randomValue < currentSum){
-                // print("chosen index = "+ currentIndex);
                 return currentIndex;
             }
             currentIndex++;
@@ -244,7 +241,6 @@ public class BarterManager : MonoBehaviour
         // float chance = merchantBonuses[chosenMerchant].specialBarterChanceBonus; // REMOVED WHEN WORKING ON UNIFIED
         float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterChance,chosenMerchant,CurrencyDummy.Dummy); 
         float roll = UnityEngine.Random.Range(0f, 1f);
-            // print($"roll = {roll} chance = {chance}");
         if (roll < chance)
         {
             return true;
@@ -311,7 +307,6 @@ public class BarterManager : MonoBehaviour
 
     private void ForwardEventRaised(Merchants _merchant, CurrencyTypes _type)
     {
-        // print("claimed!");
         foreach(CurrencyTypes currency in Enum.GetValues(typeof(CurrencyTypes))){
             OnBarterClaimed?.Invoke(unUsedUpgradeId,unUsedIsWhatDatatype,_merchant,currency);
         }
@@ -375,7 +370,7 @@ public class BarterManager : MonoBehaviour
         }
         else
         {
-            print("No more refreshes available!"); // ADD POPUP TEXT HERE!
+            //add popup!
         }
         UpdateUI();
     }
@@ -412,7 +407,6 @@ public class BarterManager : MonoBehaviour
     private bool isRefreshFree()
     {
         float roll = UnityEngine.Random.Range(0, 1f);
-        // print($"roll = {roll} chance = {freeRefreshChance}");
         if (roll < freeRefreshChance)
         {
             return true;

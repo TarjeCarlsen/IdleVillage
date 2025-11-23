@@ -70,7 +70,6 @@ private void UpdateUIInit()
 
                 foreach (StatInfo stat in statBonuses)
                 {
-                    // print($"stat type {stat.type} id = {UpgradeID.RewardMulti} merchant = {merchant} amount = {(MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, stat.type))}");
                     stat.flatIncrease_txt.text = "+" + MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat, merchant, stat.type).ToStringSmart(1);
                     stat.currencyMulti_txt.text = ((MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, stat.type) - 1) * 100).ToString("F0") + "%"; // COMMENTED OUT FOR WORKING ON UNIFIED
                 }

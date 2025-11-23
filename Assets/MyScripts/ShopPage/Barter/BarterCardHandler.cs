@@ -51,6 +51,7 @@ public class BarterCardHandler : MonoBehaviour
     private float xpReward;
     private float originalXpReward;
     private CurrencyTypes chosenReward;
+    private float threshHoldMulti;
     private int amountOfCurrencies;
     public Merchants chosenMerchant;
     private int favor;
@@ -201,10 +202,8 @@ public class BarterCardHandler : MonoBehaviour
     // {
 
     //     int totalWeigth = 0;
-    //         print($"outside "+MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths.Count);
     //     foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths)
     //     {
-    //         print($"bonus weigths for {chosenMerchant} type {kvp.Key} = {kvp.Value}");
     //         int baseWeight = kvp.Value;
     //         // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];
     //         // int effectiveWeigth = baseWeight + bonusWeigth;//REMOVED WHEN WORKING ON UNIFIED
@@ -219,7 +218,6 @@ public class BarterCardHandler : MonoBehaviour
 
     //     foreach (var kvp in MerchantUpgradeManager.Instance.merchantUpgrades[chosenMerchant].rewardWeigths)
     //     {
-    //         print($"bonus weigths for {chosenMerchant} type {kvp.Key} = {kvp.Value}");
     //         int baseWeight = kvp.Value;
     //         // int bonusWeigth = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].rewardCurrencyWeigthBonus[kvp.Key];//REMOVED WHEN WORKING ON UNIFIED
     //         // int effectiveWeigth = baseWeight + bonusWeigth; //REMOVED WHEN WORKING ON UNIFIED
@@ -311,20 +309,21 @@ public class BarterCardHandler : MonoBehaviour
         ApplyBonusesToXp(chosenMerchant);
         ApplyBonusToFavor();
         ApplyBonusesToPrice();
+        // ApplyBonusesBasedOnFavorThreshold(chosenMerchant,chosenReward);
         // InitializeGiveBonuses();
         UpdateUI();
     }
 
     private void ApplyBonusesToReward(Merchants merchant, CurrencyTypes type)
     {
+
         if (type != chosenReward || merchant != chosenMerchant) return;
-        
+        float favorThresholdMulti = ApplyBonusesBasedOnFavorThreshold(chosenMerchant,chosenReward);
         float favorBasedMulti = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.multiRewardBasedOnFavor,chosenMerchant,chosenReward) * barterManager.merchantInfos[chosenMerchant].favor;
         float stackingMulti = (MerchantUpgradeManager.Instance.GetFloat(UpgradeID.stackingMulti, chosenMerchant, chosenReward) - 1) * barterManager.merchantInfos[chosenMerchant].completedInArow;
         float baseMulti = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, type);
-        float totalMulti = favorBasedMulti + stackingMulti + baseMulti;
+        float totalMulti = favorBasedMulti + stackingMulti + baseMulti + favorThresholdMulti;
         AlphabeticNotation flat = MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat, merchant, type);
-
         if(isSpecialBarterOffer){
         rewardAmount = ((originalRewardAmount + flat) * totalMulti) * MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterRewardMulti,chosenMerchant,type);
         }else{
@@ -381,37 +380,56 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
     {
         if (merchant != chosenMerchant) return;
         float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy);
-        print($"merchant {merchant} xp multi = {multi} bonus = {MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy)}");
         xpReward = originalXpReward * multi;
 
     }
-    private void BonusesHandledOnClaimed(Merchants _merchant)
-    {
-        if (_merchant != chosenMerchant) return;
 
+    private float ApplyBonusesBasedOnFavorThreshold(Merchants _merchant, CurrencyTypes _currencyType){
+        // print($"merchant = {_merchant} threshhold = {MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_00,_merchant,CurrencyDummy.Dummy)} bonus = {MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti,_merchant,CurrencyTypes.money)}");
+        
+        // Dictionary<CurrencyTypes,float> multies = new Dictionary<CurrencyTypes, float>();
+        // foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
+        //     multies[type] = 0f;
+        // }
+
+        float multi=0f;
+
+        List<Merchants> merchantsPastThreshold_00 = new List<Merchants>();
+        List<Merchants> merchantsPastThreshold_01 = new List<Merchants>();
+
+        //Add all merchants thresholds here:
+        // ------------- Chloe threshold bonuses -------------- //
+        if(barterManager.merchantInfos[Merchants.ChloeTheMerchant].favor >MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_00,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy)){
+            merchantsPastThreshold_00.Add(Merchants.ChloeTheMerchant);
+        }
+        // if(barterManager.merchantInfos[Merchants.ChloeTheMerchant].favor >MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_01,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy)){
+        //     merchantsPastThreshold_01.Add(Merchants.ChloeTheMerchant);
+        // }
+
+
+
+        foreach(Merchants merch_to_apply in merchantsPastThreshold_00){
+
+                multi += MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti, merch_to_apply,_currencyType);
+            // }
+        }
+        // foreach(Merchants merch_to_apply in merchantsPastThreshold_01){
+        //         multi += MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti, merch_to_apply,_currencyType);
+        // }
+
+            // print($"total multi for {_merchant} type =  {_currencyType} = {multies[_currencyType]}");
+            print($"MULTI for {_merchant} type =  {_currencyType} = {multi}");
+        
+
+        return multi;
     }
 
+    private void CheckThreshold(Merchants _merchant, int threshold){
+        if(barterManager.merchantInfos[_merchant].favor > threshold){
 
-
-
-
-    private bool NoRewardCheck()
-    {
-        float roll = UnityEngine.Random.Range(0, 1f);
-        float chance = barterManager.merchantInfos[chosenMerchant].rewardRecieveChance;
-        // print($"rolled = {roll} chance = {chance}");
-        if (roll < chance)
-        {
-            // print("REWARD GIVEN!");
-            return false;
-        }
-        else
-        {
-            popUpTextHandler.RunPopUpFadeUp($"No reward for you!");
-            // print("NO REWARD GIVEN!");
-            return true;
         }
     }
+
 
 
 
@@ -454,21 +472,34 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
         }
     }
 
+    private bool NoRewardCheck()
+    {
+        float roll = UnityEngine.Random.Range(0, 1f);
+        float chance = barterManager.merchantInfos[chosenMerchant].rewardRecieveChance;
+        if (roll < chance)
+        {
+            return false;
+        }
+        else
+        {
+            popUpTextHandler.RunPopUpFadeUp($"No reward for you!");
+            return true;
+        }
+    }
 
     private void GiveBonusCurrenies(Merchants _merchant){
         if(_merchant != chosenMerchant) return;
         AlphabeticNotation amountToGive;
         foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
-            print("amount from upgrade" + MerchantUpgradeManager.Instance.GetFloat(UpgradeID.bonusGiveCurrency,_merchant,type));
             amountToGive = MoneyManager.Instance.GetCurrency(type) * MerchantUpgradeManager.Instance.GetFloat(UpgradeID.bonusGiveCurrency,_merchant,type);
             MoneyManager.Instance.AddCurrency(type, amountToGive);
-            print($"gave amount {amountToGive} type {type}");
         }
     }
     private bool isClaimConsumed(){// REMOVED WHEN WORKING ON UNIFIED
-        // float chance = barterManager.merchantBonuses[(Merchants)chosenMerchantIndex].chanceToNotConsumeClaimBonus;
-        float chance = 0f; // change to the upgradable once implemented
+        float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.chanceToNotConsumeBarterOffer,chosenMerchant,CurrencyDummy.Dummy);
+        // float chance = 0f; // change to the upgradable once implemented
         float roll = UnityEngine.Random.Range(0f, 1f);
+        print($"rolled {roll} chance {chance}");
         if (roll > chance)
         {
             return true;

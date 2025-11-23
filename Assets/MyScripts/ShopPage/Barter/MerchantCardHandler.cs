@@ -109,7 +109,6 @@ public class MerchantCardHandler : MonoBehaviour
         }
         else
         {
-            print("Cannot afford upgrade or reached max lvl!");
         }
     }
 
@@ -143,7 +142,7 @@ public class MerchantCardHandler : MonoBehaviour
 
     private void UpdateUI(UpgradeID _upgradeID, IsWhatDatatype isWhatDatatype, Merchants _merchant, CurrencyTypes _currencyTypes)
     {
-        if(upgradeID != _upgradeID) return;
+        if(upgradeID != _upgradeID || _merchant != merchants[0]) return;// hardcoded to currently only display the first merchants values
         
         pointCost_txt.text = barterManager.merchantInfos[merchants[0]].skillPoints.ToString() + "/" + skillPointCost.ToString();
         header_lvl_txt.text = string.Format("Lv.{0:F0} / Lv.{1:F0}", upgradeLevel, maxLevel);
@@ -152,7 +151,6 @@ public class MerchantCardHandler : MonoBehaviour
             string oldText = affectedUpgradeText_txt.text;
             string updatedText = "";
 
-            // print($"called from id - {_upgradeID} actuall id - {upgradeID} type - {_currencyTypes}");
             switch (isWhatDataType)
             {
                 case IsWhatDatatype.isAlphabeticnotationDatatype:
@@ -263,7 +261,6 @@ public class MerchantCardHandler : MonoBehaviour
 //     {
 //         case Merchants.ChloeTheMerchant:
 //             // affectedUpgradeText_txt.text = oldText;
-//             // print("old text = "+ oldText);
 //             return;
 //             //add all merchants here
 //     }

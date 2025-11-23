@@ -10,16 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
-  m_Name: 03_IncreaseFavorGainFlat
+  m_Name: 01_favorThresholdBonus
   m_EditorClassIdentifier: 
   merchantUpgradeTypeInfo:
-  - merchantUpgradeTypes: 02000000
+  - merchantUpgradeTypes: 01000000
     merchants: 000000000100000002000000030000000400000005000000
-    currencyTypes: 00000000
-    upgradeID: 13
+    currencyTypes: 000000000100000002000000030000000400000005000000
+    upgradeID: 18
     flat_alpha:
       coefficient: 0
       magnitude: 0
-    flat_forIntUpgrades: 2
+    flat_forIntUpgrades: 0
+    flat_forFloatUpgrades: 0.1
+    stateForUpgrade: 0
+  - merchantUpgradeTypes: 08000000
+    merchants: 02000000
+    currencyTypes: 00000000
+    upgradeID: 19
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 200
     flat_forFloatUpgrades: 0
     stateForUpgrade: 0

@@ -11,6 +11,9 @@ public enum MerchantUpgradeTypes
     subRewardAlpha,
     subRewardFloat,
     subRewardInt,
+    setRewardAlpha,
+    setRewardFloat,
+    setRewardInt,
 
 }
 
@@ -102,6 +105,33 @@ public class UpgradeEffectMerchants : ScriptableObject
                         foreach (CurrencyTypes type in info.currencyTypes)
                         {
                             MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Subtract, merch, type, info.flat_forIntUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.setRewardAlpha:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Set, merch, type, info.flat_alpha);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.setRewardFloat:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Set, merch, type, info.flat_forFloatUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.setRewardInt:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Set, merch, type, info.flat_forIntUpgrades);
                         }
                     }
                     break;
