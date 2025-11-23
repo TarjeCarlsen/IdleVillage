@@ -12,4 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
   m_Name: 01_stealFavor
   m_EditorClassIdentifier: 
-  merchantUpgradeTypeInfo: []
+  merchantUpgradeTypeInfo:
+  - merchantUpgradeTypes: 08000000
+    merchants: 0000000001000000020000000400000005000000
+    currencyTypes: 00000000
+    upgradeID: 20
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 100
+    flat_forFloatUpgrades: 0
+    stateForUpgrade: 0
+  - merchantUpgradeTypes: 08000000
+    merchants: 03000000
+    currencyTypes: 00000000
+    upgradeID: 21
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 200
+    flat_forFloatUpgrades: 0
+    stateForUpgrade: 0

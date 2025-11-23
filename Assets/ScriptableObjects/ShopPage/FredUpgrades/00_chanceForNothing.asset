@@ -12,4 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de6783f973d9641ba1fbecce7784a3, type: 3}
   m_Name: 00_chanceForNothing
   m_EditorClassIdentifier: 
-  merchantUpgradeTypeInfo: []
+  merchantUpgradeTypeInfo:
+  - merchantUpgradeTypes: 01000000
+    merchants: 03000000
+    currencyTypes: 00000000
+    upgradeID: 19
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 0
+    flat_forFloatUpgrades: 0.05
+    stateForUpgrade: 0
+  - merchantUpgradeTypes: 01000000
+    merchants: 03000000
+    currencyTypes: 000000000100000002000000030000000400000005000000
+    upgradeID: 1
+    flat_alpha:
+      coefficient: 0
+      magnitude: 0
+    flat_forIntUpgrades: 0
+    flat_forFloatUpgrades: 0.3
+    stateForUpgrade: 0
