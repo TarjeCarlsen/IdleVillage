@@ -318,11 +318,10 @@ public class BarterCardHandler : MonoBehaviour
     {
 
         if (type != chosenReward || merchant != chosenMerchant) return;
-        float favorThresholdMulti = ApplyBonusesBasedOnFavorThreshold(chosenMerchant,chosenReward);
         float favorBasedMulti = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.multiRewardBasedOnFavor,chosenMerchant,chosenReward) * barterManager.merchantInfos[chosenMerchant].favor;
         float stackingMulti = (MerchantUpgradeManager.Instance.GetFloat(UpgradeID.stackingMulti, chosenMerchant, chosenReward) - 1) * barterManager.merchantInfos[chosenMerchant].completedInArow;
         float baseMulti = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.RewardMulti, merchant, type);
-        float totalMulti = favorBasedMulti + stackingMulti + baseMulti + favorThresholdMulti;
+        float totalMulti = favorBasedMulti + stackingMulti + baseMulti;
         AlphabeticNotation flat = MerchantUpgradeManager.Instance.GetAlphabetic(UpgradeID.RewardFlat, merchant, type);
         if(isSpecialBarterOffer){
         rewardAmount = ((originalRewardAmount + flat) * totalMulti) * MerchantUpgradeManager.Instance.GetFloat(UpgradeID.specialBarterRewardMulti,chosenMerchant,type);
@@ -384,51 +383,8 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
 
     }
 
-    private float ApplyBonusesBasedOnFavorThreshold(Merchants _merchant, CurrencyTypes _currencyType){
-        // print($"merchant = {_merchant} threshhold = {MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_00,_merchant,CurrencyDummy.Dummy)} bonus = {MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti,_merchant,CurrencyTypes.money)}");
-        
-        // Dictionary<CurrencyTypes,float> multies = new Dictionary<CurrencyTypes, float>();
-        // foreach(CurrencyTypes type in Enum.GetValues(typeof(CurrencyTypes))){
-        //     multies[type] = 0f;
-        // }
+    
 
-        float multi=0f;
-
-        List<Merchants> merchantsPastThreshold_00 = new List<Merchants>();
-        List<Merchants> merchantsPastThreshold_01 = new List<Merchants>();
-
-        //Add all merchants thresholds here:
-        // ------------- Chloe threshold bonuses -------------- //
-        if(barterManager.merchantInfos[Merchants.ChloeTheMerchant].favor >MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_00,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy)){
-            merchantsPastThreshold_00.Add(Merchants.ChloeTheMerchant);
-        }
-        // if(barterManager.merchantInfos[Merchants.ChloeTheMerchant].favor >MerchantUpgradeManager.Instance.GetInt(UpgradeID.favorThreshold_01,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy)){
-        //     merchantsPastThreshold_01.Add(Merchants.ChloeTheMerchant);
-        // }
-
-
-
-        foreach(Merchants merch_to_apply in merchantsPastThreshold_00){
-
-                multi += MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti, merch_to_apply,_currencyType);
-            // }
-        }
-        // foreach(Merchants merch_to_apply in merchantsPastThreshold_01){
-        //         multi += MerchantUpgradeManager.Instance.GetFloat(UpgradeID.favorThresholdBonusMulti, merch_to_apply,_currencyType);
-        // }
-
-            // print($"total multi for {_merchant} type =  {_currencyType} = {multies[_currencyType]}");
-            print($"MULTI for {_merchant} type =  {_currencyType} = {multi}");
-        
-
-        return multi;
-    }
-
-    private void CheckThreshold(Merchants _merchant, int threshold){
-        if(barterManager.merchantInfos[_merchant].favor > threshold){
-
-        }
-    }
 
 
 

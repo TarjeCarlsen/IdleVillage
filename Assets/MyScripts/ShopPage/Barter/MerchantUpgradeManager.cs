@@ -105,9 +105,6 @@ public enum UpgradeID
     priceMulti,
     bonusGiveCurrency,
     chanceToNotConsumeBarterOffer,
-    favorThresholdBonusMulti,
-    favorThreshold_00,
-    favorThreshold_01,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -144,6 +141,8 @@ public class MerchantUpgradeManager : MonoBehaviour
     public class MerchantUpgrades
     {
         public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> upgrades = new();
+        public Dictionary<(UpgradeID, CurrencyTypes),UpgradeValue> thresholdUpgrades= new();
+        public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> thresholdMulties = new();
         // public Dictionary<CurrencyTypes, AlphabeticNotation> rewardFlat = new();
         // public Dictionary<CurrencyTypes, float> rewardMulti = new();
         // public Dictionary<CurrencyTypes, int> rewardWeigths = new();
@@ -161,7 +160,6 @@ public class MerchantUpgradeManager : MonoBehaviour
                 upgrades[(UpgradeID.multiRewardBasedOnFavor, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
                 upgrades[(UpgradeID.priceMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
                 upgrades[(UpgradeID.bonusGiveCurrency, type)] = new UpgradeValue { type = UpgradeValueType.Float,floatValue =0f };
-                upgrades[(UpgradeID.favorThresholdBonusMulti, type)] = new UpgradeValue { type = UpgradeValueType.Float,floatValue =0f };
             }
             upgrades[(UpgradeID.XpGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
             upgrades[(UpgradeID.specialBarterChance, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
@@ -172,8 +170,6 @@ public class MerchantUpgradeManager : MonoBehaviour
             upgrades[(UpgradeID.flatFavorGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             upgrades[(UpgradeID.favorGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
             upgrades[(UpgradeID.chanceToNotConsumeBarterOffer, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
-            upgrades[(UpgradeID.favorThreshold_00, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
-            upgrades[(UpgradeID.favorThreshold_01, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             // upgrades[(UpgradeID.favorThreshold_02, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             // upgrades[(UpgradeID.favorThreshold_03, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
 
@@ -249,6 +245,7 @@ public class MerchantUpgradeManager : MonoBehaviour
     {
         return merchantUpgrades[merchant].upgrades[(id, currencyType)].alphabetic;
     }
+
     // ---------------------------- UNIFIED MULTIES ----------------------------//
 
     // ------------------- rewards ------------------ //
