@@ -162,6 +162,11 @@ public class BarterManager : MonoBehaviour
             case UpgradeID.refreshTimeReduction:
             ReduceRefreshTime(upgradeID);
             break;
+            case UpgradeID.bonusBasedOnPrevActivationState:
+            foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
+                OnUpgradeBought?.Invoke(upgradeID,isWhatDatatype,merch,types);
+            }
+            break;
         }
         // print($"called from merchant {merchant}");
         OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);

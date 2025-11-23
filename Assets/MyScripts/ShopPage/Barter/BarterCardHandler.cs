@@ -100,6 +100,7 @@ public class BarterCardHandler : MonoBehaviour
         minRandom = _TESTING_minRandom;
         maxRandom = _TESTING_maxRandom;
         baseXp = _TESTING_xpReward;
+        originalXpReward = _TESTING_xpReward;
     }
 
     private void Start()
@@ -304,7 +305,7 @@ public class BarterCardHandler : MonoBehaviour
     }
     private void UpdateBonuses(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype, Merchants _merchants, CurrencyTypes types)
     {
-        if (_merchants != chosenMerchant) return;
+        // if (_merchants != chosenMerchant) return; // removed 24.11 18:33, fixed issue where xp from doublebonus from chloe wouldnt get applied
         ApplyBonusesToReward(chosenMerchant, types);
         ApplyBonusesToXp(chosenMerchant);
         ApplyBonusToFavor();
@@ -339,6 +340,21 @@ public class BarterCardHandler : MonoBehaviour
         float result = (unModifiedFavor + flat) * multi;
         favor = (int) Mathf.Round(result);
 }
+
+    private bool doubleFromChloeUpgrade(){
+        bool chloeActivated = MerchantUpgradeManager.Instance.GetBool(UpgradeID.bonusBasedOnPrevActivationState,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy);
+        bool shouldDouble = chloeActivated && barterManager.previousMerchantCompleted == Merchants.ChloeTheMerchant;
+        // print($"doubling from {chosenMerchant} state = "+ shouldDouble);
+        return shouldDouble;
+    }
+// private void ApplyBonusesToXpBaseOnPrevious(Merchants _merchant){
+//     if(_merchant != (Merchants)chosenMerchantIndex) return;
+//     // bool chloeUpgradeActivated = MerchantUpgradeManager.Instance.ChloeGetRewardPowerBool(ChloeUpgradeTypesBool.doubleXpOnNextBarter); //REMOVED WORKING UNIFIED
+//     // bool shouldDoubleXp = chloeUpgradeActivated && barterManager.previousMerchantCompleted == Merchants.ChloeTheMerchant; //REMOVED WORKING UNIFIED
+
+//     // xpReward = shouldDoubleXp ? originalXp * 2 : originalXp * 1;//REMOVED WORKING UNIFIED
+//     UpdateUI();
+// }
 
 private void ApplyBonusesToPrice(){ // have to add in flat when that gets implemented
     float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.priceMulti,chosenMerchant,chosenPrice);
@@ -379,8 +395,9 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
     {
         if (merchant != chosenMerchant) return;
         float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy);
-        xpReward = originalXpReward * multi;
-
+        // print($"before xp = "+ xpReward);
+        xpReward = doubleFromChloeUpgrade() ?  originalXpReward * multi *2 : originalXpReward * multi;
+        // print($"after xp = "+ xpReward);
     }
 
     
@@ -608,14 +625,6 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
 //     return result;
 // }
 
-// private void ApplyBonusesToXpBaseOnPrevious(Merchants _merchant){
-//     if(_merchant != (Merchants)chosenMerchantIndex) return;
-//     // bool chloeUpgradeActivated = MerchantUpgradeManager.Instance.ChloeGetRewardPowerBool(ChloeUpgradeTypesBool.doubleXpOnNextBarter); //REMOVED WORKING UNIFIED
-//     // bool shouldDoubleXp = chloeUpgradeActivated && barterManager.previousMerchantCompleted == Merchants.ChloeTheMerchant; //REMOVED WORKING UNIFIED
-
-//     // xpReward = shouldDoubleXp ? originalXp * 2 : originalXp * 1;//REMOVED WORKING UNIFIED
-//     UpdateUI();
-// }
 
 
 

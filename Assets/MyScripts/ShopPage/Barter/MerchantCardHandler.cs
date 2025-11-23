@@ -12,6 +12,7 @@ public enum IsWhatDatatype{
     isInt,
     isFloatDatatype,
     isAlphabeticnotationDatatype,
+    dontDisplay,
 }
 
 public class MerchantCardHandler : MonoBehaviour
@@ -96,6 +97,7 @@ public class MerchantCardHandler : MonoBehaviour
         {
             barterManager.merchantInfos[merchants[0]].skillPoints -= skillPointCost; // only the first merchant pays for upgrade
             upgradeApplier.ApplyUpgrade();
+            upgradeLevel++;
 
             foreach(Merchants merch in merchants){
                 foreach(CurrencyTypes type in currencyTypes){
@@ -104,7 +106,6 @@ public class MerchantCardHandler : MonoBehaviour
             UpdateUI(upgradeID, isWhatDataType, merch,type);
                 }
             }
-            upgradeLevel++;
             OnBought?.Invoke();
         }
         else
@@ -178,6 +179,9 @@ public class MerchantCardHandler : MonoBehaviour
                     templateText,
                     @"\{.*?\}",         
                                 $"<color=green>{formatted}</color>");
+                break;
+                case IsWhatDatatype.dontDisplay:
+                updatedText = oldText;
                 break;
             }
             affectedUpgradeText_txt.text = updatedText;

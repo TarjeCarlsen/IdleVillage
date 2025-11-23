@@ -18,7 +18,8 @@ public enum UpgradeValueType
 {
     Float,
     Int,
-    Alphabetic
+    Alphabetic,
+    Bool,
 }
 
 [System.Serializable]
@@ -28,6 +29,7 @@ public class UpgradeValue
     public float floatValue;
     public int intValue;
     public AlphabeticNotation alphabetic;
+    public bool boolState;
 
     public object Get() =>
         type switch
@@ -35,6 +37,7 @@ public class UpgradeValue
             UpgradeValueType.Float => floatValue,
             UpgradeValueType.Int => intValue,
             UpgradeValueType.Alphabetic => alphabetic,
+            UpgradeValueType.Bool => boolState,
             _ => null
         };
 
@@ -82,6 +85,9 @@ public class UpgradeValue
             case UpgradeValueType.Alphabetic:
                 alphabetic = (AlphabeticNotation)amount;
                 break;
+            case UpgradeValueType.Bool:
+                boolState = (bool)amount;
+                break;
         }
     }
 }
@@ -105,6 +111,7 @@ public enum UpgradeID
     priceMulti,
     bonusGiveCurrency,
     chanceToNotConsumeBarterOffer,
+    bonusBasedOnPrevActivationState,
     // SpecialOfferChance,
     // FreeRefreshChance,
     // PriceMultiplier,
@@ -170,6 +177,7 @@ public class MerchantUpgradeManager : MonoBehaviour
             upgrades[(UpgradeID.flatFavorGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             upgrades[(UpgradeID.favorGainMulti, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 1f };
             upgrades[(UpgradeID.chanceToNotConsumeBarterOffer, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
+            upgrades[(UpgradeID.bonusBasedOnPrevActivationState, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Bool, boolState = false };
             // upgrades[(UpgradeID.favorThreshold_02, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             // upgrades[(UpgradeID.favorThreshold_03, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
 
@@ -244,6 +252,10 @@ public class MerchantUpgradeManager : MonoBehaviour
     public AlphabeticNotation GetAlphabetic(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
     {
         return merchantUpgrades[merchant].upgrades[(id, currencyType)].alphabetic;
+    }
+    public bool GetBool(UpgradeID id, Merchants merchant, CurrencyTypes currencyType)
+    {
+        return merchantUpgrades[merchant].upgrades[(id, currencyType)].boolState;
     }
 
     // ---------------------------- UNIFIED MULTIES ----------------------------//

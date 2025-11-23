@@ -14,6 +14,7 @@ public enum MerchantUpgradeTypes
     setRewardAlpha,
     setRewardFloat,
     setRewardInt,
+    setRewardBool,
 
 }
 
@@ -132,6 +133,15 @@ public class UpgradeEffectMerchants : ScriptableObject
                         foreach (CurrencyTypes type in info.currencyTypes)
                         {
                             MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Set, merch, type, info.flat_forIntUpgrades);
+                        }
+                    }
+                    break;
+                case MerchantUpgradeTypes.setRewardBool:
+                    foreach (Merchants merch in info.merchants)
+                    {
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            MerchantUpgradeManager.Instance.Modify(info.upgradeID, UpgradeOperation.Set, merch, type, info.stateForUpgrade);
                         }
                     }
                     break;
