@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5717715165989729021}
   - component: {fileID: 2648753898989291420}
-  - component: {fileID: 3048991629278545814}
+  - component: {fileID: 3671915370863071335}
   - component: {fileID: 4332482802693078744}
   m_Layer: 5
   m_Name: WideCard
@@ -54,7 +54,7 @@ MonoBehaviour:
   tagForWhereToCenter: ShopPage
   objectForWhereToCenter: {fileID: 0}
   anchoredPosition: {x: 10, y: -450}
---- !u!114 &3048991629278545814
+--- !u!114 &3671915370863071335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,17 +66,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d44edfdc4628604f871b0176b66c764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPercentage: 0
+  useMinusValue: 0
+  minusThis_forDisplayValue: 0
+  amountOfDecimals: 0
+  isWhatDataType: 0
+  upgradeID: 
+  merchants: 
+  currencyTypes: 
+  skillPointCost: 5
+  maxLevel: 10
   barterManager: {fileID: 0}
   upgradeApplier: {fileID: 4332482802693078744}
-  merchant: 0
-  currencyTypes: 0
   pointCost_txt: {fileID: 4330870929773822487}
   header_lvl_txt: {fileID: 3937799054314338907}
   affectedUpgradeText_txt: {fileID: 8150799221951118281}
   cardObejct: {fileID: 1989521292662093937}
-  skillPointCost: 5
-  maxLevel: 10
-  isFlatUpgrade: 0
   upgradeLevel: 0
 --- !u!114 &4332482802693078744
 MonoBehaviour:
@@ -1345,7 +1350,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3048991629278545814}
+      - m_Target: {fileID: 3671915370863071335}
         m_TargetAssemblyTypeName: MerchantCardHandler, Assembly-CSharp
         m_MethodName: OnOpenCardClick
         m_Mode: 1
@@ -1492,7 +1497,7 @@ PrefabInstance:
     - target: {fileID: 8564242816593312271, guid: 8ce8813d2cfe20d4380a2ff7988047fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3048991629278545814}
+      objectReference: {fileID: 3671915370863071335}
     - target: {fileID: 8564242816593312271, guid: 8ce8813d2cfe20d4380a2ff7988047fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

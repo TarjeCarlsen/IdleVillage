@@ -299,9 +299,9 @@ MonoBehaviour:
   minRandom: 0.7
   maxRandom: 1.5
   isTesting: 1
-  _TESTING_indexForMerchant: 3
-  _TESTING_chosenPriceIndex: 0
-  _TESTING_chosenRewardIndex: 5
+  _TESTING_indexForMerchant: 0
+  _TESTING_chosenPriceIndex: 1
+  _TESTING_chosenRewardIndex: 0
   _TESTING_priceValue: 1
   _TESTING_rewardValue: 1
   _TESTING_level: 1
