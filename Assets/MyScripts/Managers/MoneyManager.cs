@@ -13,6 +13,11 @@ public enum CurrencyTypes{
     bread,
 }
 
+public static class CurrencyDummy
+{
+    public const CurrencyTypes Dummy = CurrencyTypes.money;
+}
+
 [System.Serializable]
 public struct TESTINCURRENCIES{
     public CurrencyTypes currencyType;
