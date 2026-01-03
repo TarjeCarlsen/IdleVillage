@@ -39,8 +39,10 @@ public class GeneratorSimple : MonoBehaviour
 
     public void StartGenerating(float time)
     {
+        print("inside start");
         if (CanAfford() && generateRoutine == null)
         {
+        print("inside inside");
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
             timeRemaining = time;
             generateRoutine = StartCoroutine(Generating());
