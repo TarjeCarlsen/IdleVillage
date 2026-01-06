@@ -11,6 +11,13 @@ public enum CurrencyTypes{
     flour,
     dough,
     bread,
+    corn,
+    tomato,
+    pumpkin,
+    carrot,
+    pear,
+    watermelon,
+    
 }
 
 public static class CurrencyDummy
