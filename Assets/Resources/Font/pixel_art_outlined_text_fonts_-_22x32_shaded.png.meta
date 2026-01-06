@@ -1,0 +1,2371 @@
+fileFormatVersion: 2
+guid: 0fc57df19fb8d6b44af37064b60753c8
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_0
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 248
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45b5c466744a4a24787d9c8710c94441
+      internalID: 1539671969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 248
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b5220f22d69fc548abcd61970135e75
+      internalID: -380149020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_2
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 248
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 373f0d5542afc8045a67c6266a3e9938
+      internalID: -957904404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_3
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 248
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d384a63f3d9361b4990fa97258cd854b
+      internalID: 754844314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_4
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 248
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b5218de56b29f459399383f0777104
+      internalID: 1486483785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_5
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e26621c01904f741ab532606e966f07
+      internalID: 1858643261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_6
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49047f65b2274434e9bbf0f653bee10c
+      internalID: -2032812436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a854ead9a9128a9479b2832d0899625e
+      internalID: 334707555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_8
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e998e1ec38d7a0c4d8bbf5c74a6403a6
+      internalID: -1509666568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_9
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 170a1a712581dcd4094b2e5fe5c4f0ff
+      internalID: -1192324919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_10
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaa40b3bb2814544eb34655722381f13
+      internalID: -43268115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60152a2ff46a61e4e80788da3ce95761
+      internalID: 224780132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_12
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9737594277a2b44984f3a5dd3dcf365
+      internalID: -1031224077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_13
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27aace53587163442afa0460f7dd3fc1
+      internalID: 1208625746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_14
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d95408812aacf544a9c363ce96c8594
+      internalID: 1732278707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_15
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9168a877bf5d7d244a32592df9e576aa
+      internalID: 276152581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_16
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19d3436f53547f444a6f2a836e8fd18b
+      internalID: 716378266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_17
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f66494413345e3a4ba7b0c37eb8fac8a
+      internalID: -883983615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_18
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad9c05e1ba01d94796bf565eaa216cf
+      internalID: -2096187686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_19
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 178
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a2f933efaf21254ba1fa0391697403c
+      internalID: -1199165156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e0764c11d1c56f4dade5e6caf57ab31
+      internalID: 841778098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_21
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8b30f814af26974eb027dd7aa784ef3
+      internalID: 1449550443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_22
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3ec559b0873fcd4f954c6bb0db1b256
+      internalID: 367963960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_23
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f48c2f98efbf5249a9499ab1989fd62
+      internalID: 1997396186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_24
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4498b046338e894f8e29a88e283ed75
+      internalID: -348222681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_25
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9db9b4eac0e126844b0031599492b931
+      internalID: -1637883644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_26
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa399fa1796be574bac6b74d27007714
+      internalID: -341536911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_27
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35f27a5bc3813134db18de25eca2a5c1
+      internalID: 845468228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_28
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 998a39e97abd3f44788708b623e3336f
+      internalID: 1897028203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_29
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d70f91b69f40f904c9adaa206ae901e7
+      internalID: 2043702186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_30
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8a20012eda80ba49b75cdca4115f7e5
+      internalID: -697240492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_31
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d2a07d776458641a268c3973643e8c
+      internalID: -1765129419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_32
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a72b21311f03724abf1016750922d5d
+      internalID: 57179934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_33
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fda24ec55cefe40449d7afe82e3b08c6
+      internalID: 872148960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_34
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e8ff03b93a4e9a4f85a5d84b2fde417
+      internalID: -1593431584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_35
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 143
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62c9f1ef26916234eada3dfa2dceb696
+      internalID: 1728949720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 451d150ef4ed3724a908a1a0295bac50
+      internalID: 949753987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_37
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eca1acac7bb02bd4685763a3ac6673c3
+      internalID: -1541848059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_38
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85228b409069977438ec5cc30a16f0c2
+      internalID: -1352573434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_39
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6699ab1c40f5ce24aa01cbb7cd99f251
+      internalID: -1970662860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_40
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b26c54ef55c8df48a25dad4102d682e
+      internalID: 1432007254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_41
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b25e8e85cf4d5c34797199b92a072ca9
+      internalID: -830493438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_42
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b881a860619d6346a94da2e3595b2a2
+      internalID: 1574056108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_43
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a6edcddef343ff4c8df894fe616b23f
+      internalID: 40116802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_44
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42be94123f443e54583cdc5c44818725
+      internalID: 274719394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_45
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b1f3eb4de70e394983168028e131b51
+      internalID: -14627102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_46
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb400e9d80732994da4ad87de6c8a3ad
+      internalID: 1159791275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_47
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a498c03fb62899048addbe459a9ce55a
+      internalID: -539124048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_48
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81d23b3a9e9ca52499e3f024dc069c6d
+      internalID: 1547024761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_49
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 895e036b0307a62499b33ea5f444dfc6
+      internalID: -468495246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_50
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e0d7825618cafa48979ac93cfce41ec
+      internalID: -1492158705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_51
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 108
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6590868fb6021d4d9a19a487ea055c6
+      internalID: 285776858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0b21c653a1b3344d9e7deb49ac47712
+      internalID: -1250675623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_53
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b85d135c1313b0f4788b2018515d9ca4
+      internalID: 1037385528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_54
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c3fe1580a1830e41bc16e9284aa00bc
+      internalID: 405955257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_55
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 627e3ae69baffa745ab2a8317b8d9613
+      internalID: 1351330369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_56
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d04e981e98bd46499c5c161d8cb04c0
+      internalID: -327637178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_57
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23e9415396a92e642b4d6514513acae0
+      internalID: -326187356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_58
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 395b3635ae9c9db419068ae38891c222
+      internalID: 1101888448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_59
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9dbcd2e8c21dbc449c0d546cb4a0c75
+      internalID: -1905635588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_60
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23a0a957238d6934f9236764b0b3f5e2
+      internalID: 1649859984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_61
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 515db4512102e4f48b9cc1b3e052628b
+      internalID: -640842083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_62
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f3b8dc68b1f1174f817a9e82e69c817
+      internalID: -1511028898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_63
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db0cce984dbea8c4f93f60bd4fa81887
+      internalID: 88423434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_64
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c09dbd0718fbc040ad40d625c5cd490
+      internalID: -1492985166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_65
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0157d1b955cdb09468a485466adcb31b
+      internalID: 836716605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_66
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36de94cddbc1582479f86808a9b0f460
+      internalID: 286115643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_67
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 73
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac68b7f538c09345aee73f4e87b5fe4
+      internalID: -161183303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_68
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58b7473e36aca384cb6d6cb6c8e42ef0
+      internalID: 381419714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_69
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98f3324dee5409d45926b1d6579541bb
+      internalID: -1318152137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_70
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b4caa88fda39094e94141735d7fb145
+      internalID: 833110612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_71
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a7c24099b584014c98dc3fa951870bf
+      internalID: 1929188916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_72
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac60869a9390fe44aa618a7025d2661
+      internalID: -1193748936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_73
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865244780fb708d4996b42e52711bca5
+      internalID: 28843583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_74
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb76b189897af349ad164ab12dfb54f
+      internalID: -1443910293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_75
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a63abd47d1cd90140a5762e31f96e77a
+      internalID: 250436422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_76
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9834a465fc81d348a5dda7795c5bd93
+      internalID: -460973955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_77
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 200e15d1f136bee4dbfc92606d6b2163
+      internalID: 1894669978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_78
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55e7eb50eeb142248bebc07d75443870
+      internalID: 1352656472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_79
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 716daa4d3ca79d44f805b58543c980f5
+      internalID: -186632017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_80
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b2922043d79a084a9df89283af22d0b
+      internalID: -765229136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_81
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f07bfab92b59b274cbebd2de3e667d02
+      internalID: 1329840494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_82
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 38
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa69e42d3078d6d4ab06103f75fe0e91
+      internalID: 1626244805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_83
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74b61193d096ce44cad9fd6fa6a9efa4
+      internalID: -566974112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_84
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e5f598ce19659f4d92f85d5e87694fc
+      internalID: -917306191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_85
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 993a57c44fe51f44b91afa1a1be04902
+      internalID: 1119238943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_86
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e85921deebc83e45a1af0e0cfa978af
+      internalID: 1576066022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_87
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1378b327b244e0d44806d4bea454cff9
+      internalID: -390845992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_88
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d579f072db6f8db4d974dc9aee21035a
+      internalID: 490019707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_89
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddaa67efceb6f04b9224da23338f3e2
+      internalID: 678314167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_90
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfd2e72952f89e749b4dd2c5cc0aab90
+      internalID: 1814652464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_91
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32313591076a66949b493fd12c923b39
+      internalID: 562990728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_92
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745178c8a41414044a6bb3f692b55c9a
+      internalID: -1385942452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_93
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2485c454b17067f48bbc8615d2dcff21
+      internalID: -1046437284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_94
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2778a139c01b08438d89a19909de36d
+      internalID: 1688988974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_95
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5089f81e32e6e747b70372e636cdc2e
+      internalID: -2089955868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_96
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed7e79fbbeb2a4345a4418376d21a3d2
+      internalID: -1318838486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_art_outlined_text_fonts_-_22x32_shaded_97
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 3
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9318d5dbcb90ab240bd9e2826529a996
+      internalID: -949453465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ba0407b3d3c342e42ab58af21f736460
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pixel_art_outlined_text_fonts_-_22x32_shaded_0: 1539671969
+      pixel_art_outlined_text_fonts_-_22x32_shaded_1: -380149020
+      pixel_art_outlined_text_fonts_-_22x32_shaded_10: -43268115
+      pixel_art_outlined_text_fonts_-_22x32_shaded_11: 224780132
+      pixel_art_outlined_text_fonts_-_22x32_shaded_12: -1031224077
+      pixel_art_outlined_text_fonts_-_22x32_shaded_13: 1208625746
+      pixel_art_outlined_text_fonts_-_22x32_shaded_14: 1732278707
+      pixel_art_outlined_text_fonts_-_22x32_shaded_15: 276152581
+      pixel_art_outlined_text_fonts_-_22x32_shaded_16: 716378266
+      pixel_art_outlined_text_fonts_-_22x32_shaded_17: -883983615
+      pixel_art_outlined_text_fonts_-_22x32_shaded_18: -2096187686
+      pixel_art_outlined_text_fonts_-_22x32_shaded_19: -1199165156
+      pixel_art_outlined_text_fonts_-_22x32_shaded_2: -957904404
+      pixel_art_outlined_text_fonts_-_22x32_shaded_20: 841778098
+      pixel_art_outlined_text_fonts_-_22x32_shaded_21: 1449550443
+      pixel_art_outlined_text_fonts_-_22x32_shaded_22: 367963960
+      pixel_art_outlined_text_fonts_-_22x32_shaded_23: 1997396186
+      pixel_art_outlined_text_fonts_-_22x32_shaded_24: -348222681
+      pixel_art_outlined_text_fonts_-_22x32_shaded_25: -1637883644
+      pixel_art_outlined_text_fonts_-_22x32_shaded_26: -341536911
+      pixel_art_outlined_text_fonts_-_22x32_shaded_27: 845468228
+      pixel_art_outlined_text_fonts_-_22x32_shaded_28: 1897028203
+      pixel_art_outlined_text_fonts_-_22x32_shaded_29: 2043702186
+      pixel_art_outlined_text_fonts_-_22x32_shaded_3: 754844314
+      pixel_art_outlined_text_fonts_-_22x32_shaded_30: -697240492
+      pixel_art_outlined_text_fonts_-_22x32_shaded_31: -1765129419
+      pixel_art_outlined_text_fonts_-_22x32_shaded_32: 57179934
+      pixel_art_outlined_text_fonts_-_22x32_shaded_33: 872148960
+      pixel_art_outlined_text_fonts_-_22x32_shaded_34: -1593431584
+      pixel_art_outlined_text_fonts_-_22x32_shaded_35: 1728949720
+      pixel_art_outlined_text_fonts_-_22x32_shaded_36: 949753987
+      pixel_art_outlined_text_fonts_-_22x32_shaded_37: -1541848059
+      pixel_art_outlined_text_fonts_-_22x32_shaded_38: -1352573434
+      pixel_art_outlined_text_fonts_-_22x32_shaded_39: -1970662860
+      pixel_art_outlined_text_fonts_-_22x32_shaded_4: 1486483785
+      pixel_art_outlined_text_fonts_-_22x32_shaded_40: 1432007254
+      pixel_art_outlined_text_fonts_-_22x32_shaded_41: -830493438
+      pixel_art_outlined_text_fonts_-_22x32_shaded_42: 1574056108
+      pixel_art_outlined_text_fonts_-_22x32_shaded_43: 40116802
+      pixel_art_outlined_text_fonts_-_22x32_shaded_44: 274719394
+      pixel_art_outlined_text_fonts_-_22x32_shaded_45: -14627102
+      pixel_art_outlined_text_fonts_-_22x32_shaded_46: 1159791275
+      pixel_art_outlined_text_fonts_-_22x32_shaded_47: -539124048
+      pixel_art_outlined_text_fonts_-_22x32_shaded_48: 1547024761
+      pixel_art_outlined_text_fonts_-_22x32_shaded_49: -468495246
+      pixel_art_outlined_text_fonts_-_22x32_shaded_5: 1858643261
+      pixel_art_outlined_text_fonts_-_22x32_shaded_50: -1492158705
+      pixel_art_outlined_text_fonts_-_22x32_shaded_51: 285776858
+      pixel_art_outlined_text_fonts_-_22x32_shaded_52: -1250675623
+      pixel_art_outlined_text_fonts_-_22x32_shaded_53: 1037385528
+      pixel_art_outlined_text_fonts_-_22x32_shaded_54: 405955257
+      pixel_art_outlined_text_fonts_-_22x32_shaded_55: 1351330369
+      pixel_art_outlined_text_fonts_-_22x32_shaded_56: -327637178
+      pixel_art_outlined_text_fonts_-_22x32_shaded_57: -326187356
+      pixel_art_outlined_text_fonts_-_22x32_shaded_58: 1101888448
+      pixel_art_outlined_text_fonts_-_22x32_shaded_59: -1905635588
+      pixel_art_outlined_text_fonts_-_22x32_shaded_6: -2032812436
+      pixel_art_outlined_text_fonts_-_22x32_shaded_60: 1649859984
+      pixel_art_outlined_text_fonts_-_22x32_shaded_61: -640842083
+      pixel_art_outlined_text_fonts_-_22x32_shaded_62: -1511028898
+      pixel_art_outlined_text_fonts_-_22x32_shaded_63: 88423434
+      pixel_art_outlined_text_fonts_-_22x32_shaded_64: -1492985166
+      pixel_art_outlined_text_fonts_-_22x32_shaded_65: 836716605
+      pixel_art_outlined_text_fonts_-_22x32_shaded_66: 286115643
+      pixel_art_outlined_text_fonts_-_22x32_shaded_67: -161183303
+      pixel_art_outlined_text_fonts_-_22x32_shaded_68: 381419714
+      pixel_art_outlined_text_fonts_-_22x32_shaded_69: -1318152137
+      pixel_art_outlined_text_fonts_-_22x32_shaded_7: 334707555
+      pixel_art_outlined_text_fonts_-_22x32_shaded_70: 833110612
+      pixel_art_outlined_text_fonts_-_22x32_shaded_71: 1929188916
+      pixel_art_outlined_text_fonts_-_22x32_shaded_72: -1193748936
+      pixel_art_outlined_text_fonts_-_22x32_shaded_73: 28843583
+      pixel_art_outlined_text_fonts_-_22x32_shaded_74: -1443910293
+      pixel_art_outlined_text_fonts_-_22x32_shaded_75: 250436422
+      pixel_art_outlined_text_fonts_-_22x32_shaded_76: -460973955
+      pixel_art_outlined_text_fonts_-_22x32_shaded_77: 1894669978
+      pixel_art_outlined_text_fonts_-_22x32_shaded_78: 1352656472
+      pixel_art_outlined_text_fonts_-_22x32_shaded_79: -186632017
+      pixel_art_outlined_text_fonts_-_22x32_shaded_8: -1509666568
+      pixel_art_outlined_text_fonts_-_22x32_shaded_80: -765229136
+      pixel_art_outlined_text_fonts_-_22x32_shaded_81: 1329840494
+      pixel_art_outlined_text_fonts_-_22x32_shaded_82: 1626244805
+      pixel_art_outlined_text_fonts_-_22x32_shaded_83: -566974112
+      pixel_art_outlined_text_fonts_-_22x32_shaded_84: -917306191
+      pixel_art_outlined_text_fonts_-_22x32_shaded_85: 1119238943
+      pixel_art_outlined_text_fonts_-_22x32_shaded_86: 1576066022
+      pixel_art_outlined_text_fonts_-_22x32_shaded_87: -390845992
+      pixel_art_outlined_text_fonts_-_22x32_shaded_88: 490019707
+      pixel_art_outlined_text_fonts_-_22x32_shaded_89: 678314167
+      pixel_art_outlined_text_fonts_-_22x32_shaded_9: -1192324919
+      pixel_art_outlined_text_fonts_-_22x32_shaded_90: 1814652464
+      pixel_art_outlined_text_fonts_-_22x32_shaded_91: 562990728
+      pixel_art_outlined_text_fonts_-_22x32_shaded_92: -1385942452
+      pixel_art_outlined_text_fonts_-_22x32_shaded_93: -1046437284
+      pixel_art_outlined_text_fonts_-_22x32_shaded_94: 1688988974
+      pixel_art_outlined_text_fonts_-_22x32_shaded_95: -2089955868
+      pixel_art_outlined_text_fonts_-_22x32_shaded_96: -1318838486
+      pixel_art_outlined_text_fonts_-_22x32_shaded_97: -949453465
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
