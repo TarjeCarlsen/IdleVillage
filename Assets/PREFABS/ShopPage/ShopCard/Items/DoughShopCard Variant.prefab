@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 147294620999730944, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5d9c8270481e6c8418fc2e79f6262976, type: 3}
+      objectReference: {fileID: 413070962, guid: e590601d9db4abe44b5da7691d781268, type: 3}
     - target: {fileID: 1128533484550109890, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -123,6 +123,10 @@ PrefabInstance:
     - target: {fileID: 4824621652000646460, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
       propertyPath: m_Name
       value: DoughShopCard Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098301498484386816, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
