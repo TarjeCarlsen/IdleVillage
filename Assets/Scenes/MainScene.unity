@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 997620300, guid: d6d513f7688cc8d418b05736e9a964f9, type: 3}
+  m_Sprite: {fileID: 2121166084, guid: a7f084398f526764285bf60ccdd1da48, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3647,7 +3647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2558893285262123739, guid: 31b7001d58edc8449a36d61482f04bb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 715
+      value: -457
       objectReference: {fileID: 0}
     - target: {fileID: 2558893285262123739, guid: 31b7001d58edc8449a36d61482f04bb5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3700,7 +3700,7 @@ PrefabInstance:
     - target: {fileID: 8035755518943298590, guid: 31b7001d58edc8449a36d61482f04bb5, type: 3}
       propertyPath: 'currencyIcons.Array.data[7]'
       value: 
-      objectReference: {fileID: -622231446, guid: b285e18197990e14ca5371c87fa54067, type: 3}
+      objectReference: {fileID: -1431374500, guid: b6b9f781dfbf6444db9ad9bee51515fd, type: 3}
     - target: {fileID: 8035755518943298590, guid: 31b7001d58edc8449a36d61482f04bb5, type: 3}
       propertyPath: 'currencyIcons.Array.data[8]'
       value: 
@@ -8458,13 +8458,37 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1426017647867555114, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 449423060, guid: 7b1a305e2b6281946996314c87d8414a, type: 3}
     - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
       propertyPath: m_text
       value: Shop
       objectReference: {fileID: 0}
     - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_fontSize
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 185a5518a05216c43bf8103410197d05, type: 2}
+    - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2091370215363951959, guid: 185a5518a05216c43bf8103410197d05, type: 2}
+    - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211642739525428878, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5488138661778645747, guid: 06732ca7d884c394b88f831a7a2a3a56, type: 3}
       propertyPath: m_Name
@@ -19241,7 +19265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1202141866, guid: ba4a92437b9b5df4693a4cfb4473c481, type: 3}
+  m_Sprite: {fileID: -1978616000, guid: 7b1a305e2b6281946996314c87d8414a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22737,9 +22761,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882355714}
   m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!224 &1912059739 stripped
 RectTransform:
@@ -24473,9 +24497,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006437169}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &2030213185 stripped
 MonoBehaviour:
