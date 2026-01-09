@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 1113ad42a3f25564989d226148523726
+guid: 99365ac180a0164489061d0b982e50bd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,8 +37,8 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
   nPOTScale: 0
   lightmap: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pumpkin_64_0
+      name: Pumpkin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c979a0d39802d8409d33a71de604117
-      internalID: 430888342
+      spriteID: 4f07b6c8d9b7e794ab91d79e3a84031f
+      internalID: 1400114224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pumpkin_64_1
+      name: Pumpkin_1
       rect:
         serializedVersion: 2
         x: 64
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78f3b11ba3661f04c9e9e377a8b6ff42
-      internalID: -2031763401
+      spriteID: 0fe900935e702d344b555e25747893ee
+      internalID: 2075911782
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8562c2c292ac39b4a9487af6c2b95a24
+    spriteID: 41058a04a43ba8349a0d3b5372b7f9ff
     internalID: 0
     vertices: []
     indices: 
@@ -154,8 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pumpkin_64_0: 430888342
-      pumpkin_64_1: -2031763401
+      Pumpkin_0: 1400114224
+      Pumpkin_1: 2075911782
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

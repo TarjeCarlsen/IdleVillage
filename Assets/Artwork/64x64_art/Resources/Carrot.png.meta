@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: a31b693c0a35025498f570f72c1ef7da
+guid: c15422a69d948f243901cb685be9774b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,8 +37,8 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
   nPOTScale: 0
   lightmap: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Wheat_64_0
+      name: Carrot_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 781ba9b8c4801c849b9e596e25802086
-      internalID: 1926994872
+      spriteID: c86f817f76d4b2d4b8dd8ae515c9b0bf
+      internalID: -2033474059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wheat_64_1
+      name: Carrot_1
       rect:
         serializedVersion: 2
         x: 64
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b52fef6961212045b31d989d7515a8a
-      internalID: 593928013
+      spriteID: cd87b3e01b014c3478441b0bf38b791e
+      internalID: -1290876455
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 72362dc1f4fdb13469e1af55e9536ab4
+    spriteID: 163ecc1f253ffc34ba7a507da43a9b18
     internalID: 0
     vertices: []
     indices: 
@@ -154,8 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Wheat_64_0: 1926994872
-      Wheat_64_1: 593928013
+      Carrot_0: -2033474059
+      Carrot_1: -1290876455
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 78ed217acfc5cb943821c89cdeb97c8e
+guid: be9c9b37b2315df4894b11a4ccfd34c6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,8 +37,8 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
   nPOTScale: 0
   lightmap: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Carrot_64_0
+      name: Tomato_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d43deee5f6beacf45ae876caf50e08bf
-      internalID: 770096
+      spriteID: e6b81398c46dd494dabd25b6b76433c4
+      internalID: 769538120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Carrot_64_1
+      name: Tomato_1
       rect:
         serializedVersion: 2
         x: 64
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4f73e9bd5fcb78418173f512df20c7e
-      internalID: -2006070066
+      spriteID: e9bd7146318eebe4797d0046a7fe2107
+      internalID: -958798028
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7db4868a919aecb4dad168d147dd7a31
+    spriteID: 9e2d0d34ca581984ebc50e039174fcea
     internalID: 0
     vertices: []
     indices: 
@@ -154,8 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Carrot_64_0: 770096
-      Carrot_64_1: -2006070066
+      Tomato_0: 769538120
+      Tomato_1: -958798028
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
