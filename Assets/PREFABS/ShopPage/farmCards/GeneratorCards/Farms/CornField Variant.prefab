@@ -63,15 +63,15 @@ PrefabInstance:
     - target: {fileID: 2519747880735264890, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 156664914, guid: a47b34091775a4f48bfc9489d11cb5ac, type: 3}
+      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
     - target: {fileID: 2701218997483789870, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 156664914, guid: a47b34091775a4f48bfc9489d11cb5ac, type: 3}
+      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
     - target: {fileID: 2945950756660674391, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 156664914, guid: a47b34091775a4f48bfc9489d11cb5ac, type: 3}
+      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
     - target: {fileID: 3803657268071689820, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -203,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 5477823026489418110, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -376270224, guid: a47b34091775a4f48bfc9489d11cb5ac, type: 3}
+      objectReference: {fileID: 2082441876, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
     - target: {fileID: 5757981877873322794, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -307,7 +307,7 @@ PrefabInstance:
     - target: {fileID: 8154499663938090547, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 156664914, guid: a47b34091775a4f48bfc9489d11cb5ac, type: 3}
+      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

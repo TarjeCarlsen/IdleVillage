@@ -3,7 +3,7 @@ using LargeNumbers;
 using TMPro;
 using UnityEngine;
 
-public class WindmillManager : MonoBehaviour
+public class WindmillManager : MonoBehaviour// REMOVED GRAIN, SCRIPT DOES NOT WORK ANYMORE
 {
     [SerializeField] private TMP_Text outputPerMinGrain_txt;
     [SerializeField] private TMP_Text outputPerMinFlour_txt;
@@ -41,10 +41,10 @@ public class WindmillManager : MonoBehaviour
 
         totalAmountGeneration += production;
 
-        if (generatedType == CurrencyTypes.grain)
-            grainOutput += production;
-        else if (generatedType == CurrencyTypes.flour)
-            flourOutput += production;
+        // if (generatedType == CurrencyTypes.grain) // REMOVED GRAIN, SCRIPT DOES NOT WORK ANYMORE
+        //     grainOutput += production;
+        // else if (generatedType == CurrencyTypes.flour)
+        //     flourOutput += production;
 
         UpdateUI();
     }
@@ -56,10 +56,10 @@ public class WindmillManager : MonoBehaviour
 
         totalAmountGeneration -= production;
 
-        if (type == CurrencyTypes.grain)
-            grainOutput -= production;
-        else if (type == CurrencyTypes.flour)
-            flourOutput -= production;
+        // if (type == CurrencyTypes.grain) // REMOVED GRAIN, SCRIPT DOES NOT WORK ANYMORE
+        //     grainOutput -= production;
+        // else if (type == CurrencyTypes.flour)
+        //     flourOutput -= production;
 
         UpdateUI();
     }

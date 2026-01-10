@@ -7,16 +7,14 @@ using LargeNumbers;
 public enum CurrencyTypes{
     money,
     wheat,
-    grain,
     flour,
     dough,
     bread,
     corn,
     tomato,
-    pumpkin,
     carrot,
-    pear,
-    watermelon,
+    pumpkin,
+
     
 }
 
