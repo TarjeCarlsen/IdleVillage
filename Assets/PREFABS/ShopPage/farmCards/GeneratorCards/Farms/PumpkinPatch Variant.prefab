@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5612739459828386732
+--- !u!1001 &9083195593685912501
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2013940909732649568, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Name
-      value: CornField Variant
+      value: PumpkinPatch Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2032563136138055011, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -63,15 +63,15 @@ PrefabInstance:
     - target: {fileID: 2519747880735264890, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
+      objectReference: {fileID: 1400114224, guid: 99365ac180a0164489061d0b982e50bd, type: 3}
     - target: {fileID: 2701218997483789870, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
+      objectReference: {fileID: 1400114224, guid: 99365ac180a0164489061d0b982e50bd, type: 3}
     - target: {fileID: 2945950756660674391, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
+      objectReference: {fileID: 1400114224, guid: 99365ac180a0164489061d0b982e50bd, type: 3}
     - target: {fileID: 3803657268071689820, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -203,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 5477823026489418110, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2082441876, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
+      objectReference: {fileID: 2075911782, guid: 99365ac180a0164489061d0b982e50bd, type: 3}
     - target: {fileID: 5757981877873322794, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -254,7 +254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6528308192845365492, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_text
-      value: Corn Field
+      value: Pumpkin Patch
       objectReference: {fileID: 0}
     - target: {fileID: 6573009409644846891, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -307,7 +307,7 @@ PrefabInstance:
     - target: {fileID: 8154499663938090547, guid: 9a00ca4334ee3d44c814b3baafcb585d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1994525343, guid: 957ef2b1fbe7d4741b449214a19b4338, type: 3}
+      objectReference: {fileID: 1400114224, guid: 99365ac180a0164489061d0b982e50bd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
