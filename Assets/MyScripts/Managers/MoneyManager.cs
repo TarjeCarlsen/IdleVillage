@@ -7,10 +7,15 @@ using LargeNumbers;
 public enum CurrencyTypes{
     money,
     wheat,
-    grain,
     flour,
     dough,
     bread,
+    corn,
+    tomato,
+    carrot,
+    pumpkin,
+
+    
 }
 
 public static class CurrencyDummy

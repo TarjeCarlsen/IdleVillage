@@ -15,6 +15,9 @@ public class GeneratorSimple : MonoBehaviour
     [SerializeField] ProgressBarHandler progressBarHandler;
     [SerializeField] TMP_Text amountToGenerate_txt;
     [SerializeField] private StartGeneratingButton startGeneratingButton;
+    [SerializeField] private Animator generatorAnim;
+    [SerializeField] private bool usingAnimation = false;
+    [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
@@ -37,10 +40,20 @@ public class GeneratorSimple : MonoBehaviour
         MoneyManager.Instance.SubtractCurrency(typeToPay, price);
     }
 
+    public void OnGenerateAutoClicked(float time){
+        if(generateRoutine == null){
+            StartGeneratingAuto(time);
+        }else{
+            StopGenerating();
+        }
+    }
+
     public void StartGenerating(float time)
     {
+        print("inside start");
         if (CanAfford() && generateRoutine == null)
         {
+        print("inside inside");
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
             timeRemaining = time;
             generateRoutine = StartCoroutine(Generating());
@@ -55,6 +68,10 @@ public class GeneratorSimple : MonoBehaviour
             OnAutoGenerationStopped?.Invoke(typeToGenerate);
             StopCoroutine(generateRoutine);
             generateRoutine = null;
+            progressBarHandler.ResetProgress();
+        if(generatorAnim){
+            generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
+        }
         }
     }
 
@@ -70,7 +87,6 @@ public class GeneratorSimple : MonoBehaviour
         }
         MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetProductionPower(typeToGenerate));
         StopGenerating();        
-        progressBarHandler.ResetProgress();
         UpdateUI();
     }
 
@@ -83,9 +99,11 @@ public class GeneratorSimple : MonoBehaviour
 
     public void StartGeneratingAuto(float time)
     {
-
         if (CanAfford() && generateRoutine == null)
         {
+        if(generatorAnim){
+            generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
+        }
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
             timeRemaining = time;
             generateRoutine = StartCoroutine(GeneratingAuto());

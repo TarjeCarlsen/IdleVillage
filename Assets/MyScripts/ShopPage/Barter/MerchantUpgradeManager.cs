@@ -182,8 +182,8 @@ public class MerchantUpgradeManager : MonoBehaviour
             upgrades[(UpgradeID.chanceToNotConsumeBarterOffer, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
             upgrades[(UpgradeID.bonusBasedOnPrevActivationState, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Bool, boolState = false };
             upgrades[(UpgradeID.chanceForNothing, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Float, floatValue = 0f };
-            upgrades[(UpgradeID.oneTimeFavorModifyLose, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
-            upgrades[(UpgradeID.oneTimeFavorModifyGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
+            // upgrades[(UpgradeID.oneTimeFavorModifyLose, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 }; //removed 03.01.26 - not working correctly
+            // upgrades[(UpgradeID.oneTimeFavorModifyGain, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 }; //removed 03.01.26 - not working correctly
             // upgrades[(UpgradeID.favorThreshold_02, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
             // upgrades[(UpgradeID.favorThreshold_03, CurrencyDummy.Dummy)] = new UpgradeValue { type = UpgradeValueType.Int, intValue = 0 };
 
