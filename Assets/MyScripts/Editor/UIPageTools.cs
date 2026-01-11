@@ -15,6 +15,12 @@ public class UIPageTools
     {
         ToggleCanvas("FarmPageCanvas");
     }
+    [MenuItem("UI/Show Grid farm page")]
+    static void ShowGridFarm()
+    {
+        ToggleCanvas("GridFarmCanvas");
+    }
+    
     [MenuItem("UI/Show Upgrade Page")]
     static void ShowUpgradePage()
     {
