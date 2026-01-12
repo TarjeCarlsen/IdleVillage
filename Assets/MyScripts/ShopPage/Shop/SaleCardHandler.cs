@@ -8,8 +8,10 @@ public class SaleCardHandler : MonoBehaviour
 
 [SerializeField] private PriceInfo priceinfo;
 [SerializeField] private GameObject prefabFarm;
+
 [SerializeField] private FarmCreator farmCreator;
 [SerializeField] private TMP_Text price_txt;
+
 
 
 [System.Serializable]
@@ -18,7 +20,11 @@ public class PriceInfo{
     public CurrencyTypes priceType;
 }
 
+private void Awake(){
+    farmCreator = GameObject.FindGameObjectWithTag("ShopSaleCards").GetComponent<FarmCreator>();
+}
 private void Start(){
+    
     price_txt.text = priceinfo.price.ToString();
 }
 

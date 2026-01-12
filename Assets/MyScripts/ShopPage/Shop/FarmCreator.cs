@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class FarmCreator : MonoBehaviour
 {
+    [SerializeField] private Transform parentToSpawnUnder;
 
-    public void CreateFarm(GameObject farm){
-        print("from farmcreator, create "+ farm);
+    public void CreateFarm(GameObject farm ){
+        Instantiate(farm,parentToSpawnUnder);
     }
 }
