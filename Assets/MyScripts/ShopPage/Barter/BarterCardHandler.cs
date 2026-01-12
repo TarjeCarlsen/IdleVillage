@@ -195,7 +195,6 @@ public class BarterCardHandler : MonoBehaviour
 
     private float GetRandomValue(int index)
     {
-        print("index not found"+ index);
         float defaultValue = barterManager.barterCurrencyValues[index].defaultCurrencyValue;
         float randomValue = UnityEngine.Random.Range(defaultValue / 2, defaultValue * 2);
         return randomValue;
