@@ -15,6 +15,7 @@ TagManager:
   - UpgradePage
   - ShopPage
   - ShopSaleCards
+  - UpgradePageNew
   layers:
   - Default
   - TransparentFX

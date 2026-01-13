@@ -29,6 +29,8 @@ public enum SpecialUpgradeTypes{
 
 public enum ActivationUnlocks{
     doughpress,
+    tractor,
+
 }
 
 public class UpgradeManager : MonoBehaviour

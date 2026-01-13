@@ -16,6 +16,7 @@ public class GeneratorSimple : MonoBehaviour
     [SerializeField] TMP_Text amountToGenerate_txt;
     [SerializeField] private StartGeneratingButton startGeneratingButton;
     [SerializeField] private Animator generatorAnim;
+    [SerializeField] private Animator resourceAnim;
     [SerializeField] private bool usingAnimation = false;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     private float timeRemaining;
@@ -99,7 +100,7 @@ public class GeneratorSimple : MonoBehaviour
 
     public void StartGeneratingAuto(float time)
     {
-        if (CanAfford() && generateRoutine == null)
+        if (CanAfford() && generateRoutine == null && UpgradeManager.Instance.GetActivationUnlock(ActivationUnlocks.tractor))
         {
         if(generatorAnim){
             generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
@@ -137,5 +138,11 @@ public class GeneratorSimple : MonoBehaviour
 
         }
     }
+
+private void StartGrowing(){
+    if(!resourceAnim) return;
+
+}
+
 
 }

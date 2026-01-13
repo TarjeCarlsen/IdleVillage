@@ -9,7 +9,6 @@ public enum UpgradeTypes{
     AddPowerMulti,
 
 }
-
 public interface IUpgradeEffect
 {
     void Apply(GameObject target = null);

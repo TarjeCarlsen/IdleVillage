@@ -114,6 +114,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Highlighted
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Pressed
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Selected
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7512035279535217213}
   m_Solo: 0
@@ -1263,16 +1269,16 @@ AnimatorStateMachine:
     m_Position: {x: 200, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7512035279535217213}
-    m_Position: {x: 235, y: 65, z: 0}
+    m_Position: {x: 490, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1573492424520413846}
-    m_Position: {x: 270, y: 130, z: 0}
+    m_Position: {x: 430, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7382048861218617867}
-    m_Position: {x: 305, y: 195, z: 0}
+    m_Position: {x: 380, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4633383798579736446}
-    m_Position: {x: 340, y: 260, z: 0}
+    m_Position: {x: 260, y: 350, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -599418931321946721}
