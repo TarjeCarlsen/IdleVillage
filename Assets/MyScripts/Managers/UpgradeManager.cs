@@ -93,6 +93,7 @@ public enum UpgradeIDGlobal
 {
     productionPower,
     market_time_between_customers,
+    tractorActivation,
 }
 
 
@@ -118,8 +119,9 @@ upgrades = new Dictionary<(UpgradeIDGlobal, CurrencyTypes), UpgradeValue>();
     //add upgrades like so:
     //upgrades[(UpgradeIDGlobal.rewardmulti, currency)] = new Upgradevalue {type = UpgradeValueType.Float, floatValue = 1f};
     upgrades[(UpgradeIDGlobal.productionPower,currency)] = new UpgradeValue {type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(1f)};
-    upgrades[(UpgradeIDGlobal.market_time_between_customers, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Float, floatValue = 1f};
  }
+    upgrades[(UpgradeIDGlobal.market_time_between_customers, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Float, floatValue = 1f};
+    upgrades[(UpgradeIDGlobal.tractorActivation, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Bool, boolState = true};
 }
 
 public UpgradeValue Modify(

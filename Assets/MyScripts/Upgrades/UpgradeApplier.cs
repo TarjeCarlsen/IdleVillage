@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class UpgradeApplier : MonoBehaviour
 {
@@ -22,7 +23,13 @@ public class UpgradeApplier : MonoBehaviour
 
     public void ApplyUpgrade(){
         if(upgradeEffect != null){
-                upgradeEffect.Apply();
+
+                upgradeEffect.Apply(areaToUnlock);
+            
+            // else
+            // {
+            //     upgradeEffect.Apply();
+            // }
         }
         if(upgradeEffectMerchants != null){
                 upgradeEffectMerchants.Apply();

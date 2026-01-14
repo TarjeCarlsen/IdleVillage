@@ -12,6 +12,10 @@ using UnityEngine.UI;
 
 public class CardInfo : MonoBehaviour
 {
+    [Header("Specify what id, datatype and currencytype for the upgrade. Default values for unlock upgrades")]
+    [SerializeField] private UpgradeIDGlobal upgradeIDGlobal;
+    [SerializeField] private IsWhatDatatype isWhatDatatype;
+    [SerializeField] private CurrencyTypes currencyType;
     [SerializeField] CardData cardData;
     [SerializeField] Image content_img;
     [SerializeField] TMP_Text header_txt;
@@ -19,6 +23,7 @@ public class CardInfo : MonoBehaviour
     [SerializeField] TMP_Text level_txt;
     [SerializeField] private List<CardInfoContent>  cardInfoContents;
     [SerializeField] private HouseManager houseManager;
+    [SerializeField] private FarmManager farmManager;
     public event Action OnBought;
     private void HideLevel() => level_txt.text = "";
     public int level;
@@ -37,6 +42,7 @@ public class CardInfo : MonoBehaviour
 
         private void Awake(){
         houseManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();
+        farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
         rectTransform = GetComponent<RectTransform>();
         uiCamera = Camera.main; 
         Init();  
@@ -93,6 +99,7 @@ public void Init()
             CalculateNewPrice();
             UpdateUI();
             OnBought?.Invoke();
+            farmManager.OnUpgradeBought(upgradeIDGlobal,isWhatDatatype,currencyType);
             // upgradeApplier.ApplyUpgrade();
         }
     }
@@ -125,24 +132,19 @@ void Update()
 {
     if (Input.GetMouseButtonDown(0))
     {
-        // 🧠 First: if you clicked on *any UI element*, we check if it's part of this card
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
-            // Get the GameObject currently under the pointer
             var pointer = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
 
             if (pointer != null)
             {
-                // ✅ If it’s part of this card’s hierarchy — do nothing
                 if (pointer.transform.IsChildOf(transform))
                     return;
             }
         }
 
-        // 🧭 Second: if it’s not over any of this card’s elements, we check its rect
         if (!RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, uiCamera))
         {
-            // ✅ Clicked truly outside — hide the card
             gameObject.SetActive(false);
         }
     }

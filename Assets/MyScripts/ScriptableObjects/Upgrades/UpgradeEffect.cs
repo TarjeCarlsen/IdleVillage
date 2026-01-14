@@ -4,8 +4,10 @@ using System;
 using UnityEngine.Assertions.Must;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Rendering;
 public enum UpgradeTypes
 {
+    unlockArea,
     addRewardAlpha,
     addRewardFloat,
     addRewardInt,
@@ -16,6 +18,7 @@ public enum UpgradeTypes
     setRewardFloat,
     setRewardInt,
     setRewardBool,
+    
 
 }
 public interface IUpgradeEffect
@@ -41,14 +44,18 @@ public class UpgradeEffect : ScriptableObject
 
     public void Apply(GameObject target = null)
     {
-
+        
         foreach (var info in upgradeTypeInfoGlobals)
         {
+        Debug.Log($"ID = {info.upgradeIDGlobal}");
             foreach (UpgradeTypes upgradeTypes in info.upgradeTypes)
             {
 
                 switch (upgradeTypes)
                 {
+                    case UpgradeTypes.unlockArea:
+                    target?.SetActive(true);
+                    break;
                     // -------- UPGRADES-------- //
                     case UpgradeTypes.addRewardAlpha:
                         foreach (CurrencyTypes type in info.currencyTypes)

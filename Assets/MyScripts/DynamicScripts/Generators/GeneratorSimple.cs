@@ -17,7 +17,6 @@ public class GeneratorSimple : MonoBehaviour
     [SerializeField] private StartGeneratingButton startGeneratingButton;
     [SerializeField] private Animator generatorAnim;
     [SerializeField] private Animator resourceAnim;
-    [SerializeField] private bool usingAnimation = false;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     private float timeRemaining;
     private Coroutine generateRoutine;
