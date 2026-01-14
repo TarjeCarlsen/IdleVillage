@@ -6,12 +6,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GeneratorSimple : MonoBehaviour
+public class GeneratorResources : MonoBehaviour
 {
-
     [SerializeField] private CurrencyTypes typeToGenerate;
     [SerializeField] private CurrencyTypes typeToPay;
     [SerializeField] private AlphabeticNotation amountToPay;
+    [SerializeField] private ResourceGenerator resourceGenerator;
     [SerializeField] ProgressBarHandler progressBarHandler;
     [SerializeField] TMP_Text amountToGenerate_txt;
     [SerializeField] private StartGeneratingButton startGeneratingButton;
@@ -21,12 +21,12 @@ public class GeneratorSimple : MonoBehaviour
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
+        [SerializeField] private FarmManager farmManager;
     public event Action<CurrencyTypes> OnAutoGenerationStarted;
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
-
     private void Start()
     {
-
+                farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
         UpdateUI();
     }
     public bool CanAfford( )
@@ -55,7 +55,7 @@ public class GeneratorSimple : MonoBehaviour
         if (CanAfford() && generateRoutine == null)
         {
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
-            timeRemaining = time;
+            timeRemaining = farmManager.productionTimes[typeToGenerate];
             generateRoutine = StartCoroutine(Generating());
         }
     }
@@ -105,7 +105,8 @@ public class GeneratorSimple : MonoBehaviour
             generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
         }
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
-            timeRemaining = time;
+            timeRemaining = farmManager.productionTimes[typeToGenerate];
+            print("upgradeable time = " + farmManager.productionTimes[typeToGenerate]);
             generateRoutine = StartCoroutine(GeneratingAuto());
         }
     }

@@ -8,16 +8,16 @@ using UnityEngine.Rendering;
 public enum UpgradeTypes
 {
     unlockArea,
-    addRewardAlpha,
-    addRewardFloat,
-    addRewardInt,
-    subRewardAlpha,
-    subRewardFloat,
-    subRewardInt,
-    setRewardAlpha,
-    setRewardFloat,
-    setRewardInt,
-    setRewardBool,
+    addAlpha,
+    addFloat,
+    addInt,
+    subAlpha,
+    subFloat,
+    subInt,
+    setAlpha,
+    setFloat,
+    setInt,
+    setBool,
     
 
 }
@@ -47,7 +47,6 @@ public class UpgradeEffect : ScriptableObject
         
         foreach (var info in upgradeTypeInfoGlobals)
         {
-        Debug.Log($"ID = {info.upgradeIDGlobal}");
             foreach (UpgradeTypes upgradeTypes in info.upgradeTypes)
             {
 
@@ -57,55 +56,55 @@ public class UpgradeEffect : ScriptableObject
                     target?.SetActive(true);
                     break;
                     // -------- UPGRADES-------- //
-                    case UpgradeTypes.addRewardAlpha:
+                    case UpgradeTypes.addAlpha:
                         foreach (CurrencyTypes type in info.currencyTypes)
                         {
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add, type, info.flat_alpha);
                         }
                         break;
-                    case UpgradeTypes.subRewardAlpha:
+                    case UpgradeTypes.subAlpha:
                         foreach (CurrencyTypes type in info.currencyTypes)
                         {
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract, type, info.flat_alpha);
                         }
                         break;
-                    case UpgradeTypes.setRewardAlpha:
+                    case UpgradeTypes.setAlpha:
                         foreach (CurrencyTypes type in info.currencyTypes)
                         {
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set, type, info.flat_alpha);
                         }
                         break;
-                    case UpgradeTypes.addRewardInt:
+                    case UpgradeTypes.addInt:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_intUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.subRewardInt:
+                    case UpgradeTypes.subInt:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_intUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.setRewardInt:
+                    case UpgradeTypes.setInt:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_intUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.addRewardFloat:
+                    case UpgradeTypes.addFloat:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_floatUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.subRewardFloat:
+                    case UpgradeTypes.subFloat:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_floatUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.setRewardFloat:
+                    case UpgradeTypes.setFloat:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_floatUpgrades);
                         } 
                             break;
-                    case UpgradeTypes.setRewardBool:
+                    case UpgradeTypes.setBool:
                         foreach(CurrencyTypes type in info.currencyTypes){
                             UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.bool_state);
                         } 

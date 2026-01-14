@@ -962,7 +962,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5906623270765738087}
   - component: {fileID: 3673466427807140941}
-  - component: {fileID: 5079278241754640142}
   m_Layer: 5
   m_Name: Generator_00
   m_TagString: Untagged
@@ -1012,26 +1011,11 @@ MonoBehaviour:
     magnitude: 0
   progressBarHandler: {fileID: 3060270681092682028}
   amountToGenerate_txt: {fileID: 4656352237096862164}
-  startGeneratingButton: {fileID: 5079278241754640142}
+  startGeneratingButton: {fileID: 0}
   generatorAnim: {fileID: 1331257840519492242}
-  usingAnimation: 1
+  resourceAnim: {fileID: 0}
   locked: 1
   stopRequested: 0
---- !u!114 &5079278241754640142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8770726147786115921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe868740a4bfa1f45b717249f367300d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generatorSimple: {fileID: 3673466427807140941}
-  startButton: {fileID: 7324565661514276913}
-  cancelButton: {fileID: 0}
 --- !u!1001 &7028895760495398267
 PrefabInstance:
   m_ObjectHideFlags: 0

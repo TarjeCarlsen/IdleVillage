@@ -5,6 +5,7 @@ using UnityEngine;
 public class ResourceGenerator : MonoBehaviour
 {
     [SerializeField] private FarmManager farmManager;
+    
     public List<GameObject> tractors;
 
     private void Awake(){
@@ -27,6 +28,14 @@ public class ResourceGenerator : MonoBehaviour
                 tractor.SetActive(true);
             }
                 break;
+            case UpgradeIDGlobal.resourceGenerationTime_Multiplier:
+                
+                break;
         }
+    }
+
+
+    private void CalculateTimeForProduction(){
+
     }
 }
