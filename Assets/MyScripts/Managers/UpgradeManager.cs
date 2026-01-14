@@ -121,7 +121,7 @@ upgrades = new Dictionary<(UpgradeIDGlobal, CurrencyTypes), UpgradeValue>();
     //add upgrades like so:
     //upgrades[(UpgradeIDGlobal.rewardmulti, currency)] = new Upgradevalue {type = UpgradeValueType.Float, floatValue = 1f};
     upgrades[(UpgradeIDGlobal.productionPower,currency)] = new UpgradeValue {type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(1f)};
-    upgrades[(UpgradeIDGlobal.resourceGenerationTime,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =25f};
+    upgrades[(UpgradeIDGlobal.resourceGenerationTime,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =5f};
     upgrades[(UpgradeIDGlobal.resourceGenerationTime_Multiplier,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =1f};
  }
     upgrades[(UpgradeIDGlobal.market_time_between_customers, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Float, floatValue = 1f};
