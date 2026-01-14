@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: ProdTimeWheatDecrease
   m_EditorClassIdentifier: 
   upgradeTypeInfoGlobals:
-  - upgradeTypes: 02000000
+  - upgradeTypes: 05000000
     currencyTypes: 01000000
     upgradeIDGlobal: 4
     flat_alpha:
       coefficient: 0
       magnitude: 0
     flat_intUpgrades: 0
-    flat_floatUpgrades: 5
+    flat_floatUpgrades: 0.05
     bool_state: 0

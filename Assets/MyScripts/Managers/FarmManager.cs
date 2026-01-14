@@ -39,8 +39,7 @@ private void InitializeProductionTimes(){
         float time = 0f;
         time = defaultProdTimes[type] * UpgradeManager.Instance.GetFloat(id,type);
         productionTimes[type]  = time;
-        print("inside calculate" + time);
-        print($"multiplier = {UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.resourceGenerationTime_Multiplier, type)}");
+
     }
 
 

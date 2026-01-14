@@ -24,11 +24,16 @@ public class GeneratorResources : MonoBehaviour
         [SerializeField] private FarmManager farmManager;
     public event Action<CurrencyTypes> OnAutoGenerationStarted;
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
+
+
+
+
     private void Start()
     {
                 farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
         UpdateUI();
     }
+
     public bool CanAfford( )
     {
         if (MoneyManager.Instance.GetCurrency(typeToPay) >= amountToPay)
@@ -37,6 +42,7 @@ public class GeneratorResources : MonoBehaviour
         }
         return false;
     }
+
     private void Pay(AlphabeticNotation price)
     {
         MoneyManager.Instance.SubtractCurrency(typeToPay, price);
@@ -75,20 +81,33 @@ public class GeneratorResources : MonoBehaviour
         }
     }
 
-    private IEnumerator Generating()
-    {
-        Pay(amountToPay);
-        progressBarHandler.StartProgress(timeRemaining);
+private IEnumerator Generating()
+{
+    Pay(amountToPay);
 
-        while (timeRemaining > 0f)
-        {
-            timeRemaining -= Time.deltaTime;
-            yield return null;
-        }
-        MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
-        StopGenerating();        
-        UpdateUI();
+    float elapsed = 0f;
+
+    while (elapsed < GetCurrentDuration())
+    {
+        elapsed += Time.deltaTime;
+
+        float duration = GetCurrentDuration();
+        progressBarHandler.SetProgress(elapsed / duration);
+
+        yield return null;
     }
+
+    MoneyManager.Instance.AddCurrency(
+        typeToGenerate,
+        UpgradeManager.Instance.GetAlphabetic(
+            UpgradeIDGlobal.productionPower,
+            typeToGenerate
+        )
+    );
+
+    StopGenerating();
+    UpdateUI();
+}
 
 
     private void UpdateUI()
@@ -106,42 +125,50 @@ public class GeneratorResources : MonoBehaviour
         }
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
             timeRemaining = farmManager.productionTimes[typeToGenerate];
-            print("upgradeable time = " + farmManager.productionTimes[typeToGenerate]);
             generateRoutine = StartCoroutine(GeneratingAuto());
         }
     }
-    private IEnumerator GeneratingAuto()
+private IEnumerator GeneratingAuto()
+{
+    while (true)
     {
-        while (true)
+        if (stopRequested || !CanAfford())
         {
-            if(stopRequested || !CanAfford()){
-                StopGenerating();
-                progressBarHandler.ResetProgress();
-                startGeneratingButton.ShowAutoButton(); // makes the player have to re enable auto once the generator runs out of currency
-                yield break;
-            }
-            Pay(amountToPay);
-            progressBarHandler.StartProgress(timeRemaining);
-
-            float currentTime = timeRemaining;
-
-            while (currentTime > 0f)
-            {
-                currentTime -= Time.deltaTime;
-                yield return null;
-            }
-            MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
+            StopGenerating();
             progressBarHandler.ResetProgress();
-            UpdateUI();
-            currentTime = timeRemaining;
-
+            startGeneratingButton.ShowAutoButton();
+            yield break;
         }
+
+        Pay(amountToPay);
+
+        float elapsed = 0f;
+
+        while (elapsed < GetCurrentDuration())
+        {
+            elapsed += Time.deltaTime;
+
+            float duration = GetCurrentDuration();
+            progressBarHandler.SetProgress(elapsed / duration);
+
+            yield return null;
+        }
+
+        MoneyManager.Instance.AddCurrency(
+            typeToGenerate,
+            UpgradeManager.Instance.GetAlphabetic(
+                UpgradeIDGlobal.productionPower,
+                typeToGenerate
+            )
+        );
+
+        progressBarHandler.ResetProgress();
+        UpdateUI();
     }
-
-private void StartGrowing(){
-    if(!resourceAnim) return;
-
 }
 
-
+private float GetCurrentDuration()
+{
+    return farmManager.productionTimes[typeToGenerate];
+}
 }

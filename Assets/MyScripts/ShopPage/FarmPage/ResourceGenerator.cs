@@ -35,7 +35,5 @@ public class ResourceGenerator : MonoBehaviour
     }
 
 
-    private void CalculateTimeForProduction(){
 
-    }
 }
