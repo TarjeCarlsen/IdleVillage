@@ -2,11 +2,20 @@ using UnityEngine;
 using LargeNumbers;
 using System;
 using UnityEngine.Assertions.Must;
-public enum UpgradeTypes{
-    UnlockArea,
-    SetActivationState,
-    AddPowerFlat,
-    AddPowerMulti,
+using System.Collections.Generic;
+using System.Collections;
+public enum UpgradeTypes
+{
+    addRewardAlpha,
+    addRewardFloat,
+    addRewardInt,
+    subRewardAlpha,
+    subRewardFloat,
+    subRewardInt,
+    setRewardAlpha,
+    setRewardFloat,
+    setRewardInt,
+    setRewardBool,
 
 }
 public interface IUpgradeEffect
@@ -17,41 +26,88 @@ public interface IUpgradeEffect
 [CreateAssetMenu(fileName = "Upgrades", menuName = "Upgrade/UpgradeEffect Data")]
 public class UpgradeEffect : ScriptableObject
 {
-    [Header("Chose upgrade type. This has to be chosen for any upgrade")]
-    public UpgradeTypes upgradeTypes;
+    public List<UpgradeTypeInfoGlobal> upgradeTypeInfoGlobals;
+    [System.Serializable]
+    public class UpgradeTypeInfoGlobal
+    {
+        public List<UpgradeTypes> upgradeTypes;
+        public List<CurrencyTypes> currencyTypes;
+        public UpgradeIDGlobal upgradeIDGlobal;
+        public AlphabeticNotation flat_alpha;
+        public int flat_intUpgrades;
+        public float flat_floatUpgrades;
+        public bool bool_state;
+    }
 
-    [Header("Chose currency to upgrade")]
-    public CurrencyTypes currencyTypes;
-    [Header("Enable to make the upgrade a activation unlock")]
-    public ActivationUnlocks activationUnlocks;
-    public bool activationState;
+    public void Apply(GameObject target = null)
+    {
 
+        foreach (var info in upgradeTypeInfoGlobals)
+        {
+            foreach (UpgradeTypes upgradeTypes in info.upgradeTypes)
+            {
 
-    [Header("Define the amount of the upgrade")]
-    public AlphabeticNotation flat;
-    public AlphabeticNotation multi;
-    public int flat_forIntUpgrades;
-    public float flat_forFloatUpgrades;
-    public void Apply(GameObject target = null){
-
-
-        switch(upgradeTypes){
-            // -------- AREA UNLOCKS -------- //
-            case UpgradeTypes.UnlockArea:
-                target?.SetActive(true);
-                break;
-            // -------- AREA UNLOCKS -------- //
-            case UpgradeTypes.SetActivationState:
-                UpgradeManager.Instance.SetActivationUnlock(activationUnlocks, activationState);
-                break;
-            // -------- POWER UPGRADES -------- //
-            case UpgradeTypes.AddPowerFlat:
-                UpgradeManager.Instance.AddPowerFlat(currencyTypes,flat);
-                break;
-            case UpgradeTypes.AddPowerMulti:
-                UpgradeManager.Instance.AddPowerMulti(currencyTypes, multi);
-                break;
+                switch (upgradeTypes)
+                {
+                    // -------- UPGRADES-------- //
+                    case UpgradeTypes.addRewardAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.subRewardAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.setRewardAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.addRewardInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.subRewardInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setRewardInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.addRewardFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.subRewardFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setRewardFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setRewardBool:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.bool_state);
+                        } 
+                            break;
+                
+                }
+                
+            }
         }
     }
-    
+
 }

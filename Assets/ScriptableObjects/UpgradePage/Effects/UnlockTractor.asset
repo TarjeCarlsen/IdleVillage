@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215bfe629d58e814cb0412648f0b5828, type: 3}
   m_Name: UnlockTractor
   m_EditorClassIdentifier: 
-  upgradeTypes: 0
+  upgradeTypes: 1
   currencyTypes: 0
-  activationUnlocks: 0
-  activationState: 0
+  activationUnlocks: 1
+  activationState: 1
   flat:
     coefficient: 0
     magnitude: 0

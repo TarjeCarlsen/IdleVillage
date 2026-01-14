@@ -167,7 +167,7 @@ public class ShopCardHandler : MonoBehaviour
 
     private void CalculatePercent()
     {
-        float averageAmountOfCustomers = rawTimeFloat / (UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks) / 2);
+        float averageAmountOfCustomers = rawTimeFloat / (UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.market_time_between_customers,CurrencyDummy.Dummy) / 2);
         currentPrice = sliderHandlerPrice.sliderValue;
 
         // --- Convert to double ratio safely ---

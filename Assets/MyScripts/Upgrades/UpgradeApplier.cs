@@ -22,14 +22,7 @@ public class UpgradeApplier : MonoBehaviour
 
     public void ApplyUpgrade(){
         if(upgradeEffect != null){
-            if (upgradeEffect.upgradeTypes == UpgradeTypes.UnlockArea)
-            {
-                upgradeEffect.Apply(areaToUnlock);
-            }
-            else
-            {
                 upgradeEffect.Apply();
-            }
         }
         if(upgradeEffectMerchants != null){
                 upgradeEffectMerchants.Apply();

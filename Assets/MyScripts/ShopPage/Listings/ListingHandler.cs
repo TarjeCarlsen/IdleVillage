@@ -70,7 +70,7 @@ public class ListingHandler : MonoBehaviour
         // }
         originalCurrencyUsed.sprite = expiredIconSprite;
         expiredCurrencyCollect.sprite = expiredIconSprite;
-        timeBetweenSellChecks = UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks);
+        timeBetweenSellChecks = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.market_time_between_customers,CurrencyDummy.Dummy);
         StartCoroutine(WaitForOneFrame());
     }
 

@@ -86,7 +86,7 @@ public class GeneratorSimple : MonoBehaviour
             timeRemaining -= Time.deltaTime;
             yield return null;
         }
-        MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetProductionPower(typeToGenerate));
+        MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
         StopGenerating();        
         UpdateUI();
     }
@@ -94,13 +94,13 @@ public class GeneratorSimple : MonoBehaviour
 
     private void UpdateUI()
     {
-        amountToGenerate_txt.text = UpgradeManager.Instance.GetProductionPower(typeToGenerate).ToString();
+        amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate).ToString();
     }
 
 
     public void StartGeneratingAuto(float time)
     {
-        if (CanAfford() && generateRoutine == null && UpgradeManager.Instance.GetActivationUnlock(ActivationUnlocks.tractor))
+        if (CanAfford() && generateRoutine == null)//removed tractor
         {
         if(generatorAnim){
             generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
@@ -131,7 +131,7 @@ public class GeneratorSimple : MonoBehaviour
                 currentTime -= Time.deltaTime;
                 yield return null;
             }
-            MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetProductionPower(typeToGenerate));
+            MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
             progressBarHandler.ResetProgress();
             UpdateUI();
             currentTime = timeRemaining;
