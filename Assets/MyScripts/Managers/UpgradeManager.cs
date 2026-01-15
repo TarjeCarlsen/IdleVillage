@@ -101,6 +101,7 @@ public enum UpgradeIDGlobal
     farmProductionPower,
     farmProductionPowerMulti,
     productionPowerMulti,
+    listingInterestedUnlock,
 }
 
 
@@ -132,6 +133,7 @@ upgrades = new Dictionary<(UpgradeIDGlobal, CurrencyTypes), UpgradeValue>();
     upgrades[(UpgradeIDGlobal.resourceGenerationTime,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =5f};
     upgrades[(UpgradeIDGlobal.resourceGenerationTime_Multiplier,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =1f};
  }
+    upgrades[(UpgradeIDGlobal.listingInterestedUnlock,CurrencyDummy.Dummy)] = new UpgradeValue {type = UpgradeValueType.Bool, boolState = false};
     upgrades[(UpgradeIDGlobal.market_time_between_customers, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Float, floatValue = 1f};
     upgrades[(UpgradeIDGlobal.tractorActivation, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Bool, boolState = true};
 }
@@ -170,5 +172,8 @@ public float GetFloat(UpgradeIDGlobal id,CurrencyTypes currencyTypes) => upgrade
 public int GetInt(UpgradeIDGlobal id,CurrencyTypes currencyTypes) => upgrades[(id,currencyTypes)].intValue;
 public AlphabeticNotation GetAlphabetic(UpgradeIDGlobal id,CurrencyTypes currencyTypes) => upgrades[(id,currencyTypes)].alphabetic;
 public bool GetBool(UpgradeIDGlobal id,CurrencyTypes currencyTypes) => upgrades[(id,currencyTypes)].boolState;
+
+
+
 
 }

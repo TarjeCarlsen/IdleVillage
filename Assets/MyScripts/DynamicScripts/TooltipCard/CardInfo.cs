@@ -32,7 +32,7 @@ public class CardInfo : MonoBehaviour
     const string NEGATIVE_COLOR = "#7A1E1E"; // dark red color
     private string templateText;
     private HouseManager houseManager;
-    private FarmManager farmManager;
+    private UpgradeHandler upgradeHandler;
     public event Action OnBought;
     private void HideLevel() => level_txt.text = "";
     public int level;
@@ -53,7 +53,7 @@ public class CardInfo : MonoBehaviour
     private void Awake()
     {
         houseManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HouseManager>();
-        farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
+        upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
         rectTransform = GetComponent<RectTransform>();
         uiCamera = Camera.main;
         Init();
@@ -65,11 +65,11 @@ public class CardInfo : MonoBehaviour
 
     private void OnEnable()
     {
-        farmManager.OnAnyUpgrade += UpdateDescription;
+        upgradeHandler.OnAnyUpgrade += UpdateDescription;
     }
     private void OnDisable()
     {
-        farmManager.OnAnyUpgrade -= UpdateDescription;
+        upgradeHandler.OnAnyUpgrade -= UpdateDescription;
 
     }
 
@@ -130,7 +130,7 @@ public class CardInfo : MonoBehaviour
             CalculateNewPrice();
             UpdateUI();
             OnBought?.Invoke();
-            farmManager.OnUpgradeBought(upgradeIDGlobal, isWhatDatatype, currencyType);
+            upgradeHandler.OnUpgradeBought(upgradeIDGlobal, isWhatDatatype, currencyType);
             // upgradeApplier.ApplyUpgrade();
         }
     }

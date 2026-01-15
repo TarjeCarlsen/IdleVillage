@@ -23,7 +23,7 @@ public class GeneratorResources : MonoBehaviour
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
-        [SerializeField] private FarmManager farmManager;
+        [SerializeField] private UpgradeHandler upgradeHandler;
     public event Action<CurrencyTypes> OnAutoGenerationStarted;
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
 
@@ -32,7 +32,7 @@ public class GeneratorResources : MonoBehaviour
 
     private void Awake()
     {
-                farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
+                upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
                 tractor.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.tractorActivation,CurrencyDummy.Dummy));
     }
 
@@ -42,10 +42,10 @@ public class GeneratorResources : MonoBehaviour
     }
 
     private void OnEnable(){
-        farmManager.notfiyUpdate += UpdateUI;
+        upgradeHandler.notfiyUpdate += UpdateUI;
     }
     private void OnDisable(){
-        farmManager.notfiyUpdate -= UpdateUI;
+        upgradeHandler.notfiyUpdate -= UpdateUI;
     }
     public bool CanAfford( )
     {
@@ -92,7 +92,7 @@ public void StartGenerating(float time)
     if (CanAfford() && generateRoutine == null)
     {
         isManualRunning = true;
-        timeRemaining = farmManager.productionTimes[typeToGenerate];
+        timeRemaining = upgradeHandler.productionTimes[typeToGenerate];
         generateRoutine = StartCoroutine(Generating());
     }
 }
@@ -132,7 +132,7 @@ private IEnumerator Generating()
 
     MoneyManager.Instance.AddCurrency(
         typeToGenerate,
-        farmManager.CalculateProduction(typeToGenerate)
+        upgradeHandler.CalculateProduction(typeToGenerate)
     );
 
     isManualRunning = false;
@@ -193,7 +193,7 @@ private IEnumerator GeneratingAuto()
 
         MoneyManager.Instance.AddCurrency(
             typeToGenerate,
-            farmManager.CalculateProduction(typeToGenerate)
+            upgradeHandler.CalculateProduction(typeToGenerate)
         );
 
         progressBarHandler.ResetProgress();
@@ -203,6 +203,6 @@ private IEnumerator GeneratingAuto()
 
 private float GetCurrentDuration()
 {
-    return farmManager.productionTimes[typeToGenerate];
+    return upgradeHandler.productionTimes[typeToGenerate];
 }
 }

@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2120808898669172615, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
       propertyPath: maxValueCurrencytype
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2233766819043227696, guid: a890cb021eada354c9c590cf13b0f0eb, type: 3}
       propertyPath: prefabListingToCreate

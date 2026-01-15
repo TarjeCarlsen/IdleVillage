@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ResourceFarm : MonoBehaviour
 {
-    [SerializeField] private FarmManager farmManager;
+    [SerializeField] private UpgradeHandler upgradeHandler;
     
     public List<GameObject> tractors;
 
     private void Awake(){
-        farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
+        upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
     }
 
 
     private void OnEnable(){
-        farmManager.OnFarmUpgradeBought += enableUpgrades;
+        upgradeHandler.OnFarmUpgradeBought += enableUpgrades;
     }
     private void OnDisable(){
-        farmManager.OnFarmUpgradeBought -= enableUpgrades;
+        upgradeHandler.OnFarmUpgradeBought -= enableUpgrades;
 
     }
 

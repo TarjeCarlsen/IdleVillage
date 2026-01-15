@@ -6,12 +6,14 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Scripting;
 
-public class FarmManager : MonoBehaviour
+public class UpgradeHandler : MonoBehaviour
 {
     public Dictionary<CurrencyTypes,float> defaultProdTimes;
     public Dictionary<CurrencyTypes, float> productionTimes;
 
 public event Action <UpgradeIDGlobal,IsWhatDatatype,CurrencyTypes> OnFarmUpgradeBought;
+public event Action <UpgradeIDGlobal,IsWhatDatatype,CurrencyTypes> OnMarketUpgradeBought;
+
 public event Action <UpgradeIDGlobal, IsWhatDatatype,CurrencyTypes> OnAnyUpgrade;
 public event Action  notfiyUpdate;
 
@@ -35,14 +37,17 @@ private void InitializeProductionTimes(){
             OnFarmUpgradeBought?.Invoke(id,datatype,currencyTypes);
             break;
             case UpgradeIDGlobal.resourceGenerationTime_Multiplier:
-            CalculateTime(id, currencyTypes);
+            CalculateTimeFarm(id, currencyTypes);
+            break;
+            case UpgradeIDGlobal.listingInterestedUnlock:
+            OnMarketUpgradeBought?.Invoke(id,datatype,currencyTypes);
             break;
         }
             notfiyUpdate?.Invoke();
             OnAnyUpgrade?.Invoke(id,datatype,currencyTypes);
     }
 
-    private void CalculateTime(UpgradeIDGlobal id,CurrencyTypes type){
+    private void CalculateTimeFarm(UpgradeIDGlobal id,CurrencyTypes type){
         float time = 0f;
         // print("multiplier = "+  UpgradeManager.Instance.GetFloat(id,type));
         time = defaultProdTimes[type] / UpgradeManager.Instance.GetFloat(id,type);

@@ -50,6 +50,7 @@ public class ShopCardHandler : MonoBehaviour
     }
 
     private void Start(){
+        parentToSpawnUnder = GameObject.FindGameObjectWithTag("ListingContainer").GetComponent<Transform>();
         time = HelperFunctions.Instance.ConvertSecondsToTime(rawTimeFloat);
         cardName = gameObject.name;
         CalculatePercent();
