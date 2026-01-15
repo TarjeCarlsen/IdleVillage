@@ -92,6 +92,7 @@ public class ListingHandler : MonoBehaviour
         StopActiveListing();
         Destroy(gameObject);
         ShopManager.Instance.RemoveListing(uniqueID);
+        ShopManager.Instance.IndicateSoldItem(false);
     }
 
     private bool ItemSold()
@@ -140,6 +141,7 @@ private IEnumerator CheckForSoldItem()
         {
             ShopManager.Instance.UpdateCollectAmount(sellingAmount,true);
             ShopManager.Instance.UpdateListing(uniqueID,true);
+            ShopManager.Instance.IndicateSoldItem(true);
             StopActiveListing();
             yield break;
         }

@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionText_txt: Increases the production amount of wheat by <b><color=#1E7F1E>
     +1</color></b>. Total bonus = <color=#1E7F1E> {} </color>
   content_images:
-  - {fileID: 524636345, guid: f2b267b9957a5934fac0b42058a43696, type: 3}
+  - {fileID: 651404241, guid: 762e2a085f529d74cbd10a089983133e, type: 3}
   cardDataInfo:
   - type: 0
     price:
@@ -25,4 +25,4 @@ MonoBehaviour:
     sprite: {fileID: -1170097376, guid: 9ba4ecf6334279b4594b783130691c64, type: 3}
     priceMultiplier: 1.1
   maxLevel: 25
-  useLevels: 0
+  useLevels: 1

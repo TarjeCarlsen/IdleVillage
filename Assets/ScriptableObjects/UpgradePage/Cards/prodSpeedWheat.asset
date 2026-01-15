@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionText_txt: Increase wheat farm production speed by <b><color=#1E7F1E>+5%</color></b>
     every upgrade. Total bonus speed =<b> {} </b>
   content_images:
-  - {fileID: 524636345, guid: f2b267b9957a5934fac0b42058a43696, type: 3}
+  - {fileID: -661755390, guid: 629d43e8a536944458998cdc1bc6cc1a, type: 3}
   cardDataInfo:
   - type: 0
     price:

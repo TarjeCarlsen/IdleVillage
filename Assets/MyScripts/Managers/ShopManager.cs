@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using LargeNumbers;
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private TMP_Text currentListingAmount_txt;
     [SerializeField] private TMP_Text currentCollectAmount_txt;
+    [SerializeField] private GameObject soldIconIndicator;
     [SerializeField] private GameObject collectAllButton;
     public Dictionary<string, ListingData> listingObjects = new Dictionary<string, ListingData>();
     [SerializeField] private Transform ShopCardHolder;
@@ -93,6 +95,10 @@ void Awake()
     private void UpdateUI(){
         currentCollectAmount_txt.text = collectAmount.ToStringSmart(1);
         currentListingAmount_txt.text = currentListings.ToString() +"/" +  StorageManager.Instance.GetMaxSpecialStorage(SpecialStorageType.shopAmountListings).ToString();
+    }
+
+    public void IndicateSoldItem(bool indicatorState){
+        soldIconIndicator.SetActive(indicatorState);
     }
 
 
