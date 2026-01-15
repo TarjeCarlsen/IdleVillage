@@ -89,15 +89,15 @@ RectTransform:
   m_GameObject: {fileID: 685990398461226124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8060724320032192198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 549, y: -14}
-  m_SizeDelta: {x: 160, y: 125}
+  m_AnchoredPosition: {x: -73, y: -118}
+  m_SizeDelta: {x: 128, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6797411450652454585
 CanvasRenderer:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7b2ff3c56dc87934abf01ee5e2d40ce3, type: 3}
+  m_Sprite: {fileID: -1409178218, guid: 67016c0d63865944083fa91eb17592a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -284,11 +284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6925e62926181848b9d0365caf01b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradeIDGlobal: 0
+  isWhatDatatype: 0
+  currencyType: 0
   cardData: {fileID: 11400000, guid: 8bb940b6253d0cc4b96bc874a1c863b2, type: 2}
-  content_img: {fileID: 7664673521183208240}
-  header_txt: {fileID: 3977746752490400855}
-  description_txt: {fileID: 3187881053670431022}
-  level_txt: {fileID: 8913126070248303909}
   cardInfoContents:
   - price_parent_obj: {fileID: 262440914537749161}
     price_text: {fileID: 6378369774318607589}
@@ -297,7 +296,14 @@ MonoBehaviour:
     rawPrice:
       coefficient: 0
       magnitude: 0
-  houseManager: {fileID: 0}
+  isPercentage: 0
+  useMinusValue: 0
+  minusThis_forDisplayValue: 0
+  amountOfDecimals: 0
+  content_img: {fileID: 7664673521183208240}
+  header_txt: {fileID: 3977746752490400855}
+  description_txt: {fileID: 3187881053670431022}
+  level_txt: {fileID: 8913126070248303909}
   level: 0
 --- !u!114 &5651554507064012076
 MonoBehaviour:
@@ -936,7 +942,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 78}
+  m_AnchoredPosition: {x: -81, y: 78}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8990874681722450808

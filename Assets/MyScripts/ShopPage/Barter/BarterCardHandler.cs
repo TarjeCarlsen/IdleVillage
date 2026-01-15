@@ -473,7 +473,6 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
         float chance = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.chanceToNotConsumeBarterOffer,chosenMerchant,CurrencyDummy.Dummy);
         // float chance = 0f; // change to the upgradable once implemented
         float roll = UnityEngine.Random.Range(0f, 1f);
-        print($"rolled {roll} chance {chance}");
         if (roll > chance)
         {
             return true;

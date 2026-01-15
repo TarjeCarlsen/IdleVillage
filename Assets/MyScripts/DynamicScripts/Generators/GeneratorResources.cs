@@ -11,14 +11,15 @@ public class GeneratorResources : MonoBehaviour
     [SerializeField] private CurrencyTypes typeToGenerate;
     [SerializeField] private CurrencyTypes typeToPay;
     [SerializeField] private AlphabeticNotation amountToPay;
-    [SerializeField] private ResourceGenerator resourceGenerator;
     [SerializeField] ProgressBarHandler progressBarHandler;
     [SerializeField] TMP_Text amountToGenerate_txt;
-    [SerializeField] private StartGeneratingButton startGeneratingButton;
     [SerializeField] private Animator generatorAnim;
     [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     [SerializeField] private GameObject tractor;
+    private bool isManualRunning = false;
+    private bool isAutoRunning = false;
+    private bool autoQueued = false;
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
@@ -29,14 +30,23 @@ public class GeneratorResources : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
                 farmManager = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<FarmManager>();
                 tractor.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.tractorActivation,CurrencyDummy.Dummy));
-                print("tractor state = "+ UpgradeManager.Instance.GetBool(UpgradeIDGlobal.tractorActivation,CurrencyDummy.Dummy));
+    }
+
+    private void Start(){
+
         UpdateUI();
     }
 
+    private void OnEnable(){
+        farmManager.notfiyUpdate += UpdateUI;
+    }
+    private void OnDisable(){
+        farmManager.notfiyUpdate -= UpdateUI;
+    }
     public bool CanAfford( )
     {
         if (MoneyManager.Instance.GetCurrency(typeToPay) >= amountToPay)
@@ -51,38 +61,61 @@ public class GeneratorResources : MonoBehaviour
         MoneyManager.Instance.SubtractCurrency(typeToPay, price);
     }
 
-    public void OnGenerateAutoClicked(float time){
-        if(generateRoutine == null){
-            StartGeneratingAuto(time);
-        }else{
-            StopGenerating();
-        }
+public void OnGenerateAutoClicked(float time)
+{
+    // If auto is already running → stop it
+    if (isAutoRunning)
+    {
+        stopRequested = true;
+        autoQueued = false;
+            if (generatorAnim)
+        generatorAnim.SetBool("Activated", false);
+        return;
     }
 
-    public void StartGenerating(float time)
+    // If manual is running → queue auto
+    if (isManualRunning)
     {
-        if (CanAfford() && generateRoutine == null)
-        {
-            OnAutoGenerationStarted?.Invoke(typeToGenerate);
-            timeRemaining = farmManager.productionTimes[typeToGenerate];
-            generateRoutine = StartCoroutine(Generating());
-        }
+        print("testing manual");
+        autoQueued = true;
+        if (generatorAnim)
+        generatorAnim.SetBool("Activated", true);
+        return;
     }
 
-    public void StopGenerating()
+    // Otherwise → start auto immediately
+    StartGeneratingAuto(time);
+}
+
+public void StartGenerating(float time)
+{
+    if (CanAfford() && generateRoutine == null)
     {
-        if (generateRoutine != null)
-        {
-            
-            OnAutoGenerationStopped?.Invoke(typeToGenerate);
-            StopCoroutine(generateRoutine);
-            generateRoutine = null;
-            progressBarHandler.ResetProgress();
-        if(generatorAnim){
-            generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
-        }
-        }
+        isManualRunning = true;
+        timeRemaining = farmManager.productionTimes[typeToGenerate];
+        generateRoutine = StartCoroutine(Generating());
     }
+}
+
+private void StopGenerating()
+{
+    if (generateRoutine != null)
+    {
+        StopCoroutine(generateRoutine);
+        generateRoutine = null;
+    }
+
+    isAutoRunning = false;
+    isManualRunning = false;
+    autoQueued = false;
+
+    progressBarHandler.ResetProgress();
+
+    if (generatorAnim)
+        generatorAnim.SetBool("Activated", false);
+
+    OnAutoGenerationStopped?.Invoke(typeToGenerate);
+}
 
 private IEnumerator Generating()
 {
@@ -93,25 +126,27 @@ private IEnumerator Generating()
     while (elapsed < GetCurrentDuration())
     {
         elapsed += Time.deltaTime;
-
-        float duration = GetCurrentDuration();
-        progressBarHandler.SetProgress(elapsed / duration);
-
+        progressBarHandler.SetProgress(elapsed / GetCurrentDuration());
         yield return null;
     }
 
     MoneyManager.Instance.AddCurrency(
         typeToGenerate,
-        UpgradeManager.Instance.GetAlphabetic(
-            UpgradeIDGlobal.productionPower,
-            typeToGenerate
-        )
+        farmManager.CalculateProduction(typeToGenerate)
     );
 
-    StopGenerating();
+    isManualRunning = false;
+    generateRoutine = null;
+    progressBarHandler.ResetProgress();
     UpdateUI();
-}
 
+    // ✅ START AUTO IF QUEUED
+    if (autoQueued)
+    {
+        autoQueued = false;
+        StartGeneratingAuto(0f);
+    }
+}
 
     private void UpdateUI()
     {
@@ -119,18 +154,18 @@ private IEnumerator Generating()
     }
 
 
-    public void StartGeneratingAuto(float time)
-    {
-        if (CanAfford() && generateRoutine == null)//removed tractor
-        {
-        if(generatorAnim){
-            generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
-        }
-            OnAutoGenerationStarted?.Invoke(typeToGenerate);
-            timeRemaining = farmManager.productionTimes[typeToGenerate];
-            generateRoutine = StartCoroutine(GeneratingAuto());
-        }
-    }
+public void StartGeneratingAuto(float time)
+{
+    if (!CanAfford() || generateRoutine != null) return;
+
+    isAutoRunning = true;
+    stopRequested = false;
+
+    if (generatorAnim)
+        generatorAnim.SetBool("Activated", true);
+
+    generateRoutine = StartCoroutine(GeneratingAuto());
+}
 private IEnumerator GeneratingAuto()
 {
     while (true)
@@ -139,7 +174,6 @@ private IEnumerator GeneratingAuto()
         {
             StopGenerating();
             progressBarHandler.ResetProgress();
-            startGeneratingButton.ShowAutoButton();
             yield break;
         }
 
@@ -159,10 +193,7 @@ private IEnumerator GeneratingAuto()
 
         MoneyManager.Instance.AddCurrency(
             typeToGenerate,
-            UpgradeManager.Instance.GetAlphabetic(
-                UpgradeIDGlobal.productionPower,
-                typeToGenerate
-            )
+            farmManager.CalculateProduction(typeToGenerate)
         );
 
         progressBarHandler.ResetProgress();

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using LargeNumbers;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Scripting;
 
 public class FarmManager : MonoBehaviour
@@ -10,6 +13,7 @@ public class FarmManager : MonoBehaviour
 
 public event Action <UpgradeIDGlobal,IsWhatDatatype,CurrencyTypes> OnFarmUpgradeBought;
 public event Action <UpgradeIDGlobal, IsWhatDatatype,CurrencyTypes> OnAnyUpgrade;
+public event Action  notfiyUpdate;
 
 private void Awake(){
     InitializeProductionTimes();
@@ -34,6 +38,7 @@ private void InitializeProductionTimes(){
             CalculateTime(id, currencyTypes);
             break;
         }
+            notfiyUpdate?.Invoke();
             OnAnyUpgrade?.Invoke(id,datatype,currencyTypes);
     }
 
@@ -41,9 +46,20 @@ private void InitializeProductionTimes(){
         float time = 0f;
         // print("multiplier = "+  UpgradeManager.Instance.GetFloat(id,type));
         time = defaultProdTimes[type] / UpgradeManager.Instance.GetFloat(id,type);
-        print($"prodtime = { defaultProdTimes[type]} multi = {UpgradeManager.Instance.GetFloat(id,type)} time = {time}");
         productionTimes[type]  = time;
 
+    }
+
+    public AlphabeticNotation CalculateProduction(CurrencyTypes type){
+        AlphabeticNotation result = new AlphabeticNotation(0f);
+        AlphabeticNotation farmPower = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.farmProductionPower,type);
+        AlphabeticNotation currencyPower = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,type);
+        float farmPowerMulti = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.farmProductionPowerMulti, type);
+        float currencyMulti = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.productionPowerMulti, type);
+
+
+        result = ((farmPower + currencyPower) * farmPowerMulti) * currencyMulti;
+        return result;
     }
 
 
