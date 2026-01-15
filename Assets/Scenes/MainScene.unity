@@ -5142,12 +5142,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
+      propertyPath: isPercentage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
+      propertyPath: useMinusValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
       propertyPath: isWhatDatatype
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
       propertyPath: upgradeIDGlobal
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
+      propertyPath: amountOfDecimals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047225555847330095, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
+      propertyPath: minusThis_forDisplayValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5115744537554466498, guid: 91db3eb5370c27444a3573a26664443f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -20289,7 +20305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpecificStartValue_TESTING: []
   defaultStartMoney:
-    coefficient: 255
+    coefficient: 10000
     magnitude: 0
 --- !u!4 &1853937288
 Transform:

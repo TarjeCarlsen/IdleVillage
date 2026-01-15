@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bfe629d58e814cb0412648f0b5828, type: 3}
-  m_Name: ProdTimeWheatDecrease
+  m_Name: ProdSpeedWheat
   m_EditorClassIdentifier: 
   upgradeTypeInfoGlobals:
-  - upgradeTypes: 05000000
+  - upgradeTypes: 02000000
     currencyTypes: 01000000
     upgradeIDGlobal: 4
     flat_alpha:

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a390db302a0e2b94bb71a0b80495e4b1, type: 3}
-  m_Name: prodTimeWheat
+  m_Name: prodSpeedWheat
   m_EditorClassIdentifier: 
-  header_txt: Wheat Production Time
-  descriptionText_txt: Decrease the production time of wheat generation from farms
-    by 5%
+  header_txt: Faster wheat production
+  descriptionText_txt: Increase wheat farm production speed by <b><color=#1E7F1E>+5%</color></b>
+    every upgrade. Total bonus speed =<b> {} </b>
   content_images:
   - {fileID: 524636345, guid: f2b267b9957a5934fac0b42058a43696, type: 3}
   cardDataInfo:
@@ -22,7 +22,7 @@ MonoBehaviour:
     price:
       coefficient: 25
       magnitude: 0
-    sprite: {fileID: 0}
-    priceMultiplier: 0
+    sprite: {fileID: -1170097376, guid: 9ba4ecf6334279b4594b783130691c64, type: 3}
+    priceMultiplier: 1.1
   maxLevel: 10
   useLevels: 1

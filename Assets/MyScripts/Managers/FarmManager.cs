@@ -9,6 +9,7 @@ public class FarmManager : MonoBehaviour
     public Dictionary<CurrencyTypes, float> productionTimes;
 
 public event Action <UpgradeIDGlobal,IsWhatDatatype,CurrencyTypes> OnFarmUpgradeBought;
+public event Action <UpgradeIDGlobal, IsWhatDatatype,CurrencyTypes> OnAnyUpgrade;
 
 private void Awake(){
     InitializeProductionTimes();
@@ -33,11 +34,14 @@ private void InitializeProductionTimes(){
             CalculateTime(id, currencyTypes);
             break;
         }
+            OnAnyUpgrade?.Invoke(id,datatype,currencyTypes);
     }
 
     private void CalculateTime(UpgradeIDGlobal id,CurrencyTypes type){
         float time = 0f;
-        time = defaultProdTimes[type] * UpgradeManager.Instance.GetFloat(id,type);
+        // print("multiplier = "+  UpgradeManager.Instance.GetFloat(id,type));
+        time = defaultProdTimes[type] / UpgradeManager.Instance.GetFloat(id,type);
+        print($"prodtime = { defaultProdTimes[type]} multi = {UpgradeManager.Instance.GetFloat(id,type)} time = {time}");
         productionTimes[type]  = time;
 
     }
