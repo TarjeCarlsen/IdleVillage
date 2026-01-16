@@ -28,9 +28,6 @@ public class ResourceFarm : MonoBehaviour
                 tractor.SetActive(true);
             }
                 break;
-            case UpgradeIDGlobal.resourceGenerationTime_Multiplier:
-                
-                break;
         }
     }
 

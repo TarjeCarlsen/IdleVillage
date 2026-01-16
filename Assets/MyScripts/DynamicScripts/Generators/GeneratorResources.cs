@@ -132,7 +132,7 @@ private IEnumerator Generating()
 
     MoneyManager.Instance.AddCurrency(
         typeToGenerate,
-        upgradeHandler.CalculateProduction(typeToGenerate)
+        upgradeHandler.CalculateProductionFarm(typeToGenerate)
     );
 
     isManualRunning = false;
@@ -193,7 +193,7 @@ private IEnumerator GeneratingAuto()
 
         MoneyManager.Instance.AddCurrency(
             typeToGenerate,
-            upgradeHandler.CalculateProduction(typeToGenerate)
+            upgradeHandler.CalculateProductionFarm(typeToGenerate)
         );
 
         progressBarHandler.ResetProgress();

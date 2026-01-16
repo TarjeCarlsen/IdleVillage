@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using LargeNumbers;
 using UnityEditor.PackageManager.Requests;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Scripting;
@@ -36,7 +37,7 @@ private void InitializeProductionTimes(){
             case UpgradeIDGlobal.tractorActivation:
             OnFarmUpgradeBought?.Invoke(id,datatype,currencyTypes);
             break;
-            case UpgradeIDGlobal.resourceGenerationTime_Multiplier:
+            case UpgradeIDGlobal.resourceGenerationSpeed_Multiplier:
             CalculateTimeFarm(id, currencyTypes);
             break;
             case UpgradeIDGlobal.listingInterestedUnlock:
@@ -48,23 +49,38 @@ private void InitializeProductionTimes(){
     }
 
     private void CalculateTimeFarm(UpgradeIDGlobal id,CurrencyTypes type){
-        float time = 0f;
+        float finalTime = 0f;
         // print("multiplier = "+  UpgradeManager.Instance.GetFloat(id,type));
-        time = defaultProdTimes[type] / UpgradeManager.Instance.GetFloat(id,type);
-        productionTimes[type]  = time;
 
+        // add + to speedmulti for more speedmulti upgrades
+        float baseTime = defaultProdTimes[type];
+        float speedMulti = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.resourceGenerationSpeed_Multiplier,type);
+
+        finalTime = baseTime;
+        finalTime /= speedMulti;
+        Mathf.Max(finalTime, 0.0001f);
+
+        productionTimes[type] = finalTime;
+        print("new time = "+ finalTime);
     }
 
-    public AlphabeticNotation CalculateProduction(CurrencyTypes type){
+    public AlphabeticNotation CalculateProductionFarm(CurrencyTypes type){
         AlphabeticNotation result = new AlphabeticNotation(0f);
         AlphabeticNotation farmPower = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.farmProductionPower,type);
         AlphabeticNotation currencyPower = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,type);
         float farmPowerMulti = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.farmProductionPowerMulti, type);
         float currencyMulti = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.productionPowerMulti, type);
 
-
+        //+ for additive
+        // * (1+ Multi / 100) for multies
+        result = farmPower + currencyPower 
+        * (1+ farmPowerMulti / 100)
+        * (1 + currencyMulti / 100);
+        
         result = ((farmPower + currencyPower) * farmPowerMulti) * currencyMulti;
+
         return result;
+
     }
 
 

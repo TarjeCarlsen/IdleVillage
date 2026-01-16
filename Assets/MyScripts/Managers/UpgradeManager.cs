@@ -97,7 +97,7 @@ public enum UpgradeIDGlobal
     market_time_between_customers,
     tractorActivation,
     resourceGenerationTime,
-    resourceGenerationTime_Multiplier,
+    resourceGenerationSpeed_Multiplier,
     farmProductionPower,
     farmProductionPowerMulti,
     productionPowerMulti,
@@ -127,11 +127,11 @@ upgrades = new Dictionary<(UpgradeIDGlobal, CurrencyTypes), UpgradeValue>();
     //add upgrades like so:
     //upgrades[(UpgradeIDGlobal.rewardmulti, currency)] = new Upgradevalue {type = UpgradeValueType.Float, floatValue = 1f};
     upgrades[(UpgradeIDGlobal.productionPower,currency)] = new UpgradeValue {type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(1f)};
-    upgrades[(UpgradeIDGlobal.productionPowerMulti,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue = 1f};
+    upgrades[(UpgradeIDGlobal.productionPowerMulti,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue = 0f};
     upgrades[(UpgradeIDGlobal.farmProductionPower,currency)] = new UpgradeValue {type = UpgradeValueType.Alphabetic, alphabetic = new AlphabeticNotation(0f)};
-    upgrades[(UpgradeIDGlobal.farmProductionPowerMulti,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =1f};
+    upgrades[(UpgradeIDGlobal.farmProductionPowerMulti,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =0f};
     upgrades[(UpgradeIDGlobal.resourceGenerationTime,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =5f};
-    upgrades[(UpgradeIDGlobal.resourceGenerationTime_Multiplier,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =1f};
+    upgrades[(UpgradeIDGlobal.resourceGenerationSpeed_Multiplier,currency)] = new UpgradeValue {type = UpgradeValueType.Float, floatValue =1f};
  }
     upgrades[(UpgradeIDGlobal.listingInterestedUnlock,CurrencyDummy.Dummy)] = new UpgradeValue {type = UpgradeValueType.Bool, boolState = false};
     upgrades[(UpgradeIDGlobal.market_time_between_customers, CurrencyDummy.Dummy)] = new UpgradeValue{type =  UpgradeValueType.Float, floatValue = 1f};
