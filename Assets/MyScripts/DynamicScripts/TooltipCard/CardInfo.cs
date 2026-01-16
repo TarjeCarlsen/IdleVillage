@@ -19,7 +19,8 @@ public class CardInfo : MonoBehaviour
     [SerializeField] CardData cardData;
     [SerializeField] private List<CardInfoContent> cardInfoContents;
 
-
+    [SerializeField] private bool useCustomText;
+    [SerializeField] private string customText;
     [SerializeField] private bool isPercentage = false;
     [SerializeField] private bool useMinusValue = false;
     [SerializeField] private float minusThis_forDisplayValue;
@@ -28,8 +29,8 @@ public class CardInfo : MonoBehaviour
     [SerializeField] TMP_Text header_txt;
     [SerializeField] TMP_Text description_txt;
     [SerializeField] TMP_Text level_txt;
-    const string POSITIVE_COLOR = "#1E7F1E"; // dark green color
-    const string NEGATIVE_COLOR = "#7A1E1E"; // dark red color
+    [SerializeField] private  ColorChoices colorChoice;
+    [SerializeField] private bool isBold;
     private string templateText;
     private HouseManager houseManager;
     private UpgradeHandler upgradeHandler;
@@ -40,6 +41,9 @@ public class CardInfo : MonoBehaviour
     private bool isInitialized = false;
     private Camera uiCamera;
     private RectTransform rectTransform;
+
+
+
     [System.Serializable]
     public class CardInfoContent
     {
@@ -200,6 +204,21 @@ public class CardInfo : MonoBehaviour
         string oldText = description_txt.text;
         string updatedText = "";
 
+        if(useCustomText){ // use custom text
+            if(level != maxLevel){ // if not reached maxlevel, replace with empty string
+                updatedText = System.Text.RegularExpressions.Regex.Replace(
+                    templateText,
+                    @"\{.*?\}",
+                                $"");
+            }else{
+
+                updatedText = System.Text.RegularExpressions.Regex.Replace(
+                    templateText,
+                    @"\{.*?\}",
+                                ApplyBold($"<color={HelperFunctions.ColorTarget(colorChoice)}>{customText}</color>"));
+            }
+        }else{
+
         switch (datatype)
         {
             case IsWhatDatatype.isAlphabeticnotationDatatype:
@@ -207,7 +226,7 @@ public class CardInfo : MonoBehaviour
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
                     @"\{.*?\}",          //((reverseCounting ? (1f - MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString
-                                $"<color={POSITIVE_COLOR}>{(useMinusValue ? alphaResult - minusThis_forDisplayValue : alphaResult).ToString()}</color>");
+                                ApplyBold($"<color={HelperFunctions.ColorTarget(colorChoice)}>{(useMinusValue ? alphaResult - minusThis_forDisplayValue : alphaResult).ToString()}</color>"));
                 break;
 
             case IsWhatDatatype.isInt:
@@ -215,10 +234,9 @@ public class CardInfo : MonoBehaviour
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
                     @"\{.*?\}",          //((reverseCounting ? (1f - MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat)) : (MerchantUpgradeManager.Instance.FredGetRewardPowerFloat(fredUpgradeTypesFloat) - minusThis_forDisplayValue)) * 100).ToString
-                                $"<color={POSITIVE_COLOR}>{(useMinusValue ? intResult - minusThis_forDisplayValue : intResult).ToString()}</color>");
+                                ApplyBold($"<color={HelperFunctions.ColorTarget(colorChoice)}>{(useMinusValue ? intResult - minusThis_forDisplayValue : intResult).ToString()}</color>"));
                 break;
             case IsWhatDatatype.isFloatDatatype:
-            print("inside float datatype");
                 float floatResult = UpgradeManager.Instance.GetFloat(id, currencyType);
                 float finalValue = useMinusValue ? floatResult - minusThis_forDisplayValue : floatResult;
 
@@ -227,11 +245,12 @@ public class CardInfo : MonoBehaviour
                 updatedText = System.Text.RegularExpressions.Regex.Replace(
                     templateText,
                     @"\{.*?\}",
-                                $"<color={POSITIVE_COLOR}>{formatted}</color>");
+                                ApplyBold($"<color={HelperFunctions.ColorTarget(colorChoice)}>{formatted}</color>"));
                 break;
             case IsWhatDatatype.dontDisplay:
                 updatedText = oldText;
                 break;
+        }
         }
         print("updated text = " + oldText);
         description_txt.text = updatedText;
@@ -240,5 +259,8 @@ public class CardInfo : MonoBehaviour
     }
 
 
-
+private string ApplyBold(string text)
+{
+    return isBold ? $"<b>{text}</b>" : text;
+}
 }

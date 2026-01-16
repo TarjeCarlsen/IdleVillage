@@ -24,7 +24,6 @@ public class GeneratorResources : MonoBehaviour
     private Coroutine generateRoutine;
     public bool stopRequested = false;
         [SerializeField] private UpgradeHandler upgradeHandler;
-    public event Action<CurrencyTypes> OnAutoGenerationStarted;
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
 
 

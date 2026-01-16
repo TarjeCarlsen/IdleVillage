@@ -61,7 +61,6 @@ private void InitializeProductionTimes(){
         Mathf.Max(finalTime, 0.0001f);
 
         productionTimes[type] = finalTime;
-        print("new time = "+ finalTime);
     }
 
     public AlphabeticNotation CalculateProductionFarm(CurrencyTypes type){
@@ -76,8 +75,6 @@ private void InitializeProductionTimes(){
         result = farmPower + currencyPower 
         * (1+ farmPowerMulti / 100)
         * (1 + currencyMulti / 100);
-        
-        result = ((farmPower + currencyPower) * farmPowerMulti) * currencyMulti;
 
         return result;
 

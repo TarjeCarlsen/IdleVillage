@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class UpgradeApplier : MonoBehaviour
 {
-
-    [SerializeField] GameObject areaToUnlock;
     [SerializeField] CardInfo cardInfo;
     public UpgradeEffect upgradeEffect;
     public UpgradeEffectMerchants upgradeEffectMerchants;
+    [SerializeField] GameObject areaToUnlock;
+    [SerializeField] private bool severlAreasToUnlock = false; 
+    [SerializeField] private List<GameObject> listOfAreasToUnlock; 
     
 
     private void OnEnable(){
@@ -23,8 +25,13 @@ public class UpgradeApplier : MonoBehaviour
 
     public void ApplyUpgrade(){
         if(upgradeEffect != null){
-
+                if(severlAreasToUnlock){
+                    foreach(GameObject area in listOfAreasToUnlock){
+                        upgradeEffect.Apply(area);
+                    }
+                }else{
                 upgradeEffect.Apply(areaToUnlock);
+                }
             
             // else
             // {
