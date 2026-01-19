@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class GeneratorResources : MonoBehaviour
 {
-    [SerializeField] private CurrencyTypes typeToGenerate;
+    [SerializeField] public CurrencyTypes typeToGenerate;
     [SerializeField] private CurrencyTypes typeToPay;
     [SerializeField] private AlphabeticNotation amountToPay;
     [SerializeField] ProgressBarHandler progressBarHandler;
@@ -203,5 +203,9 @@ private IEnumerator GeneratingAuto()
 private float GetCurrentDuration()
 {
     return upgradeHandler.productionTimes[typeToGenerate];
+}
+
+public bool isGeneratorRunning(){
+    return isManualRunning;
 }
 }

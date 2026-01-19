@@ -1,10 +1,12 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceFarm : MonoBehaviour
 {
     [SerializeField] private UpgradeHandler upgradeHandler;
+    [SerializeField] private List<GeneratorResources> generatorResources;
     
     public List<GameObject> tractors;
 
@@ -31,6 +33,17 @@ public class ResourceFarm : MonoBehaviour
         }
     }
 
+    public void OnGenerateButtonClicked(){
+        foreach(GeneratorResources generator in generatorResources){
+            if(!generator.gameObject.activeInHierarchy){
+                continue;
+            }
+            if(generator != null && !generator.isGeneratorRunning() ){
+                generator.StartGenerating(upgradeHandler.productionTimes[generator.typeToGenerate]);
+                return;
+            }
+        }
+    }
 
 
 }
