@@ -21,4 +21,12 @@ public class SetGameobjectActive : MonoBehaviour
         OnButtonActiveClick();
         OnButtonInactiveClick();
     }
+
+    public void OnButtonToggleActive(){
+        if(objectToSetActive.activeSelf == true){
+            objectToSetActive.SetActive(false);
+        }else{
+            objectToSetActive.SetActive(true);
+        }
+    }
 }

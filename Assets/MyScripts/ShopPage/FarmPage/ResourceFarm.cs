@@ -35,7 +35,7 @@ public class ResourceFarm : MonoBehaviour
 
     public void OnGenerateButtonClicked(){
         foreach(GeneratorResources generator in generatorResources){
-            if(!generator.gameObject.activeInHierarchy){
+            if(!generator.gameObject.activeInHierarchy){ // skip inactive generators
                 continue;
             }
             if(generator != null && !generator.isGeneratorRunning() ){
@@ -44,6 +44,5 @@ public class ResourceFarm : MonoBehaviour
             }
         }
     }
-
 
 }

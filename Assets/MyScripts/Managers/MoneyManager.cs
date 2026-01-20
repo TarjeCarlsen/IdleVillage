@@ -14,7 +14,7 @@ public enum CurrencyTypes{
     tomato,
     carrot,
     pumpkin,
-
+    energy,
     
 }
 
