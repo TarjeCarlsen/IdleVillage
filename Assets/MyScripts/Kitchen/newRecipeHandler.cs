@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class newRecipeHandler : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class newRecipeHandler : MonoBehaviour
     public bool isResearching;
 
 
-
+    public event Action newRecipeUnlocked;
 
     private void Awake()
     {
@@ -96,7 +97,7 @@ public class newRecipeHandler : MonoBehaviour
         float roll = 0f;
         float chance = recipeData.recipe_datas.defaultChance;// when upgradeable chance is implemented this has to be redone
 
-        roll = Random.Range(0, 1f);
+        roll = UnityEngine.Random.Range(0, 1f);
 
         if (roll <= chance)
         {
@@ -105,6 +106,7 @@ public class newRecipeHandler : MonoBehaviour
             recipeData.isUnlocked = true;
             UpdateUI();
             newRecipeDiscoveredText_img.SetActive(true);
+            kitchenManager.ForwardEventRaisedRecipeUnlocked(recipeData.recipe_datas.recipe);
             return true;
         }
         else

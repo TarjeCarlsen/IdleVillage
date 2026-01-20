@@ -15,7 +15,7 @@ public enum Recipes // list all recipes in the enum to use when cooking
 public class KitchenManager : MonoBehaviour
 {
     public List<RecipeState> allRecipes;
-
+    public event Action <Recipes> OnnewRecipeUnlocked;
     [System.Serializable]
     public class RecipeState
     {
@@ -48,6 +48,10 @@ public class KitchenManager : MonoBehaviour
             }
         }
             return null;
+    }
+
+    public void ForwardEventRaisedRecipeUnlocked(Recipes _recipe){
+        OnnewRecipeUnlocked?.Invoke(_recipe);
     }
 
     private bool ListsMatchSorted(

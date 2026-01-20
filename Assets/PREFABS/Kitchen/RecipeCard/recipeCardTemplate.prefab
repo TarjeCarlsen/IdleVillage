@@ -161,18 +161,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5521955441239853512}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 4442910406670777638}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -214,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 3
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 5521955441239853512}
 --- !u!1 &530723080550864613
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,18 +327,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5233433302655290352}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 9148762667837547317}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -391,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 2
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 5233433302655290352}
 --- !u!1 &645152396047303843
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,18 +493,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127379656355393826}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 4898820026736607276}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -568,6 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 6
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 1127379656355393826}
 --- !u!1 &677282852479547406
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,18 +884,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4286764035190725062}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 77137653994830152}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -970,6 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 1
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 4286764035190725062}
 --- !u!1 &943466288069859216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,18 +1237,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7101265800730041947}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 381948963679393510}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -1334,6 +1278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 4
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 7101265800730041947}
 --- !u!1 &1412009242405055848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1475,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 11400000, guid: 61ec9ee2ed431364f8d808be4fd291f2, type: 2}
+  m_spriteAsset: {fileID: 11400000, guid: b757645cbbb3c264db8bb5c8a1b01fbc, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -1774,18 +1719,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8234241707937756752}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1887527435450103965}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -1827,6 +1760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 8
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 8234241707937756752}
 --- !u!1 &2975903693796720475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,7 +2029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b8b9f3deac08f439a8ede87844b603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kitchenManager: {fileID: 0}
   time_txt: {fileID: 420256775648255308}
   percentage_txt: {fileID: 904969507158968647}
   recipeImage: {fileID: 4021094764412624114}
@@ -2306,18 +2239,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4919384082472564496}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8908289225391691371}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -2359,6 +2280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 5
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 4919384082472564496}
 --- !u!1 &5176233921397138537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3201,18 +3123,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5242692940209796314}
-        m_TargetAssemblyTypeName: SetGameobjectActive, Assembly-CSharp
-        m_MethodName: OnButtonToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 742253797129790626}
         m_TargetAssemblyTypeName: resourceSelection, Assembly-CSharp
         m_MethodName: OnSelectClick
@@ -3254,6 +3164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currencyType: 7
   newRecipeHandler: {fileID: 9093781414837624046}
+  setGameobjectActive: {fileID: 5242692940209796314}
 --- !u!1 &7359304947757800049
 GameObject:
   m_ObjectHideFlags: 0

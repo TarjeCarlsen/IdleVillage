@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class RecipeSelection : MonoBehaviour
 {
-    [SerializeField] private Recipes recipes;
+    [SerializeField] public Recipes selectedRecipe;
     [SerializeField] private CookingHandler cookingHandler;
 
 
     public void OnRecipeSelectionClick(){
         if(cookingHandler.isCooking) return;
-            cookingHandler.SelectedRecipe(recipes);
+            cookingHandler.SelectedRecipe(selectedRecipe);
     }
 }

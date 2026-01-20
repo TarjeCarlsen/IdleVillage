@@ -14,17 +14,26 @@ public class CookingHandler : MonoBehaviour
     [SerializeField] private TMP_Text header_txt;
     [SerializeField] private List<TMP_Text> prices;
     [SerializeField] private List<TMP_Text> yields;
-    [SerializeField] private List<GameObject> payDescriptionObjects;
-    [SerializeField] private List<GameObject> generateDescriptionObjects;
+    [SerializeField] private List<RecipeSelection> recipes;
     private KitchenManager kitchenManager;
     private KitchenManager.RecipeState recipeState;
     public bool isCooking = false;
     [SerializeField] private GeneratorAdvanced generatorAdvanced;
     private GenAdvancedInfo generatorInfo;
 
-private void Start(){
+private void Awake(){
     kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
-    recipeState.recipe_datas = null;
+
+}
+private void Start(){
+}
+
+private void OnEnable(){
+    kitchenManager.OnnewRecipeUnlocked += UpdateAvailableRecipes;
+}
+private void OnDisable(){
+    kitchenManager.OnnewRecipeUnlocked -= UpdateAvailableRecipes;
+
 }
 public void SelectedRecipe(Recipes recipes){
     recipeState = kitchenManager.GetRecipe(recipes);
@@ -50,19 +59,25 @@ private void OnStopCookingClick(){
 
 }
 
+private void UpdateAvailableRecipes(Recipes _recipe){
+    foreach(RecipeSelection selected in recipes){
+        if(selected.selectedRecipe == _recipe){
+            selected.gameObject.SetActive(true);
+        }
+    }
+}
 
 
 private void UpdateDescription()
 {
-    if(recipeState.recipe_datas == null){
         foreach(TMP_Text payDescription in prices){
             payDescription.gameObject.SetActive(false);
         }
         foreach(TMP_Text genDescription in yields){
             genDescription.gameObject.SetActive(false);
         }
+    if(recipeState.recipe_datas != null){
 
-    }else{
     header_txt.text = recipeState.recipe_datas.recipeName;
     int lengthOfPayments = recipeState.recipe_datas.recipeYield.payInfo.Count;
     int lengtOfYield = recipeState.recipe_datas.recipeYield.generateInfo.Count;
@@ -80,6 +95,6 @@ private void UpdateDescription()
     }
 
     }
+    }
 
-}
 }

@@ -13,10 +13,31 @@ MonoBehaviour:
   m_Name: ChunkyFlour
   m_EditorClassIdentifier: 
   recipeName: ChunkyFlour
-  recipe: 0
+  recipe: 1
   requiredResources: 0100000002000000
   defaultTimeToResearch: 1
+  defaultCookingTime: 10
   defaultChance: 0.97
-  image: {fileID: 0}
+  image: {fileID: 948060118, guid: e504e874fc276a441b0f592e763c64a3, type: 3}
   descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size> every time
     it is produced through cooking!
+  recipeYield:
+    payInfo:
+    - type: 1
+      amount:
+        coefficient: 1
+        magnitude: 0
+    - type: 2
+      amount:
+        coefficient: 1
+        magnitude: 0
+    generateInfo:
+    - type: 9
+      amount:
+        coefficient: 2
+        magnitude: 0
+    payDescription:
+    - 1 <size=120%><voffset=9><sprite=2></voffset>
+    - 1 <size=120%><voffset=9><sprite=13></voffset>
+    generateDescription:
+    - 2 <size=120%><voffset=9><sprite=1></voffset>
