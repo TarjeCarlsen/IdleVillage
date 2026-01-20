@@ -15,6 +15,9 @@ public class newRecipeHandler : MonoBehaviour
     [SerializeField] private Color defaultColor;
     [SerializeField] private Color notUnlockedColor;
     [SerializeField] private GameObject newRecipeDiscoveredText_img;
+    [SerializeField] private GameObject unlockedInfo;
+    [SerializeField] private TMP_Text description_text;
+    [SerializeField] private TMP_Text header_txt;
 
     private Coroutine researchCoroutine;
     private float timeRemaining;
@@ -26,6 +29,7 @@ public class newRecipeHandler : MonoBehaviour
 
     private void Awake()
     {
+        kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
         selectedResources = new List<CurrencyTypes>();
         recipeImage.sprite = notUnlockedImage;
     }
@@ -51,7 +55,8 @@ public class newRecipeHandler : MonoBehaviour
     public void StartResearch()
     {
         print("called startresearch!");
-        if (researchCoroutine == null)
+        if(recipeData == null) return;
+        if (researchCoroutine == null && !recipeData.isUnlocked)
         {
             isResearching = true;
             timeRemaining = recipeData.recipe_datas.defaultTimeToResearch;
@@ -131,17 +136,24 @@ public class newRecipeHandler : MonoBehaviour
             {
                 recipeImage.color = defaultColor;
                 recipeImage.sprite = recipeData.recipe_datas.image;
+                unlockedInfo.SetActive(true);
+                description_text.text = recipeData.recipe_datas.descriptionText;
+                header_txt.text = recipeData.recipe_datas.recipeName;
             }
             else
             {
                 recipeImage.color = notUnlockedColor;
                 recipeImage.sprite = notUnlockedImage;
+                unlockedInfo.SetActive(false);
             }
         }
         else
         {
             time_txt.text = "00:00:00";
             percentage_txt.text = "0";
+                recipeImage.color = notUnlockedColor;
+                recipeImage.sprite = notUnlockedImage;
+                unlockedInfo.SetActive(false);
 
         }
     }

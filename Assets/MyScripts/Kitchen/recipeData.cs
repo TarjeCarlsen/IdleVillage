@@ -11,4 +11,5 @@ public class recipeData : ScriptableObject
     public float defaultTimeToResearch;
     public float defaultChance;
     public Sprite image;
+    public string descriptionText;
 }

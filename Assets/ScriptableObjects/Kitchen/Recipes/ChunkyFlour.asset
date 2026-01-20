@@ -15,6 +15,8 @@ MonoBehaviour:
   recipeName: ChunkyFlour
   recipe: 0
   requiredResources: 0100000002000000
-  defaultTimeToResearch: 30
+  defaultTimeToResearch: 1
   defaultChance: 0.97
   image: {fileID: 0}
+  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size> every time
+    it is produced through cooking!
