@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using LargeNumbers;
 using TMPro;
@@ -29,6 +30,8 @@ public class GeneratorSimple : MonoBehaviour
 
         UpdateUI();
     }
+
+
     public bool CanAfford( )
     {
         if (MoneyManager.Instance.GetCurrency(typeToPay) >= amountToPay)

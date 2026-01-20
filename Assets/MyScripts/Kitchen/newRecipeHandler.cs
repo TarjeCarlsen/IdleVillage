@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class newRecipeHandler : MonoBehaviour
 {
     private List<CurrencyTypes> selectedResources;
-    [SerializeField] private KitchenManager kitchenManager;
+     private KitchenManager kitchenManager;
     [SerializeField] private TMP_Text time_txt;
     [SerializeField] private TMP_Text percentage_txt;
     [SerializeField] private Image recipeImage;
@@ -54,7 +54,6 @@ public class newRecipeHandler : MonoBehaviour
 
     public void StartResearch()
     {
-        print("called startresearch!");
         if(recipeData == null) return;
         if (researchCoroutine == null && !recipeData.isUnlocked)
         {
