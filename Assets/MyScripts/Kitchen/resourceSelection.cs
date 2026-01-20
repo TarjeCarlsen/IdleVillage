@@ -8,6 +8,7 @@ public class resourceSelection : MonoBehaviour
 
     public void OnSelectClick()
     {
+        if(newRecipeHandler.isResearching) return;
         if (isActive)
         {
             newRecipeHandler.UnSelectResource(currencyType);

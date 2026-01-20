@@ -15,6 +15,6 @@ MonoBehaviour:
   recipeName: Wheat sprinkelled dough
   recipe: 0
   requiredResources: 010000000200000003000000
-  unlocked: 0
-  difficulty: 0
-  defaultTimeToResearch: 0
+  defaultTimeToResearch: 75
+  defaultChance: 0.93
+  image: {fileID: 0}

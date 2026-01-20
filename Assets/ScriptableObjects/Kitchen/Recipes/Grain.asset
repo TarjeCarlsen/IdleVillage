@@ -15,6 +15,6 @@ MonoBehaviour:
   recipeName: Grain
   recipe: 0
   requiredResources: 01000000
-  unlocked: 0
-  difficulty: 0
-  defaultTimeToResearch: 0
+  defaultTimeToResearch: 1
+  defaultChance: 0.98
+  image: {fileID: -1754116461, guid: 4e927e608e7fa5741bad0d3a6df6a505, type: 3}

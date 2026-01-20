@@ -12,23 +12,27 @@ public enum Recipes{
 }
 public class KitchenManager : MonoBehaviour
 {
-    public List<recipeData> allRecipes;
+    public List<RecipeState> allRecipes;
+
+[System.Serializable]
+    public class RecipeState{
+        public recipeData recipe_datas;
+        public bool isUnlocked = false;
+    }
     
-
-
-
-public recipeData ChoseRecipe(List<CurrencyTypes> resourceList){
-    foreach (var recipe in allRecipes)
+public RecipeState ChoseRecipe(List<CurrencyTypes> resourceList){
+    foreach (RecipeState recipe in allRecipes)
     {
-        if (ListsMatchSorted(resourceList, recipe.requiredResources))
+        if (ListsMatchSorted(resourceList, recipe.recipe_datas.requiredResources))
         {
-            print("found recipe! : " + recipe.recipeName);
+            print("found recipe! : " + recipe.recipe_datas.recipeName);
             return recipe;
         }
     }
     // print("no match found");
     return null; // no match found
 }
+
 
 private bool ListsMatchSorted(
     List<CurrencyTypes> a,

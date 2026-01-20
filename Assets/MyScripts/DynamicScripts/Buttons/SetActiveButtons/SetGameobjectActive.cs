@@ -7,6 +7,7 @@ public class SetGameobjectActive : MonoBehaviour
     [SerializeField]private GameObject[] objectsToSetInactive;
 
 
+
     public void OnButtonActiveClick(){
         objectToSetActive.SetActive(true);
     }

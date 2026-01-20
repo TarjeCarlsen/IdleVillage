@@ -15,6 +15,6 @@ MonoBehaviour:
   recipeName: CornBread
   recipe: 0
   requiredResources: 0400000005000000
-  unlocked: 0
-  difficulty: 0
-  defaultTimeToResearch: 0
+  defaultTimeToResearch: 120
+  defaultChance: 0.96
+  image: {fileID: 0}
