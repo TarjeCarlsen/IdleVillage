@@ -6,18 +6,18 @@ using System;
 
 public enum Recipes // list all recipes in the enum to use when cooking
 {
-    grain, // wheat
-    chunkyFlour, // wheat + flour
+    grain, // wheat 
+    chunkyFlour, // wheat + flour 
     wheatSprinkelledDough, // wheat + dough
     CornBread, // cornflour + water
     flour, // grain
     dough, // water + flour
     tomatoSoup, // water + tomato
-    bread, // dough + flour
+    bread, // dough + flour 
     cornFlour, // corn + flour
     tomatoCornSandwich, // bread + tomato + corn
     pumpkinPie, // pumpkin + dough 
-    cheeselessPizza, // dough + flour + tomato
+    cheeselessPizza, // dough + flour + tomato 
     vegetableSoup, // water + carrot + corn + tomato
     CountryBreadPot, //bread + water + corn + carrot + pumpkin -- // finished to here - 21.01.2026
     pumpkinTortellini, //dough + pumpkin

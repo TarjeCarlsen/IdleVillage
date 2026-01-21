@@ -19,7 +19,7 @@ MonoBehaviour:
   defaultCookingTime: 5
   defaultChance: 0.85
   image: {fileID: 21300000, guid: 73e14db39aceba842b29c5aa424934bf, type: 3}
-  descriptionText: Gives +1   <size=120%><voffset=15><sprite=1></size></voffset>
+  descriptionText: Gives +9   <size=120%><voffset=15><sprite=1></size></voffset>
     every time it is produced through cooking!
   recipeYield:
     payInfo:
@@ -32,12 +32,12 @@ MonoBehaviour:
         coefficient: 2
         magnitude: 0
     generateInfo:
-    - type: 3
+    - type: 9
       amount:
-        coefficient: 1
+        coefficient: 9
         magnitude: 0
     payDescription:
-    - 4  <size=140%><voffset=9><sprite=14></voffset></size>
+    - 4  <size=140%><voffset=9><sprite=13></voffset></size>
     - 2  <size=140%><voffset=9><sprite=14></voffset></size>
     generateDescription:
-    - 1  <size=140%><voffset=9><sprite=14></voffset></size>
+    - 9  <size=140%><voffset=9><sprite=1></voffset></size>

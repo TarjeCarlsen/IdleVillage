@@ -46,7 +46,7 @@ public void SelectedRecipe(Recipes recipes){
 
 
 public void OnStartCookingClick(){
-    if(recipeState.recipe_datas == null) return;
+    if(recipeState == null || recipeState.recipe_datas == null) return;
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
 }
 

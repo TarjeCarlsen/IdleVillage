@@ -27,7 +27,6 @@ public class newRecipeHandler : MonoBehaviour
     public bool isResearching;
 
 
-    public event Action newRecipeUnlocked;
 
     private void Awake()
     {
@@ -42,6 +41,7 @@ public class newRecipeHandler : MonoBehaviour
     public void SelectedResource(CurrencyTypes type)
     {
         selectedResources.Add(type);
+        print("selected type = " + type);
         recipeData = kitchenManager.ChoseRecipe(selectedResources);
         UpdateUI();
     }

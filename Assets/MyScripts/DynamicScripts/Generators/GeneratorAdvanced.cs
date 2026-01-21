@@ -32,6 +32,7 @@ public class GeneratorAdvanced : MonoBehaviour
     [SerializeField] private bool usingAnimLengthEqualGenTime = false;
     [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
+    private List<(CurrencyTypes types, AlphabeticNotation amount)> yields;
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
@@ -39,7 +40,8 @@ public class GeneratorAdvanced : MonoBehaviour
 
     private void Start()
     {
-        if(usingAnimLengthEqualGenTime){
+        if (usingAnimLengthEqualGenTime)
+        {
             generationAnimLength = generatorAnim.runtimeAnimatorController.animationClips[0].length;
         }
         UpdateUI();
@@ -113,9 +115,18 @@ public class GeneratorAdvanced : MonoBehaviour
         if (CanAfford() && generateRoutine == null)
         {
             timeRemaining = time;
+            yields = new List<(CurrencyTypes types, AlphabeticNotation amount)>();
+            foreach (GenAdvancedInfo info in genAdvancedInfos)
+            {
+                foreach (GenerateInfo genInfo in info.generateInfo)
+                {
+                    yields.Add((genInfo.type, genInfo.amount));
+                }
+            }
 
-            if(usingAnimLengthEqualGenTime && generatorAnim){
-                float speed = generationAnimLength  / timeRemaining;
+            if (usingAnimLengthEqualGenTime && generatorAnim)
+            {
+                float speed = generationAnimLength / timeRemaining;
                 generatorAnim.SetBool("Activated", true);
             }
 
@@ -158,28 +169,34 @@ public class GeneratorAdvanced : MonoBehaviour
             yield return null;
         }
 
-        foreach (GenAdvancedInfo info in genAdvancedInfos)
+        foreach (var yield in yields)
         {
-            foreach (GenerateInfo genInfo in info.generateInfo)
-                MoneyManager.Instance.AddCurrency(genInfo.type, genInfo.amount);
+            MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
         }
 
-        StopGenerating();
+        // foreach (GenAdvancedInfo info in genAdvancedInfos)
+        // {
+        //     foreach (GenerateInfo genInfo in info.generateInfo)
+        // }
+
+        StopGenerating();//
         UpdateUI();
     }
 
 
     private void UpdateUI()
     {
-        if(timeRemaining <= 0f){
-        time_txt.text = "00:00";
+        if (timeRemaining <= 0f)
+        {
+            time_txt.text = "00:00";
         }
         time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
 
         // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
     }
 
-    public void UpdateTime(float time){
+    public void UpdateTime(float time)
+    {
         time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
     }
 
@@ -189,11 +206,21 @@ public class GeneratorAdvanced : MonoBehaviour
         if (CanAfford() && generateRoutine == null)//removed tractor
         {
 
-
-            if(usingAnimLengthEqualGenTime && generatorAnim){
-                float speed = generationAnimLength  / timeRemaining;
+            yields = new List<(CurrencyTypes types, AlphabeticNotation amount)>();
+            foreach (GenAdvancedInfo info in genAdvancedInfos)
+            {
+                foreach (GenerateInfo genInfo in info.generateInfo)
+                {
+                    yields.Add((genInfo.type, genInfo.amount));
+                }
+            }
+            if (usingAnimLengthEqualGenTime && generatorAnim)
+            {
+                float speed = generationAnimLength / timeRemaining;
                 generatorAnim.SetBool("Activated", true);
-            }else if(generatorAnim){
+            }
+            else if (generatorAnim)
+            {
                 generatorAnim.SetBool("Activated", true);
             }
             timeRemaining = time;
@@ -230,12 +257,9 @@ public class GeneratorAdvanced : MonoBehaviour
                 UpdateUI();
                 yield return null;
             }
-            foreach (GenAdvancedInfo info in genAdvancedInfos)
+            foreach (var yield in yields)
             {
-                foreach (GenerateInfo geninfo in info.generateInfo)
-                {
-                    MoneyManager.Instance.AddCurrency(geninfo.type, geninfo.amount);
-                }
+                MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
             }
 
             progressBarHandler.ResetProgress();
