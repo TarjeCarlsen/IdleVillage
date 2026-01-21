@@ -13,16 +13,31 @@ MonoBehaviour:
   m_Name: CornBread
   m_EditorClassIdentifier: 
   recipeName: CornBread
-  recipe: 0
+  recipe: 3
   requiredResources: 0400000005000000
   defaultTimeToResearch: 1
-  defaultCookingTime: 10
-  defaultChance: 0.96
-  image: {fileID: 0}
-  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>
+  defaultCookingTime: 12
+  defaultChance: 0.75
+  image: {fileID: -951855657, guid: c7c350253820b434193efa05ed398a5d, type: 3}
+  descriptionText: Gives +8   <size=120%><voffset=15><sprite=1></size></voffset>
     every time it is produced through cooking!
   recipeYield:
-    payInfo: []
-    generateInfo: []
-    payDescription: []
-    generateDescription: []
+    payInfo:
+    - type: 4
+      amount:
+        coefficient: 1
+        magnitude: 0
+    - type: 5
+      amount:
+        coefficient: 1
+        magnitude: 0
+    generateInfo:
+    - type: 9
+      amount:
+        coefficient: 8
+        magnitude: 0
+    payDescription:
+    - 2  <size=140%><voffset=9><sprite=4></voffset>
+    - 2  <size=140%><voffset=9><sprite=7></voffset>
+    generateDescription:
+    - 2  <size=140%><voffset=9><sprite=21></voffset>

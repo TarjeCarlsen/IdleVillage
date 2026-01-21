@@ -6,11 +6,11 @@ using System;
 
 public enum Recipes // list all recipes in the enum to use when cooking
 {
-    grain,
-    chunkyFlour,
-    wheatSprinkelledDough,
-    CornBread,
-    flour, // wheat
+    grain, // wheat
+    chunkyFlour, // wheat + flour
+    wheatSprinkelledDough, // wheat + dough
+    CornBread, // corn + bread
+    flour, // grain
     dough, // water + flour
     tomatoSoup, // water + tomato
     bread, // dough + flour

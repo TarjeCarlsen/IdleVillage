@@ -13,16 +13,31 @@ MonoBehaviour:
   m_Name: WheatSprinkelledDough
   m_EditorClassIdentifier: 
   recipeName: Wheat sprinkelled dough
-  recipe: 0
-  requiredResources: 010000000200000003000000
+  recipe: 2
+  requiredResources: 0100000003000000
   defaultTimeToResearch: 1
-  defaultCookingTime: 10
-  defaultChance: 0.93
-  image: {fileID: 0}
-  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>
+  defaultCookingTime: 20
+  defaultChance: 0.7
+  image: {fileID: -300266761, guid: 2da5954ea8a67fe4496a40dcc777b44a, type: 3}
+  descriptionText: Gives +5   <size=120%><voffset=15><sprite=1></size></voffset>
     every time it is produced through cooking!
   recipeYield:
-    payInfo: []
-    generateInfo: []
-    payDescription: []
-    generateDescription: []
+    payInfo:
+    - type: 1
+      amount:
+        coefficient: 4
+        magnitude: 0
+    - type: 3
+      amount:
+        coefficient: 1
+        magnitude: 0
+    generateInfo:
+    - type: 9
+      amount:
+        coefficient: 5
+        magnitude: 0
+    payDescription:
+    - 2  <size=140%><voffset=9><sprite=2></voffset>
+    - 2  <size=140%><voffset=9><sprite=3></voffset>
+    generateDescription:
+    - 1  <size=140%><voffset=9><sprite=1></voffset>
