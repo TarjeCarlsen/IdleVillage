@@ -18,9 +18,9 @@ MonoBehaviour:
   defaultTimeToResearch: 1
   defaultCookingTime: 10
   defaultChance: 0.97
-  image: {fileID: 948060118, guid: e504e874fc276a441b0f592e763c64a3, type: 3}
-  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size> every time
-    it is produced through cooking!
+  image: {fileID: -1221834244, guid: e7399a3ee4c8ca64d981e0944d80b0ea, type: 3}
+  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>
+    every time it is produced through cooking!
   recipeYield:
     payInfo:
     - type: 1

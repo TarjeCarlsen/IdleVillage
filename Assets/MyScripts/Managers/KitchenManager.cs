@@ -10,6 +10,25 @@ public enum Recipes // list all recipes in the enum to use when cooking
     chunkyFlour,
     wheatSprinkelledDough,
     CornBread,
+    flour, // wheat
+    dough, // water + flour
+    tomatoSoup, // water + tomato
+    bread, // dough + flour
+    cornFlour, // corn + flour
+    tomatoCornSandwich, // bread + tomato + corn
+    pumpkinPie, // pumpkin + dough 
+    cheeselessPizza, // dough + flour + tomato
+    vegetableSoup, // water + carrot + corn + tomato
+    CountryBreadPot, //bread + water + corn + carrot + pumpkin -- // finished to here - 21.01.2026
+    pumpkinTortellini, //dough + pumpkin
+    flourSmeredCorn, // corn + flour
+    tomatoPure, // tomato + flour
+    poorMansSoup, // water + grain
+    tortella, //cornflour + water
+    veggieTaco, // tortella + corn + carrot + tomato
+
+
+
 
 }
 public class KitchenManager : MonoBehaviour

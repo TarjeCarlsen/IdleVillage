@@ -16,6 +16,7 @@ public class newRecipeHandler : MonoBehaviour
     [SerializeField] private Color defaultColor;
     [SerializeField] private Color notUnlockedColor;
     [SerializeField] private GameObject newRecipeDiscoveredText_img;
+    [SerializeField] private GameObject faileResearchText_img;
     [SerializeField] private GameObject unlockedInfo;
     [SerializeField] private TMP_Text description_text;
     [SerializeField] private TMP_Text header_txt;
@@ -58,6 +59,7 @@ public class newRecipeHandler : MonoBehaviour
         if(recipeData == null) return;
         if (researchCoroutine == null && !recipeData.isUnlocked)
         {
+            UpdateUI();
             isResearching = true;
             timeRemaining = recipeData.recipe_datas.defaultTimeToResearch;
             researchCoroutine = StartCoroutine(Research());
@@ -114,6 +116,7 @@ public class newRecipeHandler : MonoBehaviour
             print("not unlocked!");
             print($"roll = {roll} chance was {chance}");
             UpdateUI();
+            faileResearchText_img.gameObject.SetActive(true);
             return false;
         }
         
@@ -122,6 +125,7 @@ public class newRecipeHandler : MonoBehaviour
     private void UpdateUI()
     {
             newRecipeDiscoveredText_img.SetActive(false);
+            faileResearchText_img.gameObject.SetActive(false);
         if (recipeData != null)
         {
             if(recipeData.recipe_datas != null) 

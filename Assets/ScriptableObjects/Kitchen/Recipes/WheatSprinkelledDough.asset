@@ -16,7 +16,13 @@ MonoBehaviour:
   recipe: 0
   requiredResources: 010000000200000003000000
   defaultTimeToResearch: 1
+  defaultCookingTime: 10
   defaultChance: 0.93
   image: {fileID: 0}
-  descriptionText: Gives +3   <size=120%><voffset=15><sprite=1></size> every time
-    it is produced through cooking!
+  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>
+    every time it is produced through cooking!
+  recipeYield:
+    payInfo: []
+    generateInfo: []
+    payDescription: []
+    generateDescription: []

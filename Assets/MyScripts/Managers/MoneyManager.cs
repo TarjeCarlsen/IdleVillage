@@ -15,6 +15,12 @@ public enum CurrencyTypes{
     carrot,
     pumpkin,
     energy,
+    water,
+    wood,
+    stone,
+    coal,
+    iron,
+    grain,
     
 }
 
