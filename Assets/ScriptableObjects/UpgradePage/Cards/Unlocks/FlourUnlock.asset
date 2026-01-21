@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a390db302a0e2b94bb71a0b80495e4b1, type: 3}
+  m_Name: FlourUnlock
+  m_EditorClassIdentifier: 
+  header_txt: Flour
+  descriptionText_txt: Unlocks the <b><color=red>flour</color></b>. Costs 2 wheat
+    per flour when producing {}
+  content_images:
+  - {fileID: 959846796, guid: 86cf68c4c2fa2f549b953a246deae992, type: 3}
+  cardDataInfo:
+  - type: 0
+    price:
+      coefficient: 15
+      magnitude: 0
+    sprite: {fileID: -1170097376, guid: 9ba4ecf6334279b4594b783130691c64, type: 3}
+    priceMultiplier: 0
+  maxLevel: 1
+  useLevels: 1

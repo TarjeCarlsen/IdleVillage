@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88867e5dfb8358a4daf23cb18d05d468, type: 3}
+  m_Name: ChunkyFlour
+  m_EditorClassIdentifier: 
+  recipeName: ChunkyFlour
+  recipe: 1
+  requiredResources: 0100000002000000
+  defaultTimeToResearch: 1
+  defaultCookingTime: 10
+  defaultChance: 0.97
+  image: {fileID: -1221834244, guid: e7399a3ee4c8ca64d981e0944d80b0ea, type: 3}
+  descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>
+    every time it is produced through cooking!
+  recipeYield:
+    payInfo:
+    - type: 1
+      amount:
+        coefficient: 1
+        magnitude: 0
+    - type: 2
+      amount:
+        coefficient: 1
+        magnitude: 0
+    generateInfo:
+    - type: 9
+      amount:
+        coefficient: 2
+        magnitude: 0
+    payDescription:
+    - 1 <size=120%><voffset=9><sprite=2></voffset>
+    - 1 <size=120%><voffset=9><sprite=13></voffset>
+    generateDescription:
+    - 2 <size=120%><voffset=9><sprite=1></voffset>

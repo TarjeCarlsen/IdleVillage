@@ -7,6 +7,7 @@ public class SetGameobjectActive : MonoBehaviour
     [SerializeField]private GameObject[] objectsToSetInactive;
 
 
+
     public void OnButtonActiveClick(){
         objectToSetActive.SetActive(true);
     }
@@ -20,5 +21,14 @@ public class SetGameobjectActive : MonoBehaviour
     public void OnButtonDoBothClick(){
         OnButtonActiveClick();
         OnButtonInactiveClick();
+    }
+
+    public void OnButtonToggleActive(){
+        print("inside");
+        if(objectToSetActive.activeSelf == true){
+            objectToSetActive.SetActive(false);
+        }else{
+            objectToSetActive.SetActive(true);
+        }
     }
 }

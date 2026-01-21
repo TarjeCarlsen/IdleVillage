@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using LargeNumbers;
 using TMPro;
@@ -16,17 +17,21 @@ public class GeneratorSimple : MonoBehaviour
     [SerializeField] TMP_Text amountToGenerate_txt;
     [SerializeField] private StartGeneratingButton startGeneratingButton;
     [SerializeField] private Animator generatorAnim;
-    [SerializeField] private bool usingAnimation = false;
+    [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
     public event Action<CurrencyTypes> OnAutoGenerationStarted;
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
+
     private void Start()
     {
+
         UpdateUI();
     }
+
+
     public bool CanAfford( )
     {
         if (MoneyManager.Instance.GetCurrency(typeToPay) >= amountToPay)
@@ -50,10 +55,8 @@ public class GeneratorSimple : MonoBehaviour
 
     public void StartGenerating(float time)
     {
-        print("inside start");
         if (CanAfford() && generateRoutine == null)
         {
-        print("inside inside");
             OnAutoGenerationStarted?.Invoke(typeToGenerate);
             timeRemaining = time;
             generateRoutine = StartCoroutine(Generating());
@@ -85,7 +88,7 @@ public class GeneratorSimple : MonoBehaviour
             timeRemaining -= Time.deltaTime;
             yield return null;
         }
-        MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetProductionPower(typeToGenerate));
+        MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
         StopGenerating();        
         UpdateUI();
     }
@@ -93,13 +96,13 @@ public class GeneratorSimple : MonoBehaviour
 
     private void UpdateUI()
     {
-        amountToGenerate_txt.text = UpgradeManager.Instance.GetProductionPower(typeToGenerate).ToString();
+        amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate).ToString();
     }
 
 
     public void StartGeneratingAuto(float time)
     {
-        if (CanAfford() && generateRoutine == null)
+        if (CanAfford() && generateRoutine == null)//removed tractor
         {
         if(generatorAnim){
             generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
@@ -109,7 +112,6 @@ public class GeneratorSimple : MonoBehaviour
             generateRoutine = StartCoroutine(GeneratingAuto());
         }
     }
-
     private IEnumerator GeneratingAuto()
     {
         while (true)
@@ -130,12 +132,18 @@ public class GeneratorSimple : MonoBehaviour
                 currentTime -= Time.deltaTime;
                 yield return null;
             }
-            MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetProductionPower(typeToGenerate));
+            MoneyManager.Instance.AddCurrency(typeToGenerate, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower,typeToGenerate));
             progressBarHandler.ResetProgress();
             UpdateUI();
             currentTime = timeRemaining;
 
         }
     }
+
+private void StartGrowing(){
+    if(!resourceAnim) return;
+
+}
+
 
 }

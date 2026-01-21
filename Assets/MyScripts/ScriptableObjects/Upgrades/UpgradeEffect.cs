@@ -2,14 +2,25 @@ using UnityEngine;
 using LargeNumbers;
 using System;
 using UnityEngine.Assertions.Must;
-public enum UpgradeTypes{
-    UnlockArea,
-    SetActivationState,
-    AddPowerFlat,
-    AddPowerMulti,
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.Rendering;
+public enum UpgradeTypes
+{
+    unlockArea,
+    addAlpha,
+    addFloat,
+    addInt,
+    subAlpha,
+    subFloat,
+    subInt,
+    setAlpha,
+    setFloat,
+    setInt,
+    setBool,
+    
 
 }
-
 public interface IUpgradeEffect
 {
     void Apply(GameObject target = null);
@@ -18,41 +29,91 @@ public interface IUpgradeEffect
 [CreateAssetMenu(fileName = "Upgrades", menuName = "Upgrade/UpgradeEffect Data")]
 public class UpgradeEffect : ScriptableObject
 {
-    [Header("Chose upgrade type. This has to be chosen for any upgrade")]
-    public UpgradeTypes upgradeTypes;
+    public List<UpgradeTypeInfoGlobal> upgradeTypeInfoGlobals;
+    [System.Serializable]
+    public class UpgradeTypeInfoGlobal
+    {
+        public List<UpgradeTypes> upgradeTypes;
+        public List<CurrencyTypes> currencyTypes;
+        public UpgradeIDGlobal upgradeIDGlobal;
+        public AlphabeticNotation flat_alpha;
+        public int flat_intUpgrades;
+        public float flat_floatUpgrades;
+        public bool bool_state;
+    }
 
-    [Header("Chose currency to upgrade")]
-    public CurrencyTypes currencyTypes;
-    [Header("Enable to make the upgrade a activation unlock")]
-    public ActivationUnlocks activationUnlocks;
-    public bool activationState;
+    public void Apply(GameObject target = null)
+    {
+        
+        foreach (var info in upgradeTypeInfoGlobals)
+        {
+            foreach (UpgradeTypes upgradeTypes in info.upgradeTypes)
+            {
 
-
-    [Header("Define the amount of the upgrade")]
-    public AlphabeticNotation flat;
-    public AlphabeticNotation multi;
-    public int flat_forIntUpgrades;
-    public float flat_forFloatUpgrades;
-    public void Apply(GameObject target = null){
-
-
-        switch(upgradeTypes){
-            // -------- AREA UNLOCKS -------- //
-            case UpgradeTypes.UnlockArea:
-                target?.SetActive(true);
-                break;
-            // -------- AREA UNLOCKS -------- //
-            case UpgradeTypes.SetActivationState:
-                UpgradeManager.Instance.SetActivationUnlock(activationUnlocks, activationState);
-                break;
-            // -------- POWER UPGRADES -------- //
-            case UpgradeTypes.AddPowerFlat:
-                UpgradeManager.Instance.AddPowerFlat(currencyTypes,flat);
-                break;
-            case UpgradeTypes.AddPowerMulti:
-                UpgradeManager.Instance.AddPowerMulti(currencyTypes, multi);
-                break;
+                switch (upgradeTypes)
+                {
+                    case UpgradeTypes.unlockArea:
+                    target?.SetActive(true);
+                    break;
+                    // -------- UPGRADES-------- //
+                    case UpgradeTypes.addAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.subAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.setAlpha:
+                        foreach (CurrencyTypes type in info.currencyTypes)
+                        {
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set, type, info.flat_alpha);
+                        }
+                        break;
+                    case UpgradeTypes.addInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.subInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setInt:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_intUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.addFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Add,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.subFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Subtract,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setFloat:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.flat_floatUpgrades);
+                        } 
+                            break;
+                    case UpgradeTypes.setBool:
+                        foreach(CurrencyTypes type in info.currencyTypes){
+                            UpgradeManager.Instance.Modify(info.upgradeIDGlobal, UpgradeOperation.Set,type,info.bool_state);
+                        } 
+                            break;
+                
+                }
+                
+            }
         }
     }
-    
+
 }

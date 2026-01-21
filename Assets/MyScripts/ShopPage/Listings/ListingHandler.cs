@@ -23,7 +23,9 @@ public class ListingHandler : MonoBehaviour
     [SerializeField] private GameObject collectButton;
     [SerializeField] private GameObject expiredButton;
     [SerializeField] private GameObject soldImage;
+    [SerializeField] private GameObject interestedUpgrade;
     // [SerializeField] private GameObject listingObject;
+    private UpgradeHandler upgradeHandler;
     public double chance;
     public AlphabeticNotation cancelAmount;
     public CurrencyTypes cancelCurrency;
@@ -59,9 +61,11 @@ public class ListingHandler : MonoBehaviour
     public AlphabeticNotation GetSellingAmount() => sellingAmount;
 
     private void Awake(){
+        upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
         if(itemDidSell) StopActiveListing();
         resultIcon.sprite = sellingIconSprite;
         originalPercentColor = percentageCustomers_txt.color;
+        interestedUpgrade.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.listingInterestedUnlock,CurrencyDummy.Dummy));
     }
     private void Start()
     {
@@ -70,8 +74,16 @@ public class ListingHandler : MonoBehaviour
         // }
         originalCurrencyUsed.sprite = expiredIconSprite;
         expiredCurrencyCollect.sprite = expiredIconSprite;
-        timeBetweenSellChecks = UpgradeManager.Instance.GetTimePower(TimeUpgradeTypes.timeBetweenCustomerChecks);
+        timeBetweenSellChecks = UpgradeManager.Instance.GetFloat(UpgradeIDGlobal.market_time_between_customers,CurrencyDummy.Dummy);
         StartCoroutine(WaitForOneFrame());
+    }
+
+    private void OnEnable(){
+        upgradeHandler.OnMarketUpgradeBought += UpdateUpgraded;
+    }
+    private void OnDisable(){
+        upgradeHandler.OnMarketUpgradeBought -= UpdateUpgraded;
+
     }
 
     private IEnumerator WaitForOneFrame(){
@@ -92,6 +104,7 @@ public class ListingHandler : MonoBehaviour
         StopActiveListing();
         Destroy(gameObject);
         ShopManager.Instance.RemoveListing(uniqueID);
+        ShopManager.Instance.IndicateSoldItem(false);
     }
 
     private bool ItemSold()
@@ -140,6 +153,7 @@ private IEnumerator CheckForSoldItem()
         {
             ShopManager.Instance.UpdateCollectAmount(sellingAmount,true);
             ShopManager.Instance.UpdateListing(uniqueID,true);
+            ShopManager.Instance.IndicateSoldItem(true);
             StopActiveListing();
             yield break;
         }
@@ -189,6 +203,10 @@ private void PercentVisuals(){
     else
         percentageCustomers_txt.color = new Color(1f, 0f, 0f);               // bright red
         
+}
+
+private void UpdateUpgraded(UpgradeIDGlobal id, IsWhatDatatype datatype, CurrencyTypes types){
+    interestedUpgrade.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.listingInterestedUnlock,CurrencyDummy.Dummy));
 }
 
     private void UpdateUI()

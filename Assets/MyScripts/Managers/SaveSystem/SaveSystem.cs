@@ -10,7 +10,7 @@ public class SaveSystem
     public struct SaveData
     {
         public CurrencySaveData currencySaveData;
-        public upgradeManagerSaveData upgradeManagerSaveData;
+        // public upgradeManagerSaveData upgradeManagerSaveData;
         public HouseManagerSaveData houseManagerSaveData;
         public StorageManagerSaveData storageManagerSaveData;
         public ShopManagerSaveData shopManagerSaveData;
@@ -61,7 +61,7 @@ public class SaveSystem
     public static void HandleSaveData()
     {
         GameManager.Instance.moneyManager.Save(ref _saveData.currencySaveData);
-        GameManager.Instance.upgradeManager.Save(ref _saveData.upgradeManagerSaveData);
+        // GameManager.Instance.upgradeManager.Save(ref _saveData.upgradeManagerSaveData);
         GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Save(ref _saveData.storageManagerSaveData);
         GameManager.Instance.shopManager.Save(ref _saveData.shopManagerSaveData);
@@ -78,7 +78,7 @@ public class SaveSystem
     public static void HandleLoadData()
     {
         GameManager.Instance.moneyManager.Load(_saveData.currencySaveData);
-        GameManager.Instance.upgradeManager.Load(_saveData.upgradeManagerSaveData);
+        // GameManager.Instance.upgradeManager.Load(_saveData.upgradeManagerSaveData);
         GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Load(_saveData.storageManagerSaveData);
         GameManager.Instance.shopManager.Load(_saveData.shopManagerSaveData);

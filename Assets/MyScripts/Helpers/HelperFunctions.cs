@@ -3,6 +3,19 @@ using UnityEngine;
 using System;
 using LargeNumbers;
 using LargeNumbers.Example;
+using UnityEngine.TextCore;
+
+
+public enum ColorChoices{
+    darkGreen,
+    brigthGreen,
+    darkRed,
+    brightRed,
+    darkBlue,
+    brightBlue,
+    black,
+    white,
+}
 public class HelperFunctions : MonoBehaviour
 {
 
@@ -156,4 +169,21 @@ public class HelperFunctions : MonoBehaviour
 
         return textMesh;
     }
+
+        public static string ColorTarget(ColorChoices choice){
+            return choice switch{
+                ColorChoices.darkGreen =>"#1E7F1E",
+                ColorChoices.brigthGreen => "#0BFF00",
+                ColorChoices.darkRed => "#7A1E1E",
+                ColorChoices.brightRed => "#FF0000",
+                ColorChoices.darkBlue => "#00107E",
+                ColorChoices.brightBlue => "#0021FF",
+                ColorChoices.black => "#000000",
+                ColorChoices.white => "#FFFFFF",
+                _ => "#FFFFFF"
+            };
+        }
+    
 }
+// dark blue 00107E
+// bright blue 0021FF

@@ -6,91 +6,91 @@ using Mono.Cecil.Cil;
 using UnityEngine;
 
 
-public enum UpgradeOperation
-{
-    Add,
-    Get,
-    Subtract,
-    Set,
-}
+// public enum UpgradeOperation // MOVED TO UPGRADEMANAGER
+// {
+//     Add,
+//     Get,
+//     Subtract,
+//     Set,
+// }
 
-public enum UpgradeValueType
-{
-    Float,
-    Int,
-    Alphabetic,
-    Bool,
-}
+// public enum UpgradeValueType
+// {
+//     Float,
+//     Int,
+//     Alphabetic,
+//     Bool,
+// }
 
-[System.Serializable]
-public class UpgradeValue
-{
-    public UpgradeValueType type;
-    public float floatValue;
-    public int intValue;
-    public AlphabeticNotation alphabetic;
-    public bool boolState;
+// [System.Serializable] // MOVED TO UPGRADEMANAGER
+// public class UpgradeValue
+// {
+//     public UpgradeValueType type;
+//     public float floatValue;
+//     public int intValue;
+//     public AlphabeticNotation alphabetic;
+//     public bool boolState;
 
-    public object Get() =>
-        type switch
-        {
-            UpgradeValueType.Float => floatValue,
-            UpgradeValueType.Int => intValue,
-            UpgradeValueType.Alphabetic => alphabetic,
-            UpgradeValueType.Bool => boolState,
-            _ => null
-        };
+//     public object Get() =>
+//         type switch
+//         {
+//             UpgradeValueType.Float => floatValue,
+//             UpgradeValueType.Int => intValue,
+//             UpgradeValueType.Alphabetic => alphabetic,
+//             UpgradeValueType.Bool => boolState,
+//             _ => null
+//         };
 
-    public void Add(object amount)
-    {
-        switch (type)
-        {
-            case UpgradeValueType.Float:
-                floatValue += (float)amount;
-                break;
-            case UpgradeValueType.Int:
-                intValue += (int)amount;
-                break;
-            case UpgradeValueType.Alphabetic:
-                alphabetic += (AlphabeticNotation)amount;
-                break;
-        }
-    }
+//     public void Add(object amount)
+//     {
+//         switch (type)
+//         {
+//             case UpgradeValueType.Float:
+//                 floatValue += (float)amount;
+//                 break;
+//             case UpgradeValueType.Int:
+//                 intValue += (int)amount;
+//                 break;
+//             case UpgradeValueType.Alphabetic:
+//                 alphabetic += (AlphabeticNotation)amount;
+//                 break;
+//         }
+//     }
 
-    public void Sub(object amount)
-    {
-        switch (type)
-        {
-            case UpgradeValueType.Float:
-                floatValue -= (float)amount;
-                break;
-            case UpgradeValueType.Int:
-                intValue -= (int)amount;
-                break;
-            case UpgradeValueType.Alphabetic:
-                alphabetic -= (AlphabeticNotation)amount;
-                break;
-        }
-    }
-    public void Set(object amount)
-    {
-        switch (type)
-        {
-            case UpgradeValueType.Float:
-                floatValue = (float)amount;
-                break;
-            case UpgradeValueType.Int:
-                intValue = (int)amount;
-                break;
-            case UpgradeValueType.Alphabetic:
-                alphabetic = (AlphabeticNotation)amount;
-                break;
-            case UpgradeValueType.Bool:
-                boolState = (bool)amount;
-                break;
-        }
-    }
-}
+//     public void Sub(object amount)
+//     {
+//         switch (type)
+//         {
+//             case UpgradeValueType.Float:
+//                 floatValue -= (float)amount;
+//                 break;
+//             case UpgradeValueType.Int:
+//                 intValue -= (int)amount;
+//                 break;
+//             case UpgradeValueType.Alphabetic:
+//                 alphabetic -= (AlphabeticNotation)amount;
+//                 break;
+//         }
+//     }
+//     public void Set(object amount)
+//     {
+//         switch (type)
+//         {
+//             case UpgradeValueType.Float:
+//                 floatValue = (float)amount;
+//                 break;
+//             case UpgradeValueType.Int:
+//                 intValue = (int)amount;
+//                 break;
+//             case UpgradeValueType.Alphabetic:
+//                 alphabetic = (AlphabeticNotation)amount;
+//                 break;
+//             case UpgradeValueType.Bool:
+//                 boolState = (bool)amount;
+//                 break;
+//         }
+//     }
+// }
 public enum UpgradeID
 {
     RewardFlat,
@@ -115,22 +115,8 @@ public enum UpgradeID
     chanceForNothing,
     oneTimeFavorModifyLose,
     oneTimeFavorModifyGain,
-    // SpecialOfferChance,
-    // FreeRefreshChance,
-    // PriceMultiplier,
-    // etc...
-}
-// public enum MerchantUpgradeType{
 
-// }
-// public enum UnifiedRewardCurrencyWeigths{
-//     bobCurrAppearChance,
-//     carlCurrAppearChance,
-//     chloeCurrAppearChance,
-//     fredCurrAppearChance,
-//     samCurrAppearChance,
-//     rogerCurrAppearChance,    
-// }
+}
 
 
 
@@ -138,14 +124,7 @@ public class MerchantUpgradeManager : MonoBehaviour
 {
     public static MerchantUpgradeManager Instance { get; private set; }
 
-    // ---------------------------- UNIFIED ----------------------------//
-
-    //TESTING NEW SYSTEM:
     [SerializeField] public Dictionary<Merchants, MerchantUpgrades> merchantUpgrades;
-    // [SerializeField] public Dictionary<Merchants,UpgradeOperation> upgradeOperations;
-    //TESTING NEW SYSTEM:
-
-
 
     [System.Serializable]
     public class MerchantUpgrades
@@ -153,10 +132,7 @@ public class MerchantUpgradeManager : MonoBehaviour
         public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> upgrades = new();
         public Dictionary<(UpgradeID, CurrencyTypes),UpgradeValue> thresholdUpgrades= new();
         public Dictionary<(UpgradeID, CurrencyTypes), UpgradeValue> thresholdMulties = new();
-        // public Dictionary<CurrencyTypes, AlphabeticNotation> rewardFlat = new();
-        // public Dictionary<CurrencyTypes, float> rewardMulti = new();
-        // public Dictionary<CurrencyTypes, int> rewardWeigths = new();
-        // public float xpGain;
+
 
         public void InitializeDefaults()
         {

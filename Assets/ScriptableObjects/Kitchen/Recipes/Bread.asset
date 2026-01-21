@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88867e5dfb8358a4daf23cb18d05d468, type: 3}
+  m_Name: Bread
+  m_EditorClassIdentifier: 
+  recipeName: Bread
+  recipe: 7
+  requiredResources: 0300000002000000
+  defaultTimeToResearch: 1
+  defaultCookingTime: 15
+  defaultChance: 0.6
+  image: {fileID: 21300000, guid: ac2af93e550888a48b3c8218b053ad4d, type: 3}
+  descriptionText: Gives +1   <size=120%><voffset=15><sprite=4></size></voffset>
+    every time it is produced through cooking!
+  recipeYield:
+    payInfo:
+    - type: 3
+      amount:
+        coefficient: 1
+        magnitude: 0
+    - type: 2
+      amount:
+        coefficient: 4
+        magnitude: 0
+    generateInfo:
+    - type: 4
+      amount:
+        coefficient: 1
+        magnitude: 0
+    payDescription:
+    - 1  <size=140%><voffset=9><sprite=3></voffset></size>
+    - 4  <size=140%><voffset=9><sprite=13></voffset></size>
+    generateDescription:
+    - 1  <size=140%><voffset=9><sprite=4></voffset></size>
