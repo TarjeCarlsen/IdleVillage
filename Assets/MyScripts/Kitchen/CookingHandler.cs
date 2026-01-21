@@ -81,6 +81,7 @@ private void UpdateDescription()
     header_txt.text = recipeState.recipe_datas.recipeName;
     int lengthOfPayments = recipeState.recipe_datas.recipeYield.payInfo.Count;
     int lengtOfYield = recipeState.recipe_datas.recipeYield.generateInfo.Count;
+    generatorAdvanced.UpdateTime(recipeState.recipe_datas.defaultCookingTime);
     Debug.Log("Payments: " + lengthOfPayments);
 
     for (int i = 0; i < lengthOfPayments; i++)

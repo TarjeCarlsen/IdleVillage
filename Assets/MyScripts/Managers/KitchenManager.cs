@@ -9,7 +9,7 @@ public enum Recipes // list all recipes in the enum to use when cooking
     grain, // wheat
     chunkyFlour, // wheat + flour
     wheatSprinkelledDough, // wheat + dough
-    CornBread, // corn + bread
+    CornBread, // cornflour + water
     flour, // grain
     dough, // water + flour
     tomatoSoup, // water + tomato

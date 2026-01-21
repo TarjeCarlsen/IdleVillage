@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88867e5dfb8358a4daf23cb18d05d468, type: 3}
-  m_Name: CornBread
+  m_Name: PumpkinPie
   m_EditorClassIdentifier: 
-  recipeName: CornBread
-  recipe: 3
-  requiredResources: 100000000a000000
+  recipeName: Pumpkin Pie
+  recipe: 10
+  requiredResources: 0800000003000000
   defaultTimeToResearch: 1
-  defaultCookingTime: 12
-  defaultChance: 0.75
-  image: {fileID: -951855657, guid: c7c350253820b434193efa05ed398a5d, type: 3}
-  descriptionText: Gives +8   <size=120%><voffset=15><sprite=1></size></voffset>
+  defaultCookingTime: 17
+  defaultChance: 0.43
+  image: {fileID: 21300000, guid: 555af871d1d143f43a050f8acd5f8654, type: 3}
+  descriptionText: Gives +12   <size=120%><voffset=15><sprite=1></size></voffset>
     every time it is produced through cooking!
   recipeYield:
     payInfo:
-    - type: 16
+    - type: 3
       amount:
         coefficient: 1
         magnitude: 0
-    - type: 10
+    - type: 8
       amount:
-        coefficient: 1
+        coefficient: 2
         magnitude: 0
     generateInfo:
     - type: 9
       amount:
-        coefficient: 8
+        coefficient: 12
         magnitude: 0
     payDescription:
-    - 1  <size=140%><voffset=9><sprite=22></voffset>
-    - 1  <size=140%><voffset=9><sprite=14></voffset>
+    - 1  <size=140%><voffset=9><sprite=3></voffset></size>
+    - 2  <size=140%><voffset=9><sprite=6></voffset></size>
     generateDescription:
-    - 8  <size=140%><voffset=9><sprite=1></voffset>
+    - 12  <size=140%><voffset=9><sprite=1></voffset></size>

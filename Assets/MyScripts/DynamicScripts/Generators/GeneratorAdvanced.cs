@@ -28,6 +28,8 @@ public class GeneratorAdvanced : MonoBehaviour
     [SerializeField] TMP_Text amountToGenerate_txt;
     [SerializeField] private StartGeneratingButton startGeneratingButton;
     [SerializeField] private Animator generatorAnim;
+    private float generationAnimLength;
+    [SerializeField] private bool usingAnimLengthEqualGenTime = false;
     [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
     private float timeRemaining;
@@ -37,7 +39,9 @@ public class GeneratorAdvanced : MonoBehaviour
 
     private void Start()
     {
-
+        if(usingAnimLengthEqualGenTime){
+            generationAnimLength = generatorAnim.runtimeAnimatorController.animationClips[0].length;
+        }
         UpdateUI();
     }
 
@@ -109,6 +113,12 @@ public class GeneratorAdvanced : MonoBehaviour
         if (CanAfford() && generateRoutine == null)
         {
             timeRemaining = time;
+
+            if(usingAnimLengthEqualGenTime && generatorAnim){
+                float speed = generationAnimLength  / timeRemaining;
+                generatorAnim.SetBool("Activated", true);
+            }
+
             generateRoutine = StartCoroutine(Generating());
         }
     }
@@ -124,6 +134,7 @@ public class GeneratorAdvanced : MonoBehaviour
             if (generatorAnim)
             {
                 generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
+                generatorAnim.speed = 1f; // reset!
             }
         }
     }
@@ -150,7 +161,7 @@ public class GeneratorAdvanced : MonoBehaviour
         foreach (GenAdvancedInfo info in genAdvancedInfos)
         {
             foreach (GenerateInfo genInfo in info.generateInfo)
-                MoneyManager.Instance.AddCurrency(genInfo.type, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, genInfo.type));
+                MoneyManager.Instance.AddCurrency(genInfo.type, genInfo.amount);
         }
 
         StopGenerating();
@@ -161,11 +172,15 @@ public class GeneratorAdvanced : MonoBehaviour
     private void UpdateUI()
     {
         if(timeRemaining <= 0f){
-        time_txt.text = "00:00:00";
+        time_txt.text = "00:00";
         }
         time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
 
         // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
+    }
+
+    public void UpdateTime(float time){
+        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
     }
 
 
@@ -173,9 +188,13 @@ public class GeneratorAdvanced : MonoBehaviour
     {
         if (CanAfford() && generateRoutine == null)//removed tractor
         {
-            if (generatorAnim)
-            {
-                generatorAnim.SetBool("Activated", true); //hardcoded. Generator auto anim has to be called "Activated"
+
+
+            if(usingAnimLengthEqualGenTime && generatorAnim){
+                float speed = generationAnimLength  / timeRemaining;
+                generatorAnim.SetBool("Activated", true);
+            }else if(generatorAnim){
+                generatorAnim.SetBool("Activated", true);
             }
             timeRemaining = time;
             generateRoutine = StartCoroutine(GeneratingAuto());
@@ -215,7 +234,7 @@ public class GeneratorAdvanced : MonoBehaviour
             {
                 foreach (GenerateInfo geninfo in info.generateInfo)
                 {
-                    MoneyManager.Instance.AddCurrency(geninfo.type, UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, geninfo.type));
+                    MoneyManager.Instance.AddCurrency(geninfo.type, geninfo.amount);
                 }
             }
 

@@ -10,29 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88867e5dfb8358a4daf23cb18d05d468, type: 3}
-  m_Name: Flour
+  m_Name: Bread
   m_EditorClassIdentifier: 
-  recipeName: Flour
-  recipe: 4
-  requiredResources: 0f000000
+  recipeName: Bread
+  recipe: 7
+  requiredResources: 0300000002000000
   defaultTimeToResearch: 1
-  defaultCookingTime: 4
-  defaultChance: 0.85
-  image: {fileID: 21300000, guid: 9016ff197714ed14a8b00a4f38ff86ba, type: 3}
-  descriptionText: Gives +1   <size=120%><voffset=15><sprite=13></size></voffset>
+  defaultCookingTime: 15
+  defaultChance: 0.6
+  image: {fileID: 21300000, guid: ac2af93e550888a48b3c8218b053ad4d, type: 3}
+  descriptionText: Gives +1   <size=120%><voffset=15><sprite=4></size></voffset>
     every time it is produced through cooking!
   recipeYield:
     payInfo:
-    - type: 15
+    - type: 3
       amount:
-        coefficient: 3
+        coefficient: 1
+        magnitude: 0
+    - type: 2
+      amount:
+        coefficient: 4
         magnitude: 0
     generateInfo:
-    - type: 2
+    - type: 4
       amount:
         coefficient: 1
         magnitude: 0
     payDescription:
-    - 3  <size=140%><voffset=9><sprite=15></voffset>
+    - 1  <size=140%><voffset=9><sprite=3></voffset></size>
+    - 4  <size=140%><voffset=9><sprite=13></voffset></size>
     generateDescription:
-    - 1  <size=140%><voffset=9><sprite=13></voffset>
+    - 1  <size=140%><voffset=9><sprite=4></voffset></size>

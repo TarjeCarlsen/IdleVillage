@@ -21,6 +21,7 @@ public enum CurrencyTypes{
     coal,
     iron,
     grain,
+    cornFlour,
     
 }
 
