@@ -5,11 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public MoneyManager moneyManager {get; set;}
-    public HouseManager houseManager {get; set;}
     public StorageManager storageManager {get; set;}
     public UpgradeManager upgradeManager{get; set;}
-    public ShopManager shopManager {get; set;}
+    public ShopManager shopManager {get; set;} 
+    public KitchenManager kitchenManager {get; set;}
 
+    // public HouseManager houseManager {get; set;} // old
     private void Awake(){
         if(Instance == null){
             Instance = this;
@@ -23,9 +24,11 @@ public class GameManager : MonoBehaviour
     private void Start(){
         moneyManager = FindFirstObjectByType<MoneyManager>();
         upgradeManager = FindFirstObjectByType<UpgradeManager>();
-        houseManager = FindFirstObjectByType<HouseManager>();
         storageManager = FindFirstObjectByType<StorageManager>();
         shopManager = FindFirstObjectByType<ShopManager>();
+        kitchenManager = FindFirstObjectByType<KitchenManager>();
+        
+        // houseManager = FindFirstObjectByType<HouseManager>(); old
     }
 
 

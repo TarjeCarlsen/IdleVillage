@@ -22,6 +22,8 @@ public class CookingHandler : MonoBehaviour
     
     [SerializeField] private GeneratorAdvanced energyConsumptionGenerator;
     [SerializeField] private float eneryConsumptionTimeIntervall = 30f; 
+    private bool manualActivated = false;
+    private bool autoActivated = false;
     private GenAdvancedInfo generatorInfo;
 
 
@@ -34,9 +36,13 @@ private void Start(){
 
 private void OnEnable(){
     kitchenManager.OnnewRecipeUnlocked += UpdateAvailableRecipes;
+    energyConsumptionGenerator.OnCantAfford += StopGeneratingAuto;
+    generatorAdvanced.OnManualFinish += ManualFinished;
 }
 private void OnDisable(){
     kitchenManager.OnnewRecipeUnlocked -= UpdateAvailableRecipes;
+    energyConsumptionGenerator.OnCantAfford -= StopGeneratingAuto;
+    generatorAdvanced.OnManualFinish -= ManualFinished;
 
 }
 public void SelectedRecipe(Recipes recipes){
@@ -52,11 +58,17 @@ public void SelectedRecipe(Recipes recipes){
 public void OnStartCookingClick(){
     if(recipeState == null || recipeState.recipe_datas == null) return;
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+        manualActivated = true;
 }
 
-
+private void ManualFinished(){
+manualActivated = false;
+}
 
 public void OnStartAutoCookingClick(){
+    if(manualActivated){
+        generatorAdvanced.StopGenerating();
+    }
     if(isCooking==true){
         generatorAdvanced.StopGenerating();
         energyConsumptionGenerator.StopGenerating();
@@ -74,8 +86,9 @@ private void StartEnergyConsumption(){
     energyConsumptionGenerator.StartGeneratingAuto(eneryConsumptionTimeIntervall);
 }
 
-private void StopEnergyConsumption(){
-
+private void StopGeneratingAuto(){
+    generatorAdvanced.StopGenerating();
+    print("stopping generating for generator");
 }
 // public void OnStartCookingAutoClick(){
 //     if(recipeState.recipe_datas == null) return;
@@ -86,10 +99,10 @@ private void OnStopCookingClick(){
 
 }
 
-private void UpdateAvailableRecipes(Recipes _recipe){
+private void UpdateAvailableRecipes(Recipes _recipe, bool state){
     foreach(RecipeSelection selected in recipes){
         if(selected.selectedRecipe == _recipe){
-            selected.gameObject.SetActive(true);
+            selected.gameObject.SetActive(state);
         }
     }
 }

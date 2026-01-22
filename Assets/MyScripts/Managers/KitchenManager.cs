@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 
 
@@ -34,7 +35,7 @@ public enum Recipes // list all recipes in the enum to use when cooking
 public class KitchenManager : MonoBehaviour
 {
     public List<RecipeState> allRecipes;
-    public event Action <Recipes> OnnewRecipeUnlocked;
+    public event Action<Recipes, bool> OnnewRecipeUnlocked;
     [System.Serializable]
     public class RecipeState
     {
@@ -66,11 +67,12 @@ public class KitchenManager : MonoBehaviour
                 return recipe;
             }
         }
-            return null;
+        return null;
     }
 
-    public void ForwardEventRaisedRecipeUnlocked(Recipes _recipe){
-        OnnewRecipeUnlocked?.Invoke(_recipe);
+    public void ForwardEventRaisedRecipeUnlocked(Recipes _recipe)
+    {
+        OnnewRecipeUnlocked?.Invoke(_recipe, true);
     }
 
     private bool ListsMatchSorted(
@@ -95,5 +97,53 @@ public class KitchenManager : MonoBehaviour
 
         return true;
     }
+
+
+
+    public void Save(ref KitchenManagerSaveData data)
+    {
+        data.recipeSaveDatas = new List<RecipeSaveData>();
+
+        foreach (RecipeState recipe in allRecipes)
+        {
+                data.recipeSaveDatas.Add(new RecipeSaveData
+                {
+                    recipeName = recipe.recipe_datas.recipeName,
+                    isUnlocked = recipe.isUnlocked,
+                    recipe = recipe.recipe_datas.recipe,
+                });
+            
+        }
+    }
+    public void Load(KitchenManagerSaveData data)
+    {
+        foreach (RecipeState recipe in allRecipes){
+            foreach(RecipeSaveData recipeSave in data.recipeSaveDatas){
+                if(recipeSave.recipeName == recipe.recipe_datas.recipeName){
+                    recipe.isUnlocked = recipeSave.isUnlocked;
+                    if(recipe.isUnlocked){
+                        OnnewRecipeUnlocked?.Invoke(recipe.recipe_datas.recipe,true);
+                    }else{
+                        OnnewRecipeUnlocked?.Invoke(recipe.recipe_datas.recipe,false);
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+[System.Serializable]
+public struct KitchenManagerSaveData
+{
+    public List<RecipeSaveData> recipeSaveDatas;
+}
+
+[System.Serializable]
+public struct RecipeSaveData
+{
+    public string recipeName;
+    public Recipes recipe;
+    public bool isUnlocked;
 
 }

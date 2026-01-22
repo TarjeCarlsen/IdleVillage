@@ -39,6 +39,8 @@ public class GeneratorAdvanced : MonoBehaviour
     private bool generatorRunning;
     [SerializeField] private CookingHandler cookingHandler;
     [SerializeField]private bool useRecipesForEnergyAuto;
+    public event Action OnCantAfford;
+    public event Action OnManualFinish;
 
     private void Start()
     {
@@ -89,6 +91,7 @@ public class GeneratorAdvanced : MonoBehaviour
 
                 if (MoneyManager.Instance.GetCurrency(payinfo.type) < payinfo.amount)
                 {
+                    OnCantAfford?.Invoke();
                     return false;
                 }
             }
@@ -188,7 +191,7 @@ public class GeneratorAdvanced : MonoBehaviour
             UpdateUI();
             yield return null;
         }
-
+        OnManualFinish?.Invoke();
         foreach (var yield in yields)
         {
             MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
@@ -253,12 +256,16 @@ public class GeneratorAdvanced : MonoBehaviour
     {
         while (true)
         {
-            if (stopRequested || !CanAfford())
+            // if (stopRequested || !CanAfford())
+            if (stopRequested )
             {
                 StopGenerating();
                 progressBarHandler.ResetProgress();
-                startGeneratingButton.ShowAutoButton(); // makes the player have to re enable auto once the generator runs out of currency
+                //startGeneratingButton.ShowAutoButton(); // makes the player have to re enable auto once the generator runs out of currency
                 yield break;
+            }
+            while (!CanAfford()){
+                yield return null;
             }
             foreach (GenAdvancedInfo info in genAdvancedInfos)
             {

@@ -14,7 +14,9 @@ public class SaveSystem
         public HouseManagerSaveData houseManagerSaveData;
         public StorageManagerSaveData storageManagerSaveData;
         public ShopManagerSaveData shopManagerSaveData;
-        public InventoryHandlerSaveData[] inventoryHandlerSaveData;
+        public KitchenManagerSaveData kitchenManagerSaveData;
+        
+        // public InventoryHandlerSaveData[] inventoryHandlerSaveData; old
     }
 
     public static string SaveFileName()
@@ -62,16 +64,19 @@ public class SaveSystem
     {
         GameManager.Instance.moneyManager.Save(ref _saveData.currencySaveData);
         // GameManager.Instance.upgradeManager.Save(ref _saveData.upgradeManagerSaveData);
-        GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Save(ref _saveData.storageManagerSaveData);
         GameManager.Instance.shopManager.Save(ref _saveData.shopManagerSaveData);
+        GameManager.Instance.kitchenManager.Save(ref _saveData.kitchenManagerSaveData);
 
-        InventoryHandler[]inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
-        _saveData.inventoryHandlerSaveData = new InventoryHandlerSaveData[inventoryHandlers.Length];
-        for (int i = 0; i < inventoryHandlers.Length; i++)
-        {
-            inventoryHandlers[i].Save(ref _saveData.inventoryHandlerSaveData[i]);
-        }
+
+        //old stuff
+        // GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
+        // InventoryHandler[]inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
+        // _saveData.inventoryHandlerSaveData = new InventoryHandlerSaveData[inventoryHandlers.Length];
+        // for (int i = 0; i < inventoryHandlers.Length; i++)
+        // {
+        //     inventoryHandlers[i].Save(ref _saveData.inventoryHandlerSaveData[i]);
+        // }
     }
     
 
@@ -79,15 +84,19 @@ public class SaveSystem
     {
         GameManager.Instance.moneyManager.Load(_saveData.currencySaveData);
         // GameManager.Instance.upgradeManager.Load(_saveData.upgradeManagerSaveData);
-        GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
         GameManager.Instance.storageManager.Load(_saveData.storageManagerSaveData);
         GameManager.Instance.shopManager.Load(_saveData.shopManagerSaveData);
+        GameManager.Instance.kitchenManager.Load(_saveData.kitchenManagerSaveData);
 
-        InventoryHandler[] inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
-        for (int i = 0; i < inventoryHandlers.Length; i++)
-        {
-            inventoryHandlers[i].Load(_saveData.inventoryHandlerSaveData[i]);
-        }
+
+
+    //Old stuff
+        // GameManager.Instance.houseManager.Load(_saveData.houseManagerSaveData);
+        // InventoryHandler[] inventoryHandlers = GameObject.FindObjectsByType<InventoryHandler>(FindObjectsSortMode.None);
+        // for (int i = 0; i < inventoryHandlers.Length; i++)
+        // {
+        //     inventoryHandlers[i].Load(_saveData.inventoryHandlerSaveData[i]);
+        // }
 
 
 
