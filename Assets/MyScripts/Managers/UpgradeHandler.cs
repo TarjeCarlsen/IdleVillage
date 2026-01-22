@@ -50,7 +50,6 @@ private void InitializeProductionTimes(){
 
     private void CalculateTimeFarm(UpgradeIDGlobal id,CurrencyTypes type){
         float finalTime = 0f;
-        // print("multiplier = "+  UpgradeManager.Instance.GetFloat(id,type));
 
         // add + to speedmulti for more speedmulti upgrades
         float baseTime = defaultProdTimes[type];

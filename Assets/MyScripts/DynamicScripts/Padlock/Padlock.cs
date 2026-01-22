@@ -23,7 +23,6 @@ public void OnUnlockClicked(){
     CurrencyTypes type = padlockInfo.priceType;
 
     if(MoneyManager.Instance.GetCurrency(padlockInfo.priceType) >= price){
-        print("can afford unlock");
         MoneyManager.Instance.SubtractCurrency(type, price);
         padlockAnim.SetTrigger("UnlockPadlock");
         padlockImage.raycastTarget = false;

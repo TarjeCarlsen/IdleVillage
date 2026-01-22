@@ -75,7 +75,6 @@ public void OnGenerateAutoClicked(float time)
     // If manual is running → queue auto
     if (isManualRunning)
     {
-        print("testing manual");
         autoQueued = true;
         if (generatorAnim)
         generatorAnim.SetBool("Activated", true);

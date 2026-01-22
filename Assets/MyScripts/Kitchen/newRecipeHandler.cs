@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
+using System.Xml;
 
 public class newRecipeHandler : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class newRecipeHandler : MonoBehaviour
     [SerializeField] private GameObject unlockedInfo;
     [SerializeField] private TMP_Text description_text;
     [SerializeField] private TMP_Text header_txt;
+    [SerializeField] public string uniqueId; // each card should be named this exactly "RecipeCard_00" then next will be "RecipeCard_01" ... and so on
+                                              // easiest way to add unique id for statically added gameobjects that will not be instantiated at runtime
 
     private Coroutine researchCoroutine;
     private float timeRemaining;
@@ -33,6 +37,7 @@ public class newRecipeHandler : MonoBehaviour
         kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
         selectedResources = new List<CurrencyTypes>();
         recipeImage.sprite = notUnlockedImage;
+        uniqueId = gameObject.name;
     }
 
     private void Start(){
@@ -41,7 +46,6 @@ public class newRecipeHandler : MonoBehaviour
     public void SelectedResource(CurrencyTypes type)
     {
         selectedResources.Add(type);
-        print("selected type = " + type);
         recipeData = kitchenManager.ChoseRecipe(selectedResources);
         UpdateUI();
     }
@@ -54,14 +58,18 @@ public class newRecipeHandler : MonoBehaviour
 
     }
 
-    public void StartResearch()
+    public void StartResearch(){
+        StartResearchInternal(null);
+    }
+    public void StartResearchInternal(float? _time = null)
     {
         if(recipeData == null) return;
         if (researchCoroutine == null && !recipeData.isUnlocked)
         {
             UpdateUI();
             isResearching = true;
-            timeRemaining = recipeData.recipe_datas.defaultTimeToResearch;
+
+            timeRemaining = _time ?? recipeData.recipe_datas.defaultTimeToResearch;
             researchCoroutine = StartCoroutine(Research());
         }
     }
@@ -72,19 +80,19 @@ public class newRecipeHandler : MonoBehaviour
         {
             StopCoroutine(researchCoroutine);
             researchCoroutine = null;
+            UpdateUI();
         }
     }
     private IEnumerator Research()
     {
-
         while (true)
         {
             time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(timeRemaining);
             yield return new WaitForSeconds(1f);
             timeRemaining -= 1f;
+            UpdateUI();
             if (timeRemaining <= 0f)
             {
-                print("setting researching false");
                 timeRemaining = 0f;
                 StopResearch();
                 isResearching = false;
@@ -103,8 +111,6 @@ public class newRecipeHandler : MonoBehaviour
 
         if (roll <= chance)
         {
-            print("recipe unlocked!");
-            print($"roll = {roll} chance was {chance}");
             recipeData.isUnlocked = true;
             UpdateUI();
             newRecipeDiscoveredText_img.SetActive(true);
@@ -113,8 +119,6 @@ public class newRecipeHandler : MonoBehaviour
         }
         else
         {
-            print("not unlocked!");
-            print($"roll = {roll} chance was {chance}");
             UpdateUI();
             faileResearchText_img.gameObject.SetActive(true);
             return false;
@@ -164,4 +168,38 @@ public class newRecipeHandler : MonoBehaviour
     }
 
 
+public void Save(ref NewRecipeHandlerSaveData data){
+    data.isResearching = isResearching;
+    data.timeRemaining = timeRemaining;
+    data.recipeData = recipeData;
+    data.uniqueId = uniqueId;
+}
+public void Load(NewRecipeHandlerSaveData data){
+    print($"unique id = {data.uniqueId} name = {uniqueId}");
+    if(data.uniqueId != uniqueId) return;
+    if(data.isResearching){
+        StopResearch();
+        recipeData = data.recipeData;
+        StartResearchInternal(data.timeRemaining);
+    }
+}
+
+
+}
+
+
+/// <summary>
+/// save data for:
+/// is it researching? 
+/// time remaining
+/// has it finished and showing unlocked or not unlocked?
+/// what recipe is beign recearched
+/// what resources are selected
+/// </summary>
+[System.Serializable]
+public struct NewRecipeHandlerSaveData{
+    public string uniqueId;
+public bool isResearching;
+public float timeRemaining;
+public KitchenManager.RecipeState recipeData;
 }

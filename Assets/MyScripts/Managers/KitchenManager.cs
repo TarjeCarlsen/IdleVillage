@@ -49,11 +49,9 @@ public class KitchenManager : MonoBehaviour
         {
             if (ListsMatchSorted(resourceList, recipe.recipe_datas.requiredResources))
             {
-                print("found recipe! : " + recipe.recipe_datas.recipeName);
                 return recipe;
             }
         }
-        // print("no match found");
         return null; // no match found
     }
 
@@ -63,7 +61,6 @@ public class KitchenManager : MonoBehaviour
         {
             if (_recipes == recipe.recipe_datas.recipe)
             {
-                print("found recipe! : " + recipe.recipe_datas.recipeName);
                 return recipe;
             }
         }

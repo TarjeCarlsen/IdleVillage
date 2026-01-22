@@ -3,9 +3,7 @@ using UnityEngine;
 public class SetGameobjectActive : MonoBehaviour
 {
     [SerializeField] private GameObject objectToSetActive;
-
     [SerializeField]private GameObject[] objectsToSetInactive;
-
 
 
     public void OnButtonActiveClick(){
@@ -30,4 +28,9 @@ public class SetGameobjectActive : MonoBehaviour
             objectToSetActive.SetActive(true);
         }
     }
+
+
+
+
 }
+

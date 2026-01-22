@@ -1,3 +1,4 @@
+using System.Data.Common;
 using UnityEngine;
 
 public class resourceSelection : MonoBehaviour
@@ -22,4 +23,21 @@ public class resourceSelection : MonoBehaviour
             isActive = !isActive;
         }
     }
+
+    // public void Save(ref ResourceSelectionSaveData data){
+    //     data.isActive = isActive;
+    //     data.currencyTypes = currencyType;
+    // }
+    // public void Load(ResourceSelectionSaveData data){
+    //     if(data.isActive){
+    //         if(data.currencyTypes == currencyType)
+    //             setGameobjectActive()
+    //     }
+    // }
 }
+
+// [System.Serializable]
+// public struct ResourceSelectionSaveData{
+//     public CurrencyTypes currencyTypes;
+//     public bool isActive;
+// }

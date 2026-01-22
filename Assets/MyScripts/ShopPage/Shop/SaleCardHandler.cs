@@ -32,9 +32,6 @@ public void OnBuyClick(){
     if(MoneyManager.Instance.GetCurrency(priceinfo.priceType) >= priceinfo.price){
         MoneyManager.Instance.SubtractCurrency(priceinfo.priceType, priceinfo.price);
         farmCreator.CreateFarm(prefabFarm);
-        print("farm bought!");
-    }else{
-        print("Cannot afford farm");
     }
 
 }

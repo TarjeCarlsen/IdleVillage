@@ -26,12 +26,13 @@ public class CookingHandler : MonoBehaviour
     private bool autoActivated = false;
     private Recipes currentSelectedRecipe;
     private GenAdvancedInfo generatorInfo;
+    [SerializeField] public string uniqueId;
 
 
     private void Awake()
     {
         kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
-
+        uniqueId = gameObject.name;
     }
     private void Start()
     {
@@ -52,7 +53,6 @@ public class CookingHandler : MonoBehaviour
     }
     public void SelectedRecipe(Recipes recipes)
     {
-        print($"called select for {recipes}");
         currentSelectedRecipe = recipes;
         recipeState = kitchenManager.GetRecipe(recipes);
         generatorAdvanced.ClearGenAdvancedInfos();
@@ -107,7 +107,6 @@ public class CookingHandler : MonoBehaviour
     private void StopGeneratingAuto()
     {
         generatorAdvanced.StopGenerating();
-        print("stopping generating for generator");
     }
 
 
@@ -159,9 +158,11 @@ public class CookingHandler : MonoBehaviour
     {
         data.selectedRecipe = currentSelectedRecipe;
         data.autoActivated = autoActivated;
+        data.uniqueId = uniqueId;
     }
     public void Load(CookingHandlerSaveData data)
     {
+        if(data.uniqueId != uniqueId) return;
         foreach(KitchenManager.RecipeState recipeState in kitchenManager.allRecipes){
             if(recipeState.recipe_datas.recipe == data.selectedRecipe){
                 if(recipeState.isUnlocked){
@@ -177,6 +178,11 @@ public class CookingHandler : MonoBehaviour
             isCooking = true;
             StartEnergyConsumption();
             generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+        }else{
+            generatorAdvanced.StopGenerating();
+            energyConsumptionGenerator.StopGenerating();
+            autoActivated = false;
+            isCooking = false;
         }
 
     }
@@ -188,4 +194,5 @@ public struct CookingHandlerSaveData
     public Recipes selectedRecipe;
     public bool manualActivated;
     public bool autoActivated;
+    public string uniqueId;
 }

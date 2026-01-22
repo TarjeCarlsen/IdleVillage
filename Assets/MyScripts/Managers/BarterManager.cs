@@ -149,7 +149,6 @@ public class BarterManager : MonoBehaviour
 
     public void UpgradeBought(UpgradeID upgradeID, IsWhatDatatype isWhatDatatype,Merchants merchant, CurrencyTypes types)
     { // SETS THE UPGRADE FOR EACH OF THE MERCHANTS. Set specific upgrades here
-        // print($"upgrade id = {upgradeID} merchant {merchant}");
         switch(upgradeID){ // call global upgrades for the shop page or production
             case UpgradeID.extraRefreshAmount:
             IncreaseMaxRefreshes(upgradeID);
@@ -169,12 +168,10 @@ public class BarterManager : MonoBehaviour
             //     }                
             //  break;
             //  case UpgradeID.oneTimeFavorModifyGain:
-            //  print("inside gain for "+ merchant);
             //     foreach(Merchants merch in Enum.GetValues(typeof(Merchants))){
             //         ForwardEventRaisedGainFavor(merch,MerchantUpgradeManager.Instance.GetInt(UpgradeID.oneTimeFavorModifyGain,merch,CurrencyDummy.Dummy));
             //     }                
         }
-        // print($"called from merchant {merchant}");
         OnUpgradeBought?.Invoke(upgradeID, isWhatDatatype, merchant,types);
         UpdateUI();
     }

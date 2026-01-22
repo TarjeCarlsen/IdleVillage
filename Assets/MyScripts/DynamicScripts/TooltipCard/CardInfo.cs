@@ -197,7 +197,6 @@ public class CardInfo : MonoBehaviour
 
     private void UpdateDescription(UpgradeIDGlobal id, IsWhatDatatype datatype, CurrencyTypes currencyTypes)
     {
-        print("inside updateDescription");
 
         if (description_txt == null) return;
 
@@ -252,7 +251,6 @@ public class CardInfo : MonoBehaviour
                 break;
         }
         }
-        print("updated text = " + oldText);
         description_txt.text = updatedText;
 
 

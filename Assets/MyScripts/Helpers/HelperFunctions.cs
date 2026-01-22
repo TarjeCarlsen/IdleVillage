@@ -4,7 +4,7 @@ using System;
 using LargeNumbers;
 using LargeNumbers.Example;
 using UnityEngine.TextCore;
-
+using System.Collections.Generic;
 
 public enum ColorChoices{
     darkGreen,
@@ -43,11 +43,18 @@ public class HelperFunctions : MonoBehaviour
         return AlphabeticNotationUtils.Min(amount, maxStorage);
     }
 
+
     //Generates a unique id for objects. Send it the object name to get "name" + uniqueid as the new unique id
+    //When generating unique ids, make a if check, check if the unique id is empty, if thats true, first then generate a new unique id
+
+        //      if(string.IsNullOrEmpty(uniqueId)){
+        //          uniqueId = HelperFunctions.Instance.GenerateUniqueId();
+        //      }
     public string GenerateUniqueId()
     {
         return System.Guid.NewGuid().ToString();
     }
+
 
     public string ConvertSecondsToTime(float totalSeconds)
     {

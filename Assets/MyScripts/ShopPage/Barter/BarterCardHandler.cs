@@ -344,7 +344,6 @@ public class BarterCardHandler : MonoBehaviour
     private bool doubleFromChloeUpgrade(){
         bool chloeActivated = MerchantUpgradeManager.Instance.GetBool(UpgradeID.bonusBasedOnPrevActivationState,Merchants.ChloeTheMerchant,CurrencyDummy.Dummy);
         bool shouldDouble = chloeActivated && barterManager.previousMerchantCompleted == Merchants.ChloeTheMerchant;
-        // print($"doubling from {chosenMerchant} state = "+ shouldDouble);
         return shouldDouble;
     }
 // private void ApplyBonusesToXpBaseOnPrevious(Merchants _merchant){
@@ -395,9 +394,7 @@ private void ApplyBonusesToPrice(){ // have to add in flat when that gets implem
     {
         if (merchant != chosenMerchant) return;
         float multi = MerchantUpgradeManager.Instance.GetFloat(UpgradeID.XpGainMulti, merchant, CurrencyDummy.Dummy);
-        // print($"before xp = "+ xpReward);
         xpReward = doubleFromChloeUpgrade() ?  originalXpReward * multi *2 : originalXpReward * multi;
-        // print($"after xp = "+ xpReward);
     }
 
     
