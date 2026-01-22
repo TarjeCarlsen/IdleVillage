@@ -15,6 +15,7 @@ public class SaveSystem
         public StorageManagerSaveData storageManagerSaveData;
         public ShopManagerSaveData shopManagerSaveData;
         public KitchenManagerSaveData kitchenManagerSaveData;
+        public CookingHandlerSaveData [] cookingHandlerSaveData;
         
         // public InventoryHandlerSaveData[] inventoryHandlerSaveData; old
     }
@@ -68,6 +69,12 @@ public class SaveSystem
         GameManager.Instance.shopManager.Save(ref _saveData.shopManagerSaveData);
         GameManager.Instance.kitchenManager.Save(ref _saveData.kitchenManagerSaveData);
 
+        CookingHandler[] cookingHandlerArray = GameObject.FindObjectsByType<CookingHandler>(FindObjectsSortMode.None);
+        _saveData.cookingHandlerSaveData = new CookingHandlerSaveData[cookingHandlerArray.Length];
+        for (int i = 0; i < cookingHandlerArray.Length; i++)
+        {
+            cookingHandlerArray[i].Save(ref _saveData.cookingHandlerSaveData[i]);
+        }
 
         //old stuff
         // GameManager.Instance.houseManager.Save(ref _saveData.houseManagerSaveData);
@@ -88,6 +95,11 @@ public class SaveSystem
         GameManager.Instance.shopManager.Load(_saveData.shopManagerSaveData);
         GameManager.Instance.kitchenManager.Load(_saveData.kitchenManagerSaveData);
 
+        CookingHandler[] cookinhandlerArray = GameObject.FindObjectsByType<CookingHandler>(FindObjectsSortMode.None);
+        for (int i = 0; i < cookinhandlerArray.Length; i++)
+        {
+            cookinhandlerArray[i].Load(_saveData.cookingHandlerSaveData[i]);
+        }
 
 
     //Old stuff
