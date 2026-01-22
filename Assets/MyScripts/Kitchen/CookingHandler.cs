@@ -25,7 +25,6 @@ public class CookingHandler : MonoBehaviour
     private bool manualActivated = false;
     private bool autoActivated = false;
     private Recipes currentSelectedRecipe;
-    private GenAdvancedInfo generatorInfo;
     [SerializeField] public string uniqueId;
 
 

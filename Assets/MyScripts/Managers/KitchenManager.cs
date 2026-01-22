@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using Unity.Collections;
 
 
 
@@ -35,6 +36,8 @@ public enum Recipes // list all recipes in the enum to use when cooking
 public class KitchenManager : MonoBehaviour
 {
     public List<RecipeState> allRecipes;
+    [SerializeField] private List<GameObject> allCookingCards;
+    [SerializeField] private List<GameObject> allRecipeCards;
     public event Action<Recipes, bool> OnnewRecipeUnlocked;
     [System.Serializable]
     public class RecipeState
@@ -100,6 +103,21 @@ public class KitchenManager : MonoBehaviour
     public void Save(ref KitchenManagerSaveData data)
     {
         data.recipeSaveDatas = new List<RecipeSaveData>();
+        data.cookingCards = new List<CookingCards>();
+        data.recipeCards = new List<RecipeCards>();
+
+        foreach(GameObject card in allCookingCards){
+            data.cookingCards.Add(new CookingCards{
+                cookingCardName = card.gameObject.name,
+                isCookingCardActive = card.gameObject.activeSelf,
+            });
+        }
+        foreach(GameObject card in allRecipeCards){
+            data.recipeCards.Add(new RecipeCards{
+                recipeCardName = card.gameObject.name,
+                isRecipeCardActive = card.gameObject.activeSelf,
+            });
+        }
 
         foreach (RecipeState recipe in allRecipes)
         {
@@ -109,11 +127,27 @@ public class KitchenManager : MonoBehaviour
                     isUnlocked = recipe.isUnlocked,
                     recipe = recipe.recipe_datas.recipe,
                 });
-            
         }
+
     }
     public void Load(KitchenManagerSaveData data)
     {
+
+        foreach(GameObject cardObject in allCookingCards){
+            foreach(CookingCards card in data.cookingCards){
+                if(cardObject.name == card.cookingCardName){
+                    cardObject.SetActive(card.isCookingCardActive);
+                }
+            }
+        }
+        foreach(GameObject cardObject in allRecipeCards){
+            foreach(RecipeCards card in data.recipeCards){
+                if(cardObject.name == card.recipeCardName){
+                    cardObject.SetActive(card.isRecipeCardActive);
+                }
+            }
+        }
+
         foreach (RecipeState recipe in allRecipes){
             foreach(RecipeSaveData recipeSave in data.recipeSaveDatas){
                 if(recipeSave.recipeName == recipe.recipe_datas.recipeName){
@@ -134,8 +168,19 @@ public class KitchenManager : MonoBehaviour
 public struct KitchenManagerSaveData
 {
     public List<RecipeSaveData> recipeSaveDatas;
+    public List<CookingCards> cookingCards;
+    public List<RecipeCards> recipeCards;
 }
-
+[System.Serializable]
+public struct CookingCards{
+    public bool isCookingCardActive;
+    public string cookingCardName;
+}
+[System.Serializable]
+public struct RecipeCards{
+    public bool isRecipeCardActive;
+    public string recipeCardName;
+}
 [System.Serializable]
 public struct RecipeSaveData
 {
