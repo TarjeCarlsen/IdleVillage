@@ -24,7 +24,6 @@ public class SetGameobjectActive : MonoBehaviour
     }
 
     public void OnButtonToggleActive(){
-        print("inside");
         if(objectToSetActive.activeSelf == true){
             objectToSetActive.SetActive(false);
         }else{

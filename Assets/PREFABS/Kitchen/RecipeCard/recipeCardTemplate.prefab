@@ -1704,7 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c69be244a773a4cbaf7654ab079483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyType: 8
+  currencyType: 10
   newRecipeHandler: {fileID: 9093781414837624046}
   setGameobjectActive: {fileID: 5417703111341411815}
 --- !u!1 &1622967727599643803

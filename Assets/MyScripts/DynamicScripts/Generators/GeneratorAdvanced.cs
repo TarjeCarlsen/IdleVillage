@@ -36,7 +36,9 @@ public class GeneratorAdvanced : MonoBehaviour
     private float timeRemaining;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
-
+    private bool generatorRunning;
+    [SerializeField] private CookingHandler cookingHandler;
+    [SerializeField]private bool useRecipesForEnergyAuto;
 
     private void Start()
     {
@@ -60,17 +62,17 @@ public class GeneratorAdvanced : MonoBehaviour
 
 
         genAdvancedInfos.Add(editableInfo);
-        foreach (GenAdvancedInfo info in genAdvancedInfos)
-        {
-            foreach (GenerateInfo genInfo in info.generateInfo)
-            {
-                print($"geninfo type = {genInfo.type} amount = {genInfo.amount}");
-            }
-            foreach (GenerateInfo genInfo in info.payInfo)
-            {
-                print($"geninfo pay type = {genInfo.type} amount = {genInfo.amount}");
-            }
-        }
+        // foreach (GenAdvancedInfo info in genAdvancedInfos)
+        // {
+        //     foreach (GenerateInfo genInfo in info.generateInfo)
+        //     {
+        //         print($"geninfo type = {genInfo.type} amount = {genInfo.amount}");
+        //     }
+        //     foreach (GenerateInfo genInfo in info.payInfo)
+        //     {
+        //         print($"geninfo pay type = {genInfo.type} amount = {genInfo.amount}");
+        //     }
+        // }
     }
 
     public void ClearGenAdvancedInfos()
@@ -98,6 +100,23 @@ public class GeneratorAdvanced : MonoBehaviour
         MoneyManager.Instance.SubtractCurrency(_typeToPay, _price);
     }
 
+    public void OnToggleGenerateAutoClicked(float time){
+        if(generatorRunning){
+            StopGenerating();
+            generatorRunning = false;
+        }else{
+
+        if (generateRoutine == null)
+        {
+            generatorRunning = true;
+            StartGeneratingAuto(time);
+        }
+        else
+        {
+            StopGenerating();
+        }
+        }
+    }
     public void OnGenerateAutoClicked(float time)
     {
         if (generateRoutine == null)
@@ -148,6 +167,7 @@ public class GeneratorAdvanced : MonoBehaviour
                 generatorAnim.speed = 1f; // reset!
             }
         }
+        UpdateUI();
     }
 
     private IEnumerator Generating()
@@ -186,11 +206,12 @@ public class GeneratorAdvanced : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (timeRemaining <= 0f)
+        if (timeRemaining <= 0f || generateRoutine == null)
         {
             time_txt.text = "00:00";
-        }
+        }else{
         time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
+        }
 
         // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
     }
@@ -205,7 +226,7 @@ public class GeneratorAdvanced : MonoBehaviour
     {
         if (CanAfford() && generateRoutine == null)//removed tractor
         {
-
+            timeRemaining = time;
             yields = new List<(CurrencyTypes types, AlphabeticNotation amount)>();
             foreach (GenAdvancedInfo info in genAdvancedInfos)
             {
@@ -249,11 +270,12 @@ public class GeneratorAdvanced : MonoBehaviour
             }
             progressBarHandler.StartProgress(timeRemaining);
 
-            float currentTime = timeRemaining;
+            // float currentTime = timeRemaining;
+            float startTime = timeRemaining;
 
-            while (currentTime > 0f)
+            while (timeRemaining > 0f)
             {
-                currentTime -= Time.deltaTime;
+                timeRemaining -= Time.deltaTime;
                 UpdateUI();
                 yield return null;
             }
@@ -264,7 +286,7 @@ public class GeneratorAdvanced : MonoBehaviour
 
             progressBarHandler.ResetProgress();
             UpdateUI();
-            currentTime = timeRemaining;
+            timeRemaining = startTime;
 
         }
     }

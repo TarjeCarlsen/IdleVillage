@@ -19,7 +19,11 @@ public class CookingHandler : MonoBehaviour
     private KitchenManager.RecipeState recipeState;
     public bool isCooking = false;
     [SerializeField] private GeneratorAdvanced generatorAdvanced;
+    
+    [SerializeField] private GeneratorAdvanced energyConsumptionGenerator;
+    [SerializeField] private float eneryConsumptionTimeIntervall = 30f; 
     private GenAdvancedInfo generatorInfo;
+
 
 private void Awake(){
     kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
@@ -50,11 +54,34 @@ public void OnStartCookingClick(){
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
 }
 
-public void OnStartCookingAutoClick(){
-    if(recipeState.recipe_datas == null) return;
+
+
+public void OnStartAutoCookingClick(){
+    if(isCooking==true){
+        generatorAdvanced.StopGenerating();
+        energyConsumptionGenerator.StopGenerating();
+        isCooking = false;
+    }else{
+
+    if(recipeState == null || recipeState.recipe_datas == null) return;
+        isCooking = true;
+        StartEnergyConsumption();
         generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+    }
+}
+
+private void StartEnergyConsumption(){
+    energyConsumptionGenerator.StartGeneratingAuto(eneryConsumptionTimeIntervall);
+}
+
+private void StopEnergyConsumption(){
 
 }
+// public void OnStartCookingAutoClick(){
+//     if(recipeState.recipe_datas == null) return;
+//         generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+
+// }
 private void OnStopCookingClick(){
 
 }
@@ -82,7 +109,6 @@ private void UpdateDescription()
     int lengthOfPayments = recipeState.recipe_datas.recipeYield.payInfo.Count;
     int lengtOfYield = recipeState.recipe_datas.recipeYield.generateInfo.Count;
     generatorAdvanced.UpdateTime(recipeState.recipe_datas.defaultCookingTime);
-    Debug.Log("Payments: " + lengthOfPayments);
 
     for (int i = 0; i < lengthOfPayments; i++)
     {
