@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class OpenCloseCanvasGroup : MonoBehaviour
@@ -13,6 +14,7 @@ public class OpenCloseCanvasGroup : MonoBehaviour
     [SerializeField] private string canvasToHideTag;
     [SerializeField] private string canvasToShowTag;
 
+
     private void Awake(){
     
     if (canvasToHide == null && !useCanvasList)
@@ -23,6 +25,8 @@ public class OpenCloseCanvasGroup : MonoBehaviour
         else
             Debug.LogWarning($"[OpenCloseCanvasGroup] No object found with tag '{canvasToHideTag}'", this);
     }
+
+
 
     if (canvasToShow == null && findCanvasFromTag)
     {

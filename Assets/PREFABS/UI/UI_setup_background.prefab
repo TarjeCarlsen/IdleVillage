@@ -105,7 +105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 510332512, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
+  m_Sprite: {fileID: 394442555, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -189,8 +189,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284391268
+  m_fontColor: {r: 0.39322567, g: 0.6226415, b: 0.36712354, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 2398747021136629178}
   - component: {fileID: 8963008669482065221}
   m_Layer: 5
-  m_Name: headerBg_img (1)
+  m_Name: headerBg_front_img (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1868379497, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
+  m_Sprite: {fileID: -1086138145, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1667304442, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
+  m_Sprite: {fileID: -281281167, guid: 92b9aec68d66a504695c50bdd0393389, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -475,8 +475,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284391268
+  m_fontColor: {r: 0.39322567, g: 0.6226415, b: 0.36712354, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

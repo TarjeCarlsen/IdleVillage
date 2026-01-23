@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 122a0d77da091e64fa3752fa06ecf45f
+guid: e2671a4204b791b4b98b571ad7a85b81
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Background_img_sheet 1_0
+      name: Pabebutton_02_192x139_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 192
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d03f3b5e5d98dd141a881c4192b6e814
-      internalID: 2099870240
+      spriteID: 47d7020ec8c93434cb0080f02369bcff
+      internalID: 862789974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Background_img_sheet 1_1
+      name: Pabebutton_02_192x139_1
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 192
         y: 0
-        width: 1920
-        height: 1080
+        width: 192
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,96 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0156bbbd780b92a4ba6b8c903d5b7673
-      internalID: -760612461
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 1_2
-      rect:
-        serializedVersion: 2
-        x: 3840
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c970dbb31c308f46bc72c40c71954c3
-      internalID: 841953366
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 1_3
-      rect:
-        serializedVersion: 2
-        x: 5760
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: faf3773f832a74943aecadc01a8bd88a
-      internalID: 1779126829
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 1_4
-      rect:
-        serializedVersion: 2
-        x: 7680
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7af57fcc026163458354d132c338835
-      internalID: 2112938489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 1_5
-      rect:
-        serializedVersion: 2
-        x: 9600
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 080be794816deae4f96a0e0bdbdde7c9
-      internalID: -601515834
+      spriteID: 9dc44eb280670b647a67b86e90f65be0
+      internalID: 1637681343
       vertices: []
       indices: 
       edges: []
@@ -232,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 854b4333b964f4846bc721fc8c669228
+    spriteID: a14b0b747aeaa4f4dbe20ac02c6ee397
     internalID: 0
     vertices: []
     indices: 
@@ -242,12 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Background_img_sheet 1_0: 2099870240
-      Background_img_sheet 1_1: -760612461
-      Background_img_sheet 1_2: 841953366
-      Background_img_sheet 1_3: 1779126829
-      Background_img_sheet 1_4: 2112938489
-      Background_img_sheet 1_5: -601515834
+      Pabebutton_02_192x139_0: 862789974
+      Pabebutton_02_192x139_1: 1637681343
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

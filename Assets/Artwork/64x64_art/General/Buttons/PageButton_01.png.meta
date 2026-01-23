@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aa14f9ef98bd97747b4d0996fe576d15
+guid: a937fa2a72c2dbb40a26cb60b8c87b94
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Background_img_sheet 2_0
+      name: PageButton_01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 192
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3053d361f13bfe54a99c429b01d90cca
-      internalID: 773159882
+      spriteID: ac638e91b7fa78e4f91e4a8d50abcb3d
+      internalID: 411581111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Background_img_sheet 2_1
+      name: PageButton_01_1
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 192
         y: 0
-        width: 1920
-        height: 1080
+        width: 192
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,96 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2656b2332a0b2b649a1cc54f94ee5045
-      internalID: 707866452
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 2_2
-      rect:
-        serializedVersion: 2
-        x: 3840
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d645df2646f238248be0e17a8ce1bb1c
-      internalID: -111041099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 2_3
-      rect:
-        serializedVersion: 2
-        x: 5760
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a81d70709af70884db43dc3debf2ecca
-      internalID: -1040903980
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 2_4
-      rect:
-        serializedVersion: 2
-        x: 7680
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90cb00aa3aed4db41b18a1ad2adfce60
-      internalID: 341271041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Background_img_sheet 2_5
-      rect:
-        serializedVersion: 2
-        x: 9600
-        y: 0
-        width: 1920
-        height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 27c8a32f48425b643b9cbd996d1e65c7
-      internalID: 1613955543
+      spriteID: 6e35bc6b4f217eb46bb58486751b572f
+      internalID: -1846384765
       vertices: []
       indices: 
       edges: []
@@ -232,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 66c493c3814a13d44a46d910a332fc74
+    spriteID: b744a2e601423554d9d35c07f05d7795
     internalID: 0
     vertices: []
     indices: 
@@ -242,12 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Background_img_sheet 2_0: 773159882
-      Background_img_sheet 2_1: 707866452
-      Background_img_sheet 2_2: -111041099
-      Background_img_sheet 2_3: -1040903980
-      Background_img_sheet 2_4: 341271041
-      Background_img_sheet 2_5: 1613955543
+      PageButton_01_0: 411581111
+      PageButton_01_1: -1846384765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
