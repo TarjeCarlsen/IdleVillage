@@ -2714,6 +2714,7 @@ MonoBehaviour:
   unlockedInfo: {fileID: 943466288069859216}
   description_text: {fileID: 834330442750093083}
   header_txt: {fileID: 210346077359959183}
+  uniqueId: 
   isResearching: 0
 --- !u!1 &4195671566076779667
 GameObject:
@@ -5144,7 +5145,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 460, y: 315}
+  m_SizeDelta: {x: 428.3, y: 315}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &526721037613296442
 CanvasRenderer:
@@ -5167,7 +5168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9150943, g: 0.6208977, b: 0.43596473, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
