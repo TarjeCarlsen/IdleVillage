@@ -190,7 +190,30 @@ public class HelperFunctions : MonoBehaviour
                 _ => "#FFFFFF"
             };
         }
+
+    //gets the fill percent using alphabetic
+        public float GetFill01(AlphabeticNotation current, AlphabeticNotation max)
+{
+    if (max.magnitude == int.MinValue || max.coefficient == 0)
+        return 0f;
+
+    // If magnitudes differ a lot, we can early out
+    int magDiff = current.magnitude - max.magnitude;
+
+    if (magDiff < -6)
+        return 0f;          // way too small to matter visually
+    if (magDiff > 0)
+        return 1f;          // overfilled
+
+    // Safe to compute
+    double ratio =
+        (current.coefficient / max.coefficient) *
+        Mathf.Pow(10f, magDiff);
+
+    return Mathf.Clamp01((float)ratio);
+}
     
 }
 // dark blue 00107E
 // bright blue 0021FF
+

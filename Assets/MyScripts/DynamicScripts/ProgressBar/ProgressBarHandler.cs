@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using LargeNumbers;
 public class ProgressBarHandler : MonoBehaviour
 {
 
@@ -92,4 +93,8 @@ public class ProgressBarHandler : MonoBehaviour
     {
         fillImage.fillAmount = Mathf.Clamp01(percentage);
     }
+
+    //sets the progress bar using alphabetic numerations
+    //this approach gives no decimals and do not give a exact number, but a estimate
+    //might be several decimals off
 }
