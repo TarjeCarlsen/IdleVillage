@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using LargeNumbers;
 
 [System.Serializable]

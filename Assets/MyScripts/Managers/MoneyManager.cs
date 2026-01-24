@@ -121,12 +121,20 @@ public class MoneyManager : MonoBehaviour
 
     public void Load(CurrencySaveData data)
     {
-        foreach(var element in data.currencyData){
-            if(Enum.TryParse(element.type, out CurrencyTypes type)){
-                currency[type] =new AlphabeticNotation(Double.Parse(element.amount));
-                OnCurrencyChanged?.Invoke(type);
-            }
+    foreach (var element in data.currencyData)
+    {
+        if (Enum.TryParse(element.type, out CurrencyTypes type))
+        {
+            AlphabeticNotation parsed;
+            AlphabeticNotation.GetAlphabeticNotationFromString(
+                element.amount,
+                out parsed
+            );
+
+            currency[type] = parsed;
+            OnCurrencyChanged?.Invoke(type);
         }
+    }
     }
 
 }

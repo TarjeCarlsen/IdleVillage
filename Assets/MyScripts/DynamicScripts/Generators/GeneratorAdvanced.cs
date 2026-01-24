@@ -37,8 +37,6 @@ public class GeneratorAdvanced : MonoBehaviour
     private Coroutine generateRoutine;
     public bool stopRequested = false;
     private bool generatorRunning;
-    [SerializeField] private CookingHandler cookingHandler;
-    [SerializeField]private bool useRecipesForEnergyAuto;
     public event Action OnCantAfford;
     public event Action OnManualFinish;
 

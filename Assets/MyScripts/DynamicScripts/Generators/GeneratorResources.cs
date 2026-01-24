@@ -27,8 +27,6 @@ public class GeneratorResources : MonoBehaviour
     public event Action<CurrencyTypes> OnAutoGenerationStopped;
 
 
-
-
     private void Awake()
     {
                 upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
