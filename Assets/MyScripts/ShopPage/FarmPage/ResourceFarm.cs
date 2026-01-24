@@ -8,89 +8,101 @@ public class ResourceFarm : MonoBehaviour
     [SerializeField] private UpgradeHandler upgradeHandler;
     [SerializeField] private EnergyConsumptionHandler energyConsumptionHandler;
     [SerializeField] private List<GeneratorResources> generatorResources;
-    [SerializeField] private float timeStartupAuto;    
+    [SerializeField] private float timeStartupAuto;
+    [SerializeField] private float energyConsumptionTime = 5f;
     public List<GameObject> tractors;
-    private void Awake(){
+    private void Awake()
+    {
         upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
     }
 
 
-    private void OnEnable(){
+    private void OnEnable()
+    {
         upgradeHandler.OnFarmUpgradeBought += enableUpgrades;
+        energyConsumptionHandler.EnergyExausted += StopGenerating;
+        energyConsumptionHandler.EnergyReStarted += ReStartAuto;
     }
-    private void OnDisable(){
+    private void OnDisable()
+    {
         upgradeHandler.OnFarmUpgradeBought -= enableUpgrades;
+        energyConsumptionHandler.EnergyExausted -= StopGenerating;
+        energyConsumptionHandler.EnergyReStarted -= ReStartAuto;
 
     }
 
-    private void enableUpgrades(UpgradeIDGlobal id, IsWhatDatatype datatype, CurrencyTypes currencyTypes){
-        switch(id){
+    private void enableUpgrades(UpgradeIDGlobal id, IsWhatDatatype datatype, CurrencyTypes currencyTypes)
+    {
+        switch (id)
+        {
             case UpgradeIDGlobal.tractorActivation:
-            foreach(GameObject tractor in tractors){
-                tractor.SetActive(true);
-            }
+                foreach (GameObject tractor in tractors)
+                {
+                    tractor.SetActive(true);
+                }
                 break;
         }
     }
 
-    public void OnGenerateButtonClicked(){
-        foreach(GeneratorResources generator in generatorResources){
-            if(!generator.gameObject.activeInHierarchy){ 
+    public void OnGenerateButtonClicked()
+    {
+        foreach (GeneratorResources generator in generatorResources)
+        {
+            if (!generator.gameObject.activeInHierarchy)
+            {
                 continue;
             }
-            if(generator != null && !generator.isGeneratorRunning() ){
+            if (generator != null && !generator.isGeneratorRunning())
+            {
                 generator.StartGenerating(upgradeHandler.productionTimes[generator.typeToGenerate]);
                 return;
             }
         }
     }
-    
-    public void OnGenerateAutoClicked(){
-        if(energyConsumptionHandler.GetEnergyState()){
-            foreach(GeneratorResources generator in generatorResources){
-            if(!generator.gameObject.activeInHierarchy){ 
-                continue;
+
+    public void OnGenerateAutoClicked()
+    {
+        if (energyConsumptionHandler.GetEnergyState())
+        {
+            StopGenerating();
+            energyConsumptionHandler.OnStopEnergyRoutine();
+        }
+        else
+        {
+            if(energyConsumptionHandler.CanAfford()){
+
+            energyConsumptionHandler.OnStartEnergyRoutine(energyConsumptionTime);
+            foreach (GeneratorResources generator in generatorResources)
+            {
+                if (generator != null && !generator.isGeneratorRunning())
+                {
+                    generator.StartGeneratingAuto(upgradeHandler.productionTimes[generator.typeToGenerate]);
+                }
             }
-            if(generator != null && !generator.isGeneratorRunning() ){
-                generator.StopGenerating();
-                return;
             }
         }
-            
-        }else{
-            foreach(GeneratorResources generator in generatorResources){
-            if(!generator.gameObject.activeInHierarchy){ 
-                continue;
+    }
+
+    private void StopGenerating()
+    {
+        foreach (GeneratorResources generator in generatorResources)
+        {
+            if (generator != null)
+            {
+                generator.stopRequested = true;
             }
-            if(generator != null && !generator.isGeneratorRunning() ){
-                generator.StartGenerating(upgradeHandler.productionTimes[generator.typeToGenerate]);
-                return;
+        }
+    }
+    private void ReStartAuto()
+    {
+        energyConsumptionHandler.OnStartEnergyRoutine(energyConsumptionTime);
+        foreach (GeneratorResources generator in generatorResources)
+        {
+            if (generator != null)
+            {
+                generator.StartGeneratingAuto(upgradeHandler.productionTimes[generator.typeToGenerate]);
+                generator.stopRequested = false;
             }
         }
     }
 }
-}
-    
-
-    
-
-        //     if (manualActivated)
-        // {
-        //     generatorAdvanced.StopGenerating();
-        // }
-        // if (isCooking == true)
-        // {
-        //     generatorAdvanced.StopGenerating();
-        //     energyConsumptionGenerator.StopGenerating();
-        //     autoActivated = false;
-        //     isCooking = false;
-        // }
-        // else
-        // {
-
-        //     if (recipeState == null || recipeState.recipe_datas == null) return;
-        //     autoActivated = true;
-        //     isCooking = true;
-        //     StartEnergyConsumption();
-        //     generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
-        // }

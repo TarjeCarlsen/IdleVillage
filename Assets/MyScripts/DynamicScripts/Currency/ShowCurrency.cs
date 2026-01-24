@@ -9,7 +9,6 @@ public class ShowCurrency : MonoBehaviour
     [SerializeField] private CurrencyTypes currencyTypes;
     [SerializeField] private TMP_Text currencyText;
     [SerializeField] private bool useStorageValues = false;
-    [SerializeField] private bool useProgressBarRelativeToStorage = false;
     
 
     private void Start(){
@@ -39,9 +38,6 @@ public class ShowCurrency : MonoBehaviour
         AlphabeticNotation ratio = current/max;
         float fill = HelperFunctions.Instance.GetFill01(current,max);
         progressBarHandler.SetProgress(fill);
-        print("fill = "+ fill);
-        print($"current money = {MoneyManager.Instance.GetCurrency(types)} storage = {StorageManager.Instance.GetMaxStorage(types)}");
-        print($"current percent filled = {MoneyManager.Instance.GetCurrency(types) / StorageManager.Instance.GetMaxStorage(types) *100}");
         }else{
         currencyText.text = MoneyManager.Instance.GetCurrency(currencyTypes).ToStringSmart(1);
     }
