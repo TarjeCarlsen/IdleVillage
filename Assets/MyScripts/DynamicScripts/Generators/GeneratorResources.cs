@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using LargeNumbers;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GeneratorResources : MonoBehaviour
@@ -93,7 +91,7 @@ public void StartGenerating(float time)
     }
 }
 
-private void StopGenerating()
+public void StopGenerating()
 {
     if (generateRoutine != null)
     {

@@ -26216,11 +26216,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1350
+      value: 1327.9739
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 873.6531
+      value: 1015.8
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26252,11 +26252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -40.00239
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.1762
+      value: -2.123
       objectReference: {fileID: 0}
     - target: {fileID: 851210932690811250, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -26272,7 +26272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1614217135979998401, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_Spacing.x
-      value: 465.72
+      value: 329.49
       objectReference: {fileID: 0}
     - target: {fileID: 1614217135979998401, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_Spacing.y
@@ -26288,7 +26288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1614217135979998401, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_ConstraintCount
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1614217135979998401, guid: 328d8c1690578c94f8122abeed12beb6, type: 3}
       propertyPath: m_Padding.m_Bottom

@@ -11,9 +11,13 @@ public class ShowCurrency : MonoBehaviour
     [SerializeField] private bool useStorageValues = false;
     [SerializeField] private bool useProgressBarRelativeToStorage = false;
     
+
+    private void Start(){
+
+        UpdateCurrency(currencyTypes);
+    }
     private void OnEnable(){
         MoneyManager.Instance.OnCurrencyChanged += UpdateCurrency;
-        UpdateCurrency(currencyTypes);
     }
     private void OnDisable(){
         MoneyManager.Instance.OnCurrencyChanged -= UpdateCurrency;
