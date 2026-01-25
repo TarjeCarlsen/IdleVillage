@@ -41,6 +41,7 @@ public class EnergyConsumptionHandler : MonoBehaviour
 
     public void OnStopEnergyRoutine(){
         if(energyCoroutine != null){
+            print("stopping energy");
             StopCoroutine(energyCoroutine);
             energyCoroutine = null;
             energyAutoRunning = false;
@@ -59,7 +60,6 @@ private IEnumerator AutoEnabled(){
             }
 
             while (!CanAfford()){
-                print("inside while loop auto !can afford");
                 yield return null;
             }
             if(RestartEnergy){

@@ -31,6 +31,7 @@ public class ResourceFarm : MonoBehaviour
 
     }
 
+    //add upgrades for farm like unlockable auto generation
     private void enableUpgrades(UpgradeIDGlobal id, IsWhatDatatype datatype, CurrencyTypes currencyTypes)
     {
         switch (id)

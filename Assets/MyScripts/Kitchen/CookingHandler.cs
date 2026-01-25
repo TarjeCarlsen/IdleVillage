@@ -1,11 +1,8 @@
-using System.Collections;
 using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine.Analytics;
 public class CookingHandler : MonoBehaviour
 {
 
@@ -20,7 +17,7 @@ public class CookingHandler : MonoBehaviour
     public bool isCooking = false;
     [SerializeField] private GeneratorAdvanced generatorAdvanced;
 
-    [SerializeField] private GeneratorAdvanced energyConsumptionGenerator;
+    [SerializeField] private EnergyConsumptionHandler energyConsumptionHandler;
     [SerializeField] private float eneryConsumptionTimeIntervall = 30f;
     private bool manualActivated = false;
     private bool autoActivated = false;
@@ -33,21 +30,20 @@ public class CookingHandler : MonoBehaviour
         kitchenManager = GameObject.FindGameObjectWithTag("KitchenPage").GetComponent<KitchenManager>();
         uniqueId = gameObject.name;
     }
-    private void Start()
-    {
-    }
 
     private void OnEnable()
     {
         kitchenManager.OnnewRecipeUnlocked += UpdateAvailableRecipes;
-        energyConsumptionGenerator.OnCantAfford += StopGeneratingAuto;
+        energyConsumptionHandler.EnergyExausted += StopGeneratingAuto;
+        energyConsumptionHandler.EnergyReStarted += ReStartAuto;
         generatorAdvanced.OnManualFinish += ManualFinished;
     }
     private void OnDisable()
     {
         kitchenManager.OnnewRecipeUnlocked -= UpdateAvailableRecipes;
-        energyConsumptionGenerator.OnCantAfford -= StopGeneratingAuto;
         generatorAdvanced.OnManualFinish -= ManualFinished;
+        energyConsumptionHandler.EnergyExausted -= StopGeneratingAuto;
+        energyConsumptionHandler.EnergyReStarted -= ReStartAuto;
 
     }
     public void SelectedRecipe(Recipes recipes)
@@ -65,8 +61,15 @@ public class CookingHandler : MonoBehaviour
     public void OnStartCookingClick()
     {
         if (recipeState == null || recipeState.recipe_datas == null) return;
-        generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
-        manualActivated = true;
+        if (autoActivated)
+        {
+        }
+        else
+        {
+
+            generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+            manualActivated = true;
+        }
     }
 
     private void ManualFinished()
@@ -78,34 +81,69 @@ public class CookingHandler : MonoBehaviour
     {
         if (manualActivated)
         {
-            generatorAdvanced.StopGenerating();
-        }
-        if (isCooking == true)
-        {
-            generatorAdvanced.StopGenerating();
-            energyConsumptionGenerator.StopGenerating();
-            autoActivated = false;
-            isCooking = false;
+            if (recipeState == null || recipeState.recipe_datas == null) return;
+            print($"manual = {manualActivated} auto = {autoActivated}");
+            print("transition");
+            generatorAdvanced.TransitionToAuto();
+            energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
         }
         else
         {
 
-            if (recipeState == null || recipeState.recipe_datas == null) return;
-            autoActivated = true;
-            isCooking = true;
-            StartEnergyConsumption();
-            generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+            if (energyConsumptionHandler.GetEnergyState())
+            {
+                print("stopauto");
+                StopGeneratingAuto();
+                energyConsumptionHandler.OnStopEnergyRoutine();
+                autoActivated = false;
+            }
+            else
+            {
+                if (energyConsumptionHandler.CanAfford())
+                {
+                    print($"inside start auto routine");
+                    if (recipeState == null || recipeState.recipe_datas == null) return; // add popup for "Chose recipe"
+                    autoActivated = true;
+                    energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+                    generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
+                }
+            }
         }
     }
 
-    private void StartEnergyConsumption()
-    {
-        energyConsumptionGenerator.StartGeneratingAuto(eneryConsumptionTimeIntervall);
-    }
+
+    // if (manualActivated)
+    // {
+    //     generatorAdvanced.stopRequested = true;
+    // }
+    // if (isCooking == true)
+    // {
+    //     generatorAdvanced.stopRequested = true;
+    //     energyConsumptionHandler.OnStopEnergyRoutine();
+    //     autoActivated = false;
+    //     isCooking = false;
+    // }
+    // else
+    // {
+
+    //     if (recipeState == null || recipeState.recipe_datas == null) return;
+    //     autoActivated = true;
+    //     isCooking = true;
+    //     generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
+    // }
+
+
 
     private void StopGeneratingAuto()
     {
-        generatorAdvanced.StopGenerating();
+        generatorAdvanced.stopRequested = true;
+    }
+
+    public void ReStartAuto()
+    {
+        energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+        generatorAdvanced.stopRequested = false;
+        generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
     }
 
 
@@ -157,32 +195,57 @@ public class CookingHandler : MonoBehaviour
     {
         data.selectedRecipe = currentSelectedRecipe;
         data.autoActivated = autoActivated;
+        data.manualActivated = manualActivated;
         data.uniqueId = uniqueId;
+        data.timeRemaining = generatorAdvanced.GetTimeRemaining();
     }
     public void Load(CookingHandlerSaveData data)
     {
-        if(data.uniqueId != uniqueId) return;
-        foreach(KitchenManager.RecipeState recipeState in kitchenManager.allRecipes){
-            if(recipeState.recipe_datas.recipe == data.selectedRecipe){
-                if(recipeState.isUnlocked){
+        if (data.uniqueId != uniqueId) return;
+        generatorAdvanced.StopGenerating();
+        energyConsumptionHandler.OnStopEnergyRoutine();
+        autoActivated = data.autoActivated;
+        manualActivated = data.manualActivated;
+        foreach (KitchenManager.RecipeState recipeState in kitchenManager.allRecipes)
+        {
+            if (recipeState.recipe_datas.recipe == data.selectedRecipe)
+            {
+                if (recipeState.isUnlocked)
+                {
                     SelectedRecipe(data.selectedRecipe);
                 }
             }
         }
 
-        if (data.autoActivated)
-        {
-            if (recipeState == null || recipeState.recipe_datas == null) return;
-            autoActivated = true;
-            isCooking = true;
-            StartEnergyConsumption();
-            generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
-        }else{
-            generatorAdvanced.StopGenerating();
-            energyConsumptionGenerator.StopGenerating();
-            autoActivated = false;
-            isCooking = false;
-        }
+
+            if(data.autoActivated)
+            {
+                if (recipeState == null || recipeState.recipe_datas == null) return; // add popup for "Chose recipe"
+                print($"inside start auto routine");
+                energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+                generatorAdvanced.ResumeGeneration(recipeState.recipe_datas.defaultCookingTime,data.timeRemaining,true);
+            }
+            else if (data.manualActivated)
+            {
+                if (recipeState == null || recipeState.recipe_datas == null) return;
+                print("manual");
+                generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
+            }
+                else
+                {
+                    print("stopauto");
+                    StopGeneratingAuto();
+                    energyConsumptionHandler.OnStopEnergyRoutine();
+                }
+        
+        // else
+        // {
+        //     print($"inside else statement");
+        //     generatorAdvanced.StopGenerating();
+        //     energyConsumptionHandler.OnStopEnergyRoutine();
+        //     autoActivated = false;
+        //     isCooking = false;
+        // }
 
     }
 }
@@ -194,4 +257,5 @@ public struct CookingHandlerSaveData
     public bool manualActivated;
     public bool autoActivated;
     public string uniqueId;
+    public float timeRemaining;
 }

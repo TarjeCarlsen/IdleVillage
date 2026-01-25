@@ -175,7 +175,6 @@ public void Save(ref NewRecipeHandlerSaveData data){
     data.uniqueId = uniqueId;
 }
 public void Load(NewRecipeHandlerSaveData data){
-    print($"unique id = {data.uniqueId} name = {uniqueId}");
     if(data.uniqueId != uniqueId) return;
     if(data.isResearching){
         StopResearch();

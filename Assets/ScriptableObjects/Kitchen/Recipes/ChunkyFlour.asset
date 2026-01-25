@@ -16,7 +16,7 @@ MonoBehaviour:
   recipe: 1
   requiredResources: 0100000002000000
   defaultTimeToResearch: 1
-  defaultCookingTime: 10
+  defaultCookingTime: 3
   defaultChance: 0.97
   image: {fileID: -1221834244, guid: e7399a3ee4c8ca64d981e0944d80b0ea, type: 3}
   descriptionText: Gives +2   <size=120%><voffset=15><sprite=1></size></voffset>

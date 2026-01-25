@@ -32,8 +32,13 @@ public class GeneratorAdvanced : MonoBehaviour
     [SerializeField] private bool usingAnimLengthEqualGenTime = false;
     [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
+    [SerializeField] private bool transitionRequested;
     private List<(CurrencyTypes types, AlphabeticNotation amount)> yields;
     private float timeRemaining;
+    public float GetTimeRemaining() => timeRemaining;
+    private bool resumeGeneration = false;
+    private float resumeTimeRemaining;
+    private float originalTime;
     private Coroutine generateRoutine;
     public bool stopRequested = false;
     private bool generatorRunning;
@@ -66,11 +71,9 @@ public class GeneratorAdvanced : MonoBehaviour
         // {
         //     foreach (GenerateInfo genInfo in info.generateInfo)
         //     {
-        //         print($"geninfo type = {genInfo.type} amount = {genInfo.amount}");
         //     }
         //     foreach (GenerateInfo genInfo in info.payInfo)
         //     {
-        //         print($"geninfo pay type = {genInfo.type} amount = {genInfo.amount}");
         //     }
         // }
     }
@@ -135,6 +138,7 @@ public class GeneratorAdvanced : MonoBehaviour
         if (CanAfford() && generateRoutine == null)
         {
             timeRemaining = time;
+            originalTime = time;
             yields = new List<(CurrencyTypes types, AlphabeticNotation amount)>();
             foreach (GenAdvancedInfo info in genAdvancedInfos)
             {
@@ -154,22 +158,7 @@ public class GeneratorAdvanced : MonoBehaviour
         }
     }
 
-    public void StopGenerating()
-    {
-        if (generateRoutine != null)
-        {
 
-            StopCoroutine(generateRoutine);
-            generateRoutine = null;
-            progressBarHandler.ResetProgress();
-            if (generatorAnim)
-            {
-                generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
-                generatorAnim.speed = 1f; // reset!
-            }
-        }
-        UpdateUI();
-    }
 
     private IEnumerator Generating()
     {
@@ -189,6 +178,13 @@ public class GeneratorAdvanced : MonoBehaviour
             UpdateUI();
             yield return null;
         }
+        if(transitionRequested){
+            StopGenerating();//
+            StartGeneratingAuto(originalTime);
+            transitionRequested = false;
+        }else{
+            StopGenerating();//
+        }
         OnManualFinish?.Invoke();
         foreach (var yield in yields)
         {
@@ -200,27 +196,11 @@ public class GeneratorAdvanced : MonoBehaviour
         //     foreach (GenerateInfo genInfo in info.generateInfo)
         // }
 
-        StopGenerating();//
         UpdateUI();
     }
 
 
-    private void UpdateUI()
-    {
-        if (timeRemaining <= 0f || generateRoutine == null)
-        {
-            time_txt.text = "00:00";
-        }else{
-        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
-        }
 
-        // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
-    }
-
-    public void UpdateTime(float time)
-    {
-        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
-    }
 
 
     public void StartGeneratingAuto(float time)
@@ -250,8 +230,10 @@ public class GeneratorAdvanced : MonoBehaviour
             UpdateUI();
         }
     }
+
     private IEnumerator GeneratingAuto()
     {
+
         while (true)
         {
             // if (stopRequested || !CanAfford())
@@ -273,7 +255,14 @@ public class GeneratorAdvanced : MonoBehaviour
 
                 }
             }
+            if(resumeGeneration){
+
+                progressBarHandler.StartProgress(originalTime);
+                print("percentage = " + (1-(timeRemaining / originalTime)));
+                progressBarHandler.SetProgressPercent(1-(timeRemaining / originalTime)); //set the progress bar to percentage done
+            }else{
             progressBarHandler.StartProgress(timeRemaining);
+            }
 
             // float currentTime = timeRemaining;
             float startTime = timeRemaining;
@@ -288,14 +277,86 @@ public class GeneratorAdvanced : MonoBehaviour
             {
                 MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
             }
-
+            if(resumeGeneration){
+                resumeGeneration = false;
+                timeRemaining = originalTime;
+            }else{
+            timeRemaining = startTime;
+            }
             progressBarHandler.ResetProgress();
             UpdateUI();
-            timeRemaining = startTime;
 
         }
     }
 
 
+    public void TransitionToAuto(){
+        transitionRequested = true;
+    }
+
+        public void StopGenerating()
+    {
+        if (generateRoutine != null)
+        {
+
+            StopCoroutine(generateRoutine);
+            generateRoutine = null;
+            progressBarHandler.ResetProgress();
+            stopRequested = false;
+            
+            if (generatorAnim)
+            {
+                generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
+                generatorAnim.speed = 1f; // reset!
+            }
+        }
+        UpdateUI();
+    }
+
+    public void ResumeGeneration(float _originalTime, float time, bool generationAuto){
+        if(generationAuto){
+            timeRemaining = time;
+            resumeGeneration = true;
+            originalTime = _originalTime;
+
+            yields = new List<(CurrencyTypes types, AlphabeticNotation amount)>();
+            foreach (GenAdvancedInfo info in genAdvancedInfos)
+            {
+                foreach (GenerateInfo genInfo in info.generateInfo)
+                {
+                    yields.Add((genInfo.type, genInfo.amount));
+                }
+            }
+            if (usingAnimLengthEqualGenTime && generatorAnim)
+            {
+                float speed = generationAnimLength / timeRemaining;
+                generatorAnim.SetBool("Activated", true);
+            }
+            else if (generatorAnim)
+            {
+                generatorAnim.SetBool("Activated", true);
+            }
+            generateRoutine = StartCoroutine(GeneratingAuto());
+            UpdateUI();
+             
+        }
+    }
+
+    private void UpdateUI()
+    {
+        if (timeRemaining <= 0f || generateRoutine == null)
+        {
+            time_txt.text = "00:00";
+        }else{
+        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
+        }
+
+        // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
+    }
+
+    public void UpdateTime(float time)
+    {
+        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
+    }
 
 }

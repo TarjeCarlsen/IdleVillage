@@ -16,7 +16,7 @@ public class ProgressBarHandler : MonoBehaviour
 
     private Coroutine progressCoroutine;
     private event Action onComplete;
-
+private float elapsed;
 
     /// <To Call function>
     ///                     myProgressBar.StartProgress(timeToComplete, () => Debug.Log("Done!"));
@@ -50,12 +50,12 @@ public class ProgressBarHandler : MonoBehaviour
         fillImage.fillAmount = 0f;
     }
 
-    private IEnumerator FillRoutine()
+private IEnumerator FillRoutine()
+{
+    elapsed = 0f;
+
+    if (reversed)
     {
-        float elapsed = 0f;
-        if (reversed)
-        {
-        // Start full and drain to empty
         fillImage.fillAmount = 1f;
 
         while (elapsed < duration)
@@ -66,24 +66,43 @@ public class ProgressBarHandler : MonoBehaviour
         }
 
         fillImage.fillAmount = 0f;
-
-        }
-        else
-        {
-            fillImage.fillAmount = 0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                fillImage.fillAmount = Mathf.Clamp01(elapsed / duration);
-                yield return null;
-            }
-
-            fillImage.fillAmount = 1f;
-        }
-        onComplete?.Invoke();
-        progressCoroutine = null;
     }
+    else
+    {
+        fillImage.fillAmount = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            fillImage.fillAmount = Mathf.Clamp01(elapsed / duration);
+            yield return null;
+        }
+
+        fillImage.fillAmount = 1f;
+    }
+
+    onComplete?.Invoke();
+    progressCoroutine = null;
+}
+
+
+/// <summary>
+/// Sets the progress bar to a specific percentage (0–1)
+/// while the coroutine is running.
+/// </summary>
+public void SetProgressPercent(float percent)
+{
+    percent = Mathf.Clamp01(percent);
+
+    // Convert percent into elapsed time
+    elapsed = percent * duration;
+
+    // Update fill visually
+    if (reversed)
+        fillImage.fillAmount = 1f - percent;
+    else
+        fillImage.fillAmount = percent;
+}
 
     /// <summary>
     /// Instantly sets the progress bar to a given percentage (0 to 1).
