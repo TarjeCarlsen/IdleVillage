@@ -36,6 +36,9 @@ public class GeneratorAdvanced : MonoBehaviour
     private List<(CurrencyTypes types, AlphabeticNotation amount)> yields;
     private float timeRemaining;
     public float GetTimeRemaining() => timeRemaining;
+    public void TransitionToAuto() => transitionRequested = true;
+    public void CancellTransitionAuto() => transitionRequested = false;
+    
     private bool resumeGeneration = false;
     private float resumeTimeRemaining;
     private float originalTime;
@@ -44,6 +47,9 @@ public class GeneratorAdvanced : MonoBehaviour
     private bool generatorRunning;
     public event Action OnCantAfford;
     public event Action OnManualFinish;
+    public event Action OnTransitionedToAuto;
+
+    [SerializeField] public bool safetyCheck = false;
 
     private void Start()
     {
@@ -182,10 +188,12 @@ public class GeneratorAdvanced : MonoBehaviour
             StopGenerating();//
             StartGeneratingAuto(originalTime);
             transitionRequested = false;
+            OnTransitionedToAuto?.Invoke();
+            yield break;
         }else{
             StopGenerating();//
+            OnManualFinish?.Invoke();
         }
-        OnManualFinish?.Invoke();
         foreach (var yield in yields)
         {
             MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
@@ -290,9 +298,7 @@ public class GeneratorAdvanced : MonoBehaviour
     }
 
 
-    public void TransitionToAuto(){
-        transitionRequested = true;
-    }
+
 
         public void StopGenerating()
     {
@@ -312,7 +318,20 @@ public class GeneratorAdvanced : MonoBehaviour
         }
         UpdateUI();
     }
+public bool SafetyCheckOrAbort(bool energyIsRunning)
+{
+    if (!safetyCheck)
+        return true; // safety disabled, allow auto
 
+    if (!energyIsRunning)
+    {
+        Debug.LogWarning("[GeneratorAdvanced] Safety check failed → stopping auto");
+        StopGenerating();
+        return false;
+    }
+
+    return true;
+}
     public void ResumeGeneration(float _originalTime, float time, bool generationAuto){
         if(generationAuto){
             timeRemaining = time;

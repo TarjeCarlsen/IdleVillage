@@ -11,6 +11,7 @@ public class EnergyConsumptionHandler : MonoBehaviour
     [SerializeField] private ProgressBarHandler progressBarHandler;
     public bool energyAutoRunning = false;
     public bool GetEnergyState() => energyAutoRunning;
+    public bool IsEnergyRoutineRunning => energyCoroutine != null;
     private float timeRemaining;
     private Coroutine energyCoroutine;
     private bool RestartEnergy = false;
@@ -32,6 +33,7 @@ public class EnergyConsumptionHandler : MonoBehaviour
     }
     public void OnStartEnergyRoutine(float time){
             if(energyCoroutine == null &&  CanAfford()){
+                energyAutoRunning = true;
                 timeRemaining = time;
                 energyCoroutine = StartCoroutine(AutoEnabled());
                 MoneyManager.Instance.SubtractCurrency(currencyTypes,price);
@@ -41,7 +43,6 @@ public class EnergyConsumptionHandler : MonoBehaviour
 
     public void OnStopEnergyRoutine(){
         if(energyCoroutine != null){
-            print("stopping energy");
             StopCoroutine(energyCoroutine);
             energyCoroutine = null;
             energyAutoRunning = false;
@@ -66,7 +67,7 @@ private IEnumerator AutoEnabled(){
                 RestartEnergy = false;
                 EnergyReStarted?.Invoke();
             }
-            energyAutoRunning = true;
+            // energyAutoRunning = true;
             progressBarHandler.StartProgress(timeRemaining);
             float startTime = timeRemaining;
             UpdateUI();

@@ -35918,7 +35918,7 @@ MonoBehaviour:
   SpecificStartValue_TESTING:
   - currencyType: 9
     testNumber:
-      coefficient: 4
+      coefficient: 25
       magnitude: 0
   defaultStartMoney:
     coefficient: 200
@@ -42183,6 +42183,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 779580388756332171, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
+      propertyPath: safetyCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1331829349795511146, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
       propertyPath: eneryConsumptionTimeIntervall
       value: 3
@@ -42250,6 +42254,14 @@ PrefabInstance:
     - target: {fileID: 8456226539766339484, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713940381457544097, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713940381457544097, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleAuto
       objectReference: {fileID: 0}
     - target: {fileID: 9064101320572492978, guid: 86dac67555d8ccc42836ac524d718a3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

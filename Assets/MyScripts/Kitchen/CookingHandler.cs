@@ -3,6 +3,14 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Assertions.Must;
+
+    public enum CookingMode{
+        idle,
+        manual,
+        auto,
+        transitioning,
+    }
 public class CookingHandler : MonoBehaviour
 {
 
@@ -23,6 +31,7 @@ public class CookingHandler : MonoBehaviour
     private bool autoActivated = false;
     private Recipes currentSelectedRecipe;
     [SerializeField] public string uniqueId;
+    [SerializeField] private CookingMode cookingMode = CookingMode.idle;
 
 
     private void Awake()
@@ -37,6 +46,7 @@ public class CookingHandler : MonoBehaviour
         energyConsumptionHandler.EnergyExausted += StopGeneratingAuto;
         energyConsumptionHandler.EnergyReStarted += ReStartAuto;
         generatorAdvanced.OnManualFinish += ManualFinished;
+        generatorAdvanced.OnTransitionedToAuto += TransitioningFinished;
     }
     private void OnDisable()
     {
@@ -44,6 +54,7 @@ public class CookingHandler : MonoBehaviour
         generatorAdvanced.OnManualFinish -= ManualFinished;
         energyConsumptionHandler.EnergyExausted -= StopGeneratingAuto;
         energyConsumptionHandler.EnergyReStarted -= ReStartAuto;
+        generatorAdvanced.OnTransitionedToAuto -= TransitioningFinished;
 
     }
     public void SelectedRecipe(Recipes recipes)
@@ -61,92 +72,98 @@ public class CookingHandler : MonoBehaviour
     public void OnStartCookingClick()
     {
         if (recipeState == null || recipeState.recipe_datas == null) return;
-        if (autoActivated)
+        if (cookingMode != CookingMode.idle) return;
         {
-        }
-        else
-        {
-
+            cookingMode = CookingMode.manual;
             generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
-            manualActivated = true;
+            // manualActivated = true;
         }
     }
 
-    private void ManualFinished()
-    {
-        manualActivated = false;
+private void ManualFinished()
+{
+    if (cookingMode != CookingMode.manual){
+        Debug.Log("Manual finished ignored! (state = "+ cookingMode + ")");
+        return;
     }
 
-    public void OnStartAutoCookingClick()
-    {
-        if (manualActivated)
-        {
-            if (recipeState == null || recipeState.recipe_datas == null) return;
-            print($"manual = {manualActivated} auto = {autoActivated}");
-            print("transition");
-            generatorAdvanced.TransitionToAuto();
-            energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
-        }
-        else
-        {
+        cookingMode = CookingMode.idle;
+        print("MANUALFINISHED EVENT INVOKED - COOKINGMODE = Idle");
+    
+}
 
-            if (energyConsumptionHandler.GetEnergyState())
-            {
-                print("stopauto");
-                StopGeneratingAuto();
-                energyConsumptionHandler.OnStopEnergyRoutine();
-                autoActivated = false;
-            }
-            else
-            {
-                if (energyConsumptionHandler.CanAfford())
-                {
-                    print($"inside start auto routine");
-                    if (recipeState == null || recipeState.recipe_datas == null) return; // add popup for "Chose recipe"
-                    autoActivated = true;
-                    energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
-                    generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
-                }
-            }
+private void TransitioningFinished(){
+    if(cookingMode == CookingMode.transitioning){
+        print("TRANSITION EVENT INVOKED - COOKINGMODE = AUTO");
+        cookingMode = CookingMode.auto;
+    }
+}
+
+public void ToggleAuto(){
+    if(cookingMode == CookingMode.manual||cookingMode == CookingMode.transitioning){
+        if(cookingMode == CookingMode.transitioning){
+            print("inside cancell transition - "+cookingMode);
+            generatorAdvanced.CancellTransitionAuto();
+            energyConsumptionHandler.OnStopEnergyRoutine();
+            cookingMode = CookingMode.manual;
+            return;
+        }else{
+            print("inside transition - "+cookingMode);
+            StartAuto(true);
+            return;
         }
     }
-
-
-    // if (manualActivated)
-    // {
-    //     generatorAdvanced.stopRequested = true;
-    // }
-    // if (isCooking == true)
-    // {
-    //     generatorAdvanced.stopRequested = true;
-    //     energyConsumptionHandler.OnStopEnergyRoutine();
-    //     autoActivated = false;
-    //     isCooking = false;
-    // }
-    // else
-    // {
-
-    //     if (recipeState == null || recipeState.recipe_datas == null) return;
-    //     autoActivated = true;
-    //     isCooking = true;
-    //     generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
-    // }
-
-
-
-    private void StopGeneratingAuto()
-    {
-        generatorAdvanced.stopRequested = true;
+    if(cookingMode == CookingMode.auto){
+        print("inside stop auto - "+cookingMode);
+        StopAuto();
+            return;
+    }else if(cookingMode == CookingMode.idle){
+        print("inside start regular auto - "+cookingMode);
+        StartAuto(false);
+            return;
     }
+    print("Outside statements - "+cookingMode);
+            return;
+}
+public void StartAuto(bool fromManual)
+{
+    energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
 
-    public void ReStartAuto()
-    {
-        energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+    if (fromManual){
+
+        generatorAdvanced.TransitionToAuto();
+        cookingMode = CookingMode.transitioning;
+        generatorAdvanced.stopRequested = false;
+    }
+    else{
+        cookingMode = CookingMode.auto;
         generatorAdvanced.stopRequested = false;
         generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
     }
+}
+
+private void StopAuto()
+{
+    cookingMode = CookingMode.idle;
+    generatorAdvanced.stopRequested = true;
+    energyConsumptionHandler.OnStopEnergyRoutine();
+}
 
 
+
+public void ReStartAuto()
+{
+    if (cookingMode != CookingMode.auto) return;
+
+    energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+    generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
+}
+
+private void StopGeneratingAuto()
+{
+    if (cookingMode == CookingMode.auto)
+        StopAuto();
+}
     private void UpdateAvailableRecipes(Recipes _recipe, bool state)
     {
         foreach (RecipeSelection selected in recipes)
@@ -157,7 +174,14 @@ public class CookingHandler : MonoBehaviour
             }
         }
     }
-
+void LateUpdate()
+{
+    if (cookingMode == CookingMode.auto && energyConsumptionHandler.IsEnergyRoutineRunning==false)
+    {
+        Debug.LogError("INVARIANT BROKEN: auto without energy");
+        energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+    }
+}
     private void UpdateDescription()
     {
         foreach (TMP_Text payDescription in prices)
@@ -193,66 +217,30 @@ public class CookingHandler : MonoBehaviour
 
     public void Save(ref CookingHandlerSaveData data)
     {
-        data.selectedRecipe = currentSelectedRecipe;
-        data.autoActivated = autoActivated;
-        data.manualActivated = manualActivated;
-        data.uniqueId = uniqueId;
-        data.timeRemaining = generatorAdvanced.GetTimeRemaining();
+    data.mode = cookingMode;
+    data.selectedRecipe = currentSelectedRecipe;
+    data.timeRemaining = generatorAdvanced.GetTimeRemaining();
     }
     public void Load(CookingHandlerSaveData data)
     {
-        if (data.uniqueId != uniqueId) return;
-        generatorAdvanced.StopGenerating();
-        energyConsumptionHandler.OnStopEnergyRoutine();
-        autoActivated = data.autoActivated;
-        manualActivated = data.manualActivated;
-        foreach (KitchenManager.RecipeState recipeState in kitchenManager.allRecipes)
-        {
-            if (recipeState.recipe_datas.recipe == data.selectedRecipe)
-            {
-                if (recipeState.isUnlocked)
-                {
-                    SelectedRecipe(data.selectedRecipe);
-                }
-            }
-        }
+    if (data.uniqueId != uniqueId) return;
 
+    StopAuto();
+    generatorAdvanced.StopGenerating();
+    cookingMode = CookingMode.idle;
 
-            if(data.autoActivated)
-            {
-                if (recipeState == null || recipeState.recipe_datas == null) return; // add popup for "Chose recipe"
-                print($"inside start auto routine");
-                energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
-                generatorAdvanced.ResumeGeneration(recipeState.recipe_datas.defaultCookingTime,data.timeRemaining,true);
-            }
-            else if (data.manualActivated)
-            {
-                if (recipeState == null || recipeState.recipe_datas == null) return;
-                print("manual");
-                generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
-            }
-                else
-                {
-                    print("stopauto");
-                    StopGeneratingAuto();
-                    energyConsumptionHandler.OnStopEnergyRoutine();
-                }
-        
-        // else
-        // {
-        //     print($"inside else statement");
-        //     generatorAdvanced.StopGenerating();
-        //     energyConsumptionHandler.OnStopEnergyRoutine();
-        //     autoActivated = false;
-        //     isCooking = false;
-        // }
+    SelectedRecipe(data.selectedRecipe);
 
-    }
+    if (data.mode == CookingMode.auto)
+        StartAuto(false);
+    else if (data.mode == CookingMode.manual)
+        generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
 }
-
+}
 [System.Serializable]
 public struct CookingHandlerSaveData
 {
+    public CookingMode mode;
     public Recipes selectedRecipe;
     public bool manualActivated;
     public bool autoActivated;
