@@ -30,7 +30,7 @@ public class CookingHandler : MonoBehaviour
     private Recipes currentSelectedRecipe;
     [SerializeField] public string uniqueId;
     [SerializeField] private CookingMode cookingMode = CookingMode.idle;
-
+    private bool isExhausted;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class CookingHandler : MonoBehaviour
     private void OnEnable()
     {
         kitchenManager.OnnewRecipeUnlocked += UpdateAvailableRecipes;
-        energyConsumptionHandler.EnergyExausted += StopGeneratingAuto;
+        energyConsumptionHandler.EnergyExausted += StopAuto;
         energyConsumptionHandler.EnergyReStarted += ReStartAuto;
         generatorAdvanced.OnManualFinish += ManualFinished;
         generatorAdvanced.OnTransitionedToAuto += TransitioningFinished;
@@ -50,7 +50,7 @@ public class CookingHandler : MonoBehaviour
     {
         kitchenManager.OnnewRecipeUnlocked -= UpdateAvailableRecipes;
         generatorAdvanced.OnManualFinish -= ManualFinished;
-        energyConsumptionHandler.EnergyExausted -= StopGeneratingAuto;
+        energyConsumptionHandler.EnergyExausted -= StopAuto;
         energyConsumptionHandler.EnergyReStarted -= ReStartAuto;
         generatorAdvanced.OnTransitionedToAuto -= TransitioningFinished;
 
@@ -120,7 +120,7 @@ public void ToggleAuto(){
         break;
 
         case CookingMode.auto:
-        StopAuto();
+        StopAuto(false);
         break;
 
         case CookingMode.idle:
@@ -130,6 +130,7 @@ public void ToggleAuto(){
 }
 public void StartAuto(bool fromManual)
 {
+    if(!energyConsumptionHandler.CanAfford()) return;
     energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
 
     if (fromManual){
@@ -145,27 +146,36 @@ public void StartAuto(bool fromManual)
     }
 }
 
-private void StopAuto()
+private void StopAuto(bool isEnergyExhausted)
 {
-    cookingMode = CookingMode.idle;
-    generatorAdvanced.stopRequested = true;
-    energyConsumptionHandler.OnStopEnergyRoutine();
+    if(isEnergyExhausted){
+        generatorAdvanced.stopRequested = true;
+        cookingMode = CookingMode.auto;
+        isExhausted = true;
+    }else{
+        isExhausted = false;
+        generatorAdvanced.stopRequested = true;
+        cookingMode = CookingMode.idle;
+        energyConsumptionHandler.OnStopEnergyRoutine();
+
+    }
 }
 
 
 
 public void ReStartAuto()
 {
-    if (cookingMode != CookingMode.auto) return;
+    if (cookingMode == CookingMode.auto ||cookingMode == CookingMode.idle ){
 
     energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
     generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
+    }
 }
 
 private void StopGeneratingAuto()
 {
     if (cookingMode == CookingMode.auto)
-        StopAuto();
+        StopAuto(false);
 }
     private void UpdateAvailableRecipes(Recipes _recipe, bool state)
     {
@@ -226,6 +236,7 @@ void LateUpdate()
     data.timeRemaining = generatorAdvanced.GetTimeRemaining();
     data.transitionRequested = generatorAdvanced.GetTransitionRequrested();
     data.resumeGeneration = generatorAdvanced.GetResumeGeneration();
+    data.isExhausted = isExhausted;
     }
 
     
@@ -233,14 +244,17 @@ void LateUpdate()
     {
     if (data.uniqueId != uniqueId)
     {
-        print("not equal uniqueid");
      return;
     }
-
+    cookingMode = data.mode;
     
     generatorAdvanced.StopGenerating();
 
     SelectedRecipe(data.selectedRecipe);
+    if(data.isExhausted){
+        energyConsumptionHandler.OnResumeExhaustedStage(eneryConsumptionTimeIntervall);
+        generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
+    }else{
 
     switch(data.mode){
         case CookingMode.idle:
@@ -260,6 +274,7 @@ void LateUpdate()
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
         break;
     }
+    }
 }
 }
 [System.Serializable]
@@ -271,4 +286,5 @@ public struct CookingHandlerSaveData
     public float timeRemaining;
     public bool transitionRequested;
     public bool resumeGeneration;
+    public bool isExhausted;
 }

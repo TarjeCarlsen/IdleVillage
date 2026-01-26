@@ -65,7 +65,7 @@ public class ResourceFarm : MonoBehaviour
     {
         if (energyConsumptionHandler.GetEnergyState())
         {
-            StopGenerating();
+            StopGenerating(false); // boolean is not used here, used in cookinghandler
             energyConsumptionHandler.OnStopEnergyRoutine();
         }
         else
@@ -84,7 +84,7 @@ public class ResourceFarm : MonoBehaviour
         }
     }
 
-    private void StopGenerating()
+    private void StopGenerating(bool isEnergyExhausted)
     {
         foreach (GeneratorResources generator in generatorResources)
         {

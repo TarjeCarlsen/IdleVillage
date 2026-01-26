@@ -36048,7 +36048,7 @@ MonoBehaviour:
   SpecificStartValue_TESTING:
   - currencyType: 9
     testNumber:
-      coefficient: 25
+      coefficient: 3
       magnitude: 0
   defaultStartMoney:
     coefficient: 200

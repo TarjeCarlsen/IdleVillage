@@ -15,7 +15,7 @@ public class EnergyConsumptionHandler : MonoBehaviour
     private float timeRemaining;
     private Coroutine energyCoroutine;
     private bool RestartEnergy = false;
-    public event Action EnergyExausted;
+    public event Action <bool> EnergyExausted;
     public event Action EnergyReStarted;
     [SerializeField]private TMP_Text start_stop_txt;
 
@@ -43,6 +43,13 @@ public class EnergyConsumptionHandler : MonoBehaviour
             }
     }
 
+    public void OnResumeExhaustedStage(float time){
+        energyAutoRunning = true;
+        timeRemaining = time;
+        energyCoroutine = StartCoroutine(AutoEnabled());
+        UpdateUI();
+    }
+
     public void OnStopEnergyRoutine(){
         if(energyCoroutine != null){
             StopCoroutine(energyCoroutine);
@@ -59,7 +66,7 @@ private IEnumerator AutoEnabled(){
         while (true)
         {
             if(!CanAfford()){
-                EnergyExausted?.Invoke();
+                EnergyExausted?.Invoke(true);
                 RestartEnergy = true;
                 UpdateUI();
             }
