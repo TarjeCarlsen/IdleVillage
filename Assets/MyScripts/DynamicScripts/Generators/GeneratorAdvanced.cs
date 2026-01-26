@@ -36,10 +36,12 @@ public class GeneratorAdvanced : MonoBehaviour
     private List<(CurrencyTypes types, AlphabeticNotation amount)> yields;
     private float timeRemaining;
     public float GetTimeRemaining() => timeRemaining;
+    public bool GetTransitionRequrested() => transitionRequested;
     public void TransitionToAuto() => transitionRequested = true;
     public void CancellTransitionAuto() => transitionRequested = false;
     
     private bool resumeGeneration = false;
+    public bool GetResumeGeneration() => resumeGeneration;
     private float resumeTimeRemaining;
     private float originalTime;
     private Coroutine generateRoutine;
@@ -48,8 +50,6 @@ public class GeneratorAdvanced : MonoBehaviour
     public event Action OnCantAfford;
     public event Action OnManualFinish;
     public event Action OnTransitionedToAuto;
-
-    [SerializeField] public bool safetyCheck = false;
 
     private void Start()
     {
@@ -184,26 +184,26 @@ public class GeneratorAdvanced : MonoBehaviour
             UpdateUI();
             yield return null;
         }
-        if(transitionRequested){
-            StopGenerating();//
-            StartGeneratingAuto(originalTime);
-            transitionRequested = false;
-            OnTransitionedToAuto?.Invoke();
-            yield break;
-        }else{
-            StopGenerating();//
-            OnManualFinish?.Invoke();
-        }
         foreach (var yield in yields)
         {
             MoneyManager.Instance.AddCurrency(yield.types, yield.amount);
         }
 
+        if(transitionRequested){
+            StopGenerating();//
+            StartGeneratingAuto(originalTime);
+            transitionRequested = false;
+            OnTransitionedToAuto?.Invoke();
+            UpdateUI();
+            yield break;
+        }else{
+            StopGenerating();//
+            OnManualFinish?.Invoke();
+        }
         // foreach (GenAdvancedInfo info in genAdvancedInfos)
         // {
         //     foreach (GenerateInfo genInfo in info.generateInfo)
         // }
-
         UpdateUI();
     }
 
@@ -235,6 +235,11 @@ public class GeneratorAdvanced : MonoBehaviour
             }
             timeRemaining = time;
             generateRoutine = StartCoroutine(GeneratingAuto());
+
+        if(transitionRequested){
+        }else{
+
+        }
             UpdateUI();
         }
     }
@@ -266,7 +271,6 @@ public class GeneratorAdvanced : MonoBehaviour
             if(resumeGeneration){
 
                 progressBarHandler.StartProgress(originalTime);
-                print("percentage = " + (1-(timeRemaining / originalTime)));
                 progressBarHandler.SetProgressPercent(1-(timeRemaining / originalTime)); //set the progress bar to percentage done
             }else{
             progressBarHandler.StartProgress(timeRemaining);
@@ -293,7 +297,6 @@ public class GeneratorAdvanced : MonoBehaviour
             }
             progressBarHandler.ResetProgress();
             UpdateUI();
-
         }
     }
 
@@ -309,29 +312,18 @@ public class GeneratorAdvanced : MonoBehaviour
             generateRoutine = null;
             progressBarHandler.ResetProgress();
             stopRequested = false;
-            
+            transitionRequested = false;
             if (generatorAnim)
             {
                 generatorAnim.SetBool("Activated", false); //hardcoded. Generator auto anim has to be called "Activated"
                 generatorAnim.speed = 1f; // reset!
             }
+        }else{
+            //FOR DEBUGGING
         }
         UpdateUI();
     }
-public bool SafetyCheckOrAbort(bool energyIsRunning)
-{
-    if (!safetyCheck)
-        return true; // safety disabled, allow auto
 
-    if (!energyIsRunning)
-    {
-        Debug.LogWarning("[GeneratorAdvanced] Safety check failed → stopping auto");
-        StopGenerating();
-        return false;
-    }
-
-    return true;
-}
     public void ResumeGeneration(float _originalTime, float time, bool generationAuto){
         if(generationAuto){
             timeRemaining = time;
@@ -360,6 +352,7 @@ public bool SafetyCheckOrAbort(bool energyIsRunning)
              
         }
     }
+
 
     private void UpdateUI()
     {

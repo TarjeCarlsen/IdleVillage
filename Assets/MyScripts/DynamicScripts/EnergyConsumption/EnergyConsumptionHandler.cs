@@ -20,6 +20,8 @@ public class EnergyConsumptionHandler : MonoBehaviour
     [SerializeField]private TMP_Text start_stop_txt;
 
 
+
+
     private void Start(){
         UpdateUI();
     }
@@ -50,6 +52,8 @@ public class EnergyConsumptionHandler : MonoBehaviour
             UpdateUI();
         }
     }
+
+
 private IEnumerator AutoEnabled(){
 
         while (true)

@@ -27,8 +27,6 @@ public class CookingHandler : MonoBehaviour
 
     [SerializeField] private EnergyConsumptionHandler energyConsumptionHandler;
     [SerializeField] private float eneryConsumptionTimeIntervall = 30f;
-    private bool manualActivated = false;
-    private bool autoActivated = false;
     private Recipes currentSelectedRecipe;
     [SerializeField] public string uniqueId;
     [SerializeField] private CookingMode cookingMode = CookingMode.idle;
@@ -88,42 +86,47 @@ private void ManualFinished()
     }
 
         cookingMode = CookingMode.idle;
-        print("MANUALFINISHED EVENT INVOKED - COOKINGMODE = Idle");
     
 }
 
 private void TransitioningFinished(){
     if(cookingMode == CookingMode.transitioning){
-        print("TRANSITION EVENT INVOKED - COOKINGMODE = AUTO");
         cookingMode = CookingMode.auto;
+    }else{
+        //FOR DEBUGGING
     }
 }
 
+
+
+
+/// <summary>
+/// State 1: manual activated
+/// State 2: Auto activated
+/// State 3: Transition from manual to auto
+/// 
+/// Fix 1: Cancelling from manual transition
+/// </summary>
 public void ToggleAuto(){
-    if(cookingMode == CookingMode.manual||cookingMode == CookingMode.transitioning){
-        if(cookingMode == CookingMode.transitioning){
-            print("inside cancell transition - "+cookingMode);
+
+    switch(cookingMode){
+        case CookingMode.transitioning:
             generatorAdvanced.CancellTransitionAuto();
             energyConsumptionHandler.OnStopEnergyRoutine();
             cookingMode = CookingMode.manual;
-            return;
-        }else{
-            print("inside transition - "+cookingMode);
+        break;
+        case CookingMode.manual:
             StartAuto(true);
-            return;
-        }
-    }
-    if(cookingMode == CookingMode.auto){
-        print("inside stop auto - "+cookingMode);
+        break;
+
+        case CookingMode.auto:
         StopAuto();
-            return;
-    }else if(cookingMode == CookingMode.idle){
-        print("inside start regular auto - "+cookingMode);
+        break;
+
+        case CookingMode.idle:
         StartAuto(false);
-            return;
+        break;
     }
-    print("Outside statements - "+cookingMode);
-            return;
 }
 public void StartAuto(bool fromManual)
 {
@@ -217,24 +220,46 @@ void LateUpdate()
 
     public void Save(ref CookingHandlerSaveData data)
     {
+        data.uniqueId = uniqueId;
     data.mode = cookingMode;
     data.selectedRecipe = currentSelectedRecipe;
     data.timeRemaining = generatorAdvanced.GetTimeRemaining();
+    data.transitionRequested = generatorAdvanced.GetTransitionRequrested();
+    data.resumeGeneration = generatorAdvanced.GetResumeGeneration();
     }
+
+    
     public void Load(CookingHandlerSaveData data)
     {
-    if (data.uniqueId != uniqueId) return;
+    if (data.uniqueId != uniqueId)
+    {
+        print("not equal uniqueid");
+     return;
+    }
 
-    StopAuto();
+    
     generatorAdvanced.StopGenerating();
-    cookingMode = CookingMode.idle;
 
     SelectedRecipe(data.selectedRecipe);
 
-    if (data.mode == CookingMode.auto)
-        StartAuto(false);
-    else if (data.mode == CookingMode.manual)
+    switch(data.mode){
+        case CookingMode.idle:
+        generatorAdvanced.StopGenerating();
+        energyConsumptionHandler.OnStopEnergyRoutine();
+        break;
+        case CookingMode.auto:
+        generatorAdvanced.ResumeGeneration(recipeState.recipe_datas.defaultCookingTime,data.timeRemaining,true);
+        energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+        break;
+        case CookingMode.transitioning:
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
+        energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
+        break;
+        case CookingMode.manual:
+        energyConsumptionHandler.OnStopEnergyRoutine();
+        generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
+        break;
+    }
 }
 }
 [System.Serializable]
@@ -242,8 +267,8 @@ public struct CookingHandlerSaveData
 {
     public CookingMode mode;
     public Recipes selectedRecipe;
-    public bool manualActivated;
-    public bool autoActivated;
     public string uniqueId;
     public float timeRemaining;
+    public bool transitionRequested;
+    public bool resumeGeneration;
 }
