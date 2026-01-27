@@ -283,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1127193905130561448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -397,6 +397,7 @@ MonoBehaviour:
   fillImage: {fileID: 6757801555709923828}
   autoStart: 0
   duration: 5
+  reversed: 0
 --- !u!1 &3955292249190357558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1013,7 @@ MonoBehaviour:
   progressBarHandler: {fileID: 3060270681092682028}
   amountToGenerate_txt: {fileID: 4656352237096862164}
   startGeneratingButton: {fileID: 0}
-  generatorAnim: {fileID: 1331257840519492242}
+  generatorAnim: {fileID: 0}
   resourceAnim: {fileID: 0}
   locked: 1
   stopRequested: 0

@@ -14,7 +14,7 @@ public class GeneratorResources : MonoBehaviour
     [SerializeField] private Animator generatorAnim;
     [SerializeField] private Animator resourceAnim;
     [SerializeField] public bool locked = false; // The locked state is for unlocking the auto functionality
-    [SerializeField] private GameObject tractor;
+    // [SerializeField] private GameObject tractor;
     private bool isManualRunning = false;
     private bool isAutoRunning = false;
     private bool autoQueued = false;
@@ -28,7 +28,7 @@ public class GeneratorResources : MonoBehaviour
     private void Awake()
     {
                 upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
-                tractor.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.tractorActivation,CurrencyDummy.Dummy));
+                // tractor.SetActive(UpgradeManager.Instance.GetBool(UpgradeIDGlobal.tractorActivation,CurrencyDummy.Dummy));
     }
 
     private void Start(){

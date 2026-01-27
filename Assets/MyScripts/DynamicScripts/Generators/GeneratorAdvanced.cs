@@ -7,6 +7,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+    public enum GenerationMode{
+        idle,
+        manual,
+        auto,
+        transitioning,
+    }
 [System.Serializable]
 public class GenAdvancedInfo
 {
@@ -358,9 +364,9 @@ public class GeneratorAdvanced : MonoBehaviour
     {
         if (timeRemaining <= 0f || generateRoutine == null)
         {
-            time_txt.text = "00:00";
+        if(time_txt != null)time_txt.text = "00:00";
         }else{
-        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
+        if(time_txt != null)time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(timeRemaining)).ToString();
         }
 
         // amountToGenerate_txt.text = UpgradeManager.Instance.GetAlphabetic(UpgradeIDGlobal.productionPower, typeToGenerate).ToString();
@@ -368,7 +374,7 @@ public class GeneratorAdvanced : MonoBehaviour
 
     public void UpdateTime(float time)
     {
-        time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
+        if(time_txt != null)time_txt.text = HelperFunctions.Instance.ConvertSecondsToTime(Mathf.Floor(time)).ToString();
     }
 
 }

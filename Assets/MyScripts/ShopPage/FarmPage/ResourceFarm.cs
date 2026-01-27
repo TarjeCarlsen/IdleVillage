@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class ResourceFarm : MonoBehaviour
 {
     [SerializeField] private UpgradeHandler upgradeHandler;
@@ -10,7 +12,8 @@ public class ResourceFarm : MonoBehaviour
     [SerializeField] private List<GeneratorResources> generatorResources;
     [SerializeField] private float timeStartupAuto;
     [SerializeField] private float energyConsumptionTime = 5f;
-    public List<GameObject> tractors;
+    [SerializeField] private GenerationMode resourceMode;
+
     private void Awake()
     {
         upgradeHandler = GameObject.FindGameObjectWithTag("ShopPage").GetComponent<UpgradeHandler>();
@@ -36,12 +39,12 @@ public class ResourceFarm : MonoBehaviour
     {
         switch (id)
         {
-            case UpgradeIDGlobal.tractorActivation:
-                foreach (GameObject tractor in tractors)
-                {
-                    tractor.SetActive(true);
-                }
-                break;
+            // case UpgradeIDGlobal.tractorActivation:
+            //     foreach (GameObject tractor in tractors)
+            //     {
+            //         tractor.SetActive(true);
+            //     }
+            //     break;
         }
     }
 
@@ -55,6 +58,7 @@ public class ResourceFarm : MonoBehaviour
             }
             if (generator != null && !generator.isGeneratorRunning())
             {
+                resourceMode = GenerationMode.manual;
                 generator.StartGenerating(upgradeHandler.productionTimes[generator.typeToGenerate]);
                 return;
             }
@@ -63,13 +67,34 @@ public class ResourceFarm : MonoBehaviour
 
     public void OnGenerateAutoClicked()
     {
-        if (energyConsumptionHandler.GetEnergyState())
-        {
-            StopGenerating(false); // boolean is not used here, used in cookinghandler
-            energyConsumptionHandler.OnStopEnergyRoutine();
+        switch(resourceMode){
+            case GenerationMode.idle:
+            StartGeneratingAuto();
+            print("inside idle");
+            break;
+            case GenerationMode.manual:
+            StopGenerating(false);
+            StartGeneratingAuto();
+            print("inside manual");
+            break;
+            case GenerationMode.auto:
+            StopGenerating(false);
+            print("inside stop generating, from auto");
+            break;
+            case GenerationMode.transitioning:
+            print("inside transition");
+            break;
         }
-        else
-        {
+        // if (energyConsumptionHandler.GetEnergyState())
+        // {
+        //     StopGenerating(false); // boolean is not used here, used in cookinghandler
+        //     energyConsumptionHandler.OnStopEnergyRoutine();
+        // }
+
+    }
+
+
+    private void StartGeneratingAuto(){
             if(energyConsumptionHandler.CanAfford()){
 
             energyConsumptionHandler.OnStartEnergyRoutine(energyConsumptionTime);
@@ -78,12 +103,11 @@ public class ResourceFarm : MonoBehaviour
                 if (generator != null && !generator.isGeneratorRunning())
                 {
                     generator.StartGeneratingAuto(upgradeHandler.productionTimes[generator.typeToGenerate]);
+                    resourceMode = GenerationMode.auto;
                 }
             }
             }
-        }
     }
-
     private void StopGenerating(bool isEnergyExhausted)
     {
         foreach (GeneratorResources generator in generatorResources)
@@ -91,6 +115,8 @@ public class ResourceFarm : MonoBehaviour
             if (generator != null)
             {
                 generator.stopRequested = true;
+                energyConsumptionHandler.OnStopEnergyRoutine();
+                resourceMode = GenerationMode.idle;
             }
         }
     }
@@ -106,4 +132,5 @@ public class ResourceFarm : MonoBehaviour
             }
         }
     }
+
 }

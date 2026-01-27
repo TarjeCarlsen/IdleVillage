@@ -127,11 +127,7 @@ MonoBehaviour:
   - {fileID: 4256640435649492107}
   timeStartupAuto: 0
   energyConsumptionTime: 3
-  tractors:
-  - {fileID: 6307469283603430210}
-  - {fileID: 5765725589450568982}
-  - {fileID: 278822428988281695}
-  - {fileID: 6491401348466940475}
+  resourceMode: 0
 --- !u!1 &2701404077204375620
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,14 +702,14 @@ PrefabInstance:
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8734628940222220994}
+      objectReference: {fileID: 5561132982534936002}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGenerating
       objectReference: {fileID: 0}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GeneratorResources, Assembly-CSharp
+      value: GeneratorAdvanced, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_IsActive
@@ -867,17 +863,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8734628940222220994}
+    - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5561132982534936002}
   m_SourcePrefab: {fileID: 100100000, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
---- !u!1 &278822428988281695 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 1455827357747730329}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &454213438001341707 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1331257840519492242, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 1455827357747730329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4489069292100986549 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3060270681092682028, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
@@ -917,7 +906,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891366143734897864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689a2d7a3aba2ff43989fc215ffc7419, type: 3}
   m_Name: 
@@ -929,12 +918,40 @@ MonoBehaviour:
     magnitude: 0
   progressBarHandler: {fileID: 4489069292100986549}
   amountToGenerate_txt: {fileID: 6100843627806217805}
-  generatorAnim: {fileID: 454213438001341707}
+  generatorAnim: {fileID: 0}
   resourceAnim: {fileID: 0}
   locked: 0
-  tractor: {fileID: 278822428988281695}
   stopRequested: 0
   upgradeHandler: {fileID: 0}
+--- !u!114 &5561132982534936002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891366143734897864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712e3c44d4d00c3499893494e8db1a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genAdvancedInfos:
+  - generateInfo:
+    - type: 1
+      amount:
+        coefficient: 2
+        magnitude: 0
+    payInfo: []
+  time_txt: {fileID: 0}
+  progressBarHandler: {fileID: 4489069292100986549}
+  amountToGenerate_txt: {fileID: 6100843627806217805}
+  startGeneratingButton: {fileID: 0}
+  generatorAnim: {fileID: 0}
+  usingAnimLengthEqualGenTime: 0
+  resourceAnim: {fileID: 0}
+  locked: 0
+  transitionRequested: 0
+  stopRequested: 0
 --- !u!1001 &4639289414529712004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,14 +999,14 @@ PrefabInstance:
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 742596333177662695}
+      objectReference: {fileID: 484917609617453196}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGenerating
       objectReference: {fileID: 0}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GeneratorResources, Assembly-CSharp
+      value: GeneratorAdvanced, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_IsActive
@@ -1163,6 +1180,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       insertIndex: -1
       addedObject: {fileID: 742596333177662695}
+    - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 484917609617453196}
   m_SourcePrefab: {fileID: 100100000, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
 --- !u!114 &71141237163621968 stripped
 MonoBehaviour:
@@ -1192,7 +1212,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4167502915356882133}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689a2d7a3aba2ff43989fc215ffc7419, type: 3}
   m_Name: 
@@ -1204,22 +1224,40 @@ MonoBehaviour:
     magnitude: 0
   progressBarHandler: {fileID: 7645514422602403496}
   amountToGenerate_txt: {fileID: 71141237163621968}
-  generatorAnim: {fileID: 5916466398025731350}
+  generatorAnim: {fileID: 0}
   resourceAnim: {fileID: 0}
   locked: 0
-  tractor: {fileID: 6307469283603430210}
   stopRequested: 0
   upgradeHandler: {fileID: 0}
---- !u!95 &5916466398025731350 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1331257840519492242, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 4639289414529712004}
+--- !u!114 &484917609617453196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6307469283603430210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 4639289414529712004}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4167502915356882133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712e3c44d4d00c3499893494e8db1a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genAdvancedInfos:
+  - generateInfo:
+    - type: 1
+      amount:
+        coefficient: 1
+        magnitude: 0
+    payInfo: []
+  time_txt: {fileID: 0}
+  progressBarHandler: {fileID: 7645514422602403496}
+  amountToGenerate_txt: {fileID: 71141237163621968}
+  startGeneratingButton: {fileID: 0}
+  generatorAnim: {fileID: 0}
+  usingAnimLengthEqualGenTime: 0
+  resourceAnim: {fileID: 0}
+  locked: 0
+  transitionRequested: 0
+  stopRequested: 0
 --- !u!114 &7645514422602403496 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3060270681092682028, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
@@ -1270,14 +1308,14 @@ PrefabInstance:
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1167902031353127714}
+      objectReference: {fileID: 5819478406507050884}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGenerating
       objectReference: {fileID: 0}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GeneratorResources, Assembly-CSharp
+      value: GeneratorAdvanced, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_IsActive
@@ -1431,6 +1469,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1167902031353127714}
+    - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5819478406507050884}
   m_SourcePrefab: {fileID: 100100000, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
 --- !u!114 &538153291344703492 stripped
 MonoBehaviour:
@@ -1460,7 +1501,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4494215119685450369}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689a2d7a3aba2ff43989fc215ffc7419, type: 3}
   m_Name: 
@@ -1472,22 +1513,40 @@ MonoBehaviour:
     magnitude: 0
   progressBarHandler: {fileID: 7895104649116352764}
   amountToGenerate_txt: {fileID: 538153291344703492}
-  generatorAnim: {fileID: 6165669587620840258}
+  generatorAnim: {fileID: 0}
   resourceAnim: {fileID: 0}
   locked: 0
-  tractor: {fileID: 5765725589450568982}
   stopRequested: 0
   upgradeHandler: {fileID: 0}
---- !u!1 &5765725589450568982 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 5181752153979482576}
+--- !u!114 &5819478406507050884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6165669587620840258 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1331257840519492242, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 5181752153979482576}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494215119685450369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712e3c44d4d00c3499893494e8db1a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genAdvancedInfos:
+  - generateInfo:
+    - type: 1
+      amount:
+        coefficient: 1
+        magnitude: 0
+    payInfo: []
+  time_txt: {fileID: 0}
+  progressBarHandler: {fileID: 7895104649116352764}
+  amountToGenerate_txt: {fileID: 538153291344703492}
+  startGeneratingButton: {fileID: 0}
+  generatorAnim: {fileID: 0}
+  usingAnimLengthEqualGenTime: 0
+  resourceAnim: {fileID: 0}
+  locked: 0
+  transitionRequested: 0
+  stopRequested: 0
 --- !u!114 &7895104649116352764 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3060270681092682028, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
@@ -1538,14 +1597,14 @@ PrefabInstance:
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4256640435649492107}
+      objectReference: {fileID: 267824934380327486}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGenerating
       objectReference: {fileID: 0}
     - target: {fileID: 1448383081580920190, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GeneratorResources, Assembly-CSharp
+      value: GeneratorAdvanced, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       propertyPath: m_IsActive
@@ -1699,6 +1758,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4256640435649492107}
+    - targetCorrespondingSourceObject: {fileID: 8770726147786115921, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 267824934380327486}
   m_SourcePrefab: {fileID: 100100000, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
 --- !u!114 &964342422903938857 stripped
 MonoBehaviour:
@@ -1728,7 +1790,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3768183669739738540}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 689a2d7a3aba2ff43989fc215ffc7419, type: 3}
   m_Name: 
@@ -1740,22 +1802,40 @@ MonoBehaviour:
     magnitude: 0
   progressBarHandler: {fileID: 7459337687872581585}
   amountToGenerate_txt: {fileID: 964342422903938857}
-  generatorAnim: {fileID: 6882964851360558191}
+  generatorAnim: {fileID: 0}
   resourceAnim: {fileID: 0}
   locked: 0
-  tractor: {fileID: 6491401348466940475}
   stopRequested: 0
   upgradeHandler: {fileID: 0}
---- !u!1 &6491401348466940475 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1723384151934715078, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 5619551030435274493}
+--- !u!114 &267824934380327486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6882964851360558191 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1331257840519492242, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}
-  m_PrefabInstance: {fileID: 5619551030435274493}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768183669739738540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712e3c44d4d00c3499893494e8db1a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genAdvancedInfos:
+  - generateInfo:
+    - type: 1
+      amount:
+        coefficient: 1
+        magnitude: 0
+    payInfo: []
+  time_txt: {fileID: 0}
+  progressBarHandler: {fileID: 7459337687872581585}
+  amountToGenerate_txt: {fileID: 964342422903938857}
+  startGeneratingButton: {fileID: 0}
+  generatorAnim: {fileID: 0}
+  usingAnimLengthEqualGenTime: 0
+  resourceAnim: {fileID: 0}
+  locked: 0
+  transitionRequested: 0
+  stopRequested: 0
 --- !u!114 &7459337687872581585 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3060270681092682028, guid: a9efb7fa64a09c941a08e32955ec9928, type: 3}

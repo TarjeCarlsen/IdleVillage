@@ -152,7 +152,7 @@ public class newRecipeHandler : MonoBehaviour
             else
             {
                 recipeImage.color = notUnlockedColor;
-                recipeImage.sprite = notUnlockedImage;
+                recipeImage.sprite = notUnlockedImage; // change to represent blacked out version of recipe later
                 unlockedInfo.SetActive(false);
             }
         }

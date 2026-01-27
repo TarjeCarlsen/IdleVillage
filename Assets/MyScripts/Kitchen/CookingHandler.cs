@@ -5,12 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Assertions.Must;
 
-    public enum CookingMode{
-        idle,
-        manual,
-        auto,
-        transitioning,
-    }
+
 public class CookingHandler : MonoBehaviour
 {
 
@@ -29,7 +24,7 @@ public class CookingHandler : MonoBehaviour
     [SerializeField] private float eneryConsumptionTimeIntervall = 30f;
     private Recipes currentSelectedRecipe;
     [SerializeField] public string uniqueId;
-    [SerializeField] private CookingMode cookingMode = CookingMode.idle;
+    [SerializeField] private GenerationMode cookingMode = GenerationMode.idle;
     private bool isExhausted;
 
     private void Awake()
@@ -70,9 +65,9 @@ public class CookingHandler : MonoBehaviour
     public void OnStartCookingClick()
     {
         if (recipeState == null || recipeState.recipe_datas == null) return;
-        if (cookingMode != CookingMode.idle) return;
+        if (cookingMode != GenerationMode.idle) return;
         {
-            cookingMode = CookingMode.manual;
+            cookingMode = GenerationMode.manual;
             generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime); //change this out when upgradeable time comes
             // manualActivated = true;
         }
@@ -80,18 +75,18 @@ public class CookingHandler : MonoBehaviour
 
 private void ManualFinished()
 {
-    if (cookingMode != CookingMode.manual){
+    if (cookingMode != GenerationMode.manual){
         Debug.Log("Manual finished ignored! (state = "+ cookingMode + ")");
         return;
     }
 
-        cookingMode = CookingMode.idle;
+        cookingMode = GenerationMode.idle;
     
 }
 
 private void TransitioningFinished(){
-    if(cookingMode == CookingMode.transitioning){
-        cookingMode = CookingMode.auto;
+    if(cookingMode == GenerationMode.transitioning){
+        cookingMode = GenerationMode.auto;
     }else{
         //FOR DEBUGGING
     }
@@ -110,20 +105,20 @@ private void TransitioningFinished(){
 public void ToggleAuto(){
 
     switch(cookingMode){
-        case CookingMode.transitioning:
+        case GenerationMode.transitioning:
             generatorAdvanced.CancellTransitionAuto();
             energyConsumptionHandler.OnStopEnergyRoutine();
-            cookingMode = CookingMode.manual;
+            cookingMode = GenerationMode.manual;
         break;
-        case CookingMode.manual:
+        case GenerationMode.manual:
             StartAuto(true);
         break;
 
-        case CookingMode.auto:
+        case GenerationMode.auto:
         StopAuto(false);
         break;
 
-        case CookingMode.idle:
+        case GenerationMode.idle:
         StartAuto(false);
         break;
     }
@@ -136,11 +131,11 @@ public void StartAuto(bool fromManual)
     if (fromManual){
 
         generatorAdvanced.TransitionToAuto();
-        cookingMode = CookingMode.transitioning;
+        cookingMode = GenerationMode.transitioning;
         generatorAdvanced.stopRequested = false;
     }
     else{
-        cookingMode = CookingMode.auto;
+        cookingMode = GenerationMode.auto;
         generatorAdvanced.stopRequested = false;
         generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
     }
@@ -150,12 +145,12 @@ private void StopAuto(bool isEnergyExhausted)
 {
     if(isEnergyExhausted){
         generatorAdvanced.stopRequested = true;
-        cookingMode = CookingMode.auto;
+        cookingMode = GenerationMode.auto;
         isExhausted = true;
     }else{
         isExhausted = false;
         generatorAdvanced.stopRequested = true;
-        cookingMode = CookingMode.idle;
+        cookingMode = GenerationMode.idle;
         energyConsumptionHandler.OnStopEnergyRoutine();
 
     }
@@ -165,7 +160,7 @@ private void StopAuto(bool isEnergyExhausted)
 
 public void ReStartAuto()
 {
-    if (cookingMode == CookingMode.auto ||cookingMode == CookingMode.idle ){
+    if (cookingMode == GenerationMode.auto ||cookingMode == GenerationMode.idle ){
 
     energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
     generatorAdvanced.StartGeneratingAuto(recipeState.recipe_datas.defaultCookingTime);
@@ -174,7 +169,7 @@ public void ReStartAuto()
 
 private void StopGeneratingAuto()
 {
-    if (cookingMode == CookingMode.auto)
+    if (cookingMode == GenerationMode.auto)
         StopAuto(false);
 }
     private void UpdateAvailableRecipes(Recipes _recipe, bool state)
@@ -189,7 +184,7 @@ private void StopGeneratingAuto()
     }
 void LateUpdate()
 {
-    if (cookingMode == CookingMode.auto && energyConsumptionHandler.IsEnergyRoutineRunning==false)
+    if (cookingMode == GenerationMode.auto && energyConsumptionHandler.IsEnergyRoutineRunning==false)
     {
         Debug.LogError("INVARIANT BROKEN: auto without energy");
         energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
@@ -257,19 +252,19 @@ void LateUpdate()
     }else{
 
     switch(data.mode){
-        case CookingMode.idle:
+        case GenerationMode.idle:
         generatorAdvanced.StopGenerating();
         energyConsumptionHandler.OnStopEnergyRoutine();
         break;
-        case CookingMode.auto:
+        case GenerationMode.auto:
         generatorAdvanced.ResumeGeneration(recipeState.recipe_datas.defaultCookingTime,data.timeRemaining,true);
         energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
         break;
-        case CookingMode.transitioning:
+        case GenerationMode.transitioning:
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
         energyConsumptionHandler.OnStartEnergyRoutine(eneryConsumptionTimeIntervall);
         break;
-        case CookingMode.manual:
+        case GenerationMode.manual:
         energyConsumptionHandler.OnStopEnergyRoutine();
         generatorAdvanced.StartGenerating(recipeState.recipe_datas.defaultCookingTime);
         break;
@@ -280,7 +275,7 @@ void LateUpdate()
 [System.Serializable]
 public struct CookingHandlerSaveData
 {
-    public CookingMode mode;
+    public GenerationMode mode;
     public Recipes selectedRecipe;
     public string uniqueId;
     public float timeRemaining;

@@ -56,6 +56,7 @@ public class EnergyConsumptionHandler : MonoBehaviour
             energyCoroutine = null;
             energyAutoRunning = false;
             RestartEnergy = false;
+            progressBarHandler.ResetProgress();
             UpdateUI();
         }
     }
@@ -65,17 +66,20 @@ private IEnumerator AutoEnabled(){
 
         while (true)
         {
+            print("inside loop");
             if(!CanAfford()){
                 EnergyExausted?.Invoke(true);
-                RestartEnergy = true;
-                UpdateUI();
             }
 
             while (!CanAfford()){
+                RestartEnergy = true;
+                UpdateUI();
+                print("inside cant afford");
                 yield return null;
             }
             if(RestartEnergy){
                 RestartEnergy = false;
+                print("restart energy");
                 EnergyReStarted?.Invoke();
             }
             // energyAutoRunning = true;
